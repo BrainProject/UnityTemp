@@ -12,4 +12,9 @@ public class HelloWorld : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnGUI()
+	{
+		GUI.Box (new Rect(20, 20, 150, 20), "Viva la Brain Project!");
+	}
 }
