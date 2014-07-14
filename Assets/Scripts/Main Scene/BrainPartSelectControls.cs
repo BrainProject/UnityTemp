@@ -29,6 +29,12 @@ public class BrainPartSelectControls : MonoBehaviour {
 				cameraAnimation.SetBool("done", true);
 				cameraAnimation.speed = 0;
 				this.transform.parent.gameObject.GetComponent<RotateAroundBrain>().CanRotate = true;
+				this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				GameObject.Find("Brain Left").GetComponent<SelectBrainPart>().CanRotate = true;
+				GameObject.Find("Brain Right").GetComponent<SelectBrainPart>().CanRotate = true;
 			}
 		}
 	}
