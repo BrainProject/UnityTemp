@@ -31,6 +31,12 @@ function Update()
 		
 	if(Input.GetKeyDown("g"))
 		on = !on;
+		
+	if(Input.GetKeyDown("m"))
+	{
+		Screen.showCursor = true;
+		Application.LoadLevel("LevelSelector");
+	}
 }
 
 
@@ -54,6 +60,8 @@ function OnGUI()
 	GUI.Box(Rect(Screen.width - 150,20,130,22), "Zbývá " + life   + " životů.");
 	if(!on)
 		GUI.Box(Rect(20,50,130,22), "You are GOD!!!!");
+	GUI.Box(Rect(20,80,130,40), "Press 'm' to go\nback to Menu");
+		//Application.LoadLevel("
 }
 
 
