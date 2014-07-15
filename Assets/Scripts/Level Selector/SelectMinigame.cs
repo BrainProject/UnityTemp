@@ -5,17 +5,31 @@ public class SelectMinigame : MonoBehaviour {
 	public string minigameName;
 	//public bool clickable{ get; set; }
 
-	private Transform cameraZoom;
+	private Vector3 CameraZoom { get; set; }
+	private Vector3 CameraDefaultPosition { get; set; }
 	private bool OnSelection { get; set; }
 	private Camera mainCamera { get; set; }
 	// Use this for initialization
 	void Start () {
 		OnSelection = false;
+		CameraDefaultPosition = new Vector3(0,1,-10);
 		mainCamera = GameObject.Find ("Main Camera").camera;
-		cameraZoom = transform.GetChild (0);
+		CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - 4);
 	}
+
+	void Update()
+	{
+		if(Input.GetButtonDown("Fire2"))
+		{
+			OnSelection = false;
+			//mainCamera.transform.position = CameraDefaultPosition;
+			mainCamera.GetComponent<SmoothCameraMove>().Move = true;
+			mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
+			mainCamera.GetComponent<SmoothCameraMove>().To = CameraDefaultPosition;
+		}
+	}
+
 	
-	// Update is called once per frame
 	void OnMouseEnter () {
 		this.renderer.material.color = Color.green;
 	}
@@ -32,22 +46,11 @@ public class SelectMinigame : MonoBehaviour {
 		else
 		{
 			//mainCamera.GetComponent<SmoothCameraMove>().from;
-			print (cameraZoom.position);
-			mainCamera.GetComponent<SmoothCameraMove>().To = cameraZoom.position;
+			//print (cameraZoom);
 			mainCamera.GetComponent<SmoothCameraMove>().Move = true;
+			mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
+			mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
 			OnSelection = true;
 		}
-	}
-
-	void OnGUI()
-	{
-		if(OnSelection)
-			if(GUI.Button(new Rect(20,20,100,40), "Cancel"))
-			{
-				OnSelection = false;
-				mainCamera.transform.position = new Vector3(0,1,-10);
-				mainCamera.GetComponent<SmoothCameraMove>().From = new Vector3(0,1,-10);
-				mainCamera.GetComponent<SmoothCameraMove>().To = new Vector3(0,1,-10);
-			}
 	}
 }

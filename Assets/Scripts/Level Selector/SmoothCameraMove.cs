@@ -29,6 +29,7 @@ public class SmoothCameraMove : MonoBehaviour {
 		}
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
-		transform.position = Vector3.Lerp(From, To, fracJourney);
+		if(journeyLength > 0.0f)
+			this.transform.position = Vector3.Lerp(From, To, fracJourney);
 	}
 }

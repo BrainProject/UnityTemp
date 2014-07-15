@@ -3,28 +3,57 @@ using System.Collections;
 
 public class SelectBrainPart : MonoBehaviour {
 	public string levelName;
+	public string descriptionText;
+	public string iconName;
+	public Color selectionColor;
 	public bool CanRotate{ get; set; }
 	private Color originalColor;
+	private GUITexture icon { get; set; }
+	private GameObject Description{ get; set; }
 
-	// Use this for initialization
-	void Start () {
+	void Start()
+	{
+		icon = GameObject.Find ("Brain Part Icon").guiTexture;
+		Description = GameObject.Find ("Description");
 		originalColor = this.renderer.material.color;
 	}
-	
-	// Update is called once per frame
-	void OnMouseEnter () {
+
+
+	void OnMouseEnter()
+	{
 		if(CanRotate)
-			this.renderer.material.color = Color.green;
+		{
+			Texture2D tmp = (Texture2D)Resources.Load (iconName, typeof(Texture2D));
+			if(tmp != null)
+				icon.texture = tmp;
+			this.transform.localScale = new Vector3(this.transform.localScale.x + 0.1f, this.transform.localScale.y + 0.1f, this.transform.localScale.z + 0.1f);
+			Description.GetComponent<TextMesh> ().text = descriptionText;
+			this.renderer.material.color = selectionColor;
+		}
 	}
 
 	void OnMouseExit()
 	{
+		if(CanRotate)
+		{
+			icon.texture = null;
+			this.transform.localScale = new Vector3(this.transform.localScale.x - 0.1f, this.transform.localScale.y - 0.1f, this.transform.localScale.z - 0.1f);
+			Description.GetComponent<TextMesh> ().text = "";
+		}
 		this.renderer.material.color = originalColor;
 	}
 
 	void OnMouseDown()
 	{
 		if(CanRotate)
-			Application.LoadLevel (levelName);
+		{
+			GameObject.Find("_LevelManager").GetComponent<LoadLevel>().LoadSeledctedLevelWithColorLerp(levelName, Time.time);
+		}
 	}
+
+//	void Fade(Color currentColor, Color nextColor)
+//	{
+//		duration += Time.deltaTime;
+//		this.renderer.material.color = Color.Lerp(currentColor, nextColor, duration);
+//	}
 }
