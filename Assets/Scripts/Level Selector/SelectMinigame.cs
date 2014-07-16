@@ -19,7 +19,7 @@ public class SelectMinigame : MonoBehaviour {
 
 	void Update()
 	{
-		if(Input.GetButtonDown("Fire2"))
+		if(Input.GetButtonDown ("Vertical"))
 		{
 			OnSelection = false;
 			//mainCamera.transform.position = CameraDefaultPosition;
@@ -39,18 +39,21 @@ public class SelectMinigame : MonoBehaviour {
 		this.renderer.material.color = Color.white;
 	}
 
-	void OnMouseDown()
+	void OnMouseOver()
 	{
-		if(OnSelection)
-			Application.LoadLevel (minigameName);
-		else
+		if(Input.GetButtonDown("Fire1") || Input.GetButtonDown ("Vertical"))
 		{
-			//mainCamera.GetComponent<SmoothCameraMove>().from;
-			//print (cameraZoom);
-			mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-			mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-			mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
-			OnSelection = true;
+			if(OnSelection)
+				Application.LoadLevel (minigameName);
+			else
+			{
+				//mainCamera.GetComponent<SmoothCameraMove>().from;
+				//print (cameraZoom);
+				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
+				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
+				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
+				OnSelection = true;
+			}
 		}
 	}
 }

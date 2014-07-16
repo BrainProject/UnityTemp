@@ -30,10 +30,10 @@ public class RotateAroundBrainBorder : MonoBehaviour {
 			this.transform.parent.transform.parent.transform.Rotate(rotatingAxis * Time.deltaTime * speedOfRotation);
 	}
 
-	void OnGUI()
-	{
-		if(CanRotate)
-			if(GUI.Button(new Rect(20, 20, 200, 40), "Reset rotation"))
-			   this.transform.parent.transform.parent.transform.eulerAngles = new Vector3(0,0,0);
-	}
+//	void OnGUI()
+//	{
+//		if(CanRotate)
+//			if(GUI.Button(new Rect(20, 20, 200, 40), "Reset rotation"))
+//			   this.transform.parent.transform.parent.transform.eulerAngles = new Vector3(0,0,0);
+//	}
 }

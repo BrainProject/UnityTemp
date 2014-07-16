@@ -14,7 +14,7 @@ public class BrainPartSelectControls : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1"))
 		{
 			if(!cameraAnimation.GetBool("start"))
 			{
@@ -33,6 +33,10 @@ public class BrainPartSelectControls : MonoBehaviour {
 				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
 				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
 				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().enabled = true;
+				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
+				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
+				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
 				GameObject.Find("Brain Left").GetComponent<SelectBrainPart>().CanRotate = true;
 				GameObject.Find("Brain Right").GetComponent<SelectBrainPart>().CanRotate = true;
 			}

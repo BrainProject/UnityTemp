@@ -9,11 +9,13 @@ var on:boolean;
 function Start()
 {
 	status = GameObject.FindGameObjectsWithTag("TicTac").Length;
+	this.transform.FindChild("Main Camera").FindChild("Left").GetComponent("RotateAroundBrainBorder").CanRotate = true;
+	this.transform.FindChild("Main Camera").FindChild("Right").GetComponent("RotateAroundBrainBorder").CanRotate = true;
 	powerUp = false;
 	time = 0;
 	transform.position = spawn.position;
 	transform.rotation = Quaternion.identity;
-	Screen.showCursor = false;
+	//Screen.showCursor = false;
 	on = true;
 }
 

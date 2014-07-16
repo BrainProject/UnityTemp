@@ -13,6 +13,7 @@ public class SelectBrainPart : MonoBehaviour {
 
 	void Start()
 	{
+		CanRotate = false;
 		icon = GameObject.Find ("Brain Part Icon").guiTexture;
 		Description = GameObject.Find ("Description");
 		originalColor = this.renderer.material.color;
@@ -43,11 +44,15 @@ public class SelectBrainPart : MonoBehaviour {
 		this.renderer.material.color = originalColor;
 	}
 
-	void OnMouseDown()
+	void OnMouseOver()
 	{
 		if(CanRotate)
 		{
-			GameObject.Find("_LevelManager").GetComponent<LoadLevel>().LoadSeledctedLevelWithColorLerp(levelName, Time.time);
+			if(Input.GetButtonDown ("Fire1"))
+			{
+				Destroy(GameObject.Find ("KinectControls"));
+				GameObject.Find("_LevelManager").GetComponent<LoadLevel>().LoadSeledctedLevelWithColorLerp(levelName, Time.time);
+			}
 		}
 	}
 
