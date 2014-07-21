@@ -9,7 +9,7 @@ public class IconClose : MonoBehaviour
     
     void OnGUI()
     {
-        if (GUI.Button(new Rect(Screen.width - 60, 10, 50, 50), closeIconTexture))
+        if (GUI.Button(new Rect(Screen.width - 60, 30, 50, 50), closeIconTexture))
         {
             fader.EndScene(sceneName);
         }
