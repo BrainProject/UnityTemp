@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Text;
+using System.Text; 
 
 public class AvatarController : MonoBehaviour
 {	
@@ -107,11 +107,7 @@ public class AvatarController : MonoBehaviour
 	
 	// Update the avatar each frame.
     public void UpdateAvatar(uint UserID, bool IsNearMode)
-    {
-		if(Input.GetKeyDown(KeyCode.X))
-		{
-			Win32.MouseKeySimulator.MouseCursorMove = false;
-		}
+    {	
 		bool flipJoint = !MirroredMovement;
 		
 		// Update Head, Neck, Spine, and Hips normally.
@@ -225,11 +221,8 @@ public class AvatarController : MonoBehaviour
 		//GestureInfo.guiText.text = string.Format("{0} Progress: {1:F1}%", gesture, (progress * 100));
 		if((gesture == KinectWrapper.Gestures.RightHandCursor || gesture == KinectWrapper.Gestures.LeftHandCursor) && progress > 0.5f)
 		{
-			Win32.MouseKeySimulator.CursorPos(Vector3.Lerp(HandCursor.transform.position, screenPos, 3 * Time.deltaTime));
 			if(HandCursor != null)
-			{
 				HandCursor.transform.position = Vector3.Lerp(HandCursor.transform.position, screenPos, 3 * Time.deltaTime);
-			}
 
 //			string sGestureText = string.Format("{0} - ({1:F1}, {2:F1} {3:F1})", gesture, screenPos.x, screenPos.y, progress * 100);
 //			Debug.Log(sGestureText);
@@ -251,74 +244,21 @@ public class AvatarController : MonoBehaviour
 		else if(gesture == KinectWrapper.Gestures.Wheel && progress > 0.5f)
 		{
 			string sGestureText = string.Format ("{0} detected, angle={1:F1} deg", gesture, screenPos.z);
-			if(screenPos.z > 1)
-			{
-				if(Input.GetKey(KeyCode.D))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-				if(!Input.GetKey(KeyCode.A))
-					Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.KEY_A);
-			}
-			else if(screenPos.z < -1)
-			{
-				if(Input.GetKey(KeyCode.A))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-				if(!Input.GetKey(KeyCode.D))
-					Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.KEY_D);
-			}else 
-			{
-				if(Input.GetKey(KeyCode.D))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-				if(Input.GetKey(KeyCode.A))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-			}
 			if(GestureInfo != null)
 				GestureInfo.guiText.text = sGestureText;
 			progressDisplayed = true;
 		}
-		else if (gesture == KinectWrapper.Gestures.Move && progress > 0.5f)
-		{
-			if(screenPos.z <= -0.1f)
-			{
-				if(Input.GetKey(KeyCode.UpArrow))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.UP);
-				if(!Input.GetKey(KeyCode.DownArrow))
-					Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.DOWN);
-			}
-			if(screenPos.z >= 0.1f)
-			{
-				if(Input.GetKey(KeyCode.DownArrow))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.DOWN);
-				if(!Input.GetKey(KeyCode.UpArrow))
-					Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.UP);
-			}
-			string sGestureText = string.Format ("{0} detected, move={1:F1} deg", gesture, screenPos.z);
-			if(GestureInfo != null)
-				GestureInfo.guiText.text = sGestureText;
-		}
-
-
 	}
 	
 	// Invoked when a gesture is complete.
-
 	// Return true, if the gesture must be detected again, false otherwise
 	public bool GestureComplete(uint userId, KinectWrapper.Gestures gesture,
 		KinectWrapper.SkeletonJoint joint, Vector3 screenPos)
 	{
 		string sGestureText = gesture + " detected";
 		if(gesture == KinectWrapper.Gestures.Click)
-		{
-			Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.LCONTROL);
 			sGestureText += string.Format(" at ({0:F1}, {1:F1})", screenPos.x, screenPos.y);
-		}
-		else if(gesture == KinectWrapper.Gestures.SweepLeft)
-		{
-			Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.LEFT);
-		}
-		else if(gesture == KinectWrapper.Gestures.SweepRight)
-		{
-			Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.RIGHT);
-		}
+		
 		if(GestureInfo != null)
 			GestureInfo.guiText.text = sGestureText;
 		progressDisplayed = false;
@@ -337,26 +277,7 @@ public class AvatarController : MonoBehaviour
 				GestureInfo.guiText.text = String.Empty;
 			progressDisplayed = false;
 		}
-		if(gesture == KinectWrapper.Gestures.Wheel)
-		{
-			if(Input.GetKey(KeyCode.D))
-				Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-			if(Input.GetKey(KeyCode.A))
-				Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-		}
-		if(gesture == KinectWrapper.Gestures.Move)
-		{
-			if(Input.GetKey(KeyCode.UpArrow))
-				Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.UP);
-			if(Input.GetKey(KeyCode.DownArrow))
-				Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.DOWN);
-		}
-		if(gesture == KinectWrapper.Gestures.RightHandCursor || gesture == KinectWrapper.Gestures.LeftHandCursor)
-		{
-			Win32.MouseKeySimulator.CursorPos(new Vector2(0.5f,0.5f));
-		}
-
-
+		
 		return true;
 	}
 	

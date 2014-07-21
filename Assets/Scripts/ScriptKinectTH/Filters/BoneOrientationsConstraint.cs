@@ -20,7 +20,7 @@ public class BoneOrientationsConstraint
 
     /// Initializes a new instance of the BoneOrientationConstraints class.
     public BoneOrientationsConstraint()
-	{
+    {
 		debugText = GameObject.Find("CalibrationText");
     }
 	

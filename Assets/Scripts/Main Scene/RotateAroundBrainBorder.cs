@@ -9,7 +9,7 @@ public class RotateAroundBrainBorder : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		CanRotate = false;
+		CanRotate = true;
 		switch(this.name)
 		{
 		case "Left": rotatingAxis = Vector3.up; break;
@@ -28,6 +28,8 @@ public class RotateAroundBrainBorder : MonoBehaviour {
 	{
 		if(CanRotate)
 			this.transform.parent.transform.parent.transform.Rotate(rotatingAxis * Time.deltaTime * speedOfRotation);
+		//use this for prototype GUI Texture variant	
+		//GameObject.Find("First Person Controller").transform.Rotate(rotatingAxis * Time.deltaTime * speedOfRotation);
 	}
 
 //	void OnGUI()

@@ -774,7 +774,7 @@ public class KinectManager : MonoBehaviour
 		catch(DllNotFoundException e)
 		{
 			string message = "Please check the Kinect SDK installation.";
-			Debug.LogError(message + " " + e.ToString());
+			Debug.LogError(message);
 			if(CalibrationText != null)
 				CalibrationText.guiText.text = message;
 				

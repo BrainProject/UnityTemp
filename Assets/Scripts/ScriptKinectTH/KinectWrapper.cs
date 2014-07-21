@@ -62,7 +62,7 @@ public class KinectWrapper
 		public const NuiImageResolution ImageResolution = NuiImageResolution.resolution640x480;
 		
 		public const float PoseCompleteDuration = 1.0f;
-		public const float ClickStayDuration = 1.5f;
+		public const float ClickStayDuration = 2.5f;
 	}
 	
 	public enum Gestures
@@ -81,9 +81,8 @@ public class KinectWrapper
 		RightHandCursor,
 		LeftHandCursor,
 		ZoomOut,
-		ZoomIn, 
-		Wheel,
-		Move
+		ZoomIn,
+		Wheel
 	}
 	
 	public struct GestureData
@@ -1112,9 +1111,6 @@ public class KinectWrapper
 	private const int shoulderCenterIndex = (int)SkeletonJoint.NECK;
 	private const int leftHipIndex = (int)SkeletonJoint.LEFT_HIP;
 	private const int rightHipIndex = (int)SkeletonJoint.RIGHT_HIP;
-
-	private const int rightKneeIndex = (int)SkeletonJoint.RIGHT_KNEE;
-	private const int leftKneeIndex = (int)SkeletonJoint.LEFT_KNEE; 
 	
 	private static void SetGestureJoint(ref GestureData gestureData, float timestamp, int joint, Vector3 jointPos)
 	{
@@ -1887,33 +1883,8 @@ public class KinectWrapper
 						}
 						break;
 				}
-			break;
-		case Gestures.Move:
-			switch(gestureData.state)
-			{
-				case 0:
-				if(jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Math.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f)
-				{
-					SetGestureJoint(ref gestureData,timestamp,leftKneeIndex,jointsPos[leftKneeIndex]);
-				}
-				break;
-			case 1:
-				bool isInPose = jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Math.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f;
-				if(isInPose)
-				{
-					gestureData.timestamp = timestamp;
-					gestureData.progress = 0.7f;
-					gestureData.screenPos.z = jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z;
-				}
-				else
-				{
-					SetGestureCancelled(ref gestureData);
-				}
 				break;
 
-
-			}
-			break;
 		}
 	}
 
