@@ -361,7 +361,12 @@ MonoBehaviour:
   SensorAngle: 10
   MinUserDistance: 1
   IgnoreInferredJoints: 0
-  smoothing: 0
+  smoothing: 1
+  customSmoothing: .100000001
+  customCorrection: .300000012
+  customPrediction: .5
+  customJitterRadius: .5
+  customMaxDeviationRadius: .75
   UseBoneOrientationsFilter: 0
   UseClippedLegsFilter: 0
   UseBoneOrientationsConstraint: 0

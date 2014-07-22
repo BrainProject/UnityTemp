@@ -10,7 +10,7 @@ using System.Text;
 
 public class KinectManager : MonoBehaviour
 {
-	public enum Smoothing : int { None, Default, Medium, Aggressive }
+	public enum Smoothing : int { None, Custom, Default, Medium, Aggressive }
 	
 	
 	// Public Bool to determine how many players there are. Default of one user.
@@ -48,6 +48,13 @@ public class KinectManager : MonoBehaviour
 	
 	// Selection of smoothing parameters
 	public Smoothing smoothing = Smoothing.Default;
+
+	// Set parameters of Custom smoothing
+	public float customSmoothing = 0.7f;
+	public float customCorrection = 0.3f;
+	public float customPrediction = 0.5f;
+	public float customJitterRadius = 1.0f;
+	public float customMaxDeviationRadius = 1.0f;
 	
 	// Public Bool to determine the use of additional filters
 	public bool UseBoneOrientationsFilter = false;
@@ -691,6 +698,13 @@ public class KinectManager : MonoBehaviour
 			
 			switch(smoothing)
 			{
+				case Smoothing.Custom:
+					smoothParameters.fSmoothing = customSmoothing;
+					smoothParameters.fCorrection = customCorrection;
+					smoothParameters.fPrediction = customPrediction;
+					smoothParameters.fJitterRadius = customJitterRadius;
+					smoothParameters.fMaxDeviationRadius = customMaxDeviationRadius;
+					break;
 				case Smoothing.Default:
 					smoothParameters.fSmoothing = 0.5f;
 					smoothParameters.fCorrection = 0.5f;
@@ -774,7 +788,7 @@ public class KinectManager : MonoBehaviour
 		catch(DllNotFoundException e)
 		{
 			string message = "Please check the Kinect SDK installation.";
-			Debug.LogError(message);
+			Debug.LogError(message + " " + e.ToString());
 			if(CalibrationText != null)
 				CalibrationText.guiText.text = message;
 				
