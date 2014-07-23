@@ -2,15 +2,16 @@
 using System.Collections;
 
 public class SmoothCameraMove : MonoBehaviour {
+	public float smooth = 5.0F;
+	public float speed = 1.0F;
+
 	public Vector3 From { get; set; }
 	public Vector3 To { get; set; }
 	public bool Move { get; set; }
 
-	public float speed = 1.0F;
 	private float startTime;
 	private float journeyLength;
-	public Transform target;
-	public float smooth = 5.0F;
+	//public Transform target;
 
 	void Start() {
 		Move = false;
@@ -20,7 +21,8 @@ public class SmoothCameraMove : MonoBehaviour {
 		journeyLength = Vector3.Distance(From, To);
 	}
 
-	void Update() {
+	void Update()
+	{
 		if(Move)
 		{
 			startTime = Time.time;
@@ -32,4 +34,22 @@ public class SmoothCameraMove : MonoBehaviour {
 		if(journeyLength > 0.0f)
 			this.transform.position = Vector3.Lerp(From, To, fracJourney);
 	}
+
+//	public IEnumerator CameraLerp(Vector3 from, Vector3 to)
+//	{
+//		Move = true;
+//		if(Move)
+//		{
+//			startTime = Time.time;
+//			journeyLength = Vector3.Distance(from, to);
+//			Move = false;
+//		}
+//		while(journeyLength > 0.0f)
+//		{
+//			float distCovered = (Time.time - startTime) * speed;
+//			float fracJourney = distCovered / journeyLength;
+//			this.transform.position = Vector3.Lerp(from, to, fracJourney);
+//			yield return null;
+//		}
+//	}
 }

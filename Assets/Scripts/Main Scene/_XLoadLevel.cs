@@ -21,10 +21,10 @@ public class LoadLevel : MonoBehaviour {
 	void Update () {
 		if(fade)
 		{
-			fadeImage.guiTexture.color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/3);
-			if(fadeImage.guiTexture.color.a >= 0.6f)
+			//fadeImage.guiTexture.color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/3);
+//			if(fadeImage.guiTexture.color.a >= 0.6f)
 			{
-				Application.LoadLevel(levelName);
+				//Application.LoadLevel(levelName);
 			}
 		}
 	}

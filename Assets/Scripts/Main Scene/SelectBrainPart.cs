@@ -50,8 +50,7 @@ public class SelectBrainPart : MonoBehaviour {
 		{
 			if(Input.GetButtonDown ("Fire1"))
 			{
-				Destroy(GameObject.Find ("KinectControls"));
-				GameObject.Find("_LevelManager").GetComponent<LoadLevel>().LoadSeledctedLevelWithColorLerp(levelName, Time.time);
+				StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 			}
 		}
 	}

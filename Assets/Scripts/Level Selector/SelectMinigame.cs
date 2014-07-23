@@ -3,26 +3,31 @@ using System.Collections;
 
 public class SelectMinigame : MonoBehaviour {
 	public string minigameName;
-	//public bool clickable{ get; set; }
+	public float cameraDistance = 1;
 
+	private bool MouseHover{ get; set; }
 	private Vector3 CameraZoom { get; set; }
 	private Vector3 CameraDefaultPosition { get; set; }
 	private bool OnSelection { get; set; }
 	private Camera mainCamera { get; set; }
-	// Use this for initialization
+
 	void Start () {
 		OnSelection = false;
-		CameraDefaultPosition = new Vector3(0,1,-10);
 		mainCamera = GameObject.Find ("Main Camera").camera;
-		CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - 4);
+		CameraDefaultPosition = mainCamera.transform.position;
+		CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
+		MouseHover = false;
 	}
 
 	void Update()
 	{
-		if(Input.GetButtonDown ("Vertical"))
+		if(Input.GetButtonDown("Fire1") && !MouseHover)
+			OnSelection = false;
+		//Set target position of camera back to its original point
+		if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
 		{
 			OnSelection = false;
-			//mainCamera.transform.position = CameraDefaultPosition;
+			//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(mainCamera.transform.position, CameraDefaultPosition));
 			mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 			mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
 			mainCamera.GetComponent<SmoothCameraMove>().To = CameraDefaultPosition;
@@ -32,23 +37,26 @@ public class SelectMinigame : MonoBehaviour {
 	
 	void OnMouseEnter () {
 		this.renderer.material.color = Color.green;
+		MouseHover = true;
 	}
 
 	void OnMouseExit()
 	{
 		this.renderer.material.color = Color.white;
+		MouseHover = false;
 	}
 
 	void OnMouseOver()
 	{
 		if(Input.GetButtonDown("Fire1") || Input.GetButtonDown ("Vertical"))
 		{
+			//load minigame if zooming or zoomed
 			if(OnSelection)
 				Application.LoadLevel (minigameName);
+			//set target position of camera near to minigame buble
 			else
 			{
-				//mainCamera.GetComponent<SmoothCameraMove>().from;
-				//print (cameraZoom);
+				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(mainCamera.transform.position, CameraZoom));
 				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
 				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;

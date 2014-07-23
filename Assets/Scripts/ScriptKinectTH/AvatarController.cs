@@ -355,6 +355,12 @@ public class AvatarController : MonoBehaviour
 		{
 			Win32.MouseKeySimulator.CursorPos(new Vector2(0.5f,0.5f));
 		}
+		if(gesture == KinectWrapper.Gestures.RaiseLeftHand)
+		{
+			//Hold with LeftHandCursor
+			Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.KEY_C);
+			Debug.Log("c");
+		}
 
 
 		return true;
