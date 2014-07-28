@@ -32,7 +32,7 @@ public class ResourcePack : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        gameType = GameType.silhouette;
+        gameType = GameType.similarity;
         CreateMenu();
 	}
 
@@ -176,6 +176,7 @@ public class ResourcePack : MonoBehaviour {
 
         GameScript mainGameScript = main.GetComponent("GameScript") as GameScript;
         mainGameScript.resourcePack = chosenButton.name;
+		mainGameScript.gameType = gameType;
 
         GameStart gameStart = menu.GetComponent("GameStart") as GameStart;
         gameStart.gameType = gameType;

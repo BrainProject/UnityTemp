@@ -336,7 +336,8 @@ public class GameScript : MonoBehaviour {
         {
             tex = Resources.Load("Textures/Pictures/" + gameType.ToString() + "/" + resourcePack + "/" + o.ToString("00")) as Texture2D;
             texA = Resources.Load("Textures/Pictures/" + gameType.ToString() + "/" + resourcePack + "/" + o.ToString("00") + "a") as Texture2D;
-            if (tex != null && texA != null)
+            
+			if (tex != null && texA != null)
             {
                 classicPic.Add(tex);
                 classicPic_a.Add(texA);
@@ -347,6 +348,7 @@ public class GameScript : MonoBehaviour {
                 o = -1;
             }
         }
+
         //Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
         List<Texture2D> chosen = new List<Texture2D>();
         for (int i = 0; i < (rows * columns)/2; i++)
