@@ -42,7 +42,7 @@ public class LoadLevelWithFade: MonoBehaviour {
 //			Application.LoadLevel(levelName);
 //	}
 
-	public IEnumerator LoadSeledctedLevelWithColorLerp(bool forBeginning, string levelToLoad = "null")
+	public IEnumerator LoadSeledctedLevelWithColorLerp(bool forBeginning, string levelToLoad = "")
 	{
 		if(forBeginning)
 		{
@@ -54,6 +54,11 @@ public class LoadLevelWithFade: MonoBehaviour {
 				
 				yield return null;
 			}
+			this.gameObject.guiTexture.enabled = false;
+		}
+		else if(levelToLoad == "")
+		{
+			print ("No minigame here.");
 			this.gameObject.guiTexture.enabled = false;
 		}
 		else

@@ -52,7 +52,10 @@ public class SelectMinigame : MonoBehaviour {
 		{
 			//load minigame if zooming or zoomed
 			if(OnSelection)
-				Application.LoadLevel (minigameName);
+			{
+				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
+				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
+			}
 			//set target position of camera near to minigame buble
 			else
 			{
