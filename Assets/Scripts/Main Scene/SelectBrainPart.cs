@@ -24,7 +24,7 @@ public class SelectBrainPart : MonoBehaviour {
 	{
 		if(CanRotate)
 		{
-			Texture2D tmp = (Texture2D)Resources.Load (iconName, typeof(Texture2D));
+			Texture2D tmp = (Texture2D)Resources.Load ("Main/" + iconName, typeof(Texture2D));
 			if(tmp != null)
 				icon.texture = tmp;
 			this.transform.localScale = new Vector3(this.transform.localScale.x + 0.1f, this.transform.localScale.y + 0.1f, this.transform.localScale.z + 0.1f);
