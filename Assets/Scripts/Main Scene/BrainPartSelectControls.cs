@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Created by: Milan Doležal
+ */ 
+
+
+using UnityEngine;
 using System.Collections;
 
 public class BrainPartSelectControls : MonoBehaviour {
@@ -37,8 +42,9 @@ public class BrainPartSelectControls : MonoBehaviour {
 				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
 				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
 				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
-				GameObject.Find("Brain Left").GetComponent<SelectBrainPart>().CanRotate = true;
-				GameObject.Find("Brain Right").GetComponent<SelectBrainPart>().CanRotate = true;
+				GameObject.Find("Frt_FrontalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
+				GameObject.Find("Mid_ParietalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
+				GameObject.Find("Bck_OccipitalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
 			}
 		}
 	}

@@ -24,6 +24,6 @@ public class SelectLevel : MonoBehaviour {
 	void OnMouseDown()
 	{
 		//System.Diagnostics.Process.Start("notepad.exe");
-		System.Diagnostics.Process.Start ("D:\\Sdílené\\Dropbox\\Unity\\Project Serious Brain\\External Applications\\Pexeso\\Pexeso.exe");
+		//System.Diagnostics.Process.Start ("D:\\Sdílené\\Dropbox\\Unity\\Project Serious Brain\\External Applications\\Pexeso\\Pexeso.exe");
 	}
 }

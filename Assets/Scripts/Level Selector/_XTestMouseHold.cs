@@ -74,7 +74,7 @@ public class _XTestMouseHold: MonoBehaviour {
 	
 	void OnMouseOver()
 	{
-		if(Input.GetKey (KeyCode.C))
+		if(Input.GetKeyDown (KeyCode.C) || Input.GetMouseButtonDown(0))
 		{
 			this.rigidbody.useGravity = !this.rigidbody.useGravity;
 			picked = !picked;

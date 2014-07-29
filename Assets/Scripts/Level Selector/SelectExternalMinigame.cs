@@ -20,7 +20,7 @@ public class SelectExternalMinigame : MonoBehaviour {
 			tmp.SetActive(false);
 			tmp.GetComponent<KinectManager>().enabled = false;
 			//need to consider parametrizable paths, kinect control (deactivate in Unity when external application starts and reactivate when it ends) and window focus return to Unity back with fullscreen
-			System.Diagnostics.Process.Start("D:\\Sdílené\\Dropbox\\Dropbox\\Unity\\Project Serious Brain\\NonUnityAssests\\External\\Pexeso\\Pexeso.exe");
+			//System.Diagnostics.Process.Start("D:\\Sdílené\\Dropbox\\Dropbox\\Unity\\Project Serious Brain\\NonUnityAssests\\External\\Pexeso\\Pexeso.exe");
 		}
 	}
 }

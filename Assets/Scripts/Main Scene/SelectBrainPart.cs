@@ -2,11 +2,13 @@
 using System.Collections;
 
 public class SelectBrainPart : MonoBehaviour {
-	public string levelName;
 	public string descriptionText;
 	public string iconName;
-	public Color selectionColor;
+	public currentBrainPartEnum brainPartToLoad;
 	public bool CanRotate{ get; set; }
+
+	private string levelName;
+	private Color selectionColor;
 	private Color originalColor;
 	private GUITexture icon { get; set; }
 	private GameObject Description{ get; set; }
@@ -17,6 +19,7 @@ public class SelectBrainPart : MonoBehaviour {
 		icon = GameObject.Find ("Brain Part Icon").guiTexture;
 		Description = GameObject.Find ("Description");
 		originalColor = this.renderer.material.color;
+		levelName = "MirkaSelection";
 	}
 
 
@@ -29,7 +32,7 @@ public class SelectBrainPart : MonoBehaviour {
 				icon.texture = tmp;
 			this.transform.localScale = new Vector3(this.transform.localScale.x + 0.1f, this.transform.localScale.y + 0.1f, this.transform.localScale.z + 0.1f);
 			Description.GetComponent<TextMesh> ().text = descriptionText;
-			this.renderer.material.color = selectionColor;
+			this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 		}
 	}
 
@@ -50,6 +53,16 @@ public class SelectBrainPart : MonoBehaviour {
 		{
 			if(Input.GetButtonDown ("Fire1"))
 			{
+				switch(descriptionText)
+				{
+				case "Frontal Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					break;
+				case "Pariental Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					break;
+				case "Occipital Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					break;
+				}
+				GameObject.Find("_GameManager").GetComponent<GameManager>().selectedBrainPart = brainPartToLoad;
 				StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 			}
 		}

@@ -1,20 +1,28 @@
-﻿using UnityEngine;
+﻿/*
+ * Created by: Milan Doležal
+ */ 
+
+
+using UnityEngine;
 using System.Collections;
 
 public class SelectMinigame : MonoBehaviour {
 	public string minigameName;
 	public float cameraDistance = 1;
 
+	//Will be changed according to currently selected brain part.
+	public Vector3 CameraDefaultPosition { get; set; }
+
 	private bool MouseHover{ get; set; }
 	private Vector3 CameraZoom { get; set; }
-	private Vector3 CameraDefaultPosition { get; set; }
 	private bool OnSelection { get; set; }
 	private Camera mainCamera { get; set; }
+	private Color originalColor;
 
 	void Start () {
 		OnSelection = false;
 		mainCamera = GameObject.Find ("Main Camera").camera;
-		CameraDefaultPosition = mainCamera.transform.position;
+		CameraDefaultPosition = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
 		CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 		MouseHover = false;
 	}
@@ -27,22 +35,24 @@ public class SelectMinigame : MonoBehaviour {
 		if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
 		{
 			OnSelection = false;
-			//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(mainCamera.transform.position, CameraDefaultPosition));
+			//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
 			mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 			mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-			mainCamera.GetComponent<SmoothCameraMove>().To = CameraDefaultPosition;
+			mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
 		}
 	}
 
 	
-	void OnMouseEnter () {
-		this.renderer.material.color = Color.green;
+	void OnMouseEnter()
+	{
+		originalColor = this.renderer.material.color;
+		this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 		MouseHover = true;
 	}
 
 	void OnMouseExit()
 	{
-		this.renderer.material.color = Color.white;
+		this.renderer.material.color = originalColor;
 		MouseHover = false;
 	}
 
@@ -59,7 +69,7 @@ public class SelectMinigame : MonoBehaviour {
 			//set target position of camera near to minigame buble
 			else
 			{
-				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(mainCamera.transform.position, CameraZoom));
+				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
 				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
 				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;

@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/*
+ * Created by: Milan Doležal
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class SmoothCameraMove : MonoBehaviour {
@@ -34,6 +38,29 @@ public class SmoothCameraMove : MonoBehaviour {
 		if(journeyLength > 0.0f)
 			this.transform.position = Vector3.Lerp(From, To, fracJourney);
 	}
+
+//	public IEnumerator CameraLerp(float startTime)
+//	{	
+//		print ("start");
+//		if(Move)
+//		{
+//			print ("moving");
+//			print ("here?");
+//			journeyLength = Vector3.Distance(From, To);
+//			print (journeyLength);
+//			Move = false;
+//		}
+//		print ("distance");
+//		float distCovered = (Time.time - startTime) * speed;
+//		float fracJourney = distCovered / journeyLength;
+//		print (distCovered);
+//		print (fracJourney);
+//		while(journeyLength > 0.0f)
+//		{
+//			this.transform.position = Vector3.Lerp(From, To, fracJourney);
+//			yield return null;
+//		}
+//	}
 
 //	public IEnumerator CameraLerp(Vector3 from, Vector3 to)
 //	{
