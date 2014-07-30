@@ -1,22 +1,28 @@
-﻿using UnityEngine;
+﻿/*
+ * Created by: Milan Doležal
+ */ 
+
+
+using UnityEngine;
 using System.Collections;
 
 public class SelectBrainPart : MonoBehaviour {
 	public string descriptionText;
 	public string iconName;
 	public currentBrainPartEnum brainPartToLoad;
-	public bool CanRotate{ get; set; }
+	public bool CanSelect{ get; set; }
 
 	private string levelName;
 	private Color selectionColor;
 	private Color originalColor;
-	private GUITexture icon { get; set; }
+	private GameObject icon { get; set; }
 	private GameObject Description{ get; set; }
 
 	void Start()
 	{
-		CanRotate = false;
-		icon = GameObject.Find ("Brain Part Icon").guiTexture;
+		CanSelect = false;
+		icon = GameObject.Find ("Brain Part Icon");
+		icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
 		Description = GameObject.Find ("Description");
 		originalColor = this.renderer.material.color;
 		levelName = "MirkaSelection";
@@ -25,23 +31,29 @@ public class SelectBrainPart : MonoBehaviour {
 
 	void OnMouseEnter()
 	{
-		if(CanRotate)
+		if(CanSelect)
 		{
-			Texture2D tmp = (Texture2D)Resources.Load ("Main/" + iconName, typeof(Texture2D));
+			Texture tmp = (Texture)Resources.Load ("Main/" + iconName, typeof(Texture));
 			if(tmp != null)
-				icon.texture = tmp;
-			this.transform.localScale = new Vector3(this.transform.localScale.x + 0.1f, this.transform.localScale.y + 0.1f, this.transform.localScale.z + 0.1f);
+			{
+				icon.renderer.material.mainTexture = tmp;
+				icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 1);
+				icon.transform.position = this.transform.parent.transform.position;
+			}
+			this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			Description.GetComponent<TextMesh> ().text = descriptionText;
+			Description.transform.position = this.transform.parent.transform.position - (new Vector3(0, 0.05f, 0));
 			this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 		}
 	}
 
 	void OnMouseExit()
 	{
-		if(CanRotate)
+		if(CanSelect)
 		{
-			icon.texture = null;
-			this.transform.localScale = new Vector3(this.transform.localScale.x - 0.1f, this.transform.localScale.y - 0.1f, this.transform.localScale.z - 0.1f);
+			icon.renderer.material.mainTexture = null;
+			icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+			this.transform.localScale = new Vector3(1, 1, 1);
 			Description.GetComponent<TextMesh> ().text = "";
 		}
 		this.renderer.material.color = originalColor;
@@ -49,7 +61,7 @@ public class SelectBrainPart : MonoBehaviour {
 
 	void OnMouseOver()
 	{
-		if(CanRotate)
+		if(CanSelect)
 		{
 			if(Input.GetButtonDown ("Fire1"))
 			{

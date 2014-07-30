@@ -63,6 +63,7 @@ public class LoadLevelWithFade: MonoBehaviour {
 		}
 		else
 		{
+			GameObject.Find ("KinectControls").SetActive(false);
 			float startTime = Time.time;
 			originalColor.a = 0;
 			targetColor.a = 1.0f;
@@ -73,7 +74,6 @@ public class LoadLevelWithFade: MonoBehaviour {
 				
 				yield return null;
 			}
-			GameObject.Find ("KinectControls").SetActive(false);
 			Application.LoadLevel(levelToLoad);
 		}
 	}

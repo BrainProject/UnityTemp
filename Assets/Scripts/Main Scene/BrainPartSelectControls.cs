@@ -34,17 +34,17 @@ public class BrainPartSelectControls : MonoBehaviour {
 				cameraAnimation.SetBool("done", true);
 				cameraAnimation.speed = 0;
 				this.transform.parent.gameObject.GetComponent<RotateAroundBrain>().CanRotate = true;
-				this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-				this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().enabled = true;
-				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
-				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
-				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
-				GameObject.Find("Frt_FrontalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
-				GameObject.Find("Mid_ParietalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
-				GameObject.Find("Bck_OccipitalLobe").GetComponent<SelectBrainPart>().CanRotate = true;
+				GameObject.Find("Left").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				GameObject.Find("Right").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				GameObject.Find("Up").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+				GameObject.Find("Down").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
+//				this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().enabled = true;
+//				this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
+//				this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
+//				this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
+				GameObject.Find("Frt_FrontalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+				GameObject.Find("Mid_ParietalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+				GameObject.Find("Bck_OccipitalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
 			}
 		}
 	}

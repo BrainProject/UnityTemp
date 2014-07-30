@@ -1,4 +1,4 @@
-﻿Shader "Custom/DiffuseFade"
+﻿Shader "Custom/Diffuse Fade"
 {
 	Properties 
 	{
