@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Kinect;
 
 public class PointManController : MonoBehaviour 
 {

@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1 &126255090
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1001 &158361554
 Prefab:
   m_ObjectHideFlags: 0
@@ -282,6 +284,14 @@ Prefab:
     - target: {fileID: 400000, guid: 5c688b9753301f34ca72225a0f292d7b, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 5c688b9753301f34ca72225a0f292d7b, type: 2}
+      propertyPath: sweepSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 5c688b9753301f34ca72225a0f292d7b, type: 2}
+      propertyPath: defaultSpeed
+      value: .25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c688b9753301f34ca72225a0f292d7b, type: 2}
@@ -391,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smooth: 5
-  speed: .200000003
+  defaultSpeed: .25
 --- !u!114 &201004097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abd99df76ad0fc4f9a521880bd7ae69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sweepSpeed: 1
 --- !u!1001 &352939560
 Prefab:
   m_ObjectHideFlags: 0
@@ -535,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1 &376872274
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +630,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
+--- !u!1001 &426756285
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_RootMapOrder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+  m_RootGameObject: {fileID: 1778214944}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &451873447
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +706,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 451873447}
   m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -4.75827742, y: .272243232, z: 2.2156558}
+  m_LocalPosition: {x: -4.7582798, y: .278278947, z: 2.21565533}
   m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
   m_Children: []
   m_Father: {fileID: 1284115984}
@@ -663,6 +724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &451873450
 Renderer:
   m_ObjectHideFlags: 0
@@ -712,7 +774,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1001 &500110005
 Prefab:
   m_ObjectHideFlags: 0
@@ -842,7 +904,7 @@ Transform:
   - {fileID: 604056980}
   - {fileID: 1062820896}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &592549114
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,6 +988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: Pexeso
   cameraDistance: .5
+  iconName: 
 --- !u!1 &604056976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1 &646206087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1 &731503017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,6 +1284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: Silhouette
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &731503020
 Renderer:
   m_ObjectHideFlags: 0
@@ -1268,7 +1334,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &860361247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,6 +1367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!23 &860361249
 Renderer:
   m_ObjectHideFlags: 0
@@ -1435,6 +1502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1 &1062820895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,12 +1534,14 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1063337868}
   - 114: {fileID: 1063337870}
   - 114: {fileID: 1063337869}
+  - 114: {fileID: 1063337872}
+  - 114: {fileID: 1063337871}
   m_Layer: 0
   m_Name: KinectControls
   m_TagString: Untagged
@@ -1483,7 +1553,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   m_GameObject: {fileID: 1063337867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1496,7 +1566,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
     type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   m_GameObject: {fileID: 1063337867}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1534,7 +1604,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
     type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   m_GameObject: {fileID: 1063337867}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1567,8 +1637,42 @@ MonoBehaviour:
   Player2Avatars: []
   Player1CalibrationPose: 0
   Player2CalibrationPose: 0
-  Player1Gestures: 060000000b000000100000000200000000000000
+  Player1Gestures: 0700000008000000
   Player2Gestures: 
+--- !u!114 &1063337871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
+    type: 2}
+  m_PrefabInternal: {fileID: 426756285}
+  m_GameObject: {fileID: 1063337867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995fbaf584c753840988f011acf708cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handCursor: {fileID: 0}
+  gripHandTexture: {fileID: 2800000, guid: 14b9957884b06cf46a4177b47044cce2, type: 3}
+  releaseHandTexture: {fileID: 2800000, guid: 3a6ceeb06eeef6142819a9bc9c1e20c6, type: 3}
+  normalHandTexture: {fileID: 2800000, guid: b025dd7475ec23c4f8474db1c7295c49, type: 3}
+  smoothFactor: 2
+  controlMouseCursor: 1
+  debugText: {fileID: 0}
+--- !u!114 &1063337872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
+    type: 2}
+  m_PrefabInternal: {fileID: 426756285}
+  m_GameObject: {fileID: 1063337867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29735fcf935e5f94a9473917f381f6b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggableObjects: []
+  dragSpeed: 3
+  selectedObjectMaterial: {fileID: 0}
 --- !u!1 &1085101862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,6 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: Game-HanoiTowers
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1085101865
 Renderer:
   m_ObjectHideFlags: 0
@@ -1663,7 +1768,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &1150492040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,6 +1852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: Silhouette
   cameraDistance: .5
+  iconName: 
 --- !u!1 &1284115980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1936,7 @@ Transform:
   - {fileID: 1887432109}
   - {fileID: 1657245235}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1323279524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +1982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1323279527
 Renderer:
   m_ObjectHideFlags: 0
@@ -1925,7 +2032,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &1326432694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,12 +2095,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1524552927
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100004, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1524552928}
@@ -2008,7 +2115,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400004, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   m_GameObject: {fileID: 1524552927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2126,6 +2233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 
 --- !u!1001 &1661673442
 Prefab:
   m_ObjectHideFlags: 0
@@ -2168,6 +2276,10 @@ Prefab:
     - target: {fileID: 400000, guid: afe1935d74d62a24d898cea1aa575a2b, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: afe1935d74d62a24d898cea1aa575a2b, type: 3}
+      propertyPath: m_UseLightProbes
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afe1935d74d62a24d898cea1aa575a2b, type: 3}
@@ -2290,12 +2402,80 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 8
+--- !u!1 &1763131154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1763131158}
+  - 33: {fileID: 1763131157}
+  - 23: {fileID: 1763131156}
+  - 114: {fileID: 1763131155}
+  m_Layer: 0
+  m_Name: Selection Part Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1763131155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763131154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28354e40322f75343ae14cd54ef90b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!23 &1763131156
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763131154}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 01331c3acb52f9949ad5ec526cb2f782, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &1763131157
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763131154}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1763131158
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763131154}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .0858289972, y: .0858289972, z: .0858289972}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_RootOrder: 7
 --- !u!1 &1778214944
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1778214945}
@@ -2310,7 +2490,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_PrefabInternal: {fileID: 2043190308}
+  m_PrefabInternal: {fileID: 426756285}
   m_GameObject: {fileID: 1778214944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2386,6 +2566,10 @@ Prefab:
       propertyPath: m_RootMapOrder
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2527c8850653b564fb64b09a2aa6110d, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2527c8850653b564fb64b09a2aa6110d, type: 3}
   m_RootGameObject: {fileID: 1284115980}
@@ -2436,6 +2620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: Pexeso
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1849066972
 Renderer:
   m_ObjectHideFlags: 0
@@ -2485,7 +2670,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &1887432108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,6 +2716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1887432111
 Renderer:
   m_ObjectHideFlags: 0
@@ -2580,7 +2766,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &1934937712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,7 +2808,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &1944336250
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,6 +2854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: SplashScreen
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1944336253
 Renderer:
   m_ObjectHideFlags: 0
@@ -2717,7 +2904,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &1997322793
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &1997322795
 Renderer:
   m_ObjectHideFlags: 0
@@ -2812,7 +3000,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &2019811872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,58 +3084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
---- !u!1001 &2043190308
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_RootMapOrder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-      propertyPath: Player1Gestures.Array.data[3]
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
-  m_RootGameObject: {fileID: 1778214944}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
+  iconName: 
 --- !u!1 &2049404694
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,6 +3168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: .5
+  iconName: 
 --- !u!1 &2096740292
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,6 +3214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: FPS PacMan
   cameraDistance: .5
+  iconName: brain_part_icon
 --- !u!23 &2096740295
 Renderer:
   m_ObjectHideFlags: 0
@@ -3125,7 +3264,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278253823
-  m_Size: .150000006
+  m_Size: .119999997
 --- !u!1 &2133417823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,3 +3348,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: TestKinectHold
   cameraDistance: 1
+  iconName: 

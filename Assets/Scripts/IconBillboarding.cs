@@ -6,8 +6,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class IconBillboarding : MonoBehaviour {
-	void Update () {
-		this.transform.rotation = Camera.main.transform.rotation;
+namespace Game{
+	public class IconBillboarding : MonoBehaviour {
+		void Update () {
+			this.transform.rotation = Camera.main.transform.rotation;
+		}
 	}
 }
