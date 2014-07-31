@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HanoiGUI : MonoBehaviour 
+namespace HanoiTowers
 {
-    public HanoiGameController controller;
 
-    private bool toggleValue = true;
-    private int disks = 3;
-
-    //just for debug, will not be visible in final game...
-	void OnGUI()
+    public class HanoiGUI : MonoBehaviour
     {
-        GUILayout.BeginArea( new Rect(4, 4, 150, 180 ), "Tests...", GUI.skin.window  );
+        public HanoiGameController controller;
+
+        private bool toggleValue = true;
+        private int disks = 3;
+
+        //just for debug, will not be visible in final game...
+        void OnGUI()
+        {
+            GUILayout.BeginArea(new Rect(4, 4, 150, 180), "Tests...", GUI.skin.window);
 
             //GUI.color = new Color(0,1,0, 0.75f);
             GUILayout.Label("Time:  " + (int)(Time.time - controller.getGameStartTime()));
@@ -28,9 +31,11 @@ public class HanoiGUI : MonoBehaviour
                 controller.numberOfDisks = disks;
                 controller.ResetGame();
             }
-	
-	    GUILayout.EndArea();
+
+            GUILayout.EndArea();
+        }
+
+
     }
-    
 
 }

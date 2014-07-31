@@ -1,27 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Object_Highlighting : MonoBehaviour {
+namespace HanoiTowers
+{
 
-	private Color startcolor;
+    public class Object_Highlighting : MonoBehaviour
+    {
 
-	void Start()
-	{
-		//renderer.material.color = Color.red;
-	}
+        private Color startcolor;
 
-	void OnMouseEnter()
-	{
+        void Start()
+        {
+            //renderer.material.color = Color.red;
+        }
 
-		startcolor = renderer.material.color;
-        renderer.material.color = new Color(255, 255, 0, 0.5f);
-        
-	}
+        void OnMouseEnter()
+        {
 
-	void OnMouseExit()
-	{
-		renderer.material.color = startcolor;
-	}
+            startcolor = renderer.material.color;
+            renderer.material.color = new Color(255, 255, 0, 0.5f);
 
+        }
+
+        void OnMouseExit()
+        {
+            renderer.material.color = startcolor;
+        }
+
+
+    }
 
 }
