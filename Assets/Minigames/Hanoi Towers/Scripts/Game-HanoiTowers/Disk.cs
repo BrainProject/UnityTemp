@@ -88,10 +88,15 @@ public class Disk : MonoBehaviour
         {
             if (actualColumn != target)
             {
-                Debug.Log("Moving from column: " + actualColumn);
-                Debug.Log("Moving to column: " + target);
+                //Debug.Log("Moving from column: " + actualColumn);
+                //Debug.Log("Moving to column: " + target);
+                Logger.addLogEntry("akce - přesun | disk: " + this.size + " | ze sloupce: " + actualColumn + " | na sloupec: " + target);
 
                 gameController.increaseScore();
+            }
+            else
+            {
+                Logger.addLogEntry("Disk položen na stejný sloupec, ze kterého byl zvednut");
             }
 
             actualColumn.removeTopDisk();
@@ -118,6 +123,7 @@ public class Disk : MonoBehaviour
 	{
 		if(isMovable() && gameController.getWaitingForTarget() == null)
 		{
+            Logger.addLogEntry("Disk " + this.size + " lifted");
 			waitingForTarget = true;
 			gameController.setWaitingForTarget(this);
 
@@ -129,6 +135,7 @@ public class Disk : MonoBehaviour
 		else
 		{
 			Debug.Log("This disk (" + this + ") is not movable now.");
+            Logger.addLogEntry("Disk " + this.size + " can't be lifted now"); 
 		}
 
 	}
@@ -136,7 +143,7 @@ public class Disk : MonoBehaviour
 	// highlighting 
 	void OnMouseEnter()
 	{
-        print("Mouse enter");
+        //print("Mouse enter");
 
 		if(gameController.getWaitingForTarget() != null)
 		{

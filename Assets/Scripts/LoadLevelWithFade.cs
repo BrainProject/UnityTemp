@@ -27,6 +27,9 @@ public class LoadLevelWithFade: MonoBehaviour {
 		targetColor = this.guiTexture.color;
 		startTime = Time.time;
 		StartCoroutine (LoadSeledctedLevelWithColorLerp (forBeginning));
+
+        //find Logger instance
+
 	}
 	
 	// Update is called once per frame
@@ -74,7 +77,9 @@ public class LoadLevelWithFade: MonoBehaviour {
 				
 				yield return null;
 			}
+
 			Application.LoadLevel(levelToLoad);
+            Logger.addLogEntry("Loading game scene: '" + levelToLoad + "'");
 		}
 	}
 }

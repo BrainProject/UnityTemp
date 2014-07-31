@@ -48,12 +48,15 @@ public class SelectMinigame : MonoBehaviour {
 		originalColor = this.renderer.material.color;
 		this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 		MouseHover = true;
+
+        Logger.addLogEntry("Mouse enter the object: '" + this.name + "'");
 	}
 
 	void OnMouseExit()
 	{
 		this.renderer.material.color = originalColor;
 		MouseHover = false;
+        Logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
 	}
 
 	void OnMouseOver()

@@ -32,7 +32,7 @@ public class Column : MonoBehaviour
 	public void addDisk(Disk newDisk)
 	{
 		disks.Push(newDisk);
-		Debug.Log("There is/are " + disks.Count + " disk(s) on column: " + this);
+		//Logger.addLogEntry("There is/are " + disks.Count + " disk(s) on column: " + this);
 
 		checkWinningCondition();
 	}
@@ -47,6 +47,8 @@ public class Column : MonoBehaviour
 			{
 				//TODO win!
 				print("WIN");
+                Logger.addLogEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
+                
 
                 //winText.text = "test";
                 winText.enabled = true;
@@ -114,8 +116,10 @@ public class Column : MonoBehaviour
 	{
         // is there disk "in motion"?
 		Disk disk = gameController.getWaitingForTarget();
+        
         if (disk == null)
         {
+            Logger.addLogEntry("Kliknutí na sloupec i když není vybrán žádný disk");
             return;
         }
 
@@ -129,6 +133,7 @@ public class Column : MonoBehaviour
 		{
             //TODO add some "warning effect"
 			Debug.Log("Column " + this + " is not a valid target for disk " + disk);
+            Logger.addLogEntry("Pokus o zakázaný přesun disku " + disk.size + " na sloupec " + this);
 		}
 	}
 

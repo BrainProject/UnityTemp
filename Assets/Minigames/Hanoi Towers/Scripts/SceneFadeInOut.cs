@@ -29,7 +29,7 @@ public class SceneFadeInOut : MonoBehaviour
 
     void FadeToClear()
     {
-        print("fading in...");
+        //print("fading in...");
         guiTexture.color = Color.Lerp(guiTexture.color, Color.clear, fadeSpeed * Time.deltaTime);
 
         if (guiTexture.color.a <= 0.05f)
@@ -42,7 +42,7 @@ public class SceneFadeInOut : MonoBehaviour
 
     void FadeToColor()
     {
-        print("fading out..., alpha = " + guiTexture.color.a);
+        //print("fading out..., alpha = " + guiTexture.color.a);
         guiTexture.color = Color.Lerp(guiTexture.color, Color.white, fadeSpeed * Time.deltaTime);
 
         if (guiTexture.color.a >= 0.95f)
