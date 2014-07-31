@@ -39,26 +39,10 @@ using System.Collections.Generic;
 public class _XTestMouseHold: MonoBehaviour {
 	private Color OriginalColor { get; set; }
 	private Vector3 tmp;
-	private bool picked;
-	
+
 	void Start()
 	{
 		OriginalColor = this.renderer.material.color;
-		picked = false;
-	}
-	
-	
-	public void Update()
-	{
-		if (picked)
-		{
-			tmp = Camera.main.WorldToScreenPoint (transform.position);
-			tmp.x = Input.mousePosition.x;
-			tmp.y = Input.mousePosition.y;
-			tmp = Camera.main.ScreenToWorldPoint (tmp);
-			tmp.z = 0;
-			transform.position = tmp;
-		}
 	}
 	
 	void OnMouseEnter()
@@ -68,17 +52,17 @@ public class _XTestMouseHold: MonoBehaviour {
 	
 	void OnMouseExit()
 	{
-		if(!picked)
-			this.renderer.material.color = OriginalColor;
+		this.renderer.material.color = OriginalColor;
 	}
 	
-	void OnMouseOver()
+	void OnMouseDrag()
 	{
-		if(Input.GetKeyDown (KeyCode.C) || Input.GetMouseButtonDown(0))
-		{
-			this.rigidbody.useGravity = !this.rigidbody.useGravity;
-			picked = !picked;
-		}
+		tmp = Camera.main.WorldToScreenPoint (transform.position);
+		tmp.x = Input.mousePosition.x;
+		tmp.y = Input.mousePosition.y;
+		tmp = Camera.main.ScreenToWorldPoint (tmp);
+		tmp.z = 0;
+		transform.position = tmp;
 	}
 }
 
