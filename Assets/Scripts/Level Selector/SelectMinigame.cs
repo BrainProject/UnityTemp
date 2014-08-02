@@ -22,7 +22,8 @@ namespace MinigameSelection {
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
 
-		void Start () {
+		void Start()
+		{
 			OnSelection = false;
 			mainCamera = GameObject.Find ("Main Camera").camera;
 			CameraDefaultPosition = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
@@ -40,11 +41,12 @@ namespace MinigameSelection {
 			if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
 			{
 				OnSelection = false;
-				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
-				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-				mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
+//				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+//				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
+//				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
+//				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
+//				mainCamera.GetComponent<SmoothCameraMove>().To = mainCamera.GetComponent<SweepCamera>().currentWaypoint.transform.position;
+//				//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
 			}
 		}
 
@@ -76,27 +78,27 @@ namespace MinigameSelection {
 	        Logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
-		void OnMouseOver()
+		void OnMouseUp()
 		{
-			if(Input.GetButtonDown("Fire1"))
+			//load minigame if zooming or zoomed
+			if(OnSelection)
 			{
-				//load minigame if zooming or zoomed
-				if(OnSelection)
-				{
-					GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
-					GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
-					StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
-				}
-				//set target position of camera near to minigame buble
-				else
-				{
-					//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-					mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-					mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-					mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
-					mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
-					OnSelection = true;
-				}
+				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
+				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
+				GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
+				GameObject.Find("_GameManager").GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
+			}
+			//set target position of camera near to minigame buble
+			else
+			{
+				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
+				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
+				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
+				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
+				mainCamera.GetComponent<CameraControl>().ReadyToLeave = false;
+				OnSelection = true;
 			}
 		}
 	}

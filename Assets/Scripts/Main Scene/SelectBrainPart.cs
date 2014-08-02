@@ -14,6 +14,7 @@ namespace MainScene {
 		public bool CanSelect{ get; set; }
 
 		private string levelName;
+		private bool initialMouseOver;
 		private Color selectionColor;
 		private Color originalColor;
 		private GameObject Icon { get; set; }
@@ -27,6 +28,7 @@ namespace MainScene {
 			Description = GameObject.Find ("Description");
 			originalColor = this.renderer.material.color;
 			levelName = "MirkaSelection";
+			initialMouseOver = true;
 		}
 
 
@@ -45,6 +47,7 @@ namespace MainScene {
 				Description.GetComponent<TextMesh> ().text = descriptionText;
 				Description.transform.position = this.transform.parent.transform.position - (new Vector3(0, 0.05f, 0));
 				this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
+				initialMouseOver = false;
 			}
 		}
 
@@ -79,6 +82,11 @@ namespace MainScene {
 					GameObject.Find("_GameManager").GetComponent<GameManager>().fromMain = true;
 					StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 				}
+			}
+			if(CanSelect && initialMouseOver)
+			{
+				OnMouseEnter();
+				print ("Mouse over from initial animation.");
 			}
 		}
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 414
+using UnityEngine;
 using System.Collections;
 
 public class Mover : MonoBehaviour {

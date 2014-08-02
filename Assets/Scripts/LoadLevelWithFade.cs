@@ -4,6 +4,7 @@
 
 //TODO: Fade when level is selected
 
+#pragma warning disable 414
 using UnityEngine;
 using System.Collections;
 

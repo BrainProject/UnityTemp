@@ -22,7 +22,7 @@ namespace Kinect {
 		
 		void Awake() 
 		{
-			manager = Camera.mainCamera.GetComponent<InteractionManager>();
+			manager = Camera.main.GetComponent<InteractionManager>();
 			infoGUI = GameObject.Find("HandGuiText");
 		}
 		
@@ -61,9 +61,9 @@ namespace Kinect {
 					if(screenNormalPos != Vector3.zero)
 					{
 						// convert the normalized screen pos to pixel pos
-						screenPixelPos.x = (int)(screenNormalPos.x * Camera.mainCamera.pixelWidth);
-						screenPixelPos.y = (int)(screenNormalPos.y * Camera.mainCamera.pixelHeight);
-						Ray ray = Camera.mainCamera.ScreenPointToRay(screenPixelPos);
+						screenPixelPos.x = (int)(screenNormalPos.x * Camera.main.pixelWidth);
+						screenPixelPos.y = (int)(screenNormalPos.y * Camera.main.pixelHeight);
+						Ray ray = Camera.main.ScreenPointToRay(screenPixelPos);
 						
 						// check for underlying objects
 						RaycastHit hit;
@@ -102,11 +102,11 @@ namespace Kinect {
 					}
 					
 					// convert the normalized screen pos to 3D-world pos
-					screenPixelPos.x = (int)(screenNormalPos.x * Camera.mainCamera.pixelWidth);
-					screenPixelPos.y = (int)(screenNormalPos.y * Camera.mainCamera.pixelHeight);
+					screenPixelPos.x = (int)(screenNormalPos.x * Camera.main.pixelWidth);
+					screenPixelPos.y = (int)(screenNormalPos.y * Camera.main.pixelHeight);
 					screenPixelPos.z = screenNormalPos.z + draggedObjectDepth;
 					
-					Vector3 newObjectPos = Camera.mainCamera.ScreenToWorldPoint(screenPixelPos) - draggedObjectOffset;
+					Vector3 newObjectPos = Camera.main.ScreenToWorldPoint(screenPixelPos) - draggedObjectOffset;
 					draggedObject.transform.position = Vector3.Lerp(draggedObject.transform.position, newObjectPos, dragSpeed * Time.deltaTime);
 					
 					// check if the object (hand grip) was released

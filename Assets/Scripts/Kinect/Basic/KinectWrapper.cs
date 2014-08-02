@@ -1,6 +1,11 @@
+// comment or uncomment the following #define directives
+// depending on whether you use KinectExtras together with KinectManager
+
 #define USE_KINECT_INTERACTION_OR_FACETRACKING
-#define USE_SPEECH_RECOGNITION
+//#define USE_SPEECH_RECOGNITION
+	
 using UnityEngine;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +15,7 @@ using System.IO;
 using System.Text; 
 
 namespace Kinect {
-	// Wrapper class that holds the various structs, vand dll imports
+	// Wrapper class that holds the various structs and dll imports
 	// needed to set up a model with the Kinect.
 	public class KinectWrapper
 	{
@@ -63,47 +68,9 @@ namespace Kinect {
 			public const int ImageHeight = 480;
 			public const NuiImageResolution ImageResolution = NuiImageResolution.resolution640x480;
 			
+			public const float MinTimeBetweenSameGestures = 0.0f;
 			public const float PoseCompleteDuration = 1.0f;
-			public const float ClickStayDuration = 1.5f;
-		}
-		
-		public enum Gestures
-		{
-			None = 0,
-			RaiseRightHand,
-			RaiseLeftHand,
-			Psi,
-			Stop,
-			Wave,
-			Click,
-			SweepLeft,
-			SweepRight,
-			SweepUp,
-			SweepDown,
-			RightHandCursor,
-			LeftHandCursor,
-			ZoomOut,
-			ZoomIn, 
-			Wheel,
-			Move
-		}
-		
-		public struct GestureData
-		{
-			public uint userId;
-			public Gestures gesture;
-			public int state;
-			public float timestamp;
-			public int joint;
-			public Vector3 jointPos;
-			public Vector3 screenPos;
-			public float tagFloat;
-			public Vector3 tagVector;
-			public Vector3 tagVector2;
-			public float progress;
-			public bool complete;
-			public bool cancelled;
-			public List<Gestures> checkForGestures;
+			public const float ClickStayDuration = 2.5f;
 		}
 		
 		/// <summary>
@@ -353,47 +320,170 @@ namespace Kinect {
 		/* 
 		 * kinect NUI (general) functions
 		 */
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING || USE_SPEECH_RECOGNITION
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "InitKinectSensor")]
+		public static extern int InitKinectSensor(NuiInitializeFlags dwFlags, bool bEnableEvents);
+
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "EnableKinectManager")]
+		public static extern void EnableKinectManager(bool bEnable);
+		
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "UpdateKinectSensor")]
+		public static extern int UpdateKinectSensor();
+	#else
 	    [DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiInitialize")]
 	    public static extern int NuiInitialize(NuiInitializeFlags dwFlags);
+	#endif
 		
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING && USE_SPEECH_RECOGNITION
+	    public static int NuiInitialize(NuiInitializeFlags dwFlags)
+		{
+			EnableKinectManager(true);
+			return InitKinectSensor(dwFlags|NuiInitializeFlags.UsesAudio, true);
+		}
+	#elif USE_KINECT_INTERACTION_OR_FACETRACKING
+	    public static int NuiInitialize(NuiInitializeFlags dwFlags)
+		{
+			EnableKinectManager(true);
+			return InitKinectSensor(dwFlags, true);
+		}
+	#elif USE_SPEECH_RECOGNITION
+	    public static int NuiInitialize(NuiInitializeFlags dwFlags)
+		{
+			EnableKinectManager(true);
+			return InitKinectSensor(dwFlags|NuiInitializeFlags.UsesAudio, false);
+		}
+	#endif
+		
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING || USE_SPEECH_RECOGNITION
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "ShutdownKinectSensor")]
+		public static extern void ShutdownKinectSensor();
+		
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "SetKinectElevationAngle")]
+		public static extern int SetKinectElevationAngle(int sensorAngle);
+		
+		[DllImportAttribute(@"KinectUnityWrapper.dll", EntryPoint = "GetKinectElevationAngle")]
+	    public static extern int GetKinectElevationAngle();
+		
+	    public static void NuiShutdown()
+		{
+			ShutdownKinectSensor();
+		}
+		
+		public static int NuiCameraElevationSetAngle(int angle)
+		{
+			return SetKinectElevationAngle(angle);
+		}
+		
+	    public static int NuiCameraElevationGetAngle(out int plAngleDegrees)
+		{
+			plAngleDegrees = GetKinectElevationAngle();
+			return 0;
+		}
+	#else
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiShutdown")]
 	    public static extern void NuiShutdown();
 		
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiCameraElevationSetAngle")]
 		public static extern int NuiCameraElevationSetAngle(int angle);
 		
-		[DllImport("Kinect10.dll", EntryPoint = "NuiCameraElevationGetAngle")]
+		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiCameraElevationGetAngle")]
 	    public static extern int NuiCameraElevationGetAngle(out int plAngleDegrees);
+	#endif
 		
-		[DllImport("Kinect10.dll", EntryPoint = "NuiImageGetColorPixelCoordinatesFromDepthPixelAtResolution")]
+		[DllImport(@"Kinect10.dll", EntryPoint = "NuiImageGetColorPixelCoordinatesFromDepthPixelAtResolution")]
 	    public static extern int NuiImageGetColorPixelCoordinatesFromDepthPixelAtResolution(NuiImageResolution eColorResolution, NuiImageResolution eDepthResolution, ref NuiImageViewArea pcViewArea, int lDepthX, int lDepthY, short sDepthValue, out int plColorX, out int plColorY);
 		
-	    [DllImport("Kinect10.dll", EntryPoint = "NuiGetSensorCount")]
+	    [DllImport(@"Kinect10.dll", EntryPoint = "NuiGetSensorCount")]
 	    public static extern int NuiGetSensorCount(out int pCount);
-		
-	    [DllImport("Kinect10.dll", EntryPoint = "NuiCreateSensorByIndex")]
-	    public static extern int NuiCreateSensorByIndex(int index, ref IntPtr pNuiSensor);
 		
 		/*
 		 * kinect skeleton functions
 		 */
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING || USE_SPEECH_RECOGNITION
+	    public static int NuiSkeletonTrackingEnable(IntPtr hNextFrameEvent, uint dwFlags)
+		{
+			// already enabled on init
+			return 0;
+		}
+	#else
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiSkeletonTrackingEnable")]
 	    public static extern int NuiSkeletonTrackingEnable(IntPtr hNextFrameEvent, uint dwFlags);
-		
+	#endif
+
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING || USE_SPEECH_RECOGNITION
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetSkeletonFrameLength")]
+		public static extern int GetSkeletonFrameLength();
+
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetSkeletonFrameData")]
+		public static extern bool GetSkeletonFrameData(ref NuiSkeletonFrame pSkeletonData, ref uint iDataBufLen, bool bNewFrame);
+
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetNextSkeletonFrame")]
+		public static extern int GetNextSkeletonFrame(uint dwWaitMs);
+	#else
 	    [DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiSkeletonGetNextFrame")]
 	    public static extern int NuiSkeletonGetNextFrame(uint dwMillisecondsToWait, ref NuiSkeletonFrame pSkeletonFrame);
+	#endif
+		
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING
+	    public static int NuiSkeletonGetNextFrame(uint dwMillisecondsToWait, ref NuiSkeletonFrame pSkeletonFrame)
+		{
+			uint iFrameLength = (uint)GetSkeletonFrameLength();
+			bool bSuccess = GetSkeletonFrameData(ref pSkeletonFrame, ref iFrameLength, true);
+			return bSuccess ? 0 : -1;
+		}
+	#elif USE_SPEECH_RECOGNITION
+	    public static int NuiSkeletonGetNextFrame(uint dwMillisecondsToWait, ref NuiSkeletonFrame pSkeletonFrame)
+		{
+			int hr = GetNextSkeletonFrame(dwMillisecondsToWait);
+			if(hr == 0)
+			{
+				uint iFrameLength = (uint)GetSkeletonFrameLength();
+				bool bSuccess = GetSkeletonFrameData(ref pSkeletonFrame, ref iFrameLength, true);
+				
+				return bSuccess ? 0 : -1;
+			}
+			
+			return hr;
+		}
+	#endif
 		
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiTransformSmooth")]
 	    public static extern int NuiTransformSmooth(ref NuiSkeletonFrame pSkeletonFrame, ref NuiTransformSmoothParameters pSmoothingParams);
 		
 	    [DllImport(@"Kinect10.dll", EntryPoint = "NuiSkeletonCalculateBoneOrientations")]
 	    public static extern int NuiSkeletonCalculateBoneOrientations(ref NuiSkeletonData pSkeletonData, NuiSkeletonBoneOrientation[] pBoneOrientations);
-
+		
 		/*
 		 * kinect video functions
 		 */
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING || USE_SPEECH_RECOGNITION
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetColorStreamHandle")]
+		public static extern IntPtr GetColorStreamHandle();
+
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetDepthStreamHandle")]
+		public static extern IntPtr GetDepthStreamHandle();
+
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetColorFrameData")]
+		public static extern bool GetColorFrameData([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1, ArraySubType = UnmanagedType.U1)] byte[] btVideoBuf, ref uint iVideoBufLen, bool bGetNewFrame);
+		
+		[DllImport(@"KinectUnityWrapper.dll", EntryPoint = "GetDepthFrameData")]
+		public static extern bool GetDepthFrameData([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1, ArraySubType = UnmanagedType.U2)] short[] shDepthBuf, ref uint iDepthBufLen, bool bGetNewFrame);
+		
+		public static int NuiImageStreamOpen(NuiImageType eImageType, NuiImageResolution eResolution, uint dwImageFrameFlags_NotUsed, uint dwFrameLimit, IntPtr hNextFrameEvent, ref IntPtr phStreamHandle)
+		{
+			if(eImageType == NuiImageType.DepthAndPlayerIndex)
+				phStreamHandle =  GetDepthStreamHandle();
+			else if(eImageType == NuiImageType.Color)
+				phStreamHandle =  GetColorStreamHandle();
+			else
+				throw new Exception("Unsupported image type: " + eImageType);
+			
+			return 0;
+		}
+	#else
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageStreamOpen")]
 	    public static extern int NuiImageStreamOpen(NuiImageType eImageType, NuiImageResolution eResolution, uint dwImageFrameFlags_NotUsed, uint dwFrameLimit, IntPtr hNextFrameEvent, ref IntPtr phStreamHandle);
+	#endif
 		
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageStreamGetNextFrame")]
 	    public static extern int NuiImageStreamGetNextFrame(IntPtr phStreamHandle, uint dwMillisecondsToWait, ref IntPtr ppcImageFrame);
@@ -401,11 +491,11 @@ namespace Kinect {
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageStreamReleaseFrame")]
 	    public static extern int NuiImageStreamReleaseFrame(IntPtr phStreamHandle, IntPtr ppcImageFrame);
 		
-		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageResolutionToSize")]
-	    public static extern int NuiImageResolutionToSize(NuiImageResolution eResolution,out uint frameWidth,out uint frameHeight);
-		
 		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageStreamSetImageFrameFlags")]
 		public static extern int NuiImageStreamSetImageFrameFlags (IntPtr phStreamHandle, NuiImageStreamFlags dvImageFrameFlags);
+		
+		[DllImportAttribute(@"Kinect10.dll", EntryPoint = "NuiImageResolutionToSize")]
+	    public static extern int NuiImageResolutionToSize(NuiImageResolution eResolution,out uint frameWidth,out uint frameHeight);
 		
 		
 		public static string GetNuiErrorString(int hr)
@@ -498,21 +588,21 @@ namespace Kinect {
 			return point;
 	    }
 
-	    public static Vector3 MapSkeletonPointToColorPoint(Vector3 skeletonPoint)
-	    {
-	        float fDepthX;
-	        float fDepthY;
-	        float fDepthZ;
-
-			NuiTransformSkeletonToDepthImage(skeletonPoint, out fDepthX, out fDepthY, out fDepthZ);
-	        
-			Vector3 point = new Vector3();
-	        point.x = (int) ((fDepthX * Constants.ImageWidth) + 0.5f);
-	        point.y = (int) ((fDepthY * Constants.ImageHeight) + 0.5f);
-	        point.z = (int) (fDepthZ + 0.5f);
-
-			return point;
-	    }
+	//    public static Vector3 MapSkeletonPointToColorPoint(Vector3 skeletonPoint)
+	//    {
+	//        float fDepthX;
+	//        float fDepthY;
+	//        float fDepthZ;
+	//
+	//		NuiTransformSkeletonToDepthImage(skeletonPoint, out fDepthX, out fDepthY, out fDepthZ);
+	//        
+	//		Vector3 point = new Vector3();
+	//        point.x = (int) ((fDepthX * Constants.ImageWidth) + 0.5f);
+	//        point.y = (int) ((fDepthY * Constants.ImageHeight) + 0.5f);
+	//        point.z = (int) (fDepthZ + 0.5f);
+	//
+	//		return point;
+	//    }
 
 	    private static void NuiTransformSkeletonToDepthImage(Vector3 vPoint, out float pfDepthX, out float pfDepthY, out float pfDepthZ)
 	    {
@@ -642,8 +732,28 @@ namespace Kinect {
 			return newSkeleton;
 		}
 		
-		public static bool PollColor(IntPtr colorStreamHandle, ref Color32[] colorImage)
+		public static bool PollColor(IntPtr colorStreamHandle, ref byte[] videoBuffer, ref Color32[] colorImage)
 		{
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING
+			uint videoBufLen = (uint)videoBuffer.Length;
+			bool newColor = GetColorFrameData(videoBuffer, ref videoBufLen, true);
+			
+			if (newColor)
+			{
+				int totalPixels = colorImage.Length;
+				
+				for (int pix = 0; pix < totalPixels; pix++)
+				{
+					int ind = pix; // totalPixels - pix - 1;
+					int src = pix << 2;
+					
+					colorImage[ind].r = videoBuffer[src + 2]; // pixels[pix].r;
+					colorImage[ind].g = videoBuffer[src + 1]; // pixels[pix].g;
+					colorImage[ind].b = videoBuffer[src]; // pixels[pix].b;
+					colorImage[ind].a = 255;
+				}
+			}
+	#else
 			IntPtr imageFramePtr = IntPtr.Zero;
 			bool newColor = false;
 		
@@ -659,17 +769,35 @@ namespace Kinect {
 				IntPtr r = IntPtr.Zero;
 				
 				frameTexture.LockRect(0, ref lockedRectPtr, r, 0);
-				ExtractColorImage(lockedRectPtr, ref colorImage);
+				//ExtractColorImage(lockedRectPtr, ref colorImage);
+				
+				ColorBuffer cb = (ColorBuffer)Marshal.PtrToStructure(lockedRectPtr.pBits, typeof(ColorBuffer));
+				int totalPixels = Constants.ImageWidth * Constants.ImageHeight;
+				
+				for (int pix = 0; pix < totalPixels; pix++)
+				{
+					int ind = pix; // totalPixels - pix - 1;
+					
+					colorImage[ind].r = cb.pixels[pix].r;
+					colorImage[ind].g = cb.pixels[pix].g;
+					colorImage[ind].b = cb.pixels[pix].b;
+					colorImage[ind].a = 255;
+				}
 				
 				frameTexture.UnlockRect(0);
 				hr = KinectWrapper.NuiImageStreamReleaseFrame(colorStreamHandle, imageFramePtr);
 			}
+	#endif
 			
 			return newColor;
 		}
 		
 		public static bool PollDepth(IntPtr depthStreamHandle, bool isNearMode, ref short[] depthPlayerData)
 		{
+	#if USE_KINECT_INTERACTION_OR_FACETRACKING
+			uint depthBufLen = (uint)(depthPlayerData.Length << 1);
+			bool newDepth = GetDepthFrameData(depthPlayerData, ref depthBufLen, true);
+	#else
 			IntPtr imageFramePtr = IntPtr.Zero;
 			bool newDepth = false;
 
@@ -694,36 +822,40 @@ namespace Kinect {
 				IntPtr r = IntPtr.Zero;
 				
 				frameTexture.LockRect(0,ref lockedRectPtr,r,0);
-				depthPlayerData = ExtractDepthImage(lockedRectPtr);
+				//depthPlayerData = ExtractDepthImage(lockedRectPtr);
+				
+				DepthBuffer db = (DepthBuffer)Marshal.PtrToStructure(lockedRectPtr.pBits, typeof(DepthBuffer));
+				depthPlayerData = db.pixels;
 				
 				frameTexture.UnlockRect(0);
 				hr = KinectWrapper.NuiImageStreamReleaseFrame(depthStreamHandle, imageFramePtr);
 			}
+	#endif
 			
 			return newDepth;
 		}
 		
-		private static void ExtractColorImage(NuiLockedRect buf, ref Color32[] colorImage)
-		{
-			ColorBuffer cb = (ColorBuffer)Marshal.PtrToStructure(buf.pBits, typeof(ColorBuffer));
-			int totalPixels = Constants.ImageWidth * Constants.ImageHeight;
-			
-			for (int pix = 0; pix < totalPixels; pix++)
-			{
-				int ind = totalPixels - pix - 1;
-				
-				colorImage[ind].r = cb.pixels[pix].r;
-				colorImage[ind].g = cb.pixels[pix].g;
-				colorImage[ind].b = cb.pixels[pix].b;
-				colorImage[ind].a = 255;
-			}
-		}
-		
-		private static short[] ExtractDepthImage(NuiLockedRect lockedRect)
-		{
-			DepthBuffer db = (DepthBuffer)Marshal.PtrToStructure(lockedRect.pBits, typeof(DepthBuffer));
-			return db.pixels;
-		}
+	//	private static void ExtractColorImage(NuiLockedRect buf, ref Color32[] colorImage)
+	//	{
+	//		ColorBuffer cb = (ColorBuffer)Marshal.PtrToStructure(buf.pBits, typeof(ColorBuffer));
+	//		int totalPixels = Constants.ImageWidth * Constants.ImageHeight;
+	//		
+	//		for (int pix = 0; pix < totalPixels; pix++)
+	//		{
+	//			int ind = totalPixels - pix - 1;
+	//			
+	//			colorImage[ind].r = cb.pixels[pix].r;
+	//			colorImage[ind].g = cb.pixels[pix].g;
+	//			colorImage[ind].b = cb.pixels[pix].b;
+	//			colorImage[ind].a = 255;
+	//		}
+	//	}
+	//	
+	//	private static short[] ExtractDepthImage(NuiLockedRect lockedRect)
+	//	{
+	//		DepthBuffer db = (DepthBuffer)Marshal.PtrToStructure(lockedRect.pBits, typeof(DepthBuffer));
+	//		return db.pixels;
+	//	}
 		
 	    private static Vector3 GetPositionBetweenIndices(ref Vector3[] jointsPos, NuiSkeletonPositionIndex p1, NuiSkeletonPositionIndex p2) 
 		{
@@ -891,7 +1023,7 @@ namespace Kinect {
 				// make a correction of about 40 degrees back to the front
 				Matrix4x4 mat = jointOrients[(int)NuiSkeletonPositionIndex.HipCenter];
 				Quaternion quat = Quaternion.LookRotation(mat.GetColumn(2), mat.GetColumn(1));
-				quat *= Quaternion.Euler(-40, 0, 0);
+				//quat *= Quaternion.Euler(-40, 0, 0);
 				jointOrients[(int)NuiSkeletonPositionIndex.HipCenter].SetTRS(Vector3.zero, quat, Vector3.one);
 			}
 	       
@@ -1097,826 +1229,6 @@ namespace Kinect {
 			        //MakeMatrixFromZ(vz, ref jointOrients[(int)NuiSkeletonPositionIndex.FootRight]);
 				}
 			}
-	    }
-		
-		
-		// Gesture related constants, variables and functions
-		private const int leftHandIndex = (int)SkeletonJoint.LEFT_HAND;
-		private const int rightHandIndex = (int)SkeletonJoint.RIGHT_HAND;
-			
-		private const int leftElbowIndex = (int)SkeletonJoint.LEFT_ELBOW;
-		private const int rightElbowIndex = (int)SkeletonJoint.RIGHT_ELBOW;
-			
-		private const int leftShoulderIndex = (int)SkeletonJoint.LEFT_SHOULDER;
-		private const int rightShoulderIndex = (int)SkeletonJoint.RIGHT_SHOULDER;
-		
-		private const int hipCenterIndex = (int)SkeletonJoint.HIPS;
-		private const int shoulderCenterIndex = (int)SkeletonJoint.NECK;
-		private const int leftHipIndex = (int)SkeletonJoint.LEFT_HIP;
-		private const int rightHipIndex = (int)SkeletonJoint.RIGHT_HIP;
-
-		private const int rightKneeIndex = (int)SkeletonJoint.RIGHT_KNEE;
-		private const int leftKneeIndex = (int)SkeletonJoint.LEFT_KNEE; 
-		
-		private static void SetGestureJoint(ref GestureData gestureData, float timestamp, int joint, Vector3 jointPos)
-		{
-			gestureData.joint = joint;
-			gestureData.jointPos = jointPos;
-			gestureData.timestamp = timestamp;
-			gestureData.state++;
-		}
-		
-		private static void SetGestureCancelled(ref GestureData gestureData)
-		{
-			gestureData.state = 0;
-			gestureData.progress = 0f;
-			gestureData.cancelled = true;
-		}
-		
-		private static void CheckPoseComplete(ref GestureData gestureData, float timestamp, Vector3 jointPos, bool isInPose, float durationToComplete)
-		{
-			if(isInPose)
-			{
-				float timeLeft = timestamp - gestureData.timestamp;
-				gestureData.progress = durationToComplete > 0f ? Mathf.Clamp01(timeLeft / durationToComplete) : 1.0f;
-		
-				if(timeLeft >= durationToComplete)
-				{
-					gestureData.timestamp = timestamp;
-					gestureData.jointPos = jointPos;
-					gestureData.state++;
-					gestureData.complete = true;
-				}
-			}
-			else
-			{
-				SetGestureCancelled(ref gestureData);
-			}
-		}
-		
-		private static void SetScreenPos(uint userId, ref GestureData gestureData, ref Vector3[] jointsPos, ref bool[] jointsTracked)
-		{
-			Vector3 handPos = jointsPos[rightHandIndex];
-	//		Vector3 elbowPos = jointsPos[rightElbowIndex];
-	//		Vector3 shoulderPos = jointsPos[rightShoulderIndex];
-			bool calculateCoords = false;
-			
-			if(gestureData.joint == rightHandIndex)
-			{
-				if(jointsTracked[rightHandIndex] /**&& jointsTracked[rightElbowIndex] && jointsTracked[rightShoulderIndex]*/)
-				{
-					calculateCoords = true;
-				}
-			}
-			else if(gestureData.joint == leftHandIndex)
-			{
-				if(jointsTracked[leftHandIndex] /**&& jointsTracked[leftElbowIndex] && jointsTracked[leftShoulderIndex]*/)
-				{
-					handPos = jointsPos[leftHandIndex];
-	//				elbowPos = jointsPos[leftElbowIndex];
-	//				shoulderPos = jointsPos[leftShoulderIndex];
-					
-					calculateCoords = true;
-				}
-			}
-			
-			if(calculateCoords)
-			{
-	//			if(gestureData.tagFloat == 0f || gestureData.userId != userId)
-	//			{
-	//				// get length from shoulder to hand (screen range)
-	//				Vector3 shoulderToElbow = elbowPos - shoulderPos;
-	//				Vector3 elbowToHand = handPos - elbowPos;
-	//				gestureData.tagFloat = (shoulderToElbow.magnitude + elbowToHand.magnitude);
-	//			}
-				
-				if(jointsTracked[hipCenterIndex] && jointsTracked[shoulderCenterIndex] && 
-					jointsTracked[leftShoulderIndex] && jointsTracked[rightShoulderIndex])
-				{
-					Vector3 neckToHips = jointsPos[shoulderCenterIndex] - jointsPos[hipCenterIndex];
-					Vector3 rightToLeft = jointsPos[rightShoulderIndex] - jointsPos[leftShoulderIndex];
-					
-					gestureData.tagVector2.x = rightToLeft.x * 1.2f;
-					gestureData.tagVector2.y = neckToHips.y * 1.2f;
-					
-					if(gestureData.joint == rightHandIndex)
-					{
-						gestureData.tagVector.x = jointsPos[rightShoulderIndex].x - gestureData.tagVector2.x / 2;
-						gestureData.tagVector.y = jointsPos[hipCenterIndex].y;
-					}
-					else
-					{
-						gestureData.tagVector.x = jointsPos[leftShoulderIndex].x - gestureData.tagVector2.x / 2;
-						gestureData.tagVector.y = jointsPos[hipCenterIndex].y;
-					}
-				}
-		
-	//			Vector3 shoulderToHand = handPos - shoulderPos;
-	//			gestureData.screenPos.x = Mathf.Clamp01((gestureData.tagFloat / 2 + shoulderToHand.x) / gestureData.tagFloat);
-	//			gestureData.screenPos.y = Mathf.Clamp01((gestureData.tagFloat / 2 + shoulderToHand.y) / gestureData.tagFloat);
-				
-				if(gestureData.tagVector2.x != 0 && gestureData.tagVector2.y != 0)
-				{
-					Vector3 relHandPos = handPos - gestureData.tagVector;
-					gestureData.screenPos.x = Mathf.Clamp01(relHandPos.x / gestureData.tagVector2.x);
-					gestureData.screenPos.y = Mathf.Clamp01(relHandPos.y / gestureData.tagVector2.y);
-				}
-				
-				//Debug.Log(string.Format("{0} - S: {1}, H: {2}, SH: {3}, L : {4}", gestureData.gesture, shoulderPos, handPos, shoulderToHand, gestureData.tagFloat));
-			}
-		}
-		
-		private static void SetZoomFactor(uint userId, ref GestureData gestureData, float initialZoom, ref Vector3[] jointsPos, ref bool[] jointsTracked)
-		{
-			Vector3 vectorZooming = jointsPos[rightHandIndex] - jointsPos[leftHandIndex];
-			
-			if(gestureData.tagFloat == 0f || gestureData.userId != userId)
-			{
-				gestureData.tagFloat = 0.5f; // this is 100%
-			}
-
-			float distZooming = vectorZooming.magnitude;
-			gestureData.screenPos.z = initialZoom + (distZooming / gestureData.tagFloat);
-		}
-		
-		private static void SetWheelRotation(uint userId, ref GestureData gestureData, Vector3 initialPos, Vector3 currentPos)
-		{
-			float angle = Vector3.Angle(initialPos, currentPos) * Mathf.Sign(currentPos.y - initialPos.y);
-			gestureData.screenPos.z = angle;
-		}
-		
-		// estimate the next state and completeness of the gesture
-		public static void CheckForGesture(uint userId, ref GestureData gestureData, float timestamp, ref Vector3[] jointsPos, ref bool[] jointsTracked)
-		{
-			if(gestureData.complete)
-				return;
-			
-			switch(gestureData.gesture)
-			{
-				// check for RaiseRightHand
-				case Gestures.RaiseRightHand:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-							}
-							break;
-								
-						case 1:  // gesture complete
-							bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
-								(jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f;
-
-							Vector3 jointPos = jointsPos[gestureData.joint];
-							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.PoseCompleteDuration);
-							break;
-					}
-					break;
-
-				// check for RaiseLeftHand
-				case Gestures.RaiseLeftHand:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftShoulderIndex].y) > 0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-							}
-							break;
-								
-						case 1:  // gesture complete
-							bool isInPose = jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
-								(jointsPos[leftHandIndex].y - jointsPos[leftShoulderIndex].y) > 0.1f;
-
-							Vector3 jointPos = jointsPos[gestureData.joint];
-							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.PoseCompleteDuration);
-							break;
-					}
-					break;
-
-				// check for Psi
-				case Gestures.Psi:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
-						       jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
-						       (jointsPos[leftHandIndex].y - jointsPos[leftShoulderIndex].y) > 0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-							}
-							break;
-								
-						case 1:  // gesture complete
-							bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
-								(jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
-								jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
-								(jointsPos[leftHandIndex].y - jointsPos[leftShoulderIndex].y) > 0.1f;
-
-							Vector3 jointPos = jointsPos[gestureData.joint];
-							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.PoseCompleteDuration);
-							break;
-					}
-					break;
-
-				// check for Stop
-				case Gestures.Stop:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightHipIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightHipIndex].y) < 0f &&
-						       jointsTracked[leftHandIndex] && jointsTracked[leftHipIndex] &&
-						       (jointsPos[leftHandIndex].y - jointsPos[leftHipIndex].y) < 0f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-							}
-							break;
-								
-						case 1:  // gesture complete
-							bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightHipIndex] &&
-								(jointsPos[rightHandIndex].y - jointsPos[rightHipIndex].y) < 0f &&
-								jointsTracked[leftHandIndex] && jointsTracked[leftHipIndex] &&
-								(jointsPos[leftHandIndex].y - jointsPos[leftHipIndex].y) < 0f;
-
-							Vector3 jointPos = jointsPos[gestureData.joint];
-							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.PoseCompleteDuration);
-							break;
-					}
-					break;
-
-				// check for Wave
-				case Gestures.Wave:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0.1f &&
-						       (jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0.05f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.3f;
-							}
-							else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0.1f &&
-						            (jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) < -0.05f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-								gestureData.progress = 0.3f;
-							}
-							break;
-					
-						case 1:  // gesture - phase 2
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0.1f && 
-									(jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) < -0.05f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0.1f &&
-									(jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) > 0.05f;
-					
-								if(isInPose)
-								{
-									gestureData.timestamp = timestamp;
-									gestureData.state++;
-									gestureData.progress = 0.7f;
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-										
-						case 2:  // gesture phase 3 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0.1f && 
-									(jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0.05f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0.1f &&
-									(jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) < -0.05f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for Click
-				case Gestures.Click:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > -0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.3f;
-
-								// set screen position at the start, because this is the most accurate click position
-								SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
-							}
-							else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > -0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-								gestureData.progress = 0.3f;
-
-								// set screen position at the start, because this is the most accurate click position
-								SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
-							}
-							break;
-					
-						case 1:  // gesture - phase 2
-	//						if((timestamp - gestureData.timestamp) < 1.0f)
-	//						{
-	//							bool isInPose = gestureData.joint == rightHandIndex ?
-	//								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-	//								//(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > -0.1f && 
-	//								Mathf.Abs(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < 0.08f &&
-	//								(jointsPos[rightHandIndex].z - gestureData.jointPos.z) < -0.05f :
-	//								jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-	//								//(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > -0.1f &&
-	//								Mathf.Abs(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < 0.08f &&
-	//								(jointsPos[leftHandIndex].z - gestureData.jointPos.z) < -0.05f;
-	//				
-	//							if(isInPose)
-	//							{
-	//								gestureData.timestamp = timestamp;
-	//								gestureData.jointPos = jointsPos[gestureData.joint];
-	//								gestureData.state++;
-	//								gestureData.progress = 0.7f;
-	//							}
-	//							else
-	//							{
-	//								// check for stay-in-place
-	//								Vector3 distVector = jointsPos[gestureData.joint] - gestureData.jointPos;
-	//								isInPose = distVector.magnitude < 0.05f;
-	//
-	//								Vector3 jointPos = jointsPos[gestureData.joint];
-	//								CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.ClickStayDuration);
-	//							}
-	//						}
-	//						else
-							{
-								// check for stay-in-place
-								Vector3 distVector = jointsPos[gestureData.joint] - gestureData.jointPos;
-								bool isInPose = distVector.magnitude < 0.05f;
-
-								Vector3 jointPos = jointsPos[gestureData.joint];
-								CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, Constants.ClickStayDuration);
-	//							SetGestureCancelled(gestureData);
-							}
-							break;
-										
-	//					case 2:  // gesture phase 3 = complete
-	//						if((timestamp - gestureData.timestamp) < 1.0f)
-	//						{
-	//							bool isInPose = gestureData.joint == rightHandIndex ?
-	//								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-	//								//(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > -0.1f && 
-	//								Mathf.Abs(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < 0.08f &&
-	//								(jointsPos[rightHandIndex].z - gestureData.jointPos.z) > 0.05f :
-	//								jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-	//								//(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > -0.1f &&
-	//								Mathf.Abs(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < 0.08f &&
-	//								(jointsPos[leftHandIndex].z - gestureData.jointPos.z) > 0.05f;
-	//
-	//							if(isInPose)
-	//							{
-	//								Vector3 jointPos = jointsPos[gestureData.joint];
-	//								CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-	//							}
-	//						}
-	//						else
-	//						{
-	//							// cancel the gesture
-	//							SetGestureCancelled(ref gestureData);
-	//						}
-	//						break;
-					}
-					break;
-
-				// check for SweepLeft
-				case Gestures.SweepLeft:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-						       (jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-	//						else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-	//					            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f &&
-	//					            (jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) > 0f)
-	//						{
-	//							SetGestureJoint(ref gestureData, timestamp, leftHandIndex);
-	//							gestureData.jointPos = jointsPos[leftHandIndex];
-	//							gestureData.progress = 0.5f;
-	//						}
-							break;
-					
-						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
-									Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < -0.2f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
-									Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < -0.2f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for SweepRight
-				case Gestures.SweepRight:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-	//						if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-	//					       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-	//					       (jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) < 0f)
-	//						{
-	//							SetGestureJoint(ref gestureData, timestamp, rightHandIndex);
-	//							gestureData.jointPos = jointsPos[rightHandIndex];
-	//							gestureData.progress = 0.5f;
-	//						}
-	//						else 
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f &&
-						            (jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) < 0f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
-									Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) > 0.2f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
-									Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) > 0.2f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for SweepUp
-				case Gestures.SweepUp:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) >= -0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-							else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) >= -0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0.1f && 
-									(jointsPos[rightHandIndex].y - gestureData.jointPos.y) > 0.2f && 
-									Mathf.Abs(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < 0.08f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0.1f &&
-									(jointsPos[leftHandIndex].y - gestureData.jointPos.y) > 0.2f && 
-									Mathf.Abs(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < 0.08f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for SweepDown
-				case Gestures.SweepDown:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) >= 0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-							else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) >= 0.1f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
-								gestureData.progress = 0.5f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = gestureData.joint == rightHandIndex ?
-									jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < -0.1f && 
-									(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < -0.2f && 
-									Mathf.Abs(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < 0.08f :
-									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-									(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < -0.1f &&
-									(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < -0.2f && 
-									Mathf.Abs(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < 0.08f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for RightHandCursor
-				case Gestures.RightHandCursor:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1 (perpetual)
-							if(jointsTracked[rightHandIndex] && jointsTracked[rightHipIndex] &&
-								(jointsPos[rightHandIndex].y - jointsPos[rightHipIndex].y) > -0.1f)
-							{
-								gestureData.joint = rightHandIndex;
-								gestureData.timestamp = timestamp;
-								//gestureData.jointPos = jointsPos[rightHandIndex];
-								SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
-								gestureData.progress = 0.7f;
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					
-					}
-					break;
-
-				// check for LeftHandCursor
-				case Gestures.LeftHandCursor:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1 (perpetual)
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftHipIndex] &&
-								(jointsPos[leftHandIndex].y - jointsPos[leftHipIndex].y) > -0.1f)
-							{
-								gestureData.joint = leftHandIndex;
-								gestureData.timestamp = timestamp;
-								//gestureData.jointPos = jointsPos[leftHandIndex];
-								SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
-								gestureData.progress = 0.7f;
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					
-					}
-					break;
-
-				// check for ZoomOut
-				case Gestures.ZoomOut:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							float distZoomOut = ((Vector3)(jointsPos[rightHandIndex] - jointsPos[leftHandIndex])).magnitude;
-					
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-							   jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-							   distZoomOut < 0.2f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.progress = 0.3f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = zooming
-							if((timestamp - gestureData.timestamp) < 1.0f)
-							{
-								bool isInPose = jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						   			jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									((jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f ||
-					       			(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f);
-
-								if(isInPose)
-								{
-									SetZoomFactor(userId, ref gestureData, 1.0f, ref jointsPos, ref jointsTracked);
-									gestureData.timestamp = timestamp;
-									gestureData.progress = 0.7f;
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for ZoomIn
-				case Gestures.ZoomIn:
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							float distZoomIn = ((Vector3)jointsPos[rightHandIndex] - jointsPos[leftHandIndex]).magnitude;
-
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-							   jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-							   distZoomIn >= 0.7f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.tagFloat = distZoomIn;
-								gestureData.progress = 0.3f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = zooming
-							if((timestamp - gestureData.timestamp) < 1.0f)
-							{
-								bool isInPose = jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						   			jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									((jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f ||
-					       			(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f);
-
-								if(isInPose)
-								{
-									SetZoomFactor(userId, ref gestureData, 0.0f, ref jointsPos, ref jointsTracked);
-									gestureData.timestamp = timestamp;
-									gestureData.progress = 0.7f;
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-					break;
-
-				// check for Wheel
-				case Gestures.Wheel:
-					Vector3 vectorWheel = (Vector3)jointsPos[rightHandIndex] - jointsPos[leftHandIndex];
-					float distWheel = vectorWheel.magnitude;
-
-					switch(gestureData.state)
-					{
-						case 0:  // gesture detection - phase 1
-							if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-							   jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-						       (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f &&
-						       (jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-							   distWheel > 0.2f && distWheel < 0.7f)
-							{
-								SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
-								gestureData.tagVector = vectorWheel;
-								gestureData.tagFloat = distWheel;
-								gestureData.progress = 0.3f;
-							}
-							break;
-					
-						case 1:  // gesture phase 2 = zooming
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
-						   			jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
-									((jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > 0f ||
-					       			(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) > 0f &&
-									Mathf.Abs(distWheel - gestureData.tagFloat) < 0.1f);
-
-								if(isInPose)
-								{
-									SetWheelRotation(userId, ref gestureData, gestureData.tagVector, vectorWheel);
-									gestureData.timestamp = timestamp;
-									gestureData.tagFloat = distWheel;
-									gestureData.progress = 0.7f;
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
-					}
-				break;
-			case Gestures.Move:
-				switch(gestureData.state)
-				{
-					case 0:
-					if(jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Math.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f)
-					{
-						SetGestureJoint(ref gestureData,timestamp,leftKneeIndex,jointsPos[leftKneeIndex]);
-					}
-					break;
-				case 1:
-					bool isInPose = jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Math.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f;
-					if(isInPose)
-					{
-						gestureData.timestamp = timestamp;
-						gestureData.progress = 0.7f;
-						gestureData.screenPos.z = jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z;
-					}
-					else
-					{
-						SetGestureCancelled(ref gestureData);
-					}
-					break;
-
-
-				}
-				break;
-			}
-		}
+	    }		
 	}
 }

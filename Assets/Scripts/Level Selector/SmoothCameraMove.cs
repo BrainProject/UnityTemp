@@ -39,6 +39,20 @@ namespace MinigameSelection {
 			float fracJourney = distCovered / journeyLength;
 			if(journeyLength > 0.0f)
 				this.transform.position = Vector3.Lerp(From, To, fracJourney);
+
+
+			if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
+			{
+				Camera.main.GetComponent<CameraControl>().BackToMain();
+				//OnSelection = false;
+				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+				Move = true;
+				Speed = defaultSpeed;
+				From = this.transform.position;
+				To = this.GetComponent<CameraControl>().currentWaypoint.transform.position;
+				Camera.main.GetComponent<CameraControl>().ReadyToLeave = true;
+				//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
+			}
 		}
 	}
 }

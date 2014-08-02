@@ -13,6 +13,7 @@ namespace Game {
 	public class GameManager : MonoBehaviour {
 		public currentBrainPartEnum selectedBrainPart;
 		public Vector3 currentCameraDefaultPosition;
+		//public GameObject selectedMinigame;
 		internal bool fromMain;
 
 		void Start()
@@ -26,9 +27,9 @@ namespace Game {
 
 		void OnGUI()
 		{
-			if(GUI.Button (new Rect(20,20,100,30), "Brain"))
+			if(GUI.Button (new Rect(20,Screen.height - 40,100,30), "Brain"))
 				Application.LoadLevel("NewMain");
-			if(GUI.Button(new Rect(20,60,100,30), "MirkaSelection"))
+			if(GUI.Button(new Rect(20,Screen.height - 80,100,30), "MirkaSelection"))
 				Application.LoadLevel("MirkaSelection");
 		}
 
@@ -36,23 +37,28 @@ namespace Game {
 		{
 			if(level == 2)
 			{
-				if(fromMain)
-				{
+				//if(fromMain)
+				//{
 					print ("Selection scene");
-					//IN DEV: default position - need to implement automatic search for waypoints
 					switch(selectedBrainPart)
 					{
-					case currentBrainPartEnum.FrontalLobe: Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
+					case currentBrainPartEnum.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
+						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("GreenPos");
 						break;
-					case currentBrainPartEnum.ParietalLobe: Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
+					case currentBrainPartEnum.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
+						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("BluePos");
 						break;
-					case currentBrainPartEnum.OccipitalLobe: Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
+					case currentBrainPartEnum.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
+						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("OrangePos");
 						break;
 					}
+					if(fromMain)
+						currentCameraDefaultPosition = Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint.transform.position;
+					if(!fromMain)
+						Camera.main.GetComponent<MinigameSelection.CameraControl>().ReadyToLeave = false;
+					Camera.main.transform.position = Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint.transform.position;
 					fromMain = false;
-				}
-//				else
-//					Camera.main.transform.position = currentCameraDefaultPosition;
+				//}
 			}
 		}
 	}

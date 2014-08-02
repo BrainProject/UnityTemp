@@ -1,10 +1,11 @@
+#pragma warning disable 414, 219
 using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Text;
+using System.Text; 
 
 namespace Kinect {
 	public class AvatarController : MonoBehaviour
@@ -26,7 +27,7 @@ namespace Kinect {
 		public int MoveRate = 1;
 		
 		// Slerp smooth factor
-		public float SmoothFactor = 3.0f;
+		public float SmoothFactor = 10.0f;
 		
 		
 		// Public variables that will get matched to bones. If empty, the kinect will simply not track it.
@@ -36,17 +37,17 @@ namespace Kinect {
 		public Transform Neck;
 		public Transform Head;
 		
-		//public Transform LeftShoulder;
+		public Transform LeftShoulder;
 		public Transform LeftUpperArm;
 		public Transform LeftElbow; 
-		public Transform LeftWrist;
+		//public Transform LeftWrist;
 		public Transform LeftHand;
 		//public Transform LeftFingers;
 		
-		//public Transform RightShoulder;
+		public Transform RightShoulder;
 		public Transform RightUpperArm;
 		public Transform RightElbow;
-		public Transform RightWrist;
+		//public Transform RightWrist;
 		public Transform RightHand;
 		//public Transform RightFingers;
 		
@@ -70,49 +71,64 @@ namespace Kinect {
 		
 		// Rotations of the bones when the Kinect tracking starts.
 	    private Quaternion[] initialRotations;
+		private Quaternion[] initialLocalRotations;
+		
+		// Rotations of the bones when the Kinect tracking starts.
+	    private Vector3[] initialDirections;
 		
 		// Calibration Offset Variables for Character Position.
 		private bool OffsetCalibrated = false;
 		private float XOffset, YOffset, ZOffset;
 		private Quaternion originalRotation;
 		
-		// GUI Text to display the gesture messages.
-		private GameObject GestureInfo;
-		// GUI Texture to display the hand cursor
-		private GameObject HandCursor;
-		// private bool to track if progress message has been displayed
-		private bool progressDisplayed;
+		// Lastly used Kinect UserID
+		private uint LastUserID;
+		
+		// private instance of the KinectManager
+		private KinectManager kinectManager;
+
+		private Vector3 hipsUp;  // up vector of the hips
+		private Vector3 hipsRight;  // right vector of the hips
+		private Vector3 chestRight;  // right vectory of the chest
 		
 		
 	    public void Start()
 	    {	
-			GestureInfo = GameObject.Find("GestureInfo");
-			HandCursor = GameObject.Find("HandCursor");
+			//GestureInfo = GameObject.Find("GestureInfo");
+			//HandCursor = GameObject.Find("HandCursor");
 			
 			// Holds our bones for later.
 			bones = new Transform[25];
 			
-			// Initial rotations of said bones.
+			// Initial rotations and directions of the bones.
 			initialRotations = new Quaternion[bones.Length];
+			initialLocalRotations = new Quaternion[bones.Length];
+			initialDirections = new Vector3[bones.Length];
 			
-			// Map bones to the points the Kinect tracks.
+			// Map bones to the points the Kinect tracks
 			MapBones();
 
-			// Get initial rotations to return to later.
+			// Get initial bone directions
+			GetInitialDirections();
+			
+			// Get initial bone rotations
 			GetInitialRotations();
 			
-			// Set the model to the calibration pose.
+			// Set the model to the calibration pose
 	        RotateToCalibrationPose(0, KinectManager.IsCalibrationNeeded());
-	    }
+		}
 		
 		// Update the avatar each frame.
 	    public void UpdateAvatar(uint UserID, bool IsNearMode)
-	    {
-			if(Input.GetKeyDown(KeyCode.X))
-			{
-				Win32.MouseKeySimulator.MouseCursorMove = false;
-			}
+	    {	
+			LastUserID = UserID;
 			bool flipJoint = !MirroredMovement;
+			
+			// Get the KinectManager instance
+			if(kinectManager == null)
+			{
+				kinectManager = KinectManager.Instance;
+			}
 			
 			// Update Head, Neck, Spine, and Hips normally.
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.HIPS, 1, flipJoint);
@@ -123,22 +139,25 @@ namespace Kinect {
 			// Beyond this, switch the arms and legs.
 			
 			// Left Arm --> Right Arm
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_COLLAR, !MirroredMovement ? 5 : 11, flipJoint);
+			TransformBoneDir(UserID, KinectWrapper.SkeletonJoint.LEFT_COLLAR, !MirroredMovement ? 5 : 11, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_SHOULDER, !MirroredMovement ? 6 : 12, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_ELBOW, !MirroredMovement ? 7 : 13, flipJoint);
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_WRIST, !MirroredMovement ? 8 : 14, flipJoint);
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_HAND, !MirroredMovement ? 9 : 15, flipJoint);
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_FINGERTIP, !MirroredMovement ? 10 : 16, flipJoint);
+			//TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_WRIST, !MirroredMovement ? 8 : 14, flipJoint);
+			TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_HAND, !MirroredMovement ? 8 : 14, flipJoint);
+			//TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_FINGERTIP, !MirroredMovement ? 10 : 16, flipJoint);
 			
 			// Right Arm --> Left Arm
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_COLLAR, !MirroredMovement ? 11 : 5, flipJoint);
+			TransformBoneDir(UserID, KinectWrapper.SkeletonJoint.RIGHT_COLLAR, !MirroredMovement ? 11 : 5, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_SHOULDER, !MirroredMovement ? 12 : 6, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_ELBOW, !MirroredMovement ? 13 : 7, flipJoint);
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_WRIST, !MirroredMovement ? 14 : 8, flipJoint);
-			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_HAND, !MirroredMovement ? 15 : 9, flipJoint);
+			//TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_WRIST, !MirroredMovement ? 14 : 8, flipJoint);
+			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_HAND, !MirroredMovement ? 14 : 8, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_FINGERTIP, !MirroredMovement ? 16 : 10, flipJoint);
 			
-			if(!IsNearMode)
+			// Hips 2
+			TransformBoneDir(UserID, KinectWrapper.SkeletonJoint.HIPS, 16, flipJoint);
+			
+			//if(!IsNearMode)
 			{
 				// Left Leg --> Right Leg
 				TransformBone(UserID, KinectWrapper.SkeletonJoint.LEFT_HIP, !MirroredMovement ? 17 : 21, flipJoint);
@@ -174,30 +193,21 @@ namespace Kinect {
 					offsetNode.transform.rotation = Quaternion.Euler(Vector3.zero);
 				}
 				
-				// Right Elbow
-				if(RightElbow != null)
-		        	RightElbow.rotation = Quaternion.Euler(0, -90, 90) * 
-						initialRotations[(int)KinectWrapper.SkeletonJoint.RIGHT_ELBOW];
-				
-				// Left Elbow
-				if(LeftElbow != null)
-		        	LeftElbow.rotation = Quaternion.Euler(0, 90, -90) * 
-						initialRotations[(int)KinectWrapper.SkeletonJoint.LEFT_ELBOW];
+	//			// Right Elbow
+	//			if(RightElbow != null)
+	//	        	RightElbow.rotation = Quaternion.Euler(0, -90, 90) * 
+	//					initialRotations[(int)KinectWrapper.SkeletonJoint.RIGHT_ELBOW];
+	//			
+	//			// Left Elbow
+	//			if(LeftElbow != null)
+	//	        	LeftElbow.rotation = Quaternion.Euler(0, 90, -90) * 
+	//					initialRotations[(int)KinectWrapper.SkeletonJoint.LEFT_ELBOW];
 
 				if(offsetNode != null)
 				{
 					// Restore the offset's rotation
 					offsetNode.transform.rotation = originalRotation;
 				}
-			}
-			
-			if(userId != 0)
-			{
-				// clear gesture info
-				KinectManager.Instance.ClearGestures(userId);
-				
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = string.Empty;
 			}
 	    }
 		
@@ -212,209 +222,167 @@ namespace Kinect {
 			
 			// re-calibrate the position offset
 			OffsetCalibrated = false;
-			
-			if(GestureInfo != null)
-				GestureInfo.guiText.text = "SweepLeft, SweepRight, Zoom or Click.";
-		}
-		
-		// Invoked when a gesture is in progress 
-		// The gesture must be added first, with KinectManager.Instance.DetectGesture()
-		public void GestureInProgress(uint userId, KinectWrapper.Gestures gesture, float progress, 
-			KinectWrapper.SkeletonJoint joint, Vector3 screenPos)
-		{
-			//GestureInfo.guiText.text = string.Format("{0} Progress: {1:F1}%", gesture, (progress * 100));
-			if((gesture == KinectWrapper.Gestures.RightHandCursor || gesture == KinectWrapper.Gestures.LeftHandCursor) && progress > 0.5f)
-			{
-				Win32.MouseKeySimulator.CursorPos(Vector3.Lerp(HandCursor.transform.position, screenPos, 3 * Time.deltaTime));
-				if(HandCursor != null)
-				{
-					HandCursor.transform.position = Vector3.Lerp(HandCursor.transform.position, screenPos, 3 * Time.deltaTime);
-				}
-
-	//			string sGestureText = string.Format("{0} - ({1:F1}, {2:F1} {3:F1})", gesture, screenPos.x, screenPos.y, progress * 100);
-	//			Debug.Log(sGestureText);
-			}
-			else if(gesture == KinectWrapper.Gestures.Click && progress > 0.3f)
-			{
-				string sGestureText = string.Format ("{0} {1:F1}% complete", gesture, progress * 100);
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
-				progressDisplayed = true;
-			}		
-			else if((gesture == KinectWrapper.Gestures.ZoomOut || gesture == KinectWrapper.Gestures.ZoomIn) && progress > 0.5f)
-			{
-				string sGestureText = string.Format ("{0} detected, zoom={1:F1}%", gesture, screenPos.z * 100);
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
-				progressDisplayed = true;
-			}
-			else if(gesture == KinectWrapper.Gestures.Wheel && progress > 0.5f)
-			{
-				string sGestureText = string.Format ("{0} detected, angle={1:F1} deg", gesture, screenPos.z);
-				if(screenPos.z > 1)
-				{
-					if(Input.GetKey(KeyCode.D))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-					if(!Input.GetKey(KeyCode.A))
-						Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.KEY_A);
-				}
-				else if(screenPos.z < -1)
-				{
-					if(Input.GetKey(KeyCode.A))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-					if(!Input.GetKey(KeyCode.D))
-						Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.KEY_D);
-				}else 
-				{
-					if(Input.GetKey(KeyCode.D))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-					if(Input.GetKey(KeyCode.A))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-				}
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
-				progressDisplayed = true;
-			}
-			else if (gesture == KinectWrapper.Gestures.Move && progress > 0.5f)
-			{
-				print ("start");
-				if(screenPos.z <= -0.1f)
-				{
-					print ("up");
-					if(Input.GetKey(KeyCode.UpArrow))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.UP);
-					if(!Input.GetKey(KeyCode.DownArrow))
-						Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.DOWN);
-				}
-				if(screenPos.z >= 0.1f)
-				{
-					print ("down");
-					if(Input.GetKey(KeyCode.DownArrow))
-						Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.DOWN);
-					if(!Input.GetKey(KeyCode.UpArrow))
-						Win32.MouseKeySimulator.SendKeyDown(Win32.KeyCode.UP);
-				}
-				string sGestureText = string.Format ("{0} detected, move={1:F1} deg", gesture, screenPos.z);
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
-				print ("end");
-			}
-
-
-		}
-		
-		// Invoked when a gesture is complete.
-
-		// Return true, if the gesture must be detected again, false otherwise
-		public bool GestureComplete(uint userId, KinectWrapper.Gestures gesture,
-			KinectWrapper.SkeletonJoint joint, Vector3 screenPos)
-		{
-			string sGestureText = gesture + " detected";
-			if(gesture == KinectWrapper.Gestures.Click)
-			{
-				Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.LCONTROL);
-				sGestureText += string.Format(" at ({0:F1}, {1:F1})", screenPos.x, screenPos.y);
-			}
-			else if(gesture == KinectWrapper.Gestures.SweepLeft)
-			{
-				Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.LEFT);
-			}
-			else if(gesture == KinectWrapper.Gestures.SweepRight)
-			{
-				Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.RIGHT);
-			}
-			if(GestureInfo != null)
-				GestureInfo.guiText.text = sGestureText;
-			progressDisplayed = false;
-			
-			return true;
-		}
-		
-		// Invoked when a gesture is cancelled.
-		public bool GestureCancelled(uint userId, KinectWrapper.Gestures gesture, 
-			KinectWrapper.SkeletonJoint joint)
-		{
-			if(progressDisplayed)
-			{
-				// clear the progress info
-				if(GestureInfo != null)
-					GestureInfo.guiText.text = String.Empty;
-				progressDisplayed = false;
-			}
-			if(gesture == KinectWrapper.Gestures.Wheel)
-			{
-				if(Input.GetKey(KeyCode.D))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_D);
-				if(Input.GetKey(KeyCode.A))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.KEY_A);
-			}
-			if(gesture == KinectWrapper.Gestures.Move)
-			{
-				if(Input.GetKey(KeyCode.UpArrow))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.UP);
-				if(Input.GetKey(KeyCode.DownArrow))
-					Win32.MouseKeySimulator.SendKeyUp(Win32.KeyCode.DOWN);
-			}
-			if(gesture == KinectWrapper.Gestures.RightHandCursor || gesture == KinectWrapper.Gestures.LeftHandCursor)
-			{
-				Win32.MouseKeySimulator.CursorPos(new Vector2(0.5f,0.5f));
-			}
-			if(gesture == KinectWrapper.Gestures.RaiseLeftHand)
-			{
-				//Hold with LeftHandCursor
-				Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.KEY_C);
-				Debug.Log("c");
-			}
-
-
-			return true;
 		}
 		
 		// Apply the rotations tracked by kinect to the joints.
 	    void TransformBone(uint userId, KinectWrapper.SkeletonJoint joint, int boneIndex, bool flip)
 	    {
 			Transform boneTransform = bones[boneIndex];
-			if(boneTransform == null)
+			if(boneTransform == null || kinectManager == null)
 				return;
 			
-			// Grab the bone we're moving.
 			int iJoint = (int)joint;
 			if(iJoint < 0)
 				return;
 			
 			// Get Kinect joint orientation
-			Quaternion jointRotation = KinectManager.Instance.GetJointOrientation(userId, iJoint, flip);
+			Quaternion jointRotation = kinectManager.GetJointOrientation(userId, iJoint, flip);
 			if(jointRotation == Quaternion.identity)
 				return;
 			
-			// Apply the new rotation.
-	        Quaternion newRotation = jointRotation * initialRotations[boneIndex];
+			// Smoothly transition to the new rotation
+			Quaternion newRotation = Kinect2AvatarRot(jointRotation, boneIndex);
 			
-			//If an offset node is specified, combine the transform with its
-			//orientation to essentially make the skeleton relative to the node
-			if (offsetNode != null)
+			if(SmoothFactor != 0f)
+	        	boneTransform.rotation = Quaternion.Slerp(boneTransform.rotation, newRotation, SmoothFactor * Time.deltaTime);
+			else
+				boneTransform.rotation = newRotation;
+		}
+		
+		// Apply the rotations tracked by kinect to the joints.
+	    void TransformBoneDir(uint userId, KinectWrapper.SkeletonJoint joint, int boneIndex, bool flip)
+	    {
+			Transform boneTransform = bones[boneIndex];
+			if(boneTransform == null || kinectManager == null)
+				return;
+			
+			// Get initial bone direction
+			Vector3 initialDir = initialDirections[boneIndex];
+			if(initialDir == Vector3.zero)
+				return;
+			
+			int iJoint = (int)joint;
+	//		if(iJoint < 0)
+	//			return;
+			
+			// Get Kinect joint orientation
+			Vector3 jointDir = Vector3.zero;
+			
+			if(boneIndex == 16)  // Hip_center
 			{
-				// Grab the total rotation by adding the Euler and offset's Euler.
-				Vector3 totalRotation = newRotation.eulerAngles + offsetNode.transform.rotation.eulerAngles;
-				// Grab our new rotation.
-				newRotation = Quaternion.Euler(totalRotation);
+				initialDir = hipsUp;
+				
+				// target is a vector from hip_center to average of hips left and right
+				jointDir = ((kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipLeft) + 
+					kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipRight)) / 2.0f) - 
+					kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter);
+
+				jointDir.z = -jointDir.z;
+				if(!flip)
+					jointDir.x = -jointDir.x;
+			}
+			else if(boneIndex == 5 || boneIndex == 11)  // Collar_left or Collar_right (shoulders)
+			{
+				// target is a vector from shoulder_center to bone
+				jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderCenter, iJoint, !flip, true);
+			}
+			else
+			{
+				jointDir = kinectManager.GetDirectionBetweenJoints(userId, iJoint - 1, iJoint, !flip, true);
+			}
+
+			if(jointDir == Vector3.zero)
+				return;
+			
+			Vector3 upDir = Vector3.zero;
+			Vector3 rightDir = Vector3.zero;
+			
+			if(joint == KinectWrapper.SkeletonJoint.SPINE)
+			{
+	//			// the spine in the Kinect data is ~40 degrees back from the hip
+	//			jointDir = Quaternion.Euler(40, 0, 0) * jointDir;
+
+				if(Hips && LeftThigh && RightThigh)
+				{
+					upDir = ((LeftThigh.position + RightThigh.position) / 2.0f) - Hips.transform.position;
+					rightDir = RightThigh.transform.position - LeftThigh.transform.position;
+				}
 			}
 			
-			// Smoothly transition to our new rotation.
-	        boneTransform.rotation = Quaternion.Slerp(boneTransform.rotation, newRotation, Time.deltaTime * SmoothFactor);
+			boneTransform.localRotation = initialLocalRotations[boneIndex];
+			
+			// transform it into bone-local space
+			jointDir = transform.TransformDirection(jointDir);
+			jointDir = boneTransform.InverseTransformDirection(jointDir);
+			
+			//create a rotation that rotates dir into target
+			Quaternion quat = Quaternion.FromToRotation(initialDir, jointDir);
+			
+			//if bone is the hip override, add in the rotation along the hips
+			if(boneIndex == 16)
+			{
+				//rotate the hips so they face forward (determined by the hips)
+				initialDir = hipsRight;
+				jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipLeft, (int)KinectWrapper.NuiSkeletonPositionIndex.HipRight, false, flip);
+				
+				if(jointDir != Vector3.zero)
+				{
+					jointDir = transform.TransformDirection(jointDir);
+					jointDir = boneTransform.InverseTransformDirection(jointDir);
+					jointDir -= Vector3.Project(jointDir, initialDirections[boneIndex]);
+					
+					quat *= Quaternion.FromToRotation(initialDir, jointDir);
+				}
+			}
+			//if bone is the spine, add in the rotation along the spine
+			else if(joint == KinectWrapper.SkeletonJoint.SPINE)
+			{
+				//rotate the chest so that it faces forward (determined by the shoulders)
+				initialDir = chestRight;
+				jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderLeft, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderRight, false, flip);
+				
+				if(jointDir != Vector3.zero)
+				{
+					jointDir = transform.TransformDirection(jointDir);
+					jointDir = boneTransform.InverseTransformDirection(jointDir);
+					jointDir -= Vector3.Project(jointDir, initialDirections[boneIndex]);
+					
+					quat *= Quaternion.FromToRotation(initialDir, jointDir);
+				}
+			}
+			
+			boneTransform.localRotation *= quat;
+			
+	//		if(joint == KinectWrapper.SkeletonJoint.SPINE && upDir != Vector3.zero && rightDir != Vector3.zero)
+	//		{
+	//			RestoreBone(bones[1], hipsUp, upDir);
+	//			RestoreBone(bones[1], hipsRight, rightDir);
+	//		}
+			
+		}
+		
+		// Transform targetDir into bone-local space (independant of the transform of the controller)
+		void RestoreBone(Transform boneTransform, Vector3 initialDir, Vector3 targetDir)
+		{
+			//targetDir = transform.TransformDirection(targetDir);
+			targetDir = boneTransform.InverseTransformDirection(targetDir);
+			
+			//create a rotation that rotates dir into target
+			Quaternion quat = Quaternion.FromToRotation(initialDir, targetDir);
+			boneTransform.localRotation *= quat;
 		}
 		
 		// Moves the avatar in 3D space - pulls the tracked position of the spine and applies it to root.
 		// Only pulls positional, not rotational.
 		void MoveAvatar(uint UserID)
 		{
-			if(Root == null || Root.parent == null)
+			if(Root == null || Root.parent == null || kinectManager == null)
 				return;
-			if(!KinectManager.Instance.IsJointTracked(UserID, (int)KinectWrapper.SkeletonJoint.HIPS))
+			if(!kinectManager.IsJointTracked(UserID, (int)KinectWrapper.SkeletonJoint.HIPS))
 				return;
 			
 	        // Get the position of the body and store it.
-			Vector3 trans = KinectManager.Instance.GetUserPosition(UserID);
+			Vector3 trans = kinectManager.GetUserPosition(UserID);
 			
 			// If this is the first time we're moving the avatar, set the offset. Otherwise ignore it.
 			if (!OffsetCalibrated)
@@ -426,22 +394,9 @@ namespace Kinect {
 				ZOffset = -trans.z * MoveRate;
 			}
 		
-			float xPos;
-			float yPos;
-			float zPos;
-			
-			// If movement is mirrored, reverse it.
-			if(!MirroredMovement)
-				xPos = trans.x * MoveRate - XOffset;
-			else
-				xPos = -trans.x * MoveRate - XOffset;
-			
-			yPos = trans.y * MoveRate - YOffset;
-			zPos = -trans.z * MoveRate - ZOffset;
-			
-			// If we are tracking vertical movement, update the y. Otherwise leave it alone.
-			Vector3 targetPos = new Vector3(xPos, VerticalMovement ? yPos : 0f, zPos);
-			Root.parent.localPosition = Vector3.Lerp(Root.parent.localPosition, targetPos, 3 * Time.deltaTime);
+			// Smoothly transition to the new position
+			Vector3 targetPos = Kinect2AvatarPos(trans, VerticalMovement);
+			Root.parent.localPosition = Vector3.Lerp(Root.parent.localPosition, targetPos, SmoothFactor * Time.deltaTime);
 		}
 		
 		// If the bones to be mapped have been declared, map that bone to the model.
@@ -457,31 +412,35 @@ namespace Kinect {
 			if(Head != null)
 				bones[4] = Head;
 			
-	//		if(LeftShoulder != null)
-	//			bones[5] = LeftShoulder;
+			if(LeftShoulder != null)
+				bones[5] = LeftShoulder;
 			if(LeftUpperArm != null)
 				bones[6] = LeftUpperArm;
 			if(LeftElbow != null)
 				bones[7] = LeftElbow;
-			if(LeftWrist != null)
-				bones[8] = LeftWrist;
+	//		if(LeftWrist != null)
+	//			bones[8] = LeftWrist;
 			if(LeftHand != null)
-				bones[9] = LeftHand;
+				bones[8] = LeftHand;
 	//		if(LeftFingers != null)
 	//			bones[10] = LeftFingers;
 			
-	//		if(RightShoulder != null)
-	//			bones[11] = RightShoulder;
+			if(RightShoulder != null)
+				bones[11] = RightShoulder;
 			if(RightUpperArm != null)
 				bones[12] = RightUpperArm;
 			if(RightElbow != null)
 				bones[13] = RightElbow;
-			if(RightWrist != null)
-				bones[14] = RightWrist;
+	//		if(RightWrist != null)
+	//			bones[14] = RightWrist;
 			if(RightHand != null)
-				bones[15] = RightHand;
+				bones[14] = RightHand;
 	//		if(RightFingers != null)
 	//			bones[16] = RightFingers;
+			
+			// Hips 2
+			if(Hips != null)
+				bones[16] = Hips;
 			
 			if(LeftThigh != null)
 				bones[17] = LeftThigh;
@@ -502,7 +461,63 @@ namespace Kinect {
 				bones[24] = RightToes;
 		}
 		
-		// Capture the initial rotations of the model.
+		// Capture the initial directions of the bones
+		void GetInitialDirections()
+		{
+			int[] intermediateBone = { 1, 2, 3, 5, 6, 7, 11, 12, 13, 17, 18, 19, 21, 22, 23};
+			
+			for (int i = 0; i < bones.Length; i++)
+			{
+				if(Array.IndexOf(intermediateBone, i) >= 0)
+				{
+					// intermediary joint
+					if(bones[i] && bones[i + 1])
+					{
+						initialDirections[i] = bones[i + 1].position - bones[i].position;
+						initialDirections[i] = bones[i].InverseTransformDirection(initialDirections[i]);
+					}
+					else
+					{
+						initialDirections[i] = Vector3.zero;
+					}
+				}
+	//			else if(i == 16)
+	//			{
+	//				// Hips 2
+	//				initialDirections[i] = Vector3.zero;
+	//			}
+				else
+				{
+					// end joint
+					initialDirections[i] = Vector3.zero;
+				}
+			}
+			
+			// special directions
+			if(Hips && LeftThigh && RightThigh)
+			{
+				hipsUp = ((RightThigh.position + LeftThigh.position) / 2.0f) - Hips.position;
+				hipsUp = Hips.InverseTransformDirection(hipsUp);
+				
+				hipsRight = RightThigh.position - LeftThigh.position;
+				hipsRight = Hips.InverseTransformDirection(hipsRight);
+				
+				// make hipRight orthogonal to the direction of the hips
+				Vector3.OrthoNormalize(ref hipsUp, ref hipsRight);
+				initialDirections[16] = hipsUp;
+			}
+			
+			if(Spine && LeftUpperArm && RightUpperArm)
+			{
+				chestRight = RightUpperArm.position - LeftUpperArm.position;
+				chestRight = Spine.InverseTransformDirection(chestRight);
+				
+				// make chestRight orthogonal to the direction of the spine
+				chestRight -= Vector3.Project(chestRight, initialDirections[2]);
+			}
+		}
+
+		// Capture the initial rotations of the bones
 		void GetInitialRotations()
 		{
 			if(offsetNode != null)
@@ -518,6 +533,7 @@ namespace Kinect {
 				if (bones[i] != null)
 				{
 					initialRotations[i] = bones[i].rotation;
+					initialLocalRotations[i] = bones[i].localRotation;
 				}
 			}
 
@@ -527,7 +543,7 @@ namespace Kinect {
 				offsetNode.transform.rotation = originalRotation;
 			}
 		}
-
+		
 		// Set bones to initial position.
 	    public void RotateToInitialPosition()
 	    {	
@@ -561,5 +577,61 @@ namespace Kinect {
 			}
 	    }
 		
+		// Converts kinect joint rotation to avatar joint rotation, depending on joint initial rotation and offset rotation
+		Quaternion Kinect2AvatarRot(Quaternion jointRotation, int boneIndex)
+		{
+			// Apply the new rotation.
+	        Quaternion newRotation = jointRotation * initialRotations[boneIndex];
+			
+			//If an offset node is specified, combine the transform with its
+			//orientation to essentially make the skeleton relative to the node
+			if (offsetNode != null)
+			{
+				// Grab the total rotation by adding the Euler and offset's Euler.
+				Vector3 totalRotation = newRotation.eulerAngles + offsetNode.transform.rotation.eulerAngles;
+				// Grab our new rotation.
+				newRotation = Quaternion.Euler(totalRotation);
+			}
+			
+			return newRotation;
+		}
+		
+		// Converts Kinect position to avatar skeleton position, depending on initial position, mirroring and move rate
+		Vector3 Kinect2AvatarPos(Vector3 jointPosition, bool bMoveVertically)
+		{
+			float xPos;
+			float yPos;
+			float zPos;
+			
+			// If movement is mirrored, reverse it.
+			if(!MirroredMovement)
+				xPos = jointPosition.x * MoveRate - XOffset;
+			else
+				xPos = -jointPosition.x * MoveRate - XOffset;
+			
+			yPos = jointPosition.y * MoveRate - YOffset;
+			zPos = -jointPosition.z * MoveRate - ZOffset;
+			
+			// If we are tracking vertical movement, update the y. Otherwise leave it alone.
+			Vector3 avatarJointPos = new Vector3(xPos, bMoveVertically ? yPos : 0f, zPos);
+			
+			return avatarJointPos;
+		}
+		
+		// converts Kinect joint position to position relative to the user position (Hips)
+		Vector3 Kinect2AvatarRelPos(Vector3 jointPosition, Vector3 userPosition)
+		{
+			jointPosition.z = !MirroredMovement ? -jointPosition.z : jointPosition.z;
+			
+			jointPosition -= userPosition;
+			jointPosition.z = -jointPosition.z;
+			
+	//		if(MirroredMovement)
+	//		{
+	//			jointPosition.x = -jointPosition.x;
+	//		}
+			
+			return jointPosition;
+		}		
 	}
 }

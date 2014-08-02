@@ -1,6 +1,7 @@
 ﻿/*
  * Created by: Milan Doležal
  */ 
+#pragma warning disable 414
 
 using UnityEngine;
 using System.Collections;

@@ -1,3 +1,4 @@
+#pragma warning disable 414, 219
 using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
