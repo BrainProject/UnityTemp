@@ -20,6 +20,11 @@ namespace MainScene {
 			originalColor = this.renderer.material.color;
 			targetColor = this.renderer.material.color;
 			targetColor.a = 0.05f;
+			if(GameObject.Find("_GameManager").GetComponent<Game.GameManager>().fromSelection)
+			{
+				this.renderer.material.color = targetColor;
+				originalColor = targetColor;
+			}
 		}
 		
 		// Update is called once per frame
@@ -33,9 +38,7 @@ namespace MainScene {
 			}
 
 			if(fading)
-			{
 				this.renderer.material.color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/4);
-			}
 		}
 	}
 }

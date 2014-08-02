@@ -80,6 +80,7 @@ namespace MainScene {
 					}
 					GameObject.Find("_GameManager").GetComponent<GameManager>().selectedBrainPart = brainPartToLoad;
 					GameObject.Find("_GameManager").GetComponent<GameManager>().fromMain = true;
+					GameObject.Find("_GameManager").GetComponent<GameManager>().fromSelection = false;
 					StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 				}
 			}

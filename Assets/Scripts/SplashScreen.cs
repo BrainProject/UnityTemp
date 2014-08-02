@@ -23,6 +23,15 @@ namespace Game {
 			StartCoroutine (LoadSeledctedLevelWithColorLerp ());
 		}
 
+		void Update()
+		{
+			if(Input.GetMouseButtonDown(0))
+			{
+				Screen.showCursor = true;
+				Application.LoadLevel(1);
+			}
+		}
+
 		public IEnumerator LoadSeledctedLevelWithColorLerp()
 		{
 			originalColor.a = 0;

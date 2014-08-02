@@ -6,6 +6,8 @@
 
 using UnityEngine;
 using System.Collections;
+using MainScene;
+using MinigameSelection;
 
 namespace Game {
 	public enum currentBrainPartEnum{none, FrontalLobe, ParietalLobe, OccipitalLobe};
@@ -15,13 +17,20 @@ namespace Game {
 		public Vector3 currentCameraDefaultPosition;
 		//public GameObject selectedMinigame;
 		internal bool fromMain;
+		internal bool fromSelection;
+		internal bool fromMinigame;
+
+		void Awake()
+		{
+			//destroy this game manager, if another one is present
+			if(GameObject.Find ("_GameManager") != this.gameObject)
+				Destroy(this.gameObject);
+		}
 
 		void Start()
 		{
-			//destroy this game object, if another game manager is present
-			if(GameObject.Find ("_GameManager") != this.gameObject)
-				Destroy(this.gameObject);
 			fromMain = false;
+			fromSelection = false;
 			DontDestroyOnLoad (this.gameObject);
 		}
 
@@ -37,28 +46,31 @@ namespace Game {
 		{
 			if(level == 2)
 			{
-				//if(fromMain)
-				//{
-					print ("Selection scene");
-					switch(selectedBrainPart)
-					{
-					case currentBrainPartEnum.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
-						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("GreenPos");
-						break;
-					case currentBrainPartEnum.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
-						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("BluePos");
-						break;
-					case currentBrainPartEnum.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
-						Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint = GameObject.Find ("OrangePos");
-						break;
-					}
-					if(fromMain)
-						currentCameraDefaultPosition = Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint.transform.position;
-					if(!fromMain)
-						Camera.main.GetComponent<MinigameSelection.CameraControl>().ReadyToLeave = false;
-					Camera.main.transform.position = Camera.main.GetComponent<MinigameSelection.CameraControl>().currentWaypoint.transform.position;
-					fromMain = false;
-				//}
+				print ("Selection scene");
+				switch(selectedBrainPart)
+				{
+				case currentBrainPartEnum.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
+					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("GreenPos");
+					break;
+				case currentBrainPartEnum.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
+					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("BluePos");
+					break;
+				case currentBrainPartEnum.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
+					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("OrangePos");
+					break;
+				}
+				if(fromMain)
+					currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
+				//if player comes to selection scene from main, he can leave immidietely by pressing Vertical key
+				Camera.main.GetComponent<CameraControl>().ReadyToLeave = fromMain;
+				Camera.main.transform.position = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
+				fromMain = false;
+			}
+
+			if(level > 2)
+			{
+				print (Application.loadedLevelName);
+				this.GetComponent<MinigameStates> ().SetPlayed(Application.loadedLevelName);
 			}
 		}
 	}

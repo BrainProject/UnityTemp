@@ -48,7 +48,7 @@ function OnGUI()
 {
 	if(GameObject.Find("TicTac") == null)
 	{
-		Time.timeScale = 0.0;
+		//Time.timeScale = 0.0;
 		Screen.showCursor = true;
 		transform.GetComponent("MouseLook").enabled = false;
 		transform.FindChild("Main Camera").GetComponent("MouseLook").enabled = false;

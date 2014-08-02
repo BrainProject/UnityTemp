@@ -17,7 +17,7 @@ namespace MinigameSelection {
 		// Use this for initialization
 		void Start()
 		{
-			ReadyToLeave = true;
+			print (currentWaypoint.name);
 			OnTransition = false;
 			this.transform.position = GameObject.Find ("_GameManager").GetComponent<GameManager> ().currentCameraDefaultPosition;
 			//this.transform.position = currentWaypoint.transform.position;
@@ -58,18 +58,22 @@ namespace MinigameSelection {
 		}
 		void OnGUI()
 		{
-			if(GUI.Button(new Rect(20, 200, 100, 30), "Reset pos."))
+			if(GUI.Button(new Rect(20, 200, 100, 30), "Reset pos"))
 			{
+				currentWaypoint = GameObject.Find ("BluePos");
 				this.GetComponent<SmoothCameraMove>().From = GameObject.Find ("BluePos").transform.position;
 				this.GetComponent<SmoothCameraMove>().To = GameObject.Find ("BluePos").transform.position;
-				currentWaypoint = GameObject.Find ("BluePos");
+				this.transform.position = currentWaypoint.transform.position;
 			}
 		}
 
 		public void BackToMain()
 		{
 			if(ReadyToLeave)
+			{
 				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "NewMain"));
+				GameObject.Find("_GameManager").GetComponent<GameManager>().fromSelection = true;
+			}
 		}
 	}
 }
