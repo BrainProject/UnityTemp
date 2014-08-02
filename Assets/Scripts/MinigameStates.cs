@@ -41,7 +41,8 @@ namespace Game {
 			minigames.Add (kinectHold);
 			Minigame splashScreen = new Minigame ("SplashScreen");
 			minigames.Add (splashScreen);
-
+			Minigame puzzle = new Minigame ("Puzzle");
+			minigames.Add (puzzle);
 		}
 		
 		public void SetPlayed(string minigameName)
