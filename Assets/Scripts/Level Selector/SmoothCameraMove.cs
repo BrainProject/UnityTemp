@@ -41,7 +41,7 @@ namespace MinigameSelection {
 				this.transform.position = Vector3.Lerp(From, To, fracJourney);
 
 
-			if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
+			if(Input.GetAxis("Vertical") < 0 || Input.GetMouseButtonDown(1))
 			{
 				Camera.main.GetComponent<CameraControl>().BackToMain();
 				//OnSelection = false;
