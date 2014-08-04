@@ -6225,6 +6225,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995fbaf584c753840988f011acf708cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handCursor: {fileID: 268850922}
+  gripHandTexture: {fileID: 2800000, guid: 14b9957884b06cf46a4177b47044cce2, type: 3}
+  releaseHandTexture: {fileID: 2800000, guid: 3a6ceeb06eeef6142819a9bc9c1e20c6, type: 3}
+  normalHandTexture: {fileID: 2800000, guid: b025dd7475ec23c4f8474db1c7295c49, type: 3}
+  smoothFactor: 2
+  controlMouseCursor: 1
+  debugText: {fileID: 0}
 --- !u!114 &917695679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6237,6 +6244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29735fcf935e5f94a9473917f381f6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggableObjects: []
+  dragSpeed: 3
+  selectedObjectMaterial: {fileID: 0}
 --- !u!1 &922523697
 GameObject:
   m_ObjectHideFlags: 0

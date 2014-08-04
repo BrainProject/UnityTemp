@@ -17,6 +17,7 @@ namespace MainScene {
 		private bool initialMouseOver;
 		private Color selectionColor;
 		private Color originalColor;
+		private GameManager gameManager;
 		private GameObject Icon { get; set; }
 		private GameObject Description{ get; set; }
 
@@ -26,6 +27,7 @@ namespace MainScene {
 			Icon = GameObject.Find ("Brain Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			Description = GameObject.Find ("Description");
+			gameManager = GameObject.Find ("_GameManager").GetComponent<GameManager>();
 			originalColor = this.renderer.material.color;
 			levelName = "MirkaSelection";
 			initialMouseOver = true;
@@ -71,16 +73,16 @@ namespace MainScene {
 				{
 					switch(descriptionText)
 					{
-					case "Frontal Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					case "Frontal Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
 						break;
-					case "Pariental Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					case "Pariental Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
 						break;
-					case "Occipital Lobe": GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = new Vector3(0,0,0);
+					case "Occipital Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
 						break;
 					}
-					GameObject.Find("_GameManager").GetComponent<GameManager>().selectedBrainPart = brainPartToLoad;
-					GameObject.Find("_GameManager").GetComponent<GameManager>().fromMain = true;
-					GameObject.Find("_GameManager").GetComponent<GameManager>().fromSelection = false;
+					gameManager.selectedBrainPart = brainPartToLoad;
+					gameManager.fromMain = true;
+					gameManager.fromSelection = false;
 					StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 				}
 			}

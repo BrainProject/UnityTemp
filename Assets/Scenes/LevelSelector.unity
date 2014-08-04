@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: FPS PacMan
   cameraDistance: 4
+  iconName: 
 --- !u!1 &960536812
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +209,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 960536813}
+  - 131: {fileID: 960536814}
   m_Layer: 0
   m_Name: HandCursor
   m_TagString: Untagged
@@ -222,11 +224,31 @@ Transform:
   m_PrefabInternal: {fileID: 1580933946}
   m_GameObject: {fileID: 960536812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: .5, y: .5, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 1406075980}
   m_RootOrder: 1
+--- !u!131 &960536814
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 13100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
+    type: 2}
+  m_PrefabInternal: {fileID: 1580933946}
+  m_GameObject: {fileID: 960536812}
+  m_Enabled: 0
+  m_Texture: {fileID: 2800000, guid: b025dd7475ec23c4f8474db1c7295c49, type: 3}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: -16
+    y: -20
+    width: 32
+    height: 40
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!1 &1259139160
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: MirkaSelection
   cameraDistance: 4
+  iconName: 
 --- !u!1 &1406075979
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +426,8 @@ GameObject:
   - 4: {fileID: 1441662851}
   - 114: {fileID: 1441662850}
   - 114: {fileID: 1441662849}
+  - 114: {fileID: 1441662853}
+  - 114: {fileID: 1441662852}
   m_Layer: 0
   m_Name: KinectControls
   m_TagString: Untagged
@@ -430,13 +455,13 @@ MonoBehaviour:
   Spine: {fileID: 0}
   Neck: {fileID: 0}
   Head: {fileID: 0}
+  LeftShoulder: {fileID: 0}
   LeftUpperArm: {fileID: 0}
   LeftElbow: {fileID: 0}
-  LeftWrist: {fileID: 0}
   LeftHand: {fileID: 0}
+  RightShoulder: {fileID: 0}
   RightUpperArm: {fileID: 0}
   RightElbow: {fileID: 0}
-  RightWrist: {fileID: 0}
   RightHand: {fileID: 0}
   LeftThigh: {fileID: 0}
   LeftKnee: {fileID: 0}
@@ -467,16 +492,14 @@ MonoBehaviour:
   DisplayUserMap: 0
   DisplayColorMap: 0
   DisplaySkeletonLines: 0
+  MapsPercentWidth: 0
+  MapsPercentHeight: 0
   SensorHeight: 1
-  SensorAngle: 10
+  SensorAngle: 15
   MinUserDistance: 1
+  DetectClosestUser: 1
   IgnoreInferredJoints: 0
   smoothing: 1
-  customSmoothing: .100000001
-  customCorrection: .300000012
-  customPrediction: .5
-  customJitterRadius: .5
-  customMaxDeviationRadius: .75
   UseBoneOrientationsFilter: 0
   UseClippedLegsFilter: 0
   UseBoneOrientationsConstraint: 0
@@ -484,10 +507,16 @@ MonoBehaviour:
   Player1Avatars:
   - {fileID: 1441662848}
   Player2Avatars: []
-  Player1CalibrationPose: 0
-  Player2CalibrationPose: 0
-  Player1Gestures: 060000000b000000100000000000000000000000
+  Player1CalibrationPose: 7
+  Player2CalibrationPose: 8
+  Player1Gestures: 0700000008000000
   Player2Gestures: 
+  MinTimeBetweenGestures: .699999988
+  GestureListeners: []
+  CalibrationText: {fileID: 0}
+  HandCursor1: {fileID: 0}
+  HandCursor2: {fileID: 0}
+  ControlMouseCursor: 0
 --- !u!4 &1441662851
 Transform:
   m_ObjectHideFlags: 0
@@ -500,6 +529,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1406075980}
   m_RootOrder: 0
+--- !u!114 &1441662852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
+    type: 2}
+  m_PrefabInternal: {fileID: 1580933946}
+  m_GameObject: {fileID: 1441662848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995fbaf584c753840988f011acf708cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1441662853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 4c8eaa715eea88649bc7c68c63bd0d69,
+    type: 2}
+  m_PrefabInternal: {fileID: 1580933946}
+  m_GameObject: {fileID: 1441662848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29735fcf935e5f94a9473917f381f6b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1580933946
 Prefab:
   m_ObjectHideFlags: 0
@@ -645,7 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smooth: 5
-  speed: 1
+  defaultSpeed: 1
 --- !u!1001 &1893803529
 Prefab:
   m_ObjectHideFlags: 0

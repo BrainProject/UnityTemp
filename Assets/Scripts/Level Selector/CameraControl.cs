@@ -11,15 +11,18 @@ namespace MinigameSelection {
 		public float sweepSpeed = 1.0f;
 		public GameObject currentWaypoint;
 
-		private bool OnTransition { get; set; }
 		internal bool ReadyToLeave { get; set; }
+
+		private bool OnTransition { get; set; }
+		private GameManager gameManager;
 
 		// Use this for initialization
 		void Start()
 		{
 			print (currentWaypoint.name);
 			OnTransition = false;
-			this.transform.position = GameObject.Find ("_GameManager").GetComponent<GameManager> ().currentCameraDefaultPosition;
+			gameManager = GameObject.Find ("_GameManager").GetComponent<GameManager> ();
+			this.transform.position = gameManager.currentCameraDefaultPosition;
 			//this.transform.position = currentWaypoint.transform.position;
 		}
 		
@@ -36,7 +39,7 @@ namespace MinigameSelection {
 					if(currentWaypoint.GetComponent<DefaultCameraPosition>().left != null)
 					{
 						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().left;
-						GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = 
+						gameManager.currentCameraDefaultPosition = 
 							currentWaypoint.transform.position;
 					}
 				}
@@ -46,8 +49,7 @@ namespace MinigameSelection {
 					if(currentWaypoint.GetComponent<DefaultCameraPosition>().right != null)
 					{
 						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().right;
-						GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = 
-							currentWaypoint.transform.position;
+						gameManager.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 				}
 				this.GetComponent<SmoothCameraMove>().Move = true;
@@ -72,7 +74,7 @@ namespace MinigameSelection {
 			if(ReadyToLeave)
 			{
 				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "NewMain"));
-				GameObject.Find("_GameManager").GetComponent<GameManager>().fromSelection = true;
+				gameManager.GetComponent<GameManager>().fromSelection = true;
 			}
 		}
 	}

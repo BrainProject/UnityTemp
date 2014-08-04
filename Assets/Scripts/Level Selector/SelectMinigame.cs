@@ -15,6 +15,7 @@ namespace MinigameSelection {
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
 
+		private GameObject gameManager;
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private bool OnSelection { get; set; }
@@ -25,13 +26,14 @@ namespace MinigameSelection {
 		void Start()
 		{
 			OnSelection = false;
-			mainCamera = GameObject.Find ("Main Camera").camera;
-			CameraDefaultPosition = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
+			gameManager = GameObject.Find ("_GameManager");
+			mainCamera = Camera.main;
+			CameraDefaultPosition = gameManager.GetComponent<GameManager>().currentCameraDefaultPosition;
 			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 			MouseHover = false;
 			Icon = GameObject.Find ("Selection Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			if(GameObject.Find ("_GameManager").GetComponent<MinigameStates> ().GetPlayed (minigameName))
+			if(gameManager.GetComponent<MinigameStates> ().GetPlayed (minigameName))
 			{
 				(this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
@@ -90,8 +92,8 @@ namespace MinigameSelection {
 			{
 				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-				GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
-				GameObject.Find("_GameManager").GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+				gameManager.GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
+				gameManager.GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
 			}
 			//set target position of camera near to minigame buble
