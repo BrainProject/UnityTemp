@@ -11,7 +11,8 @@ namespace MinigameSelection {
 		public float sweepSpeed = 1.0f;
 		public GameObject currentWaypoint;
 
-		internal bool ReadyToLeave { get; set; }
+		public bool ReadyToLeave;
+		//public bool ReadyToLeave { get; set; }
 
 		private bool OnTransition { get; set; }
 		private GameManager gameManager;

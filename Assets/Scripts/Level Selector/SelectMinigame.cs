@@ -45,7 +45,7 @@ namespace MinigameSelection {
 			if(Input.GetButtonDown("Fire1") && !MouseHover)
 				OnSelection = false;
 			//Set target position of camera back to its original point
-			if(Input.GetButtonDown ("Vertical") || Input.GetMouseButtonDown(1))
+			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
 				OnSelection = false;
 //				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
