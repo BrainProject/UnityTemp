@@ -294,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &99859897
 Transform:
   m_ObjectHideFlags: 0
@@ -351,6 +351,10 @@ Prefab:
     - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
@@ -715,8 +719,8 @@ MonoBehaviour:
   Player1Avatars:
   - {fileID: 226695123}
   Player2Avatars: []
-  Player1CalibrationPose: 7
-  Player2CalibrationPose: 8
+  Player1CalibrationPose: 0
+  Player2CalibrationPose: 0
   Player1Gestures: 0700000008000000
   Player2Gestures: 
   MinTimeBetweenGestures: .699999988
@@ -1013,6 +1017,7 @@ GameObject:
   - 4: {fileID: 366698354}
   - 33: {fileID: 366698357}
   - 23: {fileID: 366698356}
+  - 95: {fileID: 366698355}
   m_Layer: 11
   m_Name: neuron
   m_TagString: Untagged
@@ -1032,6 +1037,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1929061215}
   m_RootOrder: 1
+--- !u!95 &366698355
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9500000, guid: 2573b8cd1c5c72f4a856bd1c7bf2d0e3,
+    type: 3}
+  m_PrefabInternal: {fileID: 599806997}
+  m_GameObject: {fileID: 366698353}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 2573b8cd1c5c72f4a856bd1c7bf2d0e3, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
 --- !u!23 &366698356
 Renderer:
   m_ObjectHideFlags: 0

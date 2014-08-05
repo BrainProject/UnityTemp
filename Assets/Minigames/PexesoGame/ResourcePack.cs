@@ -30,7 +30,7 @@ public class ResourcePack : MonoBehaviour {
     {
         if (main != null)
         {
-            GameScript mainGameScript = main.GetComponent("GameScript") as GameScript;
+            GameScript mainGameScript = main.GetComponent<GameScript>();
             if (mainGameScript.enabled)
             {
                 mainGameScript.enabled = false;

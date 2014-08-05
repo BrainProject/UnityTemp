@@ -305,6 +305,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
   m_RootGameObject: {fileID: 1305046942}
@@ -562,8 +566,8 @@ MonoBehaviour:
   Player1Avatars:
   - {fileID: 1195482756}
   Player2Avatars: []
-  Player1CalibrationPose: 7
-  Player2CalibrationPose: 8
+  Player1CalibrationPose: 0
+  Player2CalibrationPose: 0
   Player1Gestures: 0700000008000000
   Player2Gestures: 
   MinTimeBetweenGestures: .699999988
@@ -586,7 +590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1305046943
 Transform:
   m_ObjectHideFlags: 0
