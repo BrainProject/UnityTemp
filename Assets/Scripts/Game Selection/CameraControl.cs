@@ -74,7 +74,7 @@ namespace MinigameSelection {
 		{
 			if(ReadyToLeave)
 			{
-				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "NewMain"));
+				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "Main"));
 				gameManager.GetComponent<GameManager>().fromSelection = true;
 			}
 		}

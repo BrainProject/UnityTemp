@@ -197,7 +197,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedBrainPart: 3
   currentCameraDefaultPosition: {x: 0, y: 0, z: 0}
-  fromMain: 0
 --- !u!4 &55683273
 Transform:
   m_ObjectHideFlags: 0
@@ -1014,7 +1013,6 @@ GameObject:
   - 4: {fileID: 366698354}
   - 33: {fileID: 366698357}
   - 23: {fileID: 366698356}
-  - 95: {fileID: 366698355}
   m_Layer: 11
   m_Name: neuron
   m_TagString: Untagged
@@ -1034,21 +1032,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1929061215}
   m_RootOrder: 1
---- !u!95 &366698355
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 2573b8cd1c5c72f4a856bd1c7bf2d0e3,
-    type: 3}
-  m_PrefabInternal: {fileID: 599806997}
-  m_GameObject: {fileID: 366698353}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2573b8cd1c5c72f4a856bd1c7bf2d0e3, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_HasTransformHierarchy: 1
 --- !u!23 &366698356
 Renderer:
   m_ObjectHideFlags: 0
@@ -1325,7 +1308,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 4bfff64415de0464f923715d7ff6a059, type: 2}
+  - {fileID: 2100000, guid: 3d0145e1078364d4c9785bc8c276ac51, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

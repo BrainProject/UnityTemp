@@ -16,37 +16,37 @@ using System.IO;
  */
 public class Logger : ScriptableObject 
 {
-//    public static string logPath = "Logs/NewronLog.txt";
+    public static string logPath = "Logs/NewronLog.txt";
 
-//#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN
 
-//    void Start()
-//    {
-//        //check if log already exists
-//        if (!File.Exists(logPath))
-//        {
-//            addLogEntry("Log file created");
-//        }
+    void Start()
+    {
+        //check if log already exists
+        if (!File.Exists(logPath))
+        {
+            addLogEntry("Log file created");
+        }
 
-//        addLogEntry("New session started");
-//    }
+        addLogEntry("New session started");
+    }
 
-//    void OnApplicationQuit()
-//    {
-//        addLogEntry("Session ended\r\n\r\n\r\n");
-//    }
+    void OnApplicationQuit()
+    {
+        addLogEntry("Session ended\r\n\r\n\r\n");
+    }
 
-//    public static void addLogEntry(string entry)
-//    {
-//        File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
-//    }
+    public static void addLogEntry(string entry)
+    {
+        File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
+    }
 
-//#elif UNITY_WEBPLAYER
+#elif UNITY_WEBPLAYER
         public static void addLogEntry(string entry)
         {
-//            //Debug.Log("Logger not supported for webplayer");
-//            Debug.Log(entry);
+            //Debug.Log("Logger not supported for webplayer");
+            Debug.Log(entry);
 
         }
-//#endif 
+#endif 
 }
