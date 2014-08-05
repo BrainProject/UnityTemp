@@ -29,7 +29,7 @@ namespace MainScene {
 			Description = GameObject.Find ("Description");
 			gameManager = GameObject.Find ("_GameManager").GetComponent<GameManager>();
 			originalColor = this.renderer.material.color;
-			levelName = "MirkaSelection";
+            levelName = "GameSelection";
 			initialMouseOver = true;
 		}
 

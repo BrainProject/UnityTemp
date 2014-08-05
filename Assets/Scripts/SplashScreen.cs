@@ -53,7 +53,7 @@ namespace Game {
 			}
 			this.gameObject.guiTexture.enabled = false;
 			Screen.showCursor = true;
-			Application.LoadLevel("NewMain");
+			Application.LoadLevel("Main");
 		}
 	}
 }

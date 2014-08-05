@@ -37,9 +37,9 @@ namespace Game {
 		void OnGUI()
 		{
 			if(GUI.Button (new Rect(20,Screen.height - 40,100,30), "Brain"))
-				Application.LoadLevel("NewMain");
-			if(GUI.Button(new Rect(20,Screen.height - 80,100,30), "MirkaSelection"))
-				Application.LoadLevel("MirkaSelection");
+				Application.LoadLevel("Main");
+			if(GUI.Button(new Rect(20,Screen.height - 80,100,30), "Game Selection"))
+				Application.LoadLevel("GameSelection");
 		}
 
 		void OnLevelWasLoaded(int level)
