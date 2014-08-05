@@ -356,11 +356,11 @@ namespace Kinect {
 			{
 				StartInteraction();
 				
-				if(!interactionInited)
-				{
-					Application.Quit();
-					return;
-				}
+//				if(!interactionInited)
+//				{
+//					Application.Quit();
+//					return;
+//				}
 			}
 			
 			// update Kinect interaction
