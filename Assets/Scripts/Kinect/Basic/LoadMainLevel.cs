@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	public class LoadMainLevel : MonoBehaviour 
 	{
@@ -19,3 +20,4 @@ namespace Kinect {
 		}		
 	}
 }
+#endif

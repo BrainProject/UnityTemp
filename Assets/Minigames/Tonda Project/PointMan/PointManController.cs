@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+#if UNITY_STANDALONE
 using Kinect;
 
 public class PointManController : MonoBehaviour 
@@ -118,5 +119,5 @@ public class PointManController : MonoBehaviour
 			}	
 		}
 	}
-
 }
+#endif

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 
+#if UNITY_STANDALONE
 namespace Kinect.Win32{
 public class MouseKeySimulator{
 		//Import cursor set method
@@ -788,3 +789,4 @@ public enum KeyCode : ushort
 	
 	}
 }
+#endif

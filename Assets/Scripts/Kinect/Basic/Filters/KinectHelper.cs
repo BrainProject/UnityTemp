@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectHelper 
 	{
@@ -177,3 +178,4 @@ namespace Kinect {
 	    }
 	}
 }
+#endif

@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	public class MouseControl
 	{
@@ -59,3 +60,4 @@ namespace Kinect {
 	    }
 	}
 }
+#endif

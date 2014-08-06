@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// Filter to correct the joint locations and joint orientations to constraint to range of viable human motion.
@@ -306,3 +307,4 @@ namespace Kinect {
 		}
 	}
 }
+#endif

@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// Implementation of a Holt Double Exponential Smoothing filter. The double exponential
@@ -193,3 +194,4 @@ namespace Kinect {
 	    }
 	}
 }
+#endif

@@ -42,7 +42,7 @@ public class Logger : ScriptableObject
         File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
     }
 
-#elif UNITY_WEBPLAYER
+#else
         public static void addLogEntry(string entry)
         {
             //Debug.Log("Logger not supported for webplayer");
