@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: HanoiTowers
   cameraDistance: 1
   iconName: 
 --- !u!122 &117802216
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &126255096
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abd99df76ad0fc4f9a521880bd7ae69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sweepSpeed: 1
+  sweepSpeed: 2
   currentWaypoint: {fileID: 1657245234}
   ReadyToLeave: 0
 --- !u!1001 &352939560
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &359815147
@@ -611,9 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
-  iconName: 
+  iconName: brain_part_icon2
 --- !u!122 &376872280
 Halo:
   m_ObjectHideFlags: 0
@@ -670,7 +670,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 48d20c3cb2408474a9568aaa83cbca56, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 48d20c3cb2408474a9568aaa83cbca56, type: 2}
+      propertyPath: m_Name
+      value: _GameManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48d20c3cb2408474a9568aaa83cbca56, type: 2}
@@ -1094,9 +1098,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
-  iconName: 
+  iconName: brain_part_icon2
 --- !u!122 &604056982
 Halo:
   m_ObjectHideFlags: 0
@@ -1285,9 +1289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
-  iconName: 
+  iconName: brain_part_icon2
 --- !u!122 &658893443
 Halo:
   m_ObjectHideFlags: 0
@@ -1426,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: HanoiTowers
   cameraDistance: 1
   iconName: 
 --- !u!23 &860361249
@@ -1500,7 +1504,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: Player1Gestures.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1580,7 +1584,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: Player1Gestures.Array.data[2]
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: ControlMouseCursor
@@ -1588,7 +1592,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c8eaa715eea88649bc7c68c63bd0d69, type: 2}
@@ -1677,7 +1681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &991465524
@@ -1837,7 +1841,7 @@ MonoBehaviour:
   Player2Avatars: []
   Player1CalibrationPose: 0
   Player2CalibrationPose: 0
-  Player1Gestures: 0700000008000000
+  Player1Gestures: 070000000800000009000000
   Player2Gestures: 
   MinTimeBetweenGestures: .100000001
   GestureListeners: []
@@ -2268,7 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: .5
   iconName: brain_part_icon
 --- !u!23 &1323279527
@@ -2555,7 +2559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &1657735280
@@ -2723,7 +2727,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 01331c3acb52f9949ad5ec526cb2f782, type: 2}
+  - {fileID: 2100000, guid: 913f85a0e1a19fd4d858ab9434960b5e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2764,7 +2768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1778214945
 Transform:
   m_ObjectHideFlags: 0
@@ -3077,7 +3081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1934937713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3449,7 +3453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &2019811878
@@ -3545,7 +3549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: .5
   iconName: 
 --- !u!122 &2049404700
@@ -3737,7 +3741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: TestKinectHold
+  minigameName: 
   cameraDistance: 1
   iconName: 
 --- !u!122 &2133417829

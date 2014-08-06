@@ -38,6 +38,13 @@ namespace MinigameSelection {
 				(this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
 			}
+			if(minigameName == "")
+			{
+				this.renderer.material.color = Color.gray;
+				this.GetComponent<SelectMinigame>().enabled = false;
+				this.collider.enabled = false;
+				//this.gameObject.SetActive(false);
+			}
 		}
 
 		void Update()
@@ -63,7 +70,7 @@ namespace MinigameSelection {
 			OriginalColor = this.renderer.material.color;
 			this.renderer.material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
 			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
-			//if(tmp != null)
+			if(tmp)
 			{
 				Icon.renderer.material.mainTexture = tmp;
 				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);

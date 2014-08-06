@@ -25,6 +25,7 @@ public class Logger : ScriptableObject
         //check if log already exists
         if (!File.Exists(logPath))
         {
+			File.Create(logPath);
             addLogEntry("Log file created");
         }
 

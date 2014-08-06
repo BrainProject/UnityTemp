@@ -34,14 +34,6 @@ namespace Game {
 			DontDestroyOnLoad (this.gameObject);
 		}
 
-		void OnGUI()
-		{
-			if(GUI.Button (new Rect(20,Screen.height - 40,100,30), "Brain"))
-				Application.LoadLevel("Main");
-			if(GUI.Button(new Rect(20,Screen.height - 80,100,30), "Game Selection"))
-				Application.LoadLevel("GameSelection");
-		}
-
 		void OnLevelWasLoaded(int level)
 		{
 			if(level == 2)
@@ -72,6 +64,17 @@ namespace Game {
 				print (Application.loadedLevelName);
 				this.GetComponent<MinigameStates> ().SetPlayed(Application.loadedLevelName);
 			}
+		}
+
+		//Only for debugging and testing purposes
+		void OnGUI()
+		{
+			if(GUI.Button (new Rect(Screen.width - 120,Screen.height - 80,100,30), "Brain"))
+				Application.LoadLevel("Main");
+			if(GUI.Button(new Rect(Screen.width - 120,Screen.height - 120,100,30), "Game Selection"))
+				Application.LoadLevel("GameSelection");
+			if(GUI.Button(new Rect(Screen.width - 120,20,100,30), "QUIT"))
+				Application.Quit();
 		}
 	}
 }

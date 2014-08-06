@@ -645,6 +645,10 @@ namespace Kinect {
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+									if(gestureData.complete)
+									{
+										Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.DOWN);
+									}
 								}
 							}
 							else

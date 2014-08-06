@@ -14,7 +14,7 @@ namespace Kinect {
 			if(!levelLoaded && manager && KinectManager.IsKinectInitialized())
 			{
 				levelLoaded = true;
-				Application.LoadLevel(1);
+				Application.LoadLevel(2);
 			}
 		}		
 	}
