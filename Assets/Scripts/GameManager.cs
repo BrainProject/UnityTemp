@@ -36,7 +36,7 @@ namespace Game {
 
 		void OnLevelWasLoaded(int level)
 		{
-			if(level == 2)
+			if(level == 3)
 			{
 				print ("Selection scene");
 				switch(selectedBrainPart)
@@ -59,7 +59,7 @@ namespace Game {
 				fromMain = false;
 			}
 
-			if(level > 2)
+			if(level > 3)
 			{
 				print (Application.loadedLevelName);
 				this.GetComponent<MinigameStates> ().SetPlayed(Application.loadedLevelName);
