@@ -50,7 +50,7 @@ public class Logger : ScriptableObject
             //Debug.Log("Application persistent data path: " + Application.persistentDataPath);
 
             //create directory if it don't exists already
-            DirectoryInfo dInfo = Directory.CreateDirectory(path);
+            Directory.CreateDirectory(path);
             //Debug.Log("directory: " + dInfo.FullName + " should exists now");
 
             bool addCreatedEntry = false;
@@ -81,7 +81,7 @@ public class Logger : ScriptableObject
 
         public static void Stop()
         {
-            Debug.Log("On application quit");
+            //Debug.Log("On application quit");
             addLogEntry("Session ended\r\n\r\n\r\n");
             logfile.Close();
         }
