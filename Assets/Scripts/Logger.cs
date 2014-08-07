@@ -3,7 +3,6 @@ using System.Collections;
 using System;
 using System.IO;
 
-
 /*
  * class for logging in-game events into simple text file
  * designed as a singleton - single GameObject 'Logger' should exists in all scenes
@@ -16,38 +15,75 @@ using System.IO;
  */
 public class Logger : ScriptableObject 
 {
-    public static string logPath = "Logs/NewronLog.txt";
+    
+    private static StreamWriter logfile;
 
-#if UNITY_STANDALONE_WIN
-
-    void Start()
-    {
-        //check if log already exists
-        if (!File.Exists(logPath))
+    
+    // in case of web build, logger can't be use, so there are only empty method definitions
+    #if UNITY_WEBPLAYER
+        
+        public static void Initialize(string path, string filename)
         {
-			File.Create(logPath);
-            addLogEntry("Log file created");
+
         }
 
-        addLogEntry("New session started");
-    }
-
-    void OnApplicationQuit()
-    {
-        addLogEntry("Session ended\r\n\r\n\r\n");
-    }
-
-    public static void addLogEntry(string entry)
-    {
-        File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
-    }
-
-#elif UNITY_WEBPLAYER
         public static void addLogEntry(string entry)
         {
             //Debug.Log("Logger not supported for webplayer");
             Debug.Log(entry);
 
         }
-#endif 
+
+        public static void Stop()
+        {
+
+        }
+
+#else
+
+    public static void Initialize(string path, string filename)
+        {
+            
+            string logPath = path + "/" + filename;
+            Debug.Log("Newron log path: " + logPath);
+            //Debug.Log("Application data path: " + Application.dataPath);
+            //Debug.Log("Application persistent data path: " + Application.persistentDataPath);
+
+            //create directory if it don't exists already
+            DirectoryInfo dInfo = Directory.CreateDirectory(path);
+            //Debug.Log("directory: " + dInfo.FullName + " should exists now");
+
+            bool addCreatedEntry = false;
+            //check if log already exists
+            if (!File.Exists(logPath))
+            {
+                addCreatedEntry = true;
+            }
+
+            //create new stream writer - will create new or append to existing file
+            logfile = new System.IO.StreamWriter(logPath, true);
+
+            if (addCreatedEntry)
+            {
+                addLogEntry("Log file created");
+            }
+
+            addLogEntry("New session started");
+        }
+        
+
+        public static void addLogEntry(string entry)
+        {
+            //System.IO.File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
+            logfile.WriteLine(Convert.ToString(DateTime.Now) + " || " + entry);
+            logfile.Flush();
+        }
+
+        public static void Stop()
+        {
+            Debug.Log("On application quit");
+            addLogEntry("Session ended\r\n\r\n\r\n");
+            logfile.Close();
+        }
+    #endif 
 }
