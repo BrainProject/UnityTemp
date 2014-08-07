@@ -299,14 +299,13 @@ namespace Kinect {
 			}
 			catch (Exception ex) 
 			{
-				string message = ex.Message + " - " + InteractionWrapper.GetNuiErrorString(hr);
-				Debug.LogError(ex.ToString());
+				//string message = ex.Message + " - " + InteractionWrapper.GetNuiErrorString(hr);
+				//Debug.LogError(ex.ToString());
 				
-				if(debugText != null)
-				{
-					debugText.guiText.text = message;
-				}
-					
+				//if(debugText != null)
+				//{
+				//	debugText.guiText.text = message;
+				//}
 				return;
 			}
 			

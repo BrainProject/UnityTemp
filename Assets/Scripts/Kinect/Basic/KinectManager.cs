@@ -1005,12 +1005,13 @@ namespace Kinect {
 			}
 			catch (Exception e)
 			{
+				Debug.Log ("Kinect is not connected, deactivating KinectManager.");
+				this.transform.parent.gameObject.SetActive(false);
 				string message = e.Message + " - " + KinectWrapper.GetNuiErrorString(hr);
-				Debug.LogError(message);
-				Debug.LogError(e.ToString());
+				//Debug.LogError(message);
+				//Debug.LogError(e.ToString());
 				if(CalibrationText != null)
 					CalibrationText.guiText.text = message;
-					
 				return;
 			}
 			
