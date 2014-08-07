@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Text;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectManager : MonoBehaviour
 	{
@@ -2107,3 +2108,4 @@ namespace Kinect {
 		}		
 	}
 }
+#endif

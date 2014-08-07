@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text; 
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	// Wrapper class that holds the various structs and dll imports
 	// needed to set up a model with the Kinect.
@@ -1232,3 +1233,4 @@ namespace Kinect {
 	    }		
 	}
 }
+#endif

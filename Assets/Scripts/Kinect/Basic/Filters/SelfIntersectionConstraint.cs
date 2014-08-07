@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect  {
 	/// <summary>
 	/// Filter to prevent skeleton arm joints from intersecting the "body".
@@ -91,3 +92,4 @@ namespace Kinect  {
 	    }
 	}
 }
+#endif

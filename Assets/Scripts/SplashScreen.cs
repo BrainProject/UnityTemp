@@ -20,6 +20,7 @@ namespace Game {
 			originalColor = this.guiTexture.color;
 			targetColor = this.guiTexture.color;
 			Screen.showCursor = false;
+			StopCoroutine ("LoadLevelWithFade");
 			StartCoroutine (LoadSeledctedLevelWithColorLerp ());
 		}
 
@@ -28,7 +29,7 @@ namespace Game {
 			if(Input.GetMouseButtonDown(0))
 			{
 				Screen.showCursor = true;
-				Application.LoadLevel(1);
+				Application.LoadLevel("Main");
 			}
 		}
 
@@ -38,22 +39,22 @@ namespace Game {
 			targetColor.a = 1.0f;
 			while(this.guiTexture.color.a < 0.99f)
 			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.timeSinceLevelLoad)/3);
+				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.timeSinceLevelLoad)/2);
 
 				yield return null;
 			}
-			float startTime = 4.0f;
+			float startTime = Time.time + 1;
 			originalColor.a = 0.99f;
 			targetColor.a = 0;
 			while(this.guiTexture.color.a > 0.01f)
 			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/3);
+				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
 
 				yield return null;
 			}
 			this.gameObject.guiTexture.enabled = false;
 			Screen.showCursor = true;
-			Application.LoadLevel("Main");
+			Application.LoadLevel((Application.loadedLevel)+1);
 		}
 	}
 }

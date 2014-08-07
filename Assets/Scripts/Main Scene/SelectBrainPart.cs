@@ -83,6 +83,7 @@ namespace MainScene {
 					gameManager.selectedBrainPart = brainPartToLoad;
 					gameManager.fromMain = true;
 					gameManager.fromSelection = false;
+					StopAllCoroutines();
 					StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
 				}
 			}

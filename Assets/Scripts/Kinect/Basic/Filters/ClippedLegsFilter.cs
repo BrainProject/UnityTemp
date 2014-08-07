@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// FilterClippedLegs smooths out leg joint positions when the skeleton is clipped
@@ -232,3 +233,4 @@ namespace Kinect {
 	    }
 	}
 }
+#endif

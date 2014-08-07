@@ -7,6 +7,7 @@
 using UnityEngine;
 using System;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// TimedLerp - Maintains a time-based lerp between 0 and a upper limit between 0 and 1.
@@ -130,3 +131,4 @@ namespace Kinect {
 	    }
 	}
 }
+#endif

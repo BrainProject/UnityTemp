@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectGestures
 	{
@@ -645,10 +646,6 @@ namespace Kinect {
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-									if(gestureData.complete)
-									{
-										Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.DOWN);
-									}
 								}
 							}
 							else
@@ -1050,6 +1047,10 @@ namespace Kinect {
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+									if(gestureData.complete)
+									{
+										Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.DOWN);
+									}
 								}
 							}
 							else
@@ -1092,3 +1093,4 @@ namespace Kinect {
 		}
 	}
 }
+#endif

@@ -28,6 +28,7 @@ namespace Game {
 			originalColor = this.guiTexture.color;
 			targetColor = this.guiTexture.color;
 			startTime = Time.time;
+			StopCoroutine ("LoadLevelWithFade");
 			StartCoroutine (LoadSeledctedLevelWithColorLerp (forBeginning));
 
 	        //find Logger instance
@@ -68,7 +69,9 @@ namespace Game {
 			}
 			else
 			{
-				GameObject.Find ("KinectControls").SetActive(false);
+				GameObject kinectObject = GameObject.Find ("KinectControls");
+				if(kinectObject)
+					kinectObject.SetActive(false);
 				float startTime = Time.time;
 				originalColor.a = 0;
 				targetColor.a = 1.0f;
