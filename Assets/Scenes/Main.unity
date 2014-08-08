@@ -1867,6 +1867,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 597517642}
   m_RootOrder: 0
+--- !u!1 &869544625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+  m_PrefabInternal: {fileID: 1160294941}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 869544628}
+  - 114: {fileID: 869544627}
+  - 114: {fileID: 869544626}
+  m_Layer: 0
+  m_Name: Logger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &869544626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: f422ea912ed288649a2fb9070705d70f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1160294941}
+  m_GameObject: {fileID: 869544625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f219c61979105764a87c5acd450c9a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &869544627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f422ea912ed288649a2fb9070705d70f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1160294941}
+  m_GameObject: {fileID: 869544625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b764b966424e6b24994b918489c79453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Logs
+  filename: NewronLog.txt
+--- !u!4 &869544628
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+  m_PrefabInternal: {fileID: 1160294941}
+  m_GameObject: {fileID: 869544625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
 --- !u!1 &871734914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,6 +2472,54 @@ Transform:
   - {fileID: 226711246}
   m_Father: {fileID: 686976236}
   m_RootOrder: 0
+--- !u!1001 &1160294941
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_RootMapOrder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f422ea912ed288649a2fb9070705d70f, type: 2}
+  m_RootGameObject: {fileID: 869544625}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1235629671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,59 +3143,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 41733273}
   m_RootOrder: 0
---- !u!1 &1718076371
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1718076374}
-  - 114: {fileID: 1718076372}
-  - 114: {fileID: 1718076373}
-  m_Layer: 0
-  m_Name: Logger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1718076372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1718076371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b764b966424e6b24994b918489c79453, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: Logs
-  filename: NewronLog.txt
---- !u!114 &1718076373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1718076371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f219c61979105764a87c5acd450c9a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1718076374
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1718076371}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.63393736, y: -1.72226667, z: 2.64820862}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
 --- !u!1 &1806535530
 GameObject:
   m_ObjectHideFlags: 0

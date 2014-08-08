@@ -4,16 +4,20 @@ using System;
 using System.IO;
 
 /*
- * class for logging in-game events into simple text file
- * designed as a singleton - single GameObject 'Logger' should exists in all scenes
+ * static class for logging in-game events into simple text file
  * from any other class, you can simply call:
  *    Logger.addLogEntry("this is my entry");
  * to add new entry to log
  * 
+ * Logger should be initialized in "main" scene
+ * If you want to debug single scene (e.g. "myGreatGame.scene"), 
+ * simply add "Logger" prefab to your scene hierarchy. 
+ * Via this prefab, you can set variables of Logger - path and filename
+ * 
  * \author Jiri Chmelik
  * \date 07-2014
  */
-public class Logger : ScriptableObject 
+public static class Logger : object 
 {
     
     private static StreamWriter logfile;
@@ -78,6 +82,10 @@ public class Logger : ScriptableObject
             {
                 logfile.WriteLine(Convert.ToString(DateTime.Now) + " || " + entry);
                 logfile.Flush();
+            }
+            else
+            {
+                Debug.LogWarning("Logger is not initialized - entry will not be added to log file. Do you have active 'Logger' prefab in your scene?");
             }
         }
 

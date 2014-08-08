@@ -11,7 +11,7 @@ namespace HanoiTowers
         Right
     }
 
-    public class HanoiGameController : MonoBehaviour
+    public class GameController : MonoBehaviour
     {
 
         //TODO HUD - score, ...
@@ -50,9 +50,9 @@ namespace HanoiTowers
         void Start()
         {
             //set up columns
-            print("Columns count: " + columns.GetLength(0));
-            print("Starting column index = " + (int)startingColumnName);
-            print("Ending column index = " + (int)endingColumnName);
+            //print("Columns count: " + columns.GetLength(0));
+            //print("Starting column index = " + (int)startingColumnName);
+            //print("Ending column index = " + (int)endingColumnName);
 
             startingColumn = columns[(int)startingColumnName].GetComponent<Column>();
             endingColumn = columns[(int)endingColumnName].GetComponent<Column>();
@@ -110,7 +110,7 @@ namespace HanoiTowers
         public void increaseScore()
         {
             score++;
-            Debug.Log("Number of moves: " + score);
+            //Debug.Log("Number of moves: " + score);
         }
 
         public float getCeilingPosition()

@@ -8,7 +8,7 @@ namespace HanoiTowers
     public class Column : MonoBehaviour
     {
 
-        public HanoiGameController gameController;
+        public GameController gameController;
         public GUIText winText;
 
         public bool starting;
@@ -143,7 +143,7 @@ namespace HanoiTowers
         public void removeTopDisk()
         {
             disks.Pop();
-            Debug.Log("There is(are) " + disks.Count + " disk(s) on column: " + this);
+            //Debug.Log("There is(are) " + disks.Count + " disk(s) on column: " + this);
         }
 
         public void removeAllDisks()

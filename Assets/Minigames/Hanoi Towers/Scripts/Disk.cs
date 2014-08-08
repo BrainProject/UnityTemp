@@ -16,7 +16,7 @@ namespace HanoiTowers
     public class Disk : MonoBehaviour
     {
 
-        public HanoiGameController gameController;
+        public GameController gameController;
 
         public int size;
 
