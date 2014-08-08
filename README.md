@@ -1,7 +1,8 @@
-UnityTemp
+Newron project
 =========
 
 Temporary repository for Unity assests of The Newron project.
+
 
 
 Git-flow
@@ -9,6 +10,9 @@ Git-flow
 
 See article by Vincent Driessen about Git-flow:
 http://nvie.com/posts/a-successful-git-branching-model/
+
+If You are using SourceTree software, see also:
+http://blog.sourcetreeapp.com/2012/08/01/smart-branching-with-sourcetree-and-git-flow/
 
 
 
