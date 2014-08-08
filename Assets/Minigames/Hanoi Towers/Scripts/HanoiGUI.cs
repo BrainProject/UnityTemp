@@ -6,7 +6,7 @@ namespace HanoiTowers
 
     public class HanoiGUI : MonoBehaviour
     {
-        public HanoiGameController controller;
+        public GameController controller;
 
         private bool toggleValue = true;
         private int disks = 3;

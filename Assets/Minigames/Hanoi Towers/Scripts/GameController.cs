@@ -11,7 +11,7 @@ namespace HanoiTowers
         Right
     }
 
-    public class HanoiGameController : MonoBehaviour
+    public class GameController : MonoBehaviour
     {
 
         //TODO HUD - score, ...

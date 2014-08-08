@@ -8,7 +8,7 @@ namespace HanoiTowers
     public class Column : MonoBehaviour
     {
 
-        public HanoiGameController gameController;
+        public GameController gameController;
         public GUIText winText;
 
         public bool starting;
