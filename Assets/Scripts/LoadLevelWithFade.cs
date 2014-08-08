@@ -30,9 +30,6 @@ namespace Game {
 			startTime = Time.time;
 			StopCoroutine ("LoadLevelWithFade");
 			StartCoroutine (LoadSeledctedLevelWithColorLerp (forBeginning));
-
-	        //find Logger instance
-
 		}
 		
 		// Update is called once per frame
@@ -62,7 +59,7 @@ namespace Game {
 				}
 				this.gameObject.guiTexture.enabled = false;
 			}
-			else if(levelToLoad == "")
+			else if(levelToLoad == "")  
 			{
 				print ("No minigame here.");
 				this.gameObject.guiTexture.enabled = false;
@@ -84,7 +81,7 @@ namespace Game {
 				}
 
 				Application.LoadLevel(levelToLoad);
-	            Logger.addLogEntry("Loading game scene: '" + levelToLoad + "'");
+	            Logger.addLogEntry("Loading scene: '" + levelToLoad + "'");
 			}
 		}
 	}

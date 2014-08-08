@@ -24,7 +24,7 @@ public class LoggerSetup : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        Debug.Log("On application quit");
+        //Debug.Log("On application quit");
         Logger.Stop();
     }
 

@@ -5,10 +5,16 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Game {
-	public class SplashScreen: MonoBehaviour {
-		private Color originalColor;
+namespace Game 
+{
+	public class SplashScreen: MonoBehaviour 
+    {
+        public float timeBeforeFade = 2.5f;
+		
+        private Color originalColor;
 		private Color targetColor;
+        
+        private float startTime;
 
 		void Awake()
 		{
@@ -20,7 +26,7 @@ namespace Game {
 			originalColor = this.guiTexture.color;
 			targetColor = this.guiTexture.color;
 			Screen.showCursor = false;
-			StopCoroutine ("LoadLevelWithFade");
+			//StopCoroutine ("LoadLevelWithFade");
 			StartCoroutine (LoadSeledctedLevelWithColorLerp ());
 		}
 
@@ -29,32 +35,36 @@ namespace Game {
 			if(Input.GetMouseButtonDown(0))
 			{
 				Screen.showCursor = true;
-				Application.LoadLevel("Main");
+                Application.LoadLevel(Application.loadedLevel + 1);
 			}
 		}
 
 		public IEnumerator LoadSeledctedLevelWithColorLerp()
 		{
+            yield return new WaitForSeconds(timeBeforeFade);
+            startTime = Time.time;
+
 			originalColor.a = 0;
 			targetColor.a = 1.0f;
 			while(this.guiTexture.color.a < 0.99f)
-			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.timeSinceLevelLoad)/2);
-
-				yield return null;
-			}
-			float startTime = Time.time + 1;
-			originalColor.a = 0.99f;
-			targetColor.a = 0;
-			while(this.guiTexture.color.a > 0.01f)
 			{
 				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
 
 				yield return null;
 			}
-			this.gameObject.guiTexture.enabled = false;
-			Screen.showCursor = true;
-			Application.LoadLevel((Application.loadedLevel)+1);
+            //float startTime = Time.time + 1;
+            //originalColor.a = 0.99f;
+            //targetColor.a = 0;
+            //while(this.guiTexture.color.a > 0.01f)
+            //{
+            //    this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
+
+            //    yield return null;
+            //}
+			//this.gameObject.guiTexture.enabled = false;
+			
+            Screen.showCursor = true;
+			Application.LoadLevel(Application.loadedLevel+1);
 		}
 	}
 }
