@@ -74,9 +74,11 @@ public class Logger : ScriptableObject
 
         public static void addLogEntry(string entry)
         {
-            //System.IO.File.AppendAllText(logPath, Convert.ToString(DateTime.Now) + " || " + entry + "\r\n");
-            logfile.WriteLine(Convert.ToString(DateTime.Now) + " || " + entry);
-            logfile.Flush();
+            if (logfile != null)
+            {
+                logfile.WriteLine(Convert.ToString(DateTime.Now) + " || " + entry);
+                logfile.Flush();
+            }
         }
 
         public static void Stop()
