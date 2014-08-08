@@ -6,7 +6,7 @@ using System.Collections;
  *
  * Helper class to set-up logger
  * 
- * script should be attached to some enabled object in main scene - 
+ * You should not use this script alone. Use 'Logger' prefab instead.
  *
  * \author Jiri Chmelik
  * \date 08-2014
