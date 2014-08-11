@@ -14,6 +14,9 @@ using System.IO;
  * simply add "Logger" prefab to your scene hierarchy. 
  * Via this prefab, you can set variables of Logger - path and filename
  * 
+ * \warning Do not add log entries during Awake() phase if possible. Order of awaking scripts is not defined
+ * and therefore Logger class may not have been initialized yet. 
+ * 
  * \author Jiri Chmelik
  * \date 07-2014
  */
@@ -47,9 +50,9 @@ public static class Logger : object
 
     public static void Initialize(string path, string filename)
         {
-            
+            Debug.Log("Initialization of Logger...");
             string logPath = path + "/" + filename;
-            Debug.Log("Newron log path: " + logPath);
+            Debug.Log("...Newron log path: " + logPath);
             //Debug.Log("Application data path: " + Application.dataPath);
             //Debug.Log("Application persistent data path: " + Application.persistentDataPath);
 
@@ -85,7 +88,7 @@ public static class Logger : object
             }
             else
             {
-                Debug.LogWarning("Logger is not initialized - entry will not be added to log file. Do you have active 'Logger' prefab in your scene?");
+                Debug.LogWarning("Logger is not initialized - entry will not be added to log file. Do you have an active instance of 'Logger' prefab in your scene?");
             }
         }
 
