@@ -161,7 +161,7 @@ namespace MinigamePexeso {
 
 	        if (main != null)
 	        {
-	            GameScript mainGameScript = main.GetComponent("GameScript") as GameScript;
+	            PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
 	            mainGameScript.rows = rows;
 	            mainGameScript.columns = columns;
 	            mainGameScript.enabled = true;

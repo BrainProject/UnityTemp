@@ -19,7 +19,7 @@ namespace MinigamePexeso {
 	    public bool toRemove = false;
 
 	    private float moveSpeed = 2f;
-		private Vector3 startPosition;
+		//private Vector3 startPosition;
 	    private Vector3 endPosition;
 	    private float t;
 
@@ -62,7 +62,7 @@ namespace MinigamePexeso {
 	    private IEnumerator move()
 		{
 			isMoving = true;
-			startPosition = transform.eulerAngles;
+			//startPosition = transform.eulerAngles;
 			t = 0;
 			endPosition = transform.eulerAngles + 180f * Vector3.up; // what the new angles should be
 
