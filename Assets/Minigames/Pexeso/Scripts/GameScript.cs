@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Timers;
 
 namespace MinigamePexeso {
-	public class PexesoGameScript : MonoBehaviour {
+	public class GameScript : MonoBehaviour {
 
 	    public Scoreboard scoreboard;
 		
@@ -158,7 +158,7 @@ namespace MinigamePexeso {
 	            timer.Stop();
 	            menu.SetActive(true);
 	            resourcePackMenu.SetActive(true);
-	            ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("ResourcePack") as ResourcePack;
+                ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as ResourcePack;
 	            resourceMenuScript.CreateMenu();
 	            //game ends here
 	            /*GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
@@ -201,7 +201,7 @@ namespace MinigamePexeso {
 	                //user clicks left mouse button and hits picture
 	                if (Input.GetMouseButtonUp(0) && hit.collider.name == "Cube")//
 	                {
-	                    Mover mover = hit.collider.gameObject.transform.parent.GetComponent("Mover") as Mover;//
+                        Mover mover = hit.collider.gameObject.transform.parent.GetComponent("MinigamePexeso.Mover") as Mover;//
 	                    //picture is already being removed
 	                    if (mover.toRemove)
 	                    {
@@ -265,8 +265,8 @@ namespace MinigamePexeso {
 	    /// <param name="second">Second object</param>
 	    public IEnumerator NotFoundPair(GameObject first, GameObject second)
 	    {
-	        Mover mover1 = first.GetComponent("Mover") as Mover;
-	        Mover mover2 = second.GetComponent("Mover") as Mover;
+            Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
+            Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
 
 			while (mover2.isMoving)
 			{
@@ -293,8 +293,8 @@ namespace MinigamePexeso {
 	    /// <param name="second">Second object</param>
 	    public IEnumerator FoundPair(GameObject first, GameObject second)
 	    {
-	        Mover mover1 = first.GetComponent("Mover") as Mover;
-	        Mover mover2 = second.GetComponent("Mover") as Mover;
+            Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
+            Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
 	        mover1.toRemove = true;
 	        mover2.toRemove = true;
 

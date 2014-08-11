@@ -33,7 +33,7 @@ namespace MinigamePexeso
 	    {
 	        if (main != null)
 	        {
-	            PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
+                GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
                 
 	            if (mainGameScript.enabled)
 	            {
@@ -172,10 +172,10 @@ namespace MinigamePexeso
 	            GameObject.Destroy(buttonPlanes[i]);
 	        }
 
-	        PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
+            GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
 	        mainGameScript.resourcePack = chosenButton.name;
 
-	        GameStart gameStart = menu.GetComponent("GameStart") as GameStart;
+            GameStart gameStart = menu.GetComponent("MinigamePexeso.GameStart") as GameStart;
 	        gameStart.enabled = true;
 	        gameStart.CreateMenu();
 	    }

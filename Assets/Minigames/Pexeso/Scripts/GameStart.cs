@@ -161,13 +161,13 @@ namespace MinigamePexeso {
 
 	        if (main != null)
 	        {
-	            PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
+                GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
 	            mainGameScript.rows = rows;
 	            mainGameScript.columns = columns;
 	            mainGameScript.enabled = true;
 	            mainGameScript.CreateGameBoard();
 
-	            AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
 	            if(musicPlayer == null)
 	            {
 	                Debug.Log("ERROR");
