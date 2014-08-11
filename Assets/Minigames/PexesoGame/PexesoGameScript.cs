@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Timers;
 
 namespace MinigamePexeso {
-	public class GameScript : MonoBehaviour {
+	public class PexesoGameScript : MonoBehaviour {
 
 	    public Scoreboard scoreboard;
 		

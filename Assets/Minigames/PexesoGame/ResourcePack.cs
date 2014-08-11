@@ -3,8 +3,10 @@ using System;
 using System.IO;
 using System.Collections;
 
-namespace MinigamePexeso {
-	public class ResourcePack : MonoBehaviour {
+namespace MinigamePexeso 
+{
+	public class ResourcePack : MonoBehaviour 
+    {
 
 	    public GameObject menu;
 	    public GameObject main;
@@ -31,7 +33,8 @@ namespace MinigamePexeso {
 	    {
 	        if (main != null)
 	        {
-	            GameScript mainGameScript = main.GetComponent("GameScript") as GameScript;
+	            PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
+                
 	            if (mainGameScript.enabled)
 	            {
 	                mainGameScript.enabled = false;
@@ -93,7 +96,6 @@ namespace MinigamePexeso {
 	    private Ray ray;
 	    private RaycastHit hit;
 
-		// Update is called once per frame
 		void Update ()
 	    {
 	        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -170,7 +172,7 @@ namespace MinigamePexeso {
 	            GameObject.Destroy(buttonPlanes[i]);
 	        }
 
-	        GameScript mainGameScript = main.GetComponent("GameScript") as GameScript;
+	        PexesoGameScript mainGameScript = main.GetComponent("PexesoGameScript") as PexesoGameScript;
 	        mainGameScript.resourcePack = chosenButton.name;
 
 	        GameStart gameStart = menu.GetComponent("GameStart") as GameStart;
