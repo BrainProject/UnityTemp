@@ -46,9 +46,9 @@ public static class Logger : object
 
         }
 
-#else
+    #else
 
-    public static void Initialize(string path, string filename)
+        public static void Initialize(string path, string filename)
         {
             Debug.Log("Initialization of Logger...");
             string logPath = path + "/" + filename;
