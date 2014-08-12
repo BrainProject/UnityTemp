@@ -49,8 +49,11 @@ namespace MinigameSelection {
 
 		void Update()
 		{
-			if(Input.GetButtonDown("Fire1") && !MouseHover)
-				OnSelection = false;
+            if (Input.GetButtonDown("Fire1") && !MouseHover)
+            {
+                OnSelection = false;
+            }
+
 			//Set target position of camera back to its original point
 			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
@@ -103,6 +106,7 @@ namespace MinigameSelection {
 				gameManager.GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
 			}
+
 			//set target position of camera near to minigame buble
 			else
 			{

@@ -9,10 +9,18 @@ using System.Collections;
 using MainScene;
 using MinigameSelection;
 
-namespace Game {
-	public enum currentBrainPartEnum{none, FrontalLobe, ParietalLobe, OccipitalLobe};
+namespace Game 
+{
+	public enum currentBrainPartEnum
+    {
+        none, 
+        FrontalLobe, 
+        ParietalLobe, 
+        OccipitalLobe
+    };
 
-	public class GameManager : MonoBehaviour {
+	public class GameManager : MonoBehaviour 
+    {
 		public currentBrainPartEnum selectedBrainPart;
 		public Vector3 currentCameraDefaultPosition;
 		//public GameObject selectedMinigame;

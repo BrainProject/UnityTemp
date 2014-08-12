@@ -6,8 +6,10 @@ using UnityEngine;
 using System.Collections;
 using Game;
 
-namespace MinigameSelection {
-	public class CameraControl : MonoBehaviour {
+namespace MinigameSelection 
+{
+	public class CameraControl : MonoBehaviour 
+    {
 		public float sweepSpeed = 1.0f;
 		public GameObject currentWaypoint;
 
@@ -17,7 +19,6 @@ namespace MinigameSelection {
 		private bool OnTransition { get; set; }
 		private GameManager gameManager;
 
-		// Use this for initialization
 		void Start()
 		{
 			print (currentWaypoint.name);
@@ -27,7 +28,6 @@ namespace MinigameSelection {
 			//this.transform.position = currentWaypoint.transform.position;
 		}
 		
-		// Update is called once per frame
 		void Update()
 		{
 			//print (currentWaypoint.name);
@@ -59,6 +59,7 @@ namespace MinigameSelection {
 				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
 			}
 		}
+
 		void OnGUI()
 		{
 			if(GUI.Button(new Rect(20, 200, 100, 30), "Reset pos"))
