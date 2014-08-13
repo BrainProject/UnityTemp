@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using System.Timers;
 
 namespace MinigamePexeso 
 {
@@ -19,11 +18,6 @@ namespace MinigamePexeso
 
         public GameObject gameTilePrefab;
 
-	    //Array of cubes.
-	    //private GameObject[] cubes;
-	    //Array of planes.
-	   // private GameObject[] planes;
-
         private GameObject[] gameTiles;
 
 	    //Number of rows.
@@ -35,16 +29,6 @@ namespace MinigamePexeso
 	    public GUIText correctPairsDisplay;
 	    private int wrongPairs;
 	    public GUIText wrongPairsDisplay;
-
-        ///// <summary>
-        ///// Elapsed game time in seconds.
-        ///// </summary>
-        //private int time;
-
-        ///// <summary>
-        ///// Determines if it is necessary to update timer text.
-        ///// </summary>
-        //private bool updateTimer = false;
 
 	    /// <summary>
 	    /// GUIText for timer.
@@ -62,34 +46,6 @@ namespace MinigamePexeso
         private float gameEndTime;
         private int   lastDisplayTime = 0;
 
-        ///// <summary>
-        ///// Timer.
-        ///// </summary>
-        //Timer timer = new Timer();
-
-        ///// <summary>
-        ///// Creates and starts timer.
-        ///// </summary>
-        //void CreateTimer()
-        //{
-        //    timer = new Timer();
-        //    timer.Interval = 1000;
-        //    timer.Elapsed +=TimerTick;
-	        
-        //    timer.Start();
-        //}
-
-        ///// <summary>
-        ///// Timer tick event method.
-        ///// </summary>
-        ///// <param name="o">O.</param>
-        ///// <param name="e">E.</param>
-        //void TimerTick(object o, System.EventArgs e)
-        //{
-        //    time++;
-        //    updateTimer = true;
-        //}
-
 		/// <summary>
 	    /// Initialization. Creates all cubes and planes, sets their position etc.
 	    /// </summary>
@@ -101,7 +57,6 @@ namespace MinigamePexeso
 	    public void CreateGameBoard()
 	    {
 	        //set everything to default values
-	        //updateTimer = false;
 	        correctPairs = 0;
 	        correctPairsDisplay.text = correctPairs.ToString();
 	        wrongPairs = 0;
@@ -114,43 +69,10 @@ namespace MinigamePexeso
             gameStartTime = Time.time;
 
 	        //disable menu object
-	        //menu.SetActive(false);
 	        resourcePackMenu.SetActive(false);
 
 	        //initialize game board
             gameTiles = GameTiles.createTiles(rows, columns, gameTilePrefab, "gameTile");
-            //cubes = new GameObject[rows * columns];
-            //planes = new GameObject[rows * columns];
-            //for (int i = 0; i < columns; i++)
-            //{
-            //    for (int o = 0; o < rows; o++)
-            //    {
-            //        cubes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
-            //        cubes[rows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
-            //        cubes[rows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(columns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(rows, 2)),0);//move them
-            //        cubes[rows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
-	                
-            //        planes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
-            //        planes[rows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
-            //        Quaternion q = new Quaternion(0, 0, 0, 1);//create rotation quaternion
-            //        q.SetLookRotation(new Vector3(0,-1000,1), new Vector3(0,1,0));//assign values to quaternion
-            //        planes[rows*i + o].transform.rotation = q;//assign quaternion to object
-            //        planes[rows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(columns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(rows, 2)),0.051f);//move them
-	                
-            //        //cubes[rows*i + o].transform.parent = planes[rows*i + o].transform;//make plane parent of cube
-            //        planes[rows * i + o].transform.parent = cubes[rows * i + o].transform;
-	                
-            //        cubes[rows*i + o].AddComponent("Mover");//attach script
-            //        planes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-            //        cubes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-
-            //        Destroy(planes[rows*i + o].collider);
-            //        //planes[rows*i + o].AddComponent<BoxCollider>(); 
-            //        Rigidbody gameObjectsRigidBody = cubes[rows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
-            //        gameObjectsRigidBody.mass = 5;//set weight
-            //        gameObjectsRigidBody.useGravity = false;//disable gravity
-            //    }
-            //}
 
             // rotate all tiles
             // add Mover script to all tiles
@@ -375,25 +297,31 @@ namespace MinigamePexeso
 		public void Pick()
 		{
 	        List<Texture2D> classicPic = new List<Texture2D>();
-	        UnityEngine.Object[] tex;
+	        UnityEngine.Object[] images;
 	        System.Random random = new System.Random();
 	        int num;
 
-	        //Load all pictures and their matching silhouettes/similarities.
-			tex = Resources.LoadAll("Textures/Pictures/" + resourcePack);
+            print("resPack to load: '" + resourcePack + "'");
 
-			if (tex == null)
+	        //Load all pictures and their matching silhouettes/similarities.
+			images = Resources.LoadAll("Textures/Pictures/" + resourcePack);
+
+			if (images == null)
 			{
 				throw new UnityException("Some images failed to load");
 			}
 
-			for(int i = 0; i < tex.Length; i++)
+            //print("image count: " + images.Length);
+
+			for(int i = 0; i < images.Length; i++)
 			{
-				if(tex[i] != null)
+				if(images[i] != null)
 				{
-					classicPic.Add (tex[i] as Texture2D);
+					classicPic.Add (images[i] as Texture2D);
 				}
 			}
+
+            print("picture count: " + images.Length);
 
 	        //Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
 	        List<Texture2D> chosen = new List<Texture2D>();

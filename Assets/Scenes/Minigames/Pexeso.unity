@@ -232,6 +232,7 @@ GameObject:
   - 92: {fileID: 119699405}
   - 124: {fileID: 119699404}
   - 81: {fileID: 119699403}
+  - 45: {fileID: 119699408}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -304,6 +305,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!45 &119699408
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 119699402}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: d5486d0ccf6f82448bd79f6cc84fc12c, type: 2}
 --- !u!1 &151761469
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameStart: {fileID: 1017195816}
   mainGameScript: {fileID: 151761470}
-  main: {fileID: 151761469}
   gameTilePrefab: {fileID: 100002, guid: 559eb87cf8f484b49ac7727de54c0dc2, type: 2}
 --- !u!4 &717895523
 Transform:
@@ -672,7 +680,7 @@ GUIText:
   m_Text: 0 s
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: 60, y: -10}
+  m_PixelOffset: {x: 60, y: -20}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -702,15 +710,15 @@ GUITexture:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 861441266}
-  m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: 7487d5ec555caf7419579633eb2ffc12, type: 3}
+  m_Enabled: 0
+  m_Texture: {fileID: 2800000, guid: 9da4b6608296e1a46911adabaca4f5ab, type: 3}
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: 390
-    y: 245
-    width: -710
-    height: -530
+    x: 425
+    y: 187.600006
+    width: -800
+    height: -440
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0
@@ -848,7 +856,7 @@ GUIText:
   m_Text: 0
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: 60, y: -10}
+  m_PixelOffset: {x: 60, y: -15}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -866,15 +874,15 @@ GUITexture:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1374855644}
-  m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: 6d7784bfb8614544dbf30697d7553ff0, type: 3}
+  m_Enabled: 0
+  m_Texture: {fileID: 2800000, guid: d6de39c43be556746bfe2f22b29fa6b8, type: 3}
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: 390
-    y: 245
-    width: -710
-    height: -530
+    x: 425
+    y: 192.800003
+    width: -800
+    height: -440
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0
@@ -1056,15 +1064,15 @@ GUITexture:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1959869082}
-  m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: 2b31651749c53b74ebaad778cd737008, type: 3}
+  m_Enabled: 0
+  m_Texture: {fileID: 2800000, guid: f10c169f069f4bc488d2eee8e2194c10, type: 3}
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: 390
-    y: 245
-    width: -710
-    height: -530
+    x: 425
+    y: 200
+    width: -800
+    height: -440
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0

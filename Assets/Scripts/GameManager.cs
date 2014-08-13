@@ -59,6 +59,7 @@ namespace Game
             {
                 print("Scene: '" + Application.loadedLevelName + "' successfully loaded");
                 //print("calling object ID: " + this.GetInstanceID());
+                
                 if (Application.loadedLevelName == gameSelectionSceneName)
                 {
                     print("this is game selection scene...");
@@ -75,7 +76,9 @@ namespace Game
                             break;
                     }
                     if (fromMain)
+                    {
                         currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
+                    }
 
                     //if player comes to selection scene from main, he can leave immediately by pressing Vertical key
                     Camera.main.GetComponent<CameraControl>().ReadyToLeave = fromMain;
@@ -83,7 +86,7 @@ namespace Game
                     fromMain = false;
                 }
 
-                if (level > 3)
+                if (level > 2)
                 {
 
                     this.GetComponent<MinigameStates>().SetPlayed(Application.loadedLevelName);
@@ -94,12 +97,18 @@ namespace Game
 		//Only for debugging and testing purposes
 		void OnGUI()
 		{
-			if(GUI.Button (new Rect(Screen.width - 120,Screen.height - 80,100,30), "Brain"))
-				Application.LoadLevel("Main");
-			if(GUI.Button(new Rect(Screen.width - 120,Screen.height - 120,100,30), "Game Selection"))
-				Application.LoadLevel("GameSelection");
-			if(GUI.Button(new Rect(Screen.width - 120,20,100,30), "QUIT"))
-				Application.Quit();
+            if (GUI.Button(new Rect(Screen.width - 130, Screen.height - 80, 110, 30), "Brain"))
+            {
+                Application.LoadLevel("Main");
+            }
+            if (GUI.Button(new Rect(Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection"))
+            {
+                Application.LoadLevel("GameSelection");
+            }
+            if (GUI.Button(new Rect(Screen.width - 130, 20, 110, 30), "QUIT"))
+            {
+                Application.Quit();
+            }
 		}
 	}
 }

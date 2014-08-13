@@ -45,10 +45,15 @@ namespace MainScene {
 					Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
 					Icon.transform.position = this.transform.parent.transform.position;
 				}
-				this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+				
+                //this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+
+                //set description
 				Description.GetComponent<TextMesh> ().text = descriptionText;
 				Description.transform.position = this.transform.parent.transform.position - (new Vector3(0, 0.05f, 0));
-				this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
+				
+                //highlight material
+                this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 				initialMouseOver = false;
 			}
 		}
@@ -59,7 +64,7 @@ namespace MainScene {
 			{
 				Icon.renderer.material.mainTexture = null;
 				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-				this.transform.localScale = new Vector3(1, 1, 1);
+				//this.transform.localScale = new Vector3(1, 1, 1);
 				Description.GetComponent<TextMesh> ().text = "";
 			}
 			this.renderer.material.color = originalColor;
@@ -71,15 +76,20 @@ namespace MainScene {
 			{
 				if(Input.GetButtonDown ("Fire1"))
 				{
-					switch(descriptionText)
-					{
-					case "Frontal Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
-						break;
-					case "Pariental Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
-						break;
-					case "Occipital Lobe": gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
-						break;
-					}
+                    //useless
+                    //switch(descriptionText)
+                    //{
+                    //case "Frontal Lobe": 
+                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    break;
+                    //case "Pariental Lobe": 
+                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    break;
+                    //case "Occipital Lobe": 
+                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    break;
+                    //}
+
 					gameManager.selectedBrainPart = brainPartToLoad;
 					gameManager.fromMain = true;
 					gameManager.fromSelection = false;
