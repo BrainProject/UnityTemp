@@ -5,16 +5,20 @@
 using UnityEngine;
 using System.Collections;
 
-namespace MainScene {
-	public class MakeTransparrent : MonoBehaviour {
+namespace MainScene 
+{
+	public class MakeTransparrent : MonoBehaviour 
+    {
+        float transparencyDelayTime = 0f;
+
 		private bool clicked;
 		private bool fading;
 		private float startTime;
 		private Color originalColor;
 		private Color targetColor;
 
-		// Use this for initialization
-		void Start () {
+		void Start () 
+        {
 			clicked = false;
 			fading = false;
 			originalColor = this.renderer.material.color;
@@ -27,18 +31,27 @@ namespace MainScene {
 			}
 		}
 		
-		// Update is called once per frame
-		void Update () {
-			//if(Input.GetButtonDown ("Fire1") && !clicked)
+		void Update () 
+        {
 			if((Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1")) && !clicked)
 			{
-				fading = true;
+				//fading = true;
 				clicked = true;
 				startTime = Time.time;
 			}
 
-			if(fading)
-				this.renderer.material.color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/4);
+            if (clicked && !fading && ((Time.time - startTime) > transparencyDelayTime) )
+            {
+                fading = true;
+                startTime = Time.time;
+
+                renderer.material.shader = Shader.Find("Transparent/Diffuse");
+            }
+
+            if (fading)
+            {
+                this.renderer.material.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) / 4);
+            }
 		}
 	}
 }

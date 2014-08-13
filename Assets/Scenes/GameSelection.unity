@@ -483,6 +483,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 6b8331fd2be5aab47ad5eb2abe787e07, type: 3}
+      propertyPath: m_Name
+      value: Right branches
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6b8331fd2be5aab47ad5eb2abe787e07, type: 3}
   m_RootGameObject: {fileID: 646206087}
@@ -893,7 +897,7 @@ GameObject:
   - 95: {fileID: 525260181}
   - 114: {fileID: 525260186}
   m_Layer: 0
-  m_Name: 01 subdivide
+  m_Name: Left branches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,7 +1184,7 @@ GameObject:
   - 95: {fileID: 646206088}
   - 114: {fileID: 646206092}
   m_Layer: 0
-  m_Name: 01 without subdivide
+  m_Name: Right branches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2143,7 +2147,7 @@ GameObject:
   - 95: {fileID: 1284115981}
   - 114: {fileID: 1284115985}
   m_Layer: 0
-  m_Name: first_envi_konar
+  m_Name: Center branches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2675,6 +2679,10 @@ Prefab:
       propertyPath: m_UseLightProbes
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: afe1935d74d62a24d898cea1aa575a2b, type: 3}
+      propertyPath: m_Name
+      value: Left branches
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afe1935d74d62a24d898cea1aa575a2b, type: 3}
   m_RootGameObject: {fileID: 525260180}
@@ -2922,6 +2930,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2527c8850653b564fb64b09a2aa6110d, type: 3}
+      propertyPath: m_Name
+      value: Center branches
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2527c8850653b564fb64b09a2aa6110d, type: 3}
   m_RootGameObject: {fileID: 1284115980}
@@ -3151,6 +3163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedBrainPart: 3
   currentCameraDefaultPosition: {x: 0, y: 0, z: 0}
+  gameSelectionSceneName: GameSelection
 --- !u!4 &1934937714
 Transform:
   m_ObjectHideFlags: 0

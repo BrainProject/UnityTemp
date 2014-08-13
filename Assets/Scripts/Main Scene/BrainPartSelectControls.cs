@@ -5,11 +5,12 @@
 using UnityEngine;
 using System.Collections;
 
-namespace MainScene {
-	public class BrainPartSelectControls : MonoBehaviour {
+namespace MainScene 
+{
+	public class BrainPartSelectControls : MonoBehaviour 
+    {
 		internal Animator cameraAnimation;
 
-		// Use this for initialization
 		void Start()
 		{
 			cameraAnimation = this.GetComponent<Animator>();
@@ -21,7 +22,6 @@ namespace MainScene {
 			}
 		}
 		
-		// Update is called once per frame
 		void Update()
 		{
 			if(Input.GetAxis ("Vertical") > 0 || Input.GetButtonDown ("Fire1"))
@@ -32,15 +32,13 @@ namespace MainScene {
 					cameraAnimation.speed = 1;
 				}
 			}
-			//if(cameraAnimation.GetCurrentAnimatorStateInfo(0).IsName("BeginningCamera"))
-			//{
-				if(cameraAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
-				{
-					cameraAnimation.SetBool("done", true);
-					cameraAnimation.speed = 0;
-					EnableInteraction();
-				}
-			//}
+    
+            if(cameraAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+			{
+				cameraAnimation.SetBool("done", true);
+				cameraAnimation.speed = 0;
+				EnableInteraction();
+			}
 		}
 
 		public void EnableInteraction()

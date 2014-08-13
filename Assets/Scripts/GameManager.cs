@@ -24,54 +24,71 @@ namespace Game
 		public currentBrainPartEnum selectedBrainPart;
 		public Vector3 currentCameraDefaultPosition;
 		//public GameObject selectedMinigame;
+        public string gameSelectionSceneName = "GameSelection";
+
 		internal bool fromMain;
 		internal bool fromSelection;
 		internal bool fromMinigame;
 
+        bool toBeDestroyed = false;
 		void Awake()
 		{
 			//destroy this game manager, if another one is present
-			if(GameObject.Find ("_GameManager") != this.gameObject)
-				Destroy(this.gameObject);
+            if (GameObject.Find("_GameManager") != this.gameObject)
+            {
+                print("Destroying redundant game manager... instance ID: " + this.GetInstanceID());
+
+                toBeDestroyed = true;
+                Destroy(this.gameObject);
+            }
 		}
 
 		void Start()
 		{
-			fromMain = false;
-			fromSelection = false;
-			DontDestroyOnLoad (this.gameObject);
+            if (!toBeDestroyed)
+            {
+                fromMain = false;
+                fromSelection = false;
+                DontDestroyOnLoad(this.gameObject);
+            }
 		}
 
 		void OnLevelWasLoaded(int level)
-		{
-			if(level == 3)
-			{
-				print ("Selection scene");
-				switch(selectedBrainPart)
-				{
-				case currentBrainPartEnum.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
-					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("GreenPos");
-					break;
-				case currentBrainPartEnum.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
-					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("BluePos");
-					break;
-				case currentBrainPartEnum.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
-					Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find ("OrangePos");
-					break;
-				}
-				if(fromMain)
-					currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
-				//if player comes to selection scene from main, he can leave immidietely by pressing Vertical key
-				Camera.main.GetComponent<CameraControl>().ReadyToLeave = fromMain;
-				Camera.main.transform.position = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
-				fromMain = false;
-			}
+        {
+            if (!toBeDestroyed)
+            {
+                print("Scene: '" + Application.loadedLevelName + "' successfully loaded");
+                //print("calling object ID: " + this.GetInstanceID());
+                if (Application.loadedLevelName == gameSelectionSceneName)
+                {
+                    print("this is game selection scene...");
+                    switch (selectedBrainPart)
+                    {
+                        case currentBrainPartEnum.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
+                            Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find("GreenPos");
+                            break;
+                        case currentBrainPartEnum.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
+                            Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find("BluePos");
+                            break;
+                        case currentBrainPartEnum.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
+                            Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find("OrangePos");
+                            break;
+                    }
+                    if (fromMain)
+                        currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
 
-			if(level > 3)
-			{
-				print (Application.loadedLevelName);
-				this.GetComponent<MinigameStates> ().SetPlayed(Application.loadedLevelName);
-			}
+                    //if player comes to selection scene from main, he can leave immediately by pressing Vertical key
+                    Camera.main.GetComponent<CameraControl>().ReadyToLeave = fromMain;
+                    Camera.main.transform.position = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.position;
+                    fromMain = false;
+                }
+
+                if (level > 3)
+                {
+
+                    this.GetComponent<MinigameStates>().SetPlayed(Application.loadedLevelName);
+                }
+            }
 		}
 
 		//Only for debugging and testing purposes
