@@ -297,17 +297,17 @@ namespace Kinect {
 				if(debugText != null)
 					debugText.guiText.text = "Please check the Kinect SDK installation.";
 			}
-			catch (Exception ex) 
-			{
-				//string message = ex.Message + " - " + InteractionWrapper.GetNuiErrorString(hr);
-				//Debug.LogError(ex.ToString());
+            //catch (Exception ex) 
+            //{
+            //    //string message = ex.Message + " - " + InteractionWrapper.GetNuiErrorString(hr);
+            //    //Debug.LogError(ex.ToString());
 				
-				//if(debugText != null)
-				//{
-				//	debugText.guiText.text = message;
-				//}
-				return;
-			}
+            //    //if(debugText != null)
+            //    //{
+            //    //	debugText.guiText.text = message;
+            //    //}
+            //    return;
+            //}
 			
 	//		// transform matrix - kinect to world
 	//		Quaternion quatTiltAngle = new Quaternion();

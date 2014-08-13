@@ -2,10 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
 
-namespace MinigamePexeso {
-	public class GameScript : MonoBehaviour {
+namespace MinigamePexeso 
+{
+	public class GameScript : MonoBehaviour 
+    {
 
 	    public Scoreboard scoreboard;
 		
@@ -15,10 +16,9 @@ namespace MinigamePexeso {
 	    public GameObject menu;
 	    public GameObject resourcePackMenu;
 
-	    //Array of cubes.
-	    private GameObject[] cubes;
-	    //Array of planes.
-	    private GameObject[] planes;
+        public GameObject gameTilePrefab;
+
+        private GameObject[] gameTiles;
 
 	    //Number of rows.
 	    public int rows = 4;
@@ -31,47 +31,20 @@ namespace MinigamePexeso {
 	    public GUIText wrongPairsDisplay;
 
 	    /// <summary>
-	    /// Elapsed game time in seconds.
-	    /// </summary>
-	    private int time;
-
-	    /// <summary>
-	    /// Determines if it is necessarry to update timer text.
-	    /// </summary>
-	    private bool updateTimer = false;
-
-	    /// <summary>
 	    /// GUIText for timer.
 	    /// </summary>
 	    public GUIText timerDisplay;
 
-	    /// <summary>
-	    /// Timer.
-	    /// </summary>
-	    Timer timer = new Timer();
+        //Update variables
+        private Ray ray;
+        private RaycastHit hit;
+        private GameObject first;
 
-	    /// <summary>
-	    /// Creates and starts timer.
-	    /// </summary>
-	    void CreateTimer()
-	    {
-	        timer = new Timer();
-	        timer.Interval = 1000;
-	        timer.Elapsed +=TimerTick;
-	        
-	        timer.Start();
-	    }
+        private short canWin = 0;
 
-	    /// <summary>
-	    /// Timer tick event method.
-	    /// </summary>
-	    /// <param name="o">O.</param>
-	    /// <param name="e">E.</param>
-	    void TimerTick(object o, System.EventArgs e)
-	    {
-	        time++;
-	        updateTimer = true;
-	    }
+        private float gameStartTime;
+        private float gameEndTime;
+        private int   lastDisplayTime = 0;
 
 		/// <summary>
 	    /// Initialization. Creates all cubes and planes, sets their position etc.
@@ -84,97 +57,80 @@ namespace MinigamePexeso {
 	    public void CreateGameBoard()
 	    {
 	        //set everything to default values
-	        updateTimer = false;
 	        correctPairs = 0;
 	        correctPairsDisplay.text = correctPairs.ToString();
 	        wrongPairs = 0;
 	        wrongPairsDisplay.text = wrongPairs.ToString();
-	        time = 0;
-	        timerDisplay.text = time + " s";
+	        //time = 0;
+            lastDisplayTime = 0;
+	        timerDisplay.text = "0 s";
 	        canWin = 0;
-	        CreateTimer();
+
+            gameStartTime = Time.time;
 
 	        //disable menu object
-	        //menu.SetActive(false);
 	        resourcePackMenu.SetActive(false);
 
 	        //initialize game board
-	        cubes = new GameObject[rows * columns];
-	        planes = new GameObject[rows * columns];
-	        for (int i = 0; i < columns; i++)
-	        {
-	            for (int o = 0; o < rows; o++)
-	            {
-	                cubes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
-	                cubes[rows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
-	                cubes[rows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(columns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(rows, 2)),0);//move them
-	                cubes[rows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
-	                
-	                planes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
-	                planes[rows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
-	                Quaternion q = new Quaternion(0, 0, 0, 1);//create rotation quaternion
-	                q.SetLookRotation(new Vector3(0,-1000,1), new Vector3(0,1,0));//assign values to quaternion
-	                planes[rows*i + o].transform.rotation = q;//assign quaternion to object
-	                planes[rows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(columns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(rows, 2)),0.051f);//move them
-	                
-	                cubes[rows*i + o].transform.parent = planes[rows*i + o].transform;//make plane parent of cube
-	                
-	                planes[rows*i + o].AddComponent("Mover");//attach script
-	                planes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-	                cubes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+            gameTiles = GameTiles.createTiles(rows, columns, gameTilePrefab, "gameTile");
 
-	                Destroy(planes[rows*i + o].collider);
-	                planes[rows*i + o].AddComponent<BoxCollider>(); 
-	                Rigidbody gameObjectsRigidBody = planes[rows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
-	                gameObjectsRigidBody.mass = 5;//set weight
-	                gameObjectsRigidBody.useGravity = false;//disable gravity
-	            }
-	        }
+            // rotate all tiles
+            // add Mover script to all tiles
+            for (int i = 0; i < columns; i++)
+            {
+                for (int o = 0; o < rows; o++)
+                {
+                    gameTiles[rows * i + o].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                    
+                    //TODO what about namespaces?
+                    gameTiles[rows * i + o].AddComponent("Mover");
+                }
+            }
 	        Pick ();
 	    }
 
-	    //Update variables
-	    private Ray ray;
-	    private RaycastHit hit;
-	    private GameObject first;
 
-	    private short canWin = 0;
 
 	    /// <summary>
 	    /// Infinite loop.
 	    /// </summary>
 		void Update()
 		{
-	        //update GUI text if necessarry
-	        if (updateTimer)
+	        //update GUI text once per second
+            float elapsedTime = Time.time - gameStartTime;
+            int displayTime = (int)Math.Floor(elapsedTime);
+            if (displayTime > lastDisplayTime)
 	        {
-	            updateTimer = false;
-	            timerDisplay.text = time + " s";
+	            timerDisplay.text = displayTime + " s";
+                lastDisplayTime = displayTime;
 	        }
 
 	        //game ended
 	        if (canWin == 2)
 	        {
-	            timer.Stop();
+	            //timer.Stop();
+                gameEndTime = Time.time;
+
 	            menu.SetActive(true);
 	            resourcePackMenu.SetActive(true);
                 ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as ResourcePack;
 	            resourceMenuScript.CreateMenu();
-	            //game ends here
-	            /*GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
-	            Scoreboard scoreboard = go.GetComponent<Scoreboard>() as Scoreboard;
-	            scoreboard.correct = correctPairsDisplay;
-	            scoreboard.wrong = wrongPairsDisplay;
-	            scoreboard.time = timerDisplay;*/
 
+	            //game ends here, show scoreboard...
+                //GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
+                //Scoreboard scoreboard = go.GetComponent<Scoreboard>() as Scoreboard;
+                //scoreboard.correct = correctPairsDisplay;
+                //scoreboard.wrong = wrongPairsDisplay;
+                scoreboard.time.text = (gameEndTime - gameStartTime).ToString();
 	        }
+
 	        //player found pair, check if game should end
 	        else if (canWin == 1)
 	        {
 	            bool picsRemain = false;
-	            for (int i = 0; i < planes.Length; i++)
+	            for (int i = 0; i < gameTiles.Length; i++)
 	            {
-	                if (planes [i] != null)
+                    if (gameTiles[i] != null)
 	                {
 	                    picsRemain = true;
 	                    break;
@@ -192,17 +148,20 @@ namespace MinigamePexeso {
 	                canWin = 0;
 	            }
 	        }
-	        //normal game turn
+	        
+            //normal game turn
 	        else
 	        {
 	            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	            if (Physics.Raycast(ray, out hit))
 	            {
+                    GameObject hittedObject = hit.collider.gameObject;
 	                //user clicks left mouse button and hits picture
-	                if (Input.GetMouseButtonUp(0) && hit.collider.name == "Cube")//
+                    if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")//
 	                {
-                        Mover mover = hit.collider.gameObject.transform.parent.GetComponent("MinigamePexeso.Mover") as Mover;//
-	                    //picture is already being removed
+                        Mover mover = hittedObject.GetComponent("MinigamePexeso.Mover") as Mover;
+	                    
+                        //picture is already being removed
 	                    if (mover.toRemove)
 	                    {
 	                        return;
@@ -211,30 +170,35 @@ namespace MinigamePexeso {
 	                    if (first == null)
 	                    {
 	                        mover.MoveUp();
-							first = hit.collider.gameObject.transform.parent.gameObject;
+                            first = hittedObject;
+                            //print("First turned tile: " + first.name);
 						}
+
 						//second selected picture is the same as first
-						else if (first == hit.collider.gameObject.transform.parent.gameObject)
+                        else if (first == hittedObject.transform.gameObject)
 						{
 							return;
 						}
+
 						//this is second selected picture, different from the first
 						else
 						{
 							//second picture is matching for the first
-							if (pictureMatch(first.renderer.material.mainTexture.name, hit.collider.gameObject.transform.parent.gameObject.renderer.material.mainTexture.name))
+                            if (pictureMatch(first.transform.GetChild(0).renderer.material.mainTexture.name, hittedObject.transform.GetChild(0).renderer.material.mainTexture.name))
 	                        {
 	                            correctPairs++;
 	                            correctPairsDisplay.text = correctPairs.ToString();
-								StartCoroutine(FoundPair(first, hit.collider.gameObject.transform.parent.gameObject));
+                                StartCoroutine(FoundPair(first, hittedObject));
 							}
-							//seond picture is not matching for the first
-	                    else
+
+						    //second picture is not matching for the first
+	                        else
 	                        {
 	                            wrongPairs++;
 	                            wrongPairsDisplay.text = wrongPairs.ToString();
-								StartCoroutine(NotFoundPair(first, hit.collider.gameObject.transform.parent.gameObject));
+                                StartCoroutine(NotFoundPair(first, hittedObject));
 							}
+
 							first = null;
 	                    }
 	                }
@@ -333,25 +297,31 @@ namespace MinigamePexeso {
 		public void Pick()
 		{
 	        List<Texture2D> classicPic = new List<Texture2D>();
-	        UnityEngine.Object[] tex;
+	        UnityEngine.Object[] images;
 	        System.Random random = new System.Random();
 	        int num;
 
-	        //Load all pictures and their matching silhouettes/similarities.
-			tex = Resources.LoadAll("Textures/Pictures/" + resourcePack);
+            print("resPack to load: '" + resourcePack + "'");
 
-			if (tex == null)
+	        //Load all pictures and their matching silhouettes/similarities.
+			images = Resources.LoadAll("Textures/Pictures/" + resourcePack);
+
+			if (images == null)
 			{
 				throw new UnityException("Some images failed to load");
 			}
 
-			for(int i = 0; i < tex.Length; i++)
+            //print("image count: " + images.Length);
+
+			for(int i = 0; i < images.Length; i++)
 			{
-				if(tex[i] != null)
+				if(images[i] != null)
 				{
-					classicPic.Add (tex[i] as Texture2D);
+					classicPic.Add (images[i] as Texture2D);
 				}
 			}
+
+            print("picture count: " + images.Length);
 
 	        //Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
 	        List<Texture2D> chosen = new List<Texture2D>();
@@ -368,11 +338,12 @@ namespace MinigamePexeso {
 	            //This happens when some image fails to load
 	            throw new UnityException("Some images failed to load");
 	        }
+
 	        //Assign textures to planes.
 	        for (int i = 0; i < (rows * columns); i++)
 	        {
 	            num = random.Next(0, chosen.Count);
-	            planes[i].renderer.material.mainTexture = chosen[num];
+                gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
 	            chosen.RemoveAt(num);
 	        }
 		}
