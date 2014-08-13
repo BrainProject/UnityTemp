@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MinigamePexeso {
-	public class Scoreboard : MonoBehaviour {
-
+namespace MinigamePexeso 
+{
+	public class Scoreboard : MonoBehaviour 
+    {
 	    public GUIText correct;
 	    public GUIText wrong;
 	    public GUIText time;
@@ -13,12 +14,6 @@ namespace MinigamePexeso {
 	    private RaycastHit hit;
 	    private GameObject first;
 
-		// Use this for initialization
-		void Start ()
-	    {
-		}
-		
-		// Update is called once per frame
 		void Update ()
 	    {
 	        ray = Camera.main.ScreenPointToRay(Input.mousePosition);

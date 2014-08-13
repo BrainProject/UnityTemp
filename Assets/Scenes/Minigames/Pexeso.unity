@@ -336,6 +336,7 @@ MonoBehaviour:
   resourcePack: Animals
   menu: {fileID: 1017195815}
   resourcePackMenu: {fileID: 717895521}
+  gameTilePrefab: {fileID: 100002, guid: 559eb87cf8f484b49ac7727de54c0dc2, type: 2}
   rows: 4
   columns: 4
   correctPairsDisplay: {fileID: 1959869084}
@@ -597,8 +598,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65f2083d45ea644c97b12dd7c25c4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 1017195815}
+  gameStart: {fileID: 1017195816}
+  mainGameScript: {fileID: 151761470}
   main: {fileID: 151761469}
+  gameTilePrefab: {fileID: 100002, guid: 559eb87cf8f484b49ac7727de54c0dc2, type: 2}
 --- !u!4 &717895523
 Transform:
   m_ObjectHideFlags: 0
@@ -739,8 +742,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf9d78e3f867fa4581fd970b9cf24ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  main: {fileID: 151761469}
-  resourcePackMenu: {fileID: 717895521}
+  mainGameScript: {fileID: 151761470}
+  gameTilePrefab: {fileID: 100002, guid: 559eb87cf8f484b49ac7727de54c0dc2, type: 2}
 --- !u!4 &1017195817
 Transform:
   m_ObjectHideFlags: 0

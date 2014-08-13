@@ -8,11 +8,16 @@ namespace MinigamePexeso
 	public class ResourcePack : MonoBehaviour 
     {
 
-	    public GameObject menu;
+        public GameStart gameStart;
+        public GameScript mainGameScript;
+
 	    public GameObject main;
+
+        public GameObject gameTilePrefab;
 	    
-	    private GameObject[] buttonPlanes;
-	    private GameObject[] buttonCubes;
+	    //private GameObject[] buttonPlanes;
+	    //private GameObject[] buttonCubes;
+        private GameObject[] gameTiles;
 
 	    /// <summary>
 	    /// Number of rows of menu items.
@@ -23,7 +28,10 @@ namespace MinigamePexeso
 	    /// </summary>
 	    private int menuColumns = 2;
 
-		// Use this for initialization
+        private Ray ray;
+        private RaycastHit hit;
+
+
 		void Start ()
 	    {
 	        CreateMenu();
@@ -33,68 +41,80 @@ namespace MinigamePexeso
 	    {
 	        if (main != null)
 	        {
-                GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
-                
 	            if (mainGameScript.enabled)
 	            {
 	                mainGameScript.enabled = false;
 	            }
 	        }
 
-	        buttonPlanes = new GameObject[menuRows * menuColumns];
-	        buttonCubes = new GameObject[menuRows * menuColumns];
-	        for (int i = 0; i < menuColumns; i++)
-	        {
-	            for (int o = 0; o < menuRows; o++)
-	            {
-	                buttonCubes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
-	                buttonCubes[menuRows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
-	                buttonCubes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1);//move them
-	                buttonCubes[menuRows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
-	                
-	                buttonPlanes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
-	                buttonPlanes[menuRows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
-	                Quaternion q = new Quaternion(0, 0, 0, 1);//create rotation quaternion
-	                q.SetLookRotation(new Vector3(0,-1000,-1), new Vector3(0,1,0));//assign values to quaternion
-	                buttonPlanes[menuRows*i + o].transform.rotation = q;//assign quaternion to object
-	                buttonPlanes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1.051f);//move them
-	                
-	                buttonCubes[menuRows*i + o].transform.parent = buttonPlanes[menuRows*i + o].transform;//make plane parent of cube
-	                
-	                buttonPlanes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-	                buttonCubes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-	                
-	                Destroy(buttonPlanes[menuRows*i + o].collider);
-	                buttonPlanes[menuRows*i + o].AddComponent<BoxCollider>();
-	                Rigidbody gameObjectsRigidBody = buttonPlanes[menuRows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
-	                gameObjectsRigidBody.mass = 5;//set weight
-	                gameObjectsRigidBody.useGravity = false;//disable gravity
-	                
-	                buttonPlanes[menuRows*i + o].tag = "PicMenuItem";
-	            }
-	        }
+	        //buttonPlanes = new GameObject[menuRows * menuColumns];
+	        //buttonCubes = new GameObject[menuRows * menuColumns];
+            gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
 
-	        string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Resources\\Textures\\Pictures\\");
-	        for (int i = 0; i < resourcePacks.Length; i++)
+            //for (int i = 0; i < menuColumns; i++)
+            //{
+            //    for (int o = 0; o < menuRows; o++)
+            //    {
+            //        gameTiles[menuRows * i + o] = Instantiate(gameTilePrefab) as GameObject;
+            //        gameTiles[menuRows * i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f * (float)Math.Pow(menuColumns, 2)), (o * 1.2f) - (0.05625f * (float)Math.Pow(menuRows, 2)), -1);//move them
+            //        gameTiles[menuRows * i + o].tag = "PicMenuItem";
+
+            //        //buttonCubes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
+            //        //buttonCubes[menuRows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
+            //        //buttonCubes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1);//move them
+            //        //buttonCubes[menuRows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
+	                
+            //        //buttonPlanes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
+            //        //buttonPlanes[menuRows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
+            //        //Quaternion q = new Quaternion(0, 0, 0, 1);//create rotation quaternion
+            //        //q.SetLookRotation(new Vector3(0,-1000,-1), new Vector3(0,1,0));//assign values to quaternion
+            //        //buttonPlanes[menuRows*i + o].transform.rotation = q;//assign quaternion to object
+            //        //buttonPlanes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1.051f);//move them
+	                
+            //        //buttonCubes[menuRows*i + o].transform.parent = buttonPlanes[menuRows*i + o].transform;//make plane parent of cube
+            //        //buttonPlanes[menuRows * i + o].transform.parent = buttonCubes[menuRows * i + o].transform;
+	                
+            //        //buttonPlanes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+            //        //buttonCubes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+	                
+            //        //Destroy(buttonPlanes[menuRows*i + o].collider);
+            //        ////buttonPlanes[menuRows*i + o].AddComponent<BoxCollider>();
+            //        //Rigidbody gameObjectsRigidBody = buttonCubes[menuRows * i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
+            //        //gameObjectsRigidBody.mass = 5;//set weight
+            //        //gameObjectsRigidBody.useGravity = false;//disable gravity
+
+            //        //buttonCubes[menuRows * i + o].tag = "PicMenuItem";
+            //    }
+            //}
+
+	        string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\");
+            int rpCount = resourcePacks.Length;
+            //print("Number of resource packs: " + rpCount);
+	        for (int i = 0; i < rpCount; i++)
 	        {
 	            //if there are more resource packs than buttons...
-				if(i >= buttonPlanes.Length)
+                if (i >= gameTiles.Length)
 				{
 					break;
 				}
 				string[] s = resourcePacks[i].Split('\\');
-	            buttonPlanes [i].name = s[s.Length - 1];
-	            buttonPlanes [i].renderer.material.mainTexture = Resources.Load("Textures/Pictures/" + s[s.Length - 1] + "/00") as Texture2D;
+                gameTiles[i].name = s[s.Length - 1];
+                gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Pictures/" + s[s.Length - 1] + "/00") as Texture2D;
+	            //buttonCubes [i].name = s[s.Length - 1];
+	            //buttonPlanes [i].renderer.material.mainTexture = Resources.Load("Textures/Pictures/" + s[s.Length - 1] + "/00") as Texture2D;
 	        }
-	        for (int i = resourcePacks.Length; i < menuColumns*menuRows; i++)
+	        for (int i = rpCount; i < menuColumns*menuRows; i++)
 	        {
-	            buttonPlanes [i].name = "Empty";
-	            buttonPlanes [i].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;
+                gameTiles[i].name = "Empty";
+                gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;
+
+                //gameTiles[i].transform.GetChild(0).gameObject.SetActive(false);
+	            //buttonPlanes [i].name = "Empty";
+	            //buttonPlanes [i].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;
+
 	        }
 	    }
 		
-	    private Ray ray;
-	    private RaycastHit hit;
 
 		void Update ()
 	    {
@@ -103,7 +123,7 @@ namespace MinigamePexeso
 	        {
 	            if (Input.GetMouseButtonUp(0) && hit.collider.tag == "PicMenuItem" && hit.collider.name != "Empty")
 	            {
-	                StartCoroutine(DropOther(hit.collider.gameObject, buttonPlanes));
+	                StartCoroutine(DropOther(hit.collider.gameObject, gameTiles));
 	            }
 	        }
 		}
@@ -168,15 +188,16 @@ namespace MinigamePexeso
 	    {
 	        for (int i = 0; i < menuColumns*menuRows; i++)
 	        {
-	            GameObject.Destroy(buttonCubes[i]);
-	            GameObject.Destroy(buttonPlanes[i]);
+	            //GameObject.Destroy(buttonCubes[i]);
+                GameObject.Destroy(gameTiles[i]);
 	        }
 
-            GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
+            //GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
 	        mainGameScript.resourcePack = chosenButton.name;
 
-            GameStart gameStart = menu.GetComponent("MinigamePexeso.GameStart") as GameStart;
+            //GameStart gameStart = menu.GetComponent("MinigamePexeso.GameStart") as GameStart;
 	        gameStart.enabled = true;
+            this.gameObject.SetActive(false);
 	        gameStart.CreateMenu();
 	    }
 	}

@@ -1,25 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MinigamePexeso {
-	public class Mover : MonoBehaviour {
-
-		// Use this for initialization
-		void Start ()
-	    {
-		}
-		
-		// Update is called once per frame
-		void Update ()
-	    {
-		}
+namespace MinigamePexeso 
+{
+	public class Mover : MonoBehaviour 
+    {
 
 	    public bool isMoving = false;
 	    public bool isLifted = false;
 	    public bool toRemove = false;
 
 	    private float moveSpeed = 2f;
-		//private Vector3 startPosition;
 	    private Vector3 endPosition;
 	    private float t;
 
@@ -62,7 +53,6 @@ namespace MinigamePexeso {
 	    private IEnumerator move()
 		{
 			isMoving = true;
-			//startPosition = transform.eulerAngles;
 			t = 0;
 			endPosition = transform.eulerAngles + 180f * Vector3.up; // what the new angles should be
 
