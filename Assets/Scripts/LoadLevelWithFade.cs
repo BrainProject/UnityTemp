@@ -8,8 +8,10 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Game {
-	public class LoadLevelWithFade: MonoBehaviour {
+namespace Game 
+{
+	public class LoadLevelWithFade: MonoBehaviour 
+    {
 		public bool forBeginning { get; set; }
 		private Color originalColor;
 		private Color targetColor;
@@ -18,11 +20,13 @@ namespace Game {
 
 		void Awake()
 		{
-			this.guiTexture.pixelInset = new Rect(Screen.width/2, Screen.height/2, 0, 0);//Screen.width, Screen.height);
+			
 		}
 
 		void Start()
 		{
+            this.guiTexture.pixelInset = new Rect(Screen.width / 2, Screen.height / 2, 0, 0);//Screen.width, Screen.height);
+
 			//default value
 			forBeginning = true;
 			originalColor = this.guiTexture.color;
@@ -81,7 +85,7 @@ namespace Game {
 				}
 
 				Application.LoadLevel(levelToLoad);
-	            Logger.addLogEntry("Loading scene: '" + levelToLoad + "'");
+	            MGC.Instance.logger.addLogEntry("Loading scene: '" + levelToLoad + "'");
 			}
 		}
 	}

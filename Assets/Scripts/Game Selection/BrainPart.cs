@@ -5,8 +5,10 @@
 using UnityEngine;
 using System.Collections;
 
-namespace MinigameSelection {
-	public class BrainPart : MonoBehaviour {
-		public Game.currentBrainPartEnum brainPart;
+namespace MinigameSelection 
+{
+	public class BrainPart : MonoBehaviour 
+    {
+		public BrainPartName brainPart;
 	}
 }

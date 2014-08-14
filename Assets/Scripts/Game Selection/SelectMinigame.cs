@@ -28,7 +28,7 @@ namespace MinigameSelection {
 			OnSelection = false;
 			gameManager = GameObject.Find ("_GameManager");
 			mainCamera = Camera.main;
-			CameraDefaultPosition = gameManager.GetComponent<GameManager>().currentCameraDefaultPosition;
+			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 			MouseHover = false;
 			Icon = GameObject.Find ("Selection Part Icon");
@@ -82,7 +82,7 @@ namespace MinigameSelection {
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
-	        Logger.addLogEntry("Mouse enter the object: '" + this.name + "'");
+	        MGC.Instance.logger.addLogEntry("Mouse enter the object: '" + this.name + "'");
 		}
 
 		void OnMouseExit()
@@ -92,22 +92,22 @@ namespace MinigameSelection {
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
 
-	        Logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
+	        MGC.Instance.logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
 		void OnMouseUp()
 		{
-			//load minigame if zooming or zoomed
+			//load mini-game if zooming or zoomed
 			if(OnSelection)
 			{
 				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-				gameManager.GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
-				gameManager.GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
+                MGC.Instance.selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
 			}
 
-			//set target position of camera near to minigame buble
+			//set target position of camera near to mini-game bubble
 			else
 			{
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));

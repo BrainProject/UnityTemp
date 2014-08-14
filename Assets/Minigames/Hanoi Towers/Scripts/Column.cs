@@ -35,8 +35,6 @@ namespace HanoiTowers
         public void addDisk(Disk newDisk)
         {
             disks.Push(newDisk);
-            //Logger.addLogEntry("There is/are " + disks.Count + " disk(s) on column: " + this);
-
             checkWinningCondition();
         }
 
@@ -50,7 +48,7 @@ namespace HanoiTowers
                 {
                     //TODO win!
                     print("WIN");
-                    Logger.addLogEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
+                    MGC.Instance.logger.addLogEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
 
 
                     //winText.text = "test";
@@ -122,7 +120,7 @@ namespace HanoiTowers
 
             if (disk == null)
             {
-                Logger.addLogEntry("Kliknutí na sloupec i když není vybrán žádný disk");
+                MGC.Instance.logger.addLogEntry("Kliknutí na sloupec i když není vybrán žádný disk");
                 return;
             }
 
@@ -136,7 +134,7 @@ namespace HanoiTowers
             {
                 //TODO add some "warning effect"
                 Debug.Log("Column " + this + " is not a valid target for disk " + disk);
-                Logger.addLogEntry("Pokus o zakázaný přesun disku " + disk.size + " na sloupec " + this);
+                MGC.Instance.logger.addLogEntry("Pokus o zakázaný přesun disku " + disk.size + " na sloupec " + this);
             }
         }
 

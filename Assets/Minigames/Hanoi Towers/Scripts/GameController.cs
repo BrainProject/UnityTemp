@@ -71,7 +71,7 @@ namespace HanoiTowers
 
         public void ResetGame()
         {
-            Logger.addLogEntry("New game starts with: " + numberOfDisks + " disks");
+            MGC.Instance.logger.addLogEntry("New game starts with: " + numberOfDisks + " disks");
 
             //reset columns
             for (int i = 0; i < columns.GetLength(0); i++)

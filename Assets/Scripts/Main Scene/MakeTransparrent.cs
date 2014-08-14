@@ -24,7 +24,7 @@ namespace MainScene
 			originalColor = this.renderer.material.color;
 			targetColor = this.renderer.material.color;
 			targetColor.a = 0.05f;
-			if(GameObject.Find("_GameManager").GetComponent<Game.GameManager>().fromSelection)
+            if (MGC.Instance.fromSelection)
 			{
 				this.renderer.material.color = targetColor;
 				originalColor = targetColor;

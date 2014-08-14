@@ -10,14 +10,13 @@ namespace MainScene {
 	public class SelectBrainPart : MonoBehaviour {
 		public string descriptionText;
 		public string iconName;
-		public currentBrainPartEnum brainPartToLoad;
+		public BrainPartName brainPartToLoad;
 		public bool CanSelect{ get; set; }
 
 		private string levelName;
 		private bool initialMouseOver;
 		private Color selectionColor;
 		private Color originalColor;
-		private GameManager gameManager;
 		private GameObject Icon { get; set; }
 		private GameObject Description{ get; set; }
 
@@ -27,7 +26,6 @@ namespace MainScene {
 			Icon = GameObject.Find ("Brain Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			Description = GameObject.Find ("Description");
-			gameManager = GameObject.Find ("_GameManager").GetComponent<GameManager>();
 			originalColor = this.renderer.material.color;
             levelName = "GameSelection";
 			initialMouseOver = true;
@@ -80,21 +78,24 @@ namespace MainScene {
                     //switch(descriptionText)
                     //{
                     //case "Frontal Lobe": 
-                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
                     //    break;
                     //case "Pariental Lobe": 
-                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
                     //    break;
                     //case "Occipital Lobe": 
-                    //    gameManager.currentCameraDefaultPosition = new Vector3(0,0,0);
+                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
                     //    break;
                     //}
 
-					gameManager.selectedBrainPart = brainPartToLoad;
-					gameManager.fromMain = true;
-					gameManager.fromSelection = false;
+                    print("Going into brain part: '" + brainPartToLoad + "'");
+                    MGC mgc = MGC.Instance;
+					
+                    mgc.selectedBrainPart = brainPartToLoad;
+                    mgc.fromMain = true;
+                    mgc.fromSelection = false;
 					StopAllCoroutines();
-					StartCoroutine(GameObject.Find("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, levelName));
+					mgc.loadLevelWithFade.LoadSeledctedLevelWithColorLerp(false, levelName);
 				}
 			}
 			if(CanSelect && initialMouseOver)

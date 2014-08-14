@@ -15,7 +15,7 @@ namespace MainScene
 		{
 			cameraAnimation = this.GetComponent<Animator>();
 			cameraAnimation.speed = 0;
-			if(GameObject.Find("_GameManager").GetComponent<Game.GameManager>().fromSelection)
+            if (MGC.Instance.fromSelection)
 			{
 				cameraAnimation.SetBool("start", true);
 				cameraAnimation.speed = 100;
