@@ -12,7 +12,7 @@ using System.IO;
 /// and (preferably in Start() function) get pointer via Master Game Controller:
 /// <code>logger = MGC.Instance.Logger()</code>
 /// Then, you can new entries by>
-/// <code>Logger.addLogEntry("this is my entry");</code>
+/// <code>Logger.addEntry("this is my entry");</code>
 /// </example>
 /// \author Jiri Chmelik
 /// \date 07-2014
@@ -72,14 +72,14 @@ public class Logger : MonoBehaviour
 
             if (addCreatedEntry)
             {
-                addLogEntry("Log file created");
+                addEntry("Log file created");
             }
 
-            addLogEntry("New session started");
+            addEntry("New session started");
         }
         
 
-        public void addLogEntry(string entry)
+        public void addEntry(string entry)
         {
             if (logfile != null)
             {
@@ -95,7 +95,7 @@ public class Logger : MonoBehaviour
         public void OnApplicationQuit()
         {
             print("Closing log file");
-            addLogEntry("Session ended\r\n\r\n\r\n");
+            addEntry("Session ended\r\n\r\n\r\n");
             logfile.Close();
         }
     #endif 

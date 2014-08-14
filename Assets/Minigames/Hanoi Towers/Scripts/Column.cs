@@ -48,7 +48,7 @@ namespace HanoiTowers
                 {
                     //TODO win!
                     print("WIN");
-                    MGC.Instance.logger.addLogEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
+                    MGC.Instance.logger.addEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
 
 
                     //winText.text = "test";
@@ -120,7 +120,7 @@ namespace HanoiTowers
 
             if (disk == null)
             {
-                MGC.Instance.logger.addLogEntry("Kliknutí na sloupec i když není vybrán žádný disk");
+                MGC.Instance.logger.addEntry("Kliknutí na sloupec i když není vybrán žádný disk");
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace HanoiTowers
             {
                 //TODO add some "warning effect"
                 Debug.Log("Column " + this + " is not a valid target for disk " + disk);
-                MGC.Instance.logger.addLogEntry("Pokus o zakázaný přesun disku " + disk.size + " na sloupec " + this);
+                MGC.Instance.logger.addEntry("Pokus o zakázaný přesun disku " + disk.size + " na sloupec " + this);
             }
         }
 

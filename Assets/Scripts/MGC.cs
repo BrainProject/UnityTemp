@@ -46,7 +46,9 @@ public enum BrainPartName
         /// </summary>
         public Logger logger;
 
-        public Game.LoadLevelWithFade loadLevelWithFade;
+        public Game.LevelLoader levelLoader;
+
+        //public Game.LoadLevelWithFade loadLevelWithFade;
 
         public BrainPartName selectedBrainPart;
         public Vector3 currentCameraDefaultPosition;
@@ -67,14 +69,27 @@ public enum BrainPartName
             logger.Initialize("Logs", "PlayerActions.txt");
 
             //initiate level loader
-            loadLevelWithFade = this.gameObject.AddComponent<Game.LoadLevelWithFade>();
-            gameObject.AddComponent<GUITexture>();
-            
+            levelLoader = this.gameObject.AddComponent<Game.LevelLoader>();
+                        
         }
 
         void OnLevelWasLoaded(int level)
         {
-            print("Scene: '" + Application.loadedLevelName + "' successfully loaded");
+            print("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
+            MGC.Instance.logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
+
+            //perform fade in?
+            if (MGC.Instance.levelLoader.doFade)
+            {
+                MGC.Instance.levelLoader.FadeIn();
+            }
+            else
+            {
+                gameObject.guiTexture.enabled = false;
+            }
+            
+
+            //loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
             //print("calling object ID: " + this.GetInstanceID());
 
             if (Application.loadedLevelName == gameSelectionSceneName)

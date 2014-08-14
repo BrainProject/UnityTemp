@@ -93,13 +93,13 @@ namespace HanoiTowers
                 {
                     //Debug.Log("Moving from column: " + actualColumn);
                     //Debug.Log("Moving to column: " + target);
-                    MGC.Instance.logger.addLogEntry("akce - přesun | disk: " + this.size + " | ze sloupce: " + actualColumn + " | na sloupec: " + target);
+                    MGC.Instance.logger.addEntry("akce - přesun | disk: " + this.size + " | ze sloupce: " + actualColumn + " | na sloupec: " + target);
 
                     gameController.increaseScore();
                 }
                 else
                 {
-                    MGC.Instance.logger.addLogEntry("Disk položen na stejný sloupec, ze kterého byl zvednut");
+                    MGC.Instance.logger.addEntry("Disk položen na stejný sloupec, ze kterého byl zvednut");
                 }
 
                 actualColumn.removeTopDisk();
@@ -126,7 +126,7 @@ namespace HanoiTowers
         {
             if (isMovable() && gameController.getWaitingForTarget() == null)
             {
-                MGC.Instance.logger.addLogEntry("Disk " + this.size + " lifted");
+                MGC.Instance.logger.addEntry("Disk " + this.size + " lifted");
                 waitingForTarget = true;
                 gameController.setWaitingForTarget(this);
 
@@ -138,7 +138,7 @@ namespace HanoiTowers
             else
             {
                 Debug.Log("This disk (" + this + ") is not movable now.");
-                MGC.Instance.logger.addLogEntry("Disk " + this.size + " can't be lifted now");
+                MGC.Instance.logger.addEntry("Disk " + this.size + " can't be lifted now");
             }
 
         }

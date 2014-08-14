@@ -76,8 +76,9 @@ namespace MinigameSelection
 		{
 			if(ReadyToLeave)
 			{
-				//StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "Main"));
-                mgc.loadLevelWithFade.LoadSeledctedLevelWithColorLerp(false, "Main");
+				//StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadMainLevel(false, "Main"));
+                mgc.levelLoader.LoadLevel("Main");
+
 				mgc.fromSelection = true;
 			}
 		}

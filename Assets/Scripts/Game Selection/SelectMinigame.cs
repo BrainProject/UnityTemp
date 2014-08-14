@@ -6,8 +6,10 @@ using UnityEngine;
 using System.Collections;
 using Game;
 
-namespace MinigameSelection {
-	public class SelectMinigame : MonoBehaviour {
+namespace MinigameSelection 
+{
+	public class SelectMinigame : MonoBehaviour 
+    {
 		public string minigameName;
 		public float cameraDistance = 1;
 		public string iconName;
@@ -15,7 +17,7 @@ namespace MinigameSelection {
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
 
-		private GameObject gameManager;
+		private MGC mgc;
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private bool OnSelection { get; set; }
@@ -26,14 +28,14 @@ namespace MinigameSelection {
 		void Start()
 		{
 			OnSelection = false;
-			gameManager = GameObject.Find ("_GameManager");
+			mgc = MGC.Instance;
 			mainCamera = Camera.main;
 			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 			MouseHover = false;
 			Icon = GameObject.Find ("Selection Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			if(gameManager.GetComponent<MinigameStates> ().GetPlayed (minigameName))
+			if(mgc.GetComponent<MinigameStates> ().GetPlayed (minigameName))
 			{
 				(this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
@@ -82,7 +84,7 @@ namespace MinigameSelection {
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
-	        MGC.Instance.logger.addLogEntry("Mouse enter the object: '" + this.name + "'");
+	        MGC.Instance.logger.addEntry("Mouse enter the object: '" + this.name + "'");
 		}
 
 		void OnMouseExit()
@@ -92,7 +94,7 @@ namespace MinigameSelection {
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
 
-	        MGC.Instance.logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
+	        MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
 		void OnMouseUp()
@@ -104,7 +106,7 @@ namespace MinigameSelection {
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
 				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
                 MGC.Instance.selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
-				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
+                MGC.Instance.levelLoader.LoadLevel(minigameName);
 			}
 
 			//set target position of camera near to mini-game bubble

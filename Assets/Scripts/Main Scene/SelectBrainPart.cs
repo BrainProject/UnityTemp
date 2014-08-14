@@ -94,8 +94,11 @@ namespace MainScene {
                     mgc.selectedBrainPart = brainPartToLoad;
                     mgc.fromMain = true;
                     mgc.fromSelection = false;
-					StopAllCoroutines();
-					mgc.loadLevelWithFade.LoadSeledctedLevelWithColorLerp(false, levelName);
+					
+                    
+                    StopAllCoroutines();
+
+                    mgc.levelLoader.LoadLevel(levelName);
 				}
 			}
 			if(CanSelect && initialMouseOver)
