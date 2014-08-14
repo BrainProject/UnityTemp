@@ -12,7 +12,7 @@ public class GameTiles : MonoBehaviour
             for (int o = 0; o < rows; o++)
             {
                 gameTiles[rows * i + o] = Instantiate(tilePrefab) as GameObject;
-                gameTiles[rows * i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f * (columns * columns)), (o * 1.2f) - (0.05625f * (rows * rows)), -1);//move them
+                gameTiles[rows * i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f * (columns * columns)), (o * 1.2f) - (0.05625f * (rows * rows)), -1);//flipAnimation them
                 gameTiles[rows * i + o].tag = tileTag;
             }
         }

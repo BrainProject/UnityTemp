@@ -12,7 +12,6 @@ namespace MinigamePexeso
         public GameScript mainGameScript;
         public GameObject gameTilePrefab;
 
-
         //TODO find better solution...
         private string[] resPacksNames;
         private string resPackPath;
@@ -40,6 +39,9 @@ namespace MinigamePexeso
             resPacksNames = new string[2];
             resPacksNames[0] = "Animals";
             resPacksNames[1] = "Landscapes";
+
+            //no need of confusing tiles
+            menuRows = 1;
 
 	        CreateMenu();
 		}
@@ -83,7 +85,6 @@ namespace MinigamePexeso
                 }
             }
         }
-		
 
 		void Update ()
 	    {
@@ -100,7 +101,6 @@ namespace MinigamePexeso
 	    /// <summary>
 	    /// COROUTINE. Not selected buttons fall down.
 	    /// </summary>
-	    /// <returns>The other.</returns>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator DropOther(GameObject chosenButton, GameObject[] buttons)
@@ -111,6 +111,7 @@ namespace MinigamePexeso
 	        {
 	            if(chosenButton != buttons[i])
 	            {
+                    buttons[i].rigidbody.isKinematic = false;
 	                buttons[i].rigidbody.useGravity = true;
 	                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
 	            }
@@ -122,18 +123,16 @@ namespace MinigamePexeso
 	            yield return null;
 	        }
 	        StartCoroutine(SelectButton(chosenButton));
-	        yield return 0;
+	        //yield return 0;
 	    }
 	    
 	    /// <summary>
 	    /// COROUTINE. Selected button flies towards camera. Also starts new game.
 	    /// </summary>
-	    /// <returns>The other.</returns>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator SelectButton(GameObject chosenButton)
 	    {
-	        
 	        Vector3 startPosition = chosenButton.transform.position;
 	        float t = 0;
 	        
@@ -151,13 +150,13 @@ namespace MinigamePexeso
 	        CreateMainGameObject(chosenButton);
 	        chosenButton.transform.position = endPosition;
 	        
-	        yield return 0;
+	        //yield return 0;
 	    }
 
 	    private void CreateMainGameObject(GameObject chosenButton)
 	    {
             //destroy used tiles 
-            //TODO memory waste - tile can be reused...
+            //TODO minor memory waste - tiles objects can be reused...
 	        for (int i = 0; i < menuColumns*menuRows; i++)
 	        {
                 GameObject.Destroy(gameTiles[i]);

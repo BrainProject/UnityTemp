@@ -5,65 +5,89 @@ namespace MinigamePexeso
 {
 	public class Mover : MonoBehaviour 
     {
+        /// <summary>
+        /// speed of flipping animation
+        /// </summary>
+        public float moveSpeed = 2f;
 
+        /// <summary>
+        /// is tile moving?
+        /// </summary>
 	    public bool isMoving = false;
-	    public bool isLifted = false;
-	    public bool toRemove = false;
+	    
+        /// <summary>
+        /// is tile flipped by image side up?
+        /// </summary>
+        public bool imageSideUp = false;
 
-	    private float moveSpeed = 2f;
-	    private Vector3 endPosition;
+	    
+	    private Vector3 endRotation;
 	    private float t;
 
-	    public void Move()
+	    public void Flip()
 	    {
-			if (isLifted)
+            //print("Flip");
+			if (imageSideUp)
 			{
-				MoveDown ();
+				FlipImageDown ();
 			}
 			else
 			{
-				MoveUp ();
+				FlipImageUp ();
 			}
 	    }
 
-	    public void MoveUp()
+	    public void FlipImageUp()
 	    {
-	        if (!isLifted)
+            //print("FlipImageUp");
+	        if (!imageSideUp)
 			{
 				if (!isMoving)
 				{
-					isLifted = true;
-					StartCoroutine(move());
+					imageSideUp = true;
+                    endRotation = Vector3.up;
+					StartCoroutine(flipAnimation());
 				}
 			}
 	    }
 
-	    public void MoveDown()
+	    public void FlipImageDown()
 	    {
-			if (isLifted)
+            //print("FlipImageDown");
+			if (imageSideUp)
 			{
 				if (!isMoving)
 				{
-					isLifted = false;
-					StartCoroutine(move());
+					imageSideUp = false;
+                    endRotation = 180f * Vector3.up;
+					StartCoroutine(flipAnimation());
 				}
 			}
 	    }
 	    
-	    private IEnumerator move()
+	    private IEnumerator flipAnimation()
 		{
+            //this will ensure, that user can't click on this tile while it is flipped image-side up
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+
 			isMoving = true;
 			t = 0;
-			endPosition = transform.eulerAngles + 180f * Vector3.up; // what the new angles should be
 
 			while (t < 1f)
 			{
 				t += Time.deltaTime * moveSpeed;
-				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, endPosition, t);
+				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, endRotation, t);
 				yield return null;
 			}
+
 			isMoving = false;
-			yield return 0;
+
+            //after tile is flipped down, re-enable collider to allow mouse clicks on this object
+            if (!imageSideUp)
+            {
+                gameObject.GetComponent<BoxCollider>().enabled = true;
+            }
+			//yield return 0;
 	    }
 	}
 }

@@ -6,74 +6,36 @@ namespace MinigamePexeso
 {
 	public class GameStart : MonoBehaviour 
     {
-
-	    //public GameObject main;
         public GameScript mainGameScript;
 	    
-        //public GameObject resourcePackMenu;
-        
         public GameObject gameTilePrefab;
 
-	    //private GameObject[] buttonPlanes;
-	    //private GameObject[] buttonCubes;
         private GameObject[] gameTiles;
 
 	    /// <summary>
 	    /// Number of rows of menu items.
 	    /// </summary>
 	    private int menuRows = 2;
-	    /// <summary>
+
+        /// <summary>
 	    /// Number of columns of menu items.
 	    /// </summary>
 	    private int menuColumns = 2;
 
-        //// Use this for initialization
-        //void Start ()
-        //{
-        //}
+        /// <summary>
+        /// Used for mouse click detection
+        /// </summary>
+        private Ray ray;
+        private RaycastHit hit;
 
+
+
+        /// <summary>
+        /// creates "menu" for selecting size of board
+        /// </summary>
 	    public void CreateMenu()
 	    {
-	        //resourcePackMenu.SetActive(false);
-
-            //buttonPlanes = new GameObject[menuRows * menuColumns];
-	        //buttonCubes = new GameObject[menuRows * menuColumns];
             gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "MenuItem");
-
-            //for (int i = 0; i < menuColumns; i++)
-            //{
-            //    for (int o = 0; o < menuRows; o++)
-            //    {
-            //        gameTiles[menuRows * i + o] = Instantiate(gameTilePrefab) as GameObject;
-            //        gameTiles[menuRows * i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f * (float)Math.Pow(menuColumns, 2)), (o * 1.2f) - (0.05625f * (float)Math.Pow(menuRows, 2)), -1);//move them
-            //        gameTiles[menuRows * i + o].tag = "MenuItem";
-
-            //        //buttonCubes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
-            //        //buttonCubes[menuRows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
-            //        //buttonCubes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1);//move them
-            //        //buttonCubes[menuRows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
-	                
-            //        //buttonPlanes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
-            //        //buttonPlanes[menuRows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
-            //        //Quaternion q = new Quaternion(0, 0, 0, 1);//create rotation quaternion
-            //        //q.SetLookRotation(new Vector3(0,-1000,-1), new Vector3(0,1,0));//assign values to quaternion
-            //        //buttonPlanes[menuRows*i + o].transform.rotation = q;//assign quaternion to object
-            //        //buttonPlanes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1.051f);//move them
-	                
-            //        //buttonCubes[menuRows*i + o].transform.parent = buttonPlanes[menuRows*i + o].transform;//make plane parent of cube
-	                
-            //        //buttonPlanes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-            //        //buttonCubes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-
-            //        //Destroy(buttonPlanes[menuRows*i + o].collider);
-            //        //buttonPlanes[menuRows*i + o].AddComponent<BoxCollider>();
-            //        //Rigidbody gameObjectsRigidBody = buttonPlanes[menuRows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
-            //        //gameObjectsRigidBody.mass = 5;//set weight
-            //        //gameObjectsRigidBody.useGravity = false;//disable gravity
-
-                    
-            //    }
-            //}
 
 	        gameTiles [0].name = "2x2";
             gameTiles[0].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/2x2") as Texture2D;
@@ -85,8 +47,6 @@ namespace MinigamePexeso
             gameTiles[3].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/4x4") as Texture2D;
 	    }
 		
-	    private Ray ray;
-	    private RaycastHit hit;
 
 		// Update is called once per frame
 		void Update ()
@@ -104,7 +64,6 @@ namespace MinigamePexeso
 	    /// <summary>
 	    /// COROUTINE. Not selected buttons fall down.
 	    /// </summary>
-	    /// <returns>The other.</returns>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator DropOther(GameObject chosenButton, GameObject[] buttons)
@@ -115,6 +74,7 @@ namespace MinigamePexeso
 	        {
 	            if(chosenButton != buttons[i])
 	            {
+                    buttons[i].rigidbody.isKinematic = false;
 	                buttons[i].rigidbody.useGravity = true;
 	                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
 	            }
@@ -126,18 +86,17 @@ namespace MinigamePexeso
 	            yield return null;
 	        }
 	        StartCoroutine(SelectButton(chosenButton));
-	        yield return 0;
+	        
+            //yield return 0;
 	    }
 
 	    /// <summary>
 	    /// COROUTINE. Selected button flies towards camera. Also starts new game.
 	    /// </summary>
-	    /// <returns>The other.</returns>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator SelectButton(GameObject chosenButton)
 	    {
-
 	        Vector3 startPosition = chosenButton.transform.position;
 	        float t = 0;
 	        
@@ -154,7 +113,7 @@ namespace MinigamePexeso
 	        CreateMainGameObject(chosenButton);
 	        chosenButton.transform.position = endPosition;
 
-	        yield return 0;
+	        //yield return 0;
 	    }
 
 	    /// <summary>
@@ -169,13 +128,11 @@ namespace MinigamePexeso
 
 	        for (int i = 0; i < menuColumns*menuRows; i++)
 	        {
-	            //GameObject.Destroy(buttonCubes[i]);
                 GameObject.Destroy(gameTiles[i]);
 	        }
 
             if (mainGameScript != null)
             {
-                //GameScript mainGameScript = main.GetComponent("MinigamePexeso.GameScript") as GameScript;
                 mainGameScript.rows = rows;
                 mainGameScript.columns = columns;
                 mainGameScript.enabled = true;

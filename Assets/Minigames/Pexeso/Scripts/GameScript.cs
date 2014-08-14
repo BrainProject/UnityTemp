@@ -7,10 +7,19 @@ namespace MinigamePexeso
 {
 	public class GameScript : MonoBehaviour 
     {
+        /// <summary>
+        /// How long to wait before non-matching tiles are flipped back
+        /// </summary>
+        public float observationTime = 0.5f;
 
+        /// <summary>
+        /// not used at the moment
+        /// </summary>
 	    public Scoreboard scoreboard;
 		
-	    //determines current resource pack
+	    /// <summary>
+        /// determines current resource pack
+	    /// </summary>
 	    public string resourcePack;
 
 	    public GameObject menu;
@@ -18,13 +27,20 @@ namespace MinigamePexeso
 
         public GameObject gameTilePrefab;
 
+        /// <summary>
+        /// array of tiles
+        /// </summary>
         private GameObject[] gameTiles;
 
 	    //Number of rows.
 	    public int rows = 4;
-	    //number of columns.
+	    
+        //number of columns.
 	    public int columns = 4;
 
+        /// <summary>
+        /// used as score
+        /// </summary>
 	    private int correctPairs;
 	    public GUIText correctPairsDisplay;
 	    private int wrongPairs;
@@ -35,12 +51,15 @@ namespace MinigamePexeso
 	    /// </summary>
 	    public GUIText timerDisplay;
 
-        //Update variables
+        
         private Ray ray;
         private RaycastHit hit;
         private GameObject first;
 
-        private short canWin = 0;
+        /// <summary>
+        /// If correctPairs variable reaches this value, game successfully ends
+        /// </summary>
+        private int winningScore;
 
         private float gameStartTime;
         private float gameEndTime;
@@ -64,7 +83,7 @@ namespace MinigamePexeso
 	        //time = 0;
             lastDisplayTime = 0;
 	        timerDisplay.text = "0 s";
-	        canWin = 0;
+            winningScore = 0;
 
             gameStartTime = Time.time;
 
@@ -74,6 +93,9 @@ namespace MinigamePexeso
 	        //initialize game board
             gameTiles = GameTiles.createTiles(rows, columns, gameTilePrefab, "gameTile");
 
+            winningScore = (rows * columns) / 2;
+            //print("Winning score set to: " + winningScore);
+
             // rotate all tiles
             // add Mover script to all tiles
             for (int i = 0; i < columns; i++)
@@ -82,11 +104,12 @@ namespace MinigamePexeso
                 {
                     gameTiles[rows * i + o].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
                     
-                    //TODO what about namespaces?
+                    //TODO what about namespaces here?
                     gameTiles[rows * i + o].AddComponent("Mover");
                 }
             }
-	        Pick ();
+
+	        AddPicturesToGameTiles ();
 	    }
 
 
@@ -97,6 +120,8 @@ namespace MinigamePexeso
 		void Update()
 		{
 	        //update GUI text once per second
+            //TODO event better solution would be to use coroutine with 
+            //     yield return new WaitForSeconds(1f);
             float elapsedTime = Time.time - gameStartTime;
             int displayTime = (int)Math.Floor(elapsedTime);
             if (displayTime > lastDisplayTime)
@@ -105,48 +130,10 @@ namespace MinigamePexeso
                 lastDisplayTime = displayTime;
 	        }
 
-	        //game ended
-	        if (canWin == 2)
+	        //check winning condition
+	        if (correctPairs == winningScore)
 	        {
-	            //timer.Stop();
-                gameEndTime = Time.time;
-
-	            menu.SetActive(true);
-	            resourcePackMenu.SetActive(true);
-                ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as ResourcePack;
-	            resourceMenuScript.CreateMenu();
-
-	            //game ends here, show scoreboard...
-                //GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
-                //Scoreboard scoreboard = go.GetComponent<Scoreboard>() as Scoreboard;
-                //scoreboard.correct = correctPairsDisplay;
-                //scoreboard.wrong = wrongPairsDisplay;
-                scoreboard.time.text = (gameEndTime - gameStartTime).ToString();
-	        }
-
-	        //player found pair, check if game should end
-	        else if (canWin == 1)
-	        {
-	            bool picsRemain = false;
-	            for (int i = 0; i < gameTiles.Length; i++)
-	            {
-                    if (gameTiles[i] != null)
-	                {
-	                    picsRemain = true;
-	                    break;
-	                }
-	            }
-	            if (!picsRemain)
-	            {
-	                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
-	                musicPlayer.Stop();
-	                this.gameObject.audio.Play();
-	                canWin = 2;
-	            }
-	            else
-	            {
-	                canWin = 0;
-	            }
+                EndGame();
 	        }
 	        
             //normal game turn
@@ -156,38 +143,33 @@ namespace MinigamePexeso
 	            if (Physics.Raycast(ray, out hit))
 	            {
                     GameObject hittedObject = hit.collider.gameObject;
-	                //user clicks left mouse button and hits picture
+
+	                //user clicks by left mouse button and hits tile that can be flipped
                     if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")//
 	                {
                         Mover mover = hittedObject.GetComponent("MinigamePexeso.Mover") as Mover;
-	                    
-                        //picture is already being removed
-	                    if (mover.toRemove)
-	                    {
-	                        return;
-	                    }
-	                    //this is first selected picture
+
+                        //just flip it 
+                        mover.Flip();
+
+	                    // is this the first flipped picture?
 	                    if (first == null)
 	                    {
-	                        mover.MoveUp();
                             first = hittedObject;
                             //print("First turned tile: " + first.name);
 						}
 
-						//second selected picture is the same as first
-                        else if (first == hittedObject.transform.gameObject)
-						{
-							return;
-						}
-
-						//this is second selected picture, different from the first
+						// one tile was already flipped, user clicked on another one
 						else
 						{
-							//second picture is matching for the first
-                            if (pictureMatch(first.transform.GetChild(0).renderer.material.mainTexture.name, hittedObject.transform.GetChild(0).renderer.material.mainTexture.name))
+							// check if images are matching...
+                            if (checkTilesMatch(first, hittedObject))
 	                        {
+                                //increase score and display it
 	                            correctPairs++;
 	                            correctPairsDisplay.text = correctPairs.ToString();
+
+                                //run animation of removing flipped pair
                                 StartCoroutine(FoundPair(first, hittedObject));
 							}
 
@@ -196,6 +178,8 @@ namespace MinigamePexeso
 	                        {
 	                            wrongPairs++;
 	                            wrongPairsDisplay.text = wrongPairs.ToString();
+
+                                //flipped both picsture back, after some time
                                 StartCoroutine(NotFoundPair(first, hittedObject));
 							}
 
@@ -206,15 +190,38 @@ namespace MinigamePexeso
 	        }
 		}
 
+        private void EndGame()
+        {
+            print("All pairs found... game ends");
+
+            //to avoid calling this method more than once
+            winningScore = -1;
+
+            //stop game music and play wictory sound
+            AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+            musicPlayer.Stop();
+            this.gameObject.audio.Play();
+
+            //game ends here, show scoreboard...
+            gameEndTime = Time.time;
+            //GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
+            //Scoreboard scoreboard = go.GetComponent<Scoreboard>() as Scoreboard;
+            //scoreboard.correct = correctPairsDisplay;
+            //scoreboard.wrong = wrongPairsDisplay;
+            scoreboard.time.text = (gameEndTime - gameStartTime).ToString();
+
+            StartCoroutine(RestartGame());
+        }
+
 	    /// <summary>
-	    /// Returns true, if two pictures should match.
+        /// Returns true, if pictures of given tiles are matching.
 	    /// </summary>
-	    /// <returns></returns>
-	    /// <param name="tex1">Picture 1 name</param>
-	    /// <param name="tex2">Picture 2 name</param>
-	    public bool pictureMatch(string tex1, string tex2)
+        /// <returns>true, if pictures of given tiles are matching.</returns>
+	    /// <param name="tex1">First tile</param>
+	    /// <param name="tex2">Second tile</param>
+	    public bool checkTilesMatch(GameObject first, GameObject second)
 	    {
-	        if (tex1  == tex2)
+            if (first.transform.GetChild(0).renderer.material.mainTexture.name == second.transform.GetChild(0).renderer.material.mainTexture.name)
 	        {
 	            return true;
 	        }
@@ -222,96 +229,87 @@ namespace MinigamePexeso
 	    }
 
 	    /// <summary>
-	    /// COROUTINE. Called when user selected two pictures which do not match.
+	    /// COROUTINE. Called when user selected two tiles which different pictures
 	    /// </summary>
-	    /// <returns></returns>
-	    /// <param name="first">First object</param>
-	    /// <param name="second">Second object</param>
+        /// Wait until they are fully flipped up,
+        /// wait some time, so user can observe the tiles
+        /// flip them down
+	    /// <param name="first">First game tile</param>
+	    /// <param name="second">Second game tile</param>
 	    public IEnumerator NotFoundPair(GameObject first, GameObject second)
 	    {
             Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
             Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
 
-			while (mover2.isMoving)
-			{
-				yield return new WaitForSeconds(0.2f);
-			}
-			
-			mover2.MoveUp();
-			
 			while (mover1.isMoving || mover2.isMoving)
 	        {
-	            yield return new WaitForSeconds(0.2f);
+	            yield return new WaitForSeconds(0.1f);
 	        }
-	        mover1.MoveDown();
-	        mover2.MoveDown();
 
-	        yield return 0;
+            //
+            yield return new WaitForSeconds(observationTime);
+
+	        mover1.Flip();
+	        mover2.Flip();
+
+	        //yield return 0;
 	    }
 
 	    /// <summary>
-	    /// COROUTINE. Called when user selected two pictures which match.
+	    /// COROUTINE. Called when user selected two matching pictures
 	    /// </summary>
 	    /// <returns></returns>
 	    /// <param name="first">First object</param>
 	    /// <param name="second">Second object</param>
 	    public IEnumerator FoundPair(GameObject first, GameObject second)
 	    {
+            //print("FoundPair");
+
             Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
             Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
-	        mover1.toRemove = true;
-	        mover2.toRemove = true;
-
-	        while (mover1.isMoving || mover2.isMoving)
-	        {
-	            yield return new WaitForSeconds(0.1f);
-	        }
-
-			mover1.MoveUp();
-			mover2.MoveUp();
-
+			
+            //wait while tiles finishes their flipping
 			while (mover1.isMoving || mover2.isMoving)
 			{
 				yield return new WaitForSeconds(0.1f);
 			}
 			
+            //set up physics to animate fall of tiles
 			first.rigidbody.useGravity = true;
+            first.rigidbody.isKinematic = false;
 	        second.rigidbody.useGravity = true;
+            second.rigidbody.isKinematic = false;
 
 	        first.rigidbody.AddForce(new Vector3(0,1,-5) * 100);
 			second.rigidbody.AddForce(new Vector3(0,1,-5) * 100);
 
+            //wait until tiles are out of view, then destroy them
 	        yield return new WaitForSeconds(1.3f);
-
 	        Destroy(first);
 	        Destroy(second);
 
-	        canWin = 1;
-
-	        yield return 0;
+	        //yield return 0;
 	    }
 		
 	    /// <summary>
-	    /// Randomly assigns pictures to planes.
+	    /// Randomly assigns pictures to game tiles.
 	    /// </summary>
-		public void Pick()
+		public void AddPicturesToGameTiles()
 		{
 	        List<Texture2D> classicPic = new List<Texture2D>();
 	        UnityEngine.Object[] images;
 	        System.Random random = new System.Random();
 	        int num;
 
-            print("resPack to load: '" + resourcePack + "'");
+            //print("resPack to load: '" + resourcePack + "'");
 
-	        //Load all pictures and their matching silhouettes/similarities.
+	        //Load all pictures
 			images = Resources.LoadAll("Textures/Pictures/" + resourcePack);
 
 			if (images == null)
 			{
 				throw new UnityException("Some images failed to load");
 			}
-
-            //print("image count: " + images.Length);
 
 			for(int i = 0; i < images.Length; i++)
 			{
@@ -321,9 +319,9 @@ namespace MinigamePexeso
 				}
 			}
 
-            print("picture count: " + images.Length);
+            print("Loaded picture count: " + images.Length);
 
-	        //Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
+	        //Choose randomly appropriate number of pictures
 	        List<Texture2D> chosen = new List<Texture2D>();
 	        for (int i = 0; i < (rows * columns)/2; i++)
 	        {
@@ -332,6 +330,7 @@ namespace MinigamePexeso
 	            chosen.Add(classicPic[num]);
 	            classicPic.RemoveAt(num);
 	        }
+
 	        //Check if appropriate number of pics have been chosen.
 	        if (chosen.Count != (rows * columns))
 	        {
@@ -347,5 +346,19 @@ namespace MinigamePexeso
 	            chosen.RemoveAt(num);
 	        }
 		}
+
+        public IEnumerator RestartGame()
+        {
+            
+            //wait some time...
+            yield return new WaitForSeconds(2f);
+            print("Restarting game...");
+
+            menu.SetActive(true);
+            resourcePackMenu.SetActive(true);
+            ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as ResourcePack;
+            this.enabled = false;
+            resourceMenuScript.CreateMenu();
+        }
 	}
 }
