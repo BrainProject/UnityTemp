@@ -77,7 +77,7 @@ namespace MinigameSelection
 			if(ReadyToLeave)
 			{
 				//StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadMainLevel(false, "Main"));
-                mgc.levelLoader.LoadLevel("Main");
+                mgc.sceneLoader.LoadScene("Main");
 
 				mgc.fromSelection = true;
 			}

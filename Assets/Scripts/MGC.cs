@@ -46,11 +46,11 @@ public enum BrainPartName
         /// </summary>
         public Logger logger;
 
-        public Game.LevelLoader levelLoader;
+        public Game.SceneLoader sceneLoader;
 
         //public Game.LoadLevelWithFade loadLevelWithFade;
 
-        public BrainPartName selectedBrainPart;
+        public BrainPartName currentBrainPart;
         public Vector3 currentCameraDefaultPosition;
         //public GameObject selectedMinigame;
         public string gameSelectionSceneName = "GameSelection";
@@ -60,7 +60,7 @@ public enum BrainPartName
         internal bool fromMinigame;
 
 
-        void Start()
+        void Awake()
         {
             print("Master Game Controller starts...");
 
@@ -69,7 +69,7 @@ public enum BrainPartName
             logger.Initialize("Logs", "PlayerActions.txt");
 
             //initiate level loader
-            levelLoader = this.gameObject.AddComponent<Game.LevelLoader>();
+            sceneLoader = this.gameObject.AddComponent<Game.SceneLoader>();
                         
         }
 
@@ -79,9 +79,9 @@ public enum BrainPartName
             MGC.Instance.logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
 
             //perform fade in?
-            if (MGC.Instance.levelLoader.doFade)
+            if (MGC.Instance.sceneLoader.doFade)
             {
-                MGC.Instance.levelLoader.FadeIn();
+                MGC.Instance.sceneLoader.FadeIn();
             }
             else
             {
@@ -95,7 +95,7 @@ public enum BrainPartName
             if (Application.loadedLevelName == gameSelectionSceneName)
             {
                 print("this is game selection scene...");
-                switch (selectedBrainPart)
+                switch (currentBrainPart)
                 {
                     case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
                         Camera.main.GetComponent<CameraControl>().currentWaypoint = GameObject.Find("GreenPos");
@@ -118,11 +118,10 @@ public enum BrainPartName
                 fromMain = false;
             }
 
-            if (level > 2)
-            {
-
-                this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
-            }
+            //if (level > 2)
+            //{
+            //    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
+            //}
         }
 
         //Only for debugging and testing purposes

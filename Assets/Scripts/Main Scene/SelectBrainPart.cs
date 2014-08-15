@@ -91,14 +91,14 @@ namespace MainScene {
                     print("Going into brain part: '" + brainPartToLoad + "'");
                     MGC mgc = MGC.Instance;
 					
-                    mgc.selectedBrainPart = brainPartToLoad;
+                    mgc.currentBrainPart = brainPartToLoad;
                     mgc.fromMain = true;
                     mgc.fromSelection = false;
 					
                     
                     StopAllCoroutines();
 
-                    mgc.levelLoader.LoadLevel(levelName);
+                    mgc.sceneLoader.LoadScene(levelName);
 				}
 			}
 			if(CanSelect && initialMouseOver)

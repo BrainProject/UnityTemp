@@ -1,12 +1,13 @@
-﻿/*
- * Created by: Milan Dolezal
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 namespace Game 
 {
+    /// <summary>
+    /// Only for transition into main scene...
+    /// No important stuff should be created or initialized here
+    /// GMC is initialized here, but only for `fade-in` effect in main.
+    /// </summary>
 	public class SplashScreen: MonoBehaviour 
     {
         public float timeBeforeFade = 2.5f;
@@ -28,8 +29,8 @@ namespace Game
 			Screen.showCursor = false;
 			StartCoroutine (LoadMainLevel());
 
-            MGC mgc = MGC.Instance;
-
+            //following line not only print something, but also create instance of MGC (if this is the first call...)
+            print("Initialization of master game controller: " + MGC.Instance);
 		}
 
 		void Update()
@@ -56,7 +57,11 @@ namespace Game
 			}
 			
             Screen.showCursor = true;
-            MGC.Instance.levelLoader.doFade = true;
+
+            //we want 'fade-in' effect for main scene
+            MGC.Instance.sceneLoader.doFade = true;
+
+            //load main scene
 			Application.LoadLevel(Application.loadedLevel+1);
 		}
 	}

@@ -4,9 +4,9 @@ using System.Collections;
 namespace Game 
 {
     /// <summary>
-    /// For loading levels and fading
+    /// For loading scenes and fading
     /// </summary>
-	public class LevelLoader : MonoBehaviour 
+	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
         public float fadeSpeed = 4f;
@@ -21,7 +21,7 @@ namespace Game
 
 		void Start()
 		{
-            print("LevelLoader start...");
+            print("SceneLoader start...");
 
             gameObject.AddComponent<GUITexture>();
             guiTexture.texture = Resources.Load("Textures/white") as Texture;
@@ -36,9 +36,9 @@ namespace Game
 			
 		}
 
-        public void LoadLevel(string levelName, bool doFadeInOut = true)
+        public void LoadScene(string levelName, bool doFadeInOut = true)
         {
-            print("Loading level: '" + levelName + "'");
+            print("Loading scene: '" + levelName + "'");
 
             doFade = doFadeInOut;
 

@@ -17,7 +17,6 @@ namespace MinigameSelection
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
 
-		private MGC mgc;
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private bool OnSelection { get; set; }
@@ -28,19 +27,20 @@ namespace MinigameSelection
 		void Start()
 		{
 			OnSelection = false;
-			mgc = MGC.Instance;
 			mainCamera = Camera.main;
 			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 			MouseHover = false;
 			Icon = GameObject.Find ("Selection Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			if(mgc.GetComponent<MinigameStates> ().GetPlayed (minigameName))
-			{
-				(this.GetComponent("Halo") as Behaviour).enabled = true;
-				this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
-			}
-			if(minigameName == "")
+			
+            //if(mgc.GetComponent<MinigameStates> ().GetPlayed (minigameName))
+            //{
+            //    (this.GetComponent("Halo") as Behaviour).enabled = true;
+            //    this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+            //}
+			
+            if(minigameName == "")
 			{
 				this.renderer.material.color = Color.gray;
 				this.GetComponent<SelectMinigame>().enabled = false;
@@ -102,11 +102,12 @@ namespace MinigameSelection
 			//load mini-game if zooming or zoomed
 			if(OnSelection)
 			{
-				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
+				//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
+
 				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
-                MGC.Instance.selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
-                MGC.Instance.levelLoader.LoadLevel(minigameName);
+                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+                MGC.Instance.sceneLoader.LoadScene(minigameName);
 			}
 
 			//set target position of camera near to mini-game bubble
