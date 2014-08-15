@@ -6,7 +6,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Game {
+namespace Game 
+{
 	public class Minigame
 	{
 		internal string minigameName;
@@ -19,9 +20,12 @@ namespace Game {
 		}
 	}
 
-	public class MinigameStates : MonoBehaviour {
-		//Status of each minigame. True if minigame was played.
-		//Minigames needs to be set in Start() function manualy in this scrip.
+	public class MinigameStates : MonoBehaviour 
+    {
+		/// <summary>
+        /// Status of each minigame. True if minigame was played.
+        /// Minigames needs to be set in Start() function manualy in this scrip.
+		/// </summary>
 		public List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
@@ -35,8 +39,8 @@ namespace Game {
 			minigames.Add (pexeso);
 			Minigame silhouette = new Minigame ("Silhouette");
 			minigames.Add (silhouette);
-			Minigame splashScreen = new Minigame ("SplashScreen");
-			minigames.Add (splashScreen);
+//			Minigame splashScreen = new Minigame ("SplashScreen");
+//			minigames.Add (splashScreen);
 			Minigame puzzle = new Minigame ("Puzzle");
 			minigames.Add (puzzle);
 		}

@@ -3,53 +3,53 @@ using System.Collections;
 using System;
 using System.IO;
 
-/*
- * static class for logging in-game events into simple text file
- * from any other class, you can simply call:
- *    Logger.addLogEntry("this is my entry");
- * to add new entry to log
- * 
- * Logger should be initialized in "main" scene
- * If you want to debug single scene (e.g. "myGreatGame.scene"), 
- * simply add "Logger" prefab to your scene hierarchy. 
- * Via this prefab, you can set variables of Logger - path and filename
- * 
- * \warning Do not add log entries during Awake() phase if possible. Order of awaking scripts is not defined
- * and therefore Logger class may not have been initialized yet. 
- * 
- * \author Jiri Chmelik
- * \date 07-2014
- */
-public static class Logger : object 
+/// <summary>
+/// Class for logging in-game events into simple text file
+/// </summary>
+/// <example>
+/// To use Logger, define a global variable:
+/// <code>Logger logger;</code>
+/// and (preferably in Start() function) get pointer via Master Game Controller:
+/// <code>logger = MGC.Instance.Logger()</code>
+/// Then, you can new entries by>
+/// <code>Logger.addEntry("this is my entry");</code>
+/// </example>
+/// \author Jiri Chmelik
+/// \date 07-2014
+public class Logger : MonoBehaviour
 {
-    
-    private static StreamWriter logfile;
+    private string path;
+    private string filename;
 
-    
+    private StreamWriter logfile;
+
     // in case of web build, logger can't be use, so there are only empty method definitions
     #if UNITY_WEBPLAYER
         
-        public static void Initialize(string path, string filename)
+        public void Initialize(string path, string filename)
         {
 
         }
 
-        public static void addLogEntry(string entry)
+        public void addLogEntry(string entry)
         {
             //Debug.Log("Logger not supported for webplayer");
             Debug.Log(entry);
 
         }
 
-        public static void Stop()
+        public void Stop()
         {
 
         }
 
     #else
 
-        public static void Initialize(string path, string filename)
+        public void Initialize(string ppath, string pfilename)
         {
+            path = ppath;
+            filename = pfilename;
+        
             Debug.Log("Initialization of Logger...");
             string logPath = path + "/" + filename;
             Debug.Log("...Newron log path: " + logPath);
@@ -72,14 +72,14 @@ public static class Logger : object
 
             if (addCreatedEntry)
             {
-                addLogEntry("Log file created");
+                addEntry("Log file created");
             }
 
-            addLogEntry("New session started");
+            addEntry("New session started");
         }
         
 
-        public static void addLogEntry(string entry)
+        public void addEntry(string entry)
         {
             if (logfile != null)
             {
@@ -92,10 +92,10 @@ public static class Logger : object
             }
         }
 
-        public static void Stop()
+        public void OnApplicationQuit()
         {
-            //Debug.Log("On application quit");
-            addLogEntry("Session ended\r\n\r\n\r\n");
+            print("Closing log file");
+            addEntry("Session ended\r\n\r\n\r\n");
             logfile.Close();
         }
     #endif 
