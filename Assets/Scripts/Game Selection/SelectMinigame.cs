@@ -12,7 +12,7 @@ namespace MinigameSelection
     {
 		public string minigameName;
 		public float cameraDistance = 1;
-		public string iconName;
+		public Texture minigameIcon;
 
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
@@ -23,6 +23,7 @@ namespace MinigameSelection
 		private Camera mainCamera { get; set; }
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
+		private Vector3 OriginalIconScale { get; set; }
 
 		void Start()
 		{
@@ -31,9 +32,17 @@ namespace MinigameSelection
 			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
 			MouseHover = false;
-			Icon = GameObject.Find ("Selection Part Icon");
-			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			
+			if(minigameIcon)
+			{
+				Icon = (GameObject)Instantiate(GameObject.Find ("Selection Part Icon"));
+				Icon.transform.position = this.transform.position;
+				Icon.renderer.material.mainTexture = minigameIcon;
+				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				Icon.transform.parent = this.transform;
+				OriginalIconScale = Icon.transform.localScale;
+				//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
+			}
+
             if(MGC.Instance.minigameStates.GetPlayed(minigameName))
             {
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
@@ -74,13 +83,15 @@ namespace MinigameSelection
 		{
 			OriginalColor = this.renderer.material.color;
 			this.renderer.material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
-			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
-			if(tmp)
-			{
-				Icon.renderer.material.mainTexture = tmp;
-				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
-				Icon.transform.position = this.transform.position;
-			}
+//			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
+//			if(tmp)
+//			{
+//				Icon.renderer.material.mainTexture = tmp;
+//				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
+//				Icon.transform.position = this.transform.position;
+//			}
+			if(Icon)
+				Icon.transform.localScale = new Vector3 (1, 1, 1);
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
@@ -90,10 +101,11 @@ namespace MinigameSelection
 		void OnMouseExit()
 		{
 			this.renderer.material.color = OriginalColor;
-			Icon.renderer.material.mainTexture = null;
-			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
+			//Icon.renderer.material.mainTexture = null;
+			//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
-
+			if(Icon)
+				Icon.transform.localScale = OriginalIconScale;
 	        MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
 		}
 

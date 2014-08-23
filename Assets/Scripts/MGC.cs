@@ -137,16 +137,16 @@ public class MGC : Singleton<MGC>
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
 			Application.LoadLevel ("GameSelection");
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 160, 110, 30), "QUIT")) {
+		if (GUI.Button (new Rect (Screen.width - 130, 460, 110, 30), "QUIT")) {
 			Application.Quit ();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 200, 110, 30), "Save")) {
+		if (GUI.Button (new Rect (Screen.width - 130, 500, 110, 30), "Save")) {
 			SaveGame();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 240, 110, 30), "Load")) {
+		if (GUI.Button (new Rect (Screen.width - 130, 540, 110, 30), "Load")) {
 			LoadGame ();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 280, 110, 30), "Reset status")) {
+		if (GUI.Button (new Rect (Screen.width - 130, 580, 110, 30), "Reset status")) {
 
 		}
 	}
@@ -188,7 +188,7 @@ public class MGC : Singleton<MGC>
 			minigameData.played = false;
 		}
 
-		print ("Game statuses are reset to 'not yet played'");
+		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 	}
 
 
