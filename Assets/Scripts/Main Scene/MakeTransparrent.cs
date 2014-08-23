@@ -29,6 +29,11 @@ namespace MainScene
 				this.renderer.material.color = targetColor;
 				originalColor = targetColor;
 			}
+			else
+			{
+				originalColor.a = 1.0f;
+				this.renderer.material.color = originalColor;
+			}
 		}
 		
 		void Update () 
@@ -45,7 +50,7 @@ namespace MainScene
                 fading = true;
                 startTime = Time.time;
 
-                renderer.material.shader = Shader.Find("Transparent/Diffuse");
+                //renderer.material.shader = Shader.Find("Transparent/Diffuse");
             }
 
             if (fading)

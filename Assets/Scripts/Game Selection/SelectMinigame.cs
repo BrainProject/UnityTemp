@@ -34,11 +34,11 @@ namespace MinigameSelection
 			Icon = GameObject.Find ("Selection Part Icon");
 			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			
-            //if(mgc.GetComponent<MinigameStates> ().GetPlayed (minigameName))
-            //{
-            //    (this.GetComponent("Halo") as Behaviour).enabled = true;
-            //    this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
-            //}
+            if(MGC.Instance.minigameStates.GetPlayed(minigameName))
+            {
+                (this.GetComponent("Halo") as Behaviour).enabled = true;
+                this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+            }
 			
             if(minigameName == "")
 			{

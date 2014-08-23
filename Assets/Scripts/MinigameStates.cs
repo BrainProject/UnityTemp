@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Game 
 {
+	[System.Serializable]
 	public class Minigame
 	{
 		internal string minigameName;
@@ -24,14 +25,12 @@ namespace Game
     {
 		/// <summary>
         /// Status of each minigame. True if minigame was played.
-        /// Minigames needs to be set in Start() function manualy in this scrip.
+        /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
 		public List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
 		{
-			DontDestroyOnLoad (this.gameObject);
-
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);
@@ -61,7 +60,10 @@ namespace Game
 		{
 			foreach(Minigame game in minigames)
 				if(game.minigameName == minigameName)
+			{
+				print (game.played);
 					return game.played;
+			}
 			return false;
 		}
 	}

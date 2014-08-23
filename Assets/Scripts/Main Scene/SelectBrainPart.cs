@@ -37,7 +37,7 @@ namespace MainScene {
 			if(CanSelect)
 			{
 				Texture tmp = (Texture)Resources.Load ("Main/" + iconName, typeof(Texture));
-				if(tmp != null)
+				if(tmp)
 				{
 					Icon.renderer.material.mainTexture = tmp;
 					Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
