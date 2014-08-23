@@ -10,9 +10,12 @@ using System.Collections;
 /// \author Milan Doležal
 /// 
 /// \date 07-2014
-public class MinigamePlayed : MonoBehaviour {
-	void Start () {
-		MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-		Destroy (this.gameObject);
+namespace Game
+{
+	public class MinigamePlayed : MonoBehaviour {
+		void Start () {
+			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			Destroy (this.gameObject);
+		}
 	}
 }
