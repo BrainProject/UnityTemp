@@ -31,7 +31,7 @@ public class Logger : MonoBehaviour
 
         }
 
-        public void addLogEntry(string entry)
+        public void addEntry(string entry)
         {
             //Debug.Log("Logger not supported for webplayer");
             Debug.Log(entry);
