@@ -23,7 +23,7 @@ namespace MainScene
 			fading = false;
 			originalColor = this.renderer.material.color;
 			targetColor = this.renderer.material.color;
-			targetColor.a = 0.1f;
+			targetColor.a = 0.2f;
             if (MGC.Instance.fromSelection)
 			{
 				this.renderer.material.color = targetColor;
