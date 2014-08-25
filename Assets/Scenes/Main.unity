@@ -222,7 +222,7 @@ Transform:
   - {fileID: 226695126}
   - {fileID: 1918173135}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &112400030
 Prefab:
   m_ObjectHideFlags: 0
@@ -639,8 +639,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 275323347}
   - 95: {fileID: 275323348}
+  - 114: {fileID: 275323349}
+  - 65: {fileID: 275323350}
   m_Layer: 0
-  m_Name: neuron_breath_ONE_blink_earsNponytail
+  m_Name: Neuron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,12 +671,36 @@ Animator:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 275323346}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: fae97c8b132433e4e87ca4b123d894ea, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 8d7fff2bcbcc7d94eae0d636f0b14fd8, type: 3}
   m_Controller: {fileID: 9100000, guid: c3f58ab50ead26349ba1ed493630c9ac, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+--- !u!114 &275323349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 275323346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d18b79a36b8f424bb3f64aacb5f347b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpExists: 0
+--- !u!65 &275323350
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 275323346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .340000004, y: .479999989, z: .25999999}
+  m_Center: {x: 0, y: .219999999, z: -.0599999987}
 --- !u!1001 &304307926
 Prefab:
   m_ObjectHideFlags: 0
@@ -986,7 +1012,7 @@ GameObject:
   - 4: {fileID: 572701025}
   - 137: {fileID: 572701026}
   m_Layer: 0
-  m_Name: neuron
+  m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3369,7 +3395,7 @@ Transform:
   - {fileID: 202802031}
   - {fileID: 1120562650}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &2069743954
 GameObject:
   m_ObjectHideFlags: 0

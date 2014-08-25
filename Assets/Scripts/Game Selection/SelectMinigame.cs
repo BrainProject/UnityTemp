@@ -13,6 +13,7 @@ namespace MinigameSelection
 		public string minigameName;
 		public float cameraDistance = 1;
 		public Texture minigameIcon;
+		public Texture minigameHelp;
 
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
@@ -116,7 +117,8 @@ namespace MinigameSelection
 			{
 				//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-
+				if(minigameHelp && GameObject.Find("Neuron"))
+					GameObject.Find("Neuron").GetComponent<BrainHelp>().helpTexture = minigameHelp;
 				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
                 MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
                 MGC.Instance.sceneLoader.LoadScene(minigameName);

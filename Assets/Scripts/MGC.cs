@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using MainScene;
 using MinigameSelection;
+using Game;
 
 public enum BrainPartName
 {
@@ -47,8 +48,8 @@ public class MGC : Singleton<MGC>
 	/// Logs players actions
 	/// </summary>
 	public Logger logger;
-	public Game.SceneLoader sceneLoader;
-	public Game.MinigameStates minigameStates;
+	public SceneLoader sceneLoader;
+	public MinigameStates minigameStates;
 	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
@@ -67,10 +68,13 @@ public class MGC : Singleton<MGC>
 		logger.Initialize ("Logs", "PlayerActions.txt");
 
 		//initiate level loader
-		sceneLoader = this.gameObject.AddComponent<Game.SceneLoader> ();
+		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
 			
 		//initiate minigame states
-		minigameStates = this.gameObject.AddComponent<Game.MinigameStates> ();
+		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
+
+		//initiate help gui
+
 	}
 
 	void Start()
