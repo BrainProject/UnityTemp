@@ -44,17 +44,19 @@ public class MGC : Singleton<MGC>
 	{
 	}
 	// guarantee this will be always a singleton only - can't use the constructor!
-	/// <summary>
-	/// Logs players actions
-	/// </summary>
-	public Logger logger;
-	public SceneLoader sceneLoader;
-	public MinigameStates minigameStates;
+
+	
 	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
 	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
+	/// <summary>
+	/// Logs players actions
+	/// </summary>
+	internal Logger logger;
+	internal SceneLoader sceneLoader;
+	internal MinigameStates minigameStates;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
