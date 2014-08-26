@@ -42,6 +42,14 @@ namespace Game
 			}
 		}
 
+		void OnMouseDown()
+		{
+			GameObject.Find ("Neuron").GetComponent<Game.BrainHelp> ().helpExists = false;
+			canControl = false;
+			StopCoroutine ("FadeIn");
+			StartCoroutine ("FadeOut");
+		}
+
 		IEnumerator FadeIn()
 		{
 			float startTime = Time.time;
@@ -55,6 +63,8 @@ namespace Game
 
 		IEnumerator FadeOut()
 		{
+			//Tell to MGC that this minigame was played.
+			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
 			originalColor = this.guiTexture.color;
@@ -65,6 +75,7 @@ namespace Game
 				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime));
 				yield return null;
 			}
+			Destroy (this.gameObject);
 		}
 
 		IEnumerator MoveAway(float direction)

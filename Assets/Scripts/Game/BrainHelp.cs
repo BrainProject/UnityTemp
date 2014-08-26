@@ -50,6 +50,8 @@ namespace Game
 		{
 			if(level > 2)
 				ShowHelpBubble();
+			else
+				helpExists = false;
 		}
 	}
 }

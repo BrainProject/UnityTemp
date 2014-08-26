@@ -14,7 +14,7 @@ namespace Game
 {
 	public class MinigamePlayed : MonoBehaviour {
 		void Start () {
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			//MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
 			Destroy (this.gameObject);
 		}
 	}

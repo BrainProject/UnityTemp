@@ -27,7 +27,7 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		public List<Minigame> minigames = new List<Minigame>();
+		internal List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
 		{
@@ -36,10 +36,10 @@ namespace Game
 			minigames.Add (hanoi);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
-			Minigame silhouette = new Minigame ("Silhouette");
+			Minigame similarities = new Minigame ("Similaries");
+			minigames.Add (similarities);
+			Minigame silhouette = new Minigame ("Silhouettes");
 			minigames.Add (silhouette);
-//			Minigame splashScreen = new Minigame ("SplashScreen");
-//			minigames.Add (splashScreen);
 			Minigame puzzle = new Minigame ("Puzzle");
 			minigames.Add (puzzle);
 		}
@@ -59,10 +59,9 @@ namespace Game
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-				if(game.minigameName == minigameName)
+			if(game.minigameName == minigameName)
 			{
-				print (game.played);
-					return game.played;
+				return game.played;
 			}
 			return false;
 		}

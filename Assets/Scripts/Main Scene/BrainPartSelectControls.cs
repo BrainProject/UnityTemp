@@ -24,7 +24,7 @@ namespace MainScene
 		
 		void Update()
 		{
-			if(Input.GetAxis ("Vertical") > 0 || Input.GetButtonDown ("Fire1"))
+			if(Input.GetAxis ("Vertical") > 0 || Input.GetButtonDown ("Fire1") || Mathf.RoundToInt(Time.timeSinceLevelLoad) == 2)
 			{
 				if(!cameraAnimation.GetBool("start"))
 				{
@@ -43,15 +43,10 @@ namespace MainScene
 
 		public void EnableInteraction()
 		{
-			this.transform.parent.gameObject.GetComponent<RotateAroundBrain>().CanRotate = true;
 			GameObject.Find("Left").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
 			GameObject.Find("Right").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
 			GameObject.Find("Up").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
 			GameObject.Find("Down").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-			//this.transform.GetChild(0).GetComponent<RotateAroundBrainBorder>().enabled = true;
-			//this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
-			//this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
-			//this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
 			GameObject.Find("FrontalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
 			GameObject.Find("ParietalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
 			GameObject.Find("OccipitalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
