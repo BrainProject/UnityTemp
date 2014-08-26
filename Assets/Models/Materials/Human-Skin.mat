@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Human-Skin
-  m_Shader: {fileID: 5, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: c0096a96d54378848b8674c4703cd253, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -36,6 +36,34 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Diffuse
+        second:
+          m_Texture: {fileID: 2800000, guid: 8639015779d844a4b8851c921f7d7f8e, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Normal
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -44,26 +72,54 @@ Material:
     m_Floats:
       data:
         first:
+          name: _Reflection
+        second: 0
+      data:
+        first:
           name: _Cutoff
         second: .5
       data:
         first:
           name: _Shininess
-        second: .078125
+        second: .00999999978
+      data:
+        first:
+          name: _SpecLevel
+        second: .5
       data:
         first:
           name: _Parallax
         second: .0199999996
+      data:
+        first:
+          name: _Gloss
+        second: 0
+      data:
+        first:
+          name: _FrezPow
+        second: 0
+      data:
+        first:
+          name: _FrezFalloff
+        second: 10
+      data:
+        first:
+          name: _EdgeAlpha
+        second: 1
+      data:
+        first:
+          name: _Metalics
+        second: 0
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .90196079, g: .796078444, b: .698039234, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: .5, g: .5, b: .5, a: 0}
+        second: {r: .929411769, g: .796078444, b: .635294139, a: .435294122}
       data:
         first:
           name: _Emission
         second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .5, g: .5, b: .5, a: 0}

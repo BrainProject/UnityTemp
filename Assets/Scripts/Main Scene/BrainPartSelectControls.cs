@@ -52,9 +52,11 @@ namespace MainScene
 			//this.transform.GetChild(1).GetComponent<RotateAroundBrainBorder>().enabled = true;
 			//this.transform.GetChild(2).GetComponent<RotateAroundBrainBorder>().enabled = true;
 			//this.transform.GetChild(3).GetComponent<RotateAroundBrainBorder>().enabled = true;
-            GameObject.Find("FrontalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
-            GameObject.Find("ParietalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
-            GameObject.Find("OccipitalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+			GameObject.Find("FrontalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+			GameObject.Find("ParietalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+			GameObject.Find("OccipitalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+			GameObject.Find("Cerebellum").GetComponent<SelectBrainPart>().CanSelect = true;
+			GameObject.Find("TemporalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
 		}
 	}
 }
