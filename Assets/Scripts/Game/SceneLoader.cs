@@ -9,7 +9,7 @@ namespace Game
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 4f;
+        public float fadeSpeed = 5f;
 
         private float speed;
 		private Color originalColor;
@@ -60,7 +60,7 @@ namespace Game
         private IEnumerator FadeInCoroutine()
         {
             print("fading in...");
-            guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
             //print("initial alpha = " + guiTexture.color.a);
             float startTime = Time.time;
             originalColor = guiTexture.color;
@@ -68,7 +68,7 @@ namespace Game
             
             guiTexture.enabled = true;
             
-            while (guiTexture.color.a > 0.05f)
+            while (guiTexture.color.a > 0.01f)
             {
                 //guiTexture.enabled = true;
                 this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
@@ -104,7 +104,7 @@ namespace Game
                 targetColor.a = 1.0f;                
                 
                 this.gameObject.guiTexture.enabled = true;
-                while (this.guiTexture.color.a < 0.9f)
+                while (this.guiTexture.color.a < 0.51f)
                 {
                     this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
                     //print("alpha = " + this.guiTexture.color.a);
