@@ -1,93 +1,132 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-namespace MinigamePexeso 
+namespace MinigamePexeso
 {
-	public class Mover : MonoBehaviour 
-    {
-        /// <summary>
-        /// speed of flipping animation
-        /// </summary>
-        public float moveSpeed = 2f;
-
-        /// <summary>
-        /// is tile moving?
-        /// </summary>
-	    public bool isMoving = false;
-	    
-        /// <summary>
-        /// is tile flipped by image side up?
-        /// </summary>
-        public bool imageSideUp = false;
-
-	    
-	    private Vector3 endRotation;
-	    private float t;
-
-	    public void Flip()
-	    {
-            //print("Flip");
-			if (imageSideUp)
+	public class Mover : MonoBehaviour
+	{
+		// Use this for initialization
+		void Start ()
+		{
+			downPosition = transform.position;
+			upPosition = transform.position + moveVector;
+		}
+		
+		// Update is called once per frame
+		void Update ()
+		{
+		}
+		
+		public bool isMoving = false;
+		public bool isLifted = false;
+		public bool toRemove = false;
+		
+		private Vector3 moveVector = new Vector3(0, 0, -1);
+		private Vector3 downPosition;
+		public Vector3 upPosition;
+		
+		private float moveSpeed = 2f;
+		private Vector3 startPosition;
+		private Vector3 endPosition;
+		private float t;
+		
+		private bool switchTranslation = false;
+		
+		public void Move()
+		{
+			if (isLifted)
 			{
-				FlipImageDown ();
+				MoveDown();
 			}
 			else
 			{
-				FlipImageUp ();
+				MoveUp();
 			}
-	    }
-
-	    public void FlipImageUp()
-	    {
-            //print("FlipImageUp");
-	        if (!imageSideUp)
-			{
-				if (!isMoving)
-				{
-					imageSideUp = true;
-                    endRotation = Vector3.up;
-					StartCoroutine(flipAnimation());
-				}
-			}
-	    }
-
-	    public void FlipImageDown()
-	    {
-            //print("FlipImageDown");
-			if (imageSideUp)
-			{
-				if (!isMoving)
-				{
-					imageSideUp = false;
-                    endRotation = 180f * Vector3.up;
-					StartCoroutine(flipAnimation());
-				}
-			}
-	    }
-	    
-	    private IEnumerator flipAnimation()
+		}
+		
+		public void MoveUp()
 		{
-            //this will ensure, that user can't click on this tile while it is flipped image-side up
-            gameObject.GetComponent<BoxCollider>().enabled = false;
-
+			if(!isLifted)
+			{
+				if(!isMoving)
+				{
+					isLifted = true;
+					StartCoroutine(move(moveVector));
+				}
+				else
+				{
+					isLifted = true;
+					switchTranslation = true;
+				}
+			}
+			else if(transform.position == downPosition)
+			{
+				isLifted = false;
+				MoveUp();
+			}
+		}
+		
+		public void MoveDown()
+		{
+			if (isLifted)
+			{
+				if (!isMoving)
+				{
+					isLifted = false;
+					StartCoroutine(move(-moveVector));
+				} else
+				{
+					isLifted = false;
+					switchTranslation = true;
+				}
+			}
+			else if(transform.position == upPosition)
+			{
+				isLifted = true;
+				MoveDown();
+			}
+		}
+		
+		private void SwitchTargets()
+		{
+			startPosition = transform.position;
+			if (isLifted)
+			{
+				endPosition = upPosition;
+			}
+			else
+			{
+				endPosition = downPosition;
+			}
+		}
+		
+		private IEnumerator move(Vector3 moveVector)
+		{
 			isMoving = true;
+			startPosition = transform.position;
 			t = 0;
-
+			
+			endPosition = new Vector3(startPosition.x + moveVector.x,
+			                          startPosition.y + moveVector.y,
+			                          startPosition.z + moveVector.z);
+			
 			while (t < 1f)
 			{
-				t += Time.deltaTime * moveSpeed;
-				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, endRotation, t);
+				if(switchTranslation)
+				{
+					t = 0;
+					switchTranslation = false;
+					SwitchTargets();
+				}
+				else
+				{
+					t += Time.deltaTime * moveSpeed;
+					transform.position = Vector3.Lerp(startPosition, endPosition, t);
+				}
 				yield return null;
 			}
-
 			isMoving = false;
-
-            //after tile is flipped down, re-enable collider to allow mouse clicks on this object
-            if (!imageSideUp)
-            {
-                gameObject.GetComponent<BoxCollider>().enabled = true;
-            }
-			//yield return 0;
-	    }
+			yield return 0;
+		}
 	}
 }

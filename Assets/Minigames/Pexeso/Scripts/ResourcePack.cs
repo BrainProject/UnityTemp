@@ -5,15 +5,16 @@ using System.Collections;
 
 namespace MinigamePexeso 
 {
+	public enum GameType { Pexeso, Similarity, Silhouette };
+
 	public class ResourcePack : MonoBehaviour 
     {
+        public GameType currentGame = GameType.Similarity;
 
         public GameStart gameStart;
         public GameScript mainGameScript;
         public GameObject gameTilePrefab;
 
-        //TODO find better solution...
-        private string[] resPacksNames;
         private string resPackPath;
 
         private GameObject[] gameTiles;
@@ -33,15 +34,9 @@ namespace MinigamePexeso
 
 		void Start ()
 	    {
-            //TODO find better solution for resource packs path and names
-            resPackPath = "Textures/Pictures/";
-            
-            resPacksNames = new string[2];
-            resPacksNames[0] = "Animals";
-            resPacksNames[1] = "Landscapes";
+            Debug.Log("Current chosen game: " + currentGame);
 
-            //no need of confusing tiles
-            menuRows = 1;
+			resPackPath = "Textures/Pictures/" + currentGame + "/";
 
 	        CreateMenu();
 		}
@@ -55,33 +50,26 @@ namespace MinigamePexeso
 
             gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
 
-	        //string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\");
-            int resPackCount = resPacksNames.Length;
-            //print("Number of resource packs: " + resPackCount);
+            string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
+            int resPackCount = resourcePacks.Length;
+            print("Number of available res. packs: " + resPackCount); 
 
-            //iterate through all tiles
             for (int i = 0; i < menuColumns * menuRows; i++)
             {
                 //while we have some resource packs left
                 if (i < resPackCount)
                 {
-                    print("Resource pack name: '" + resPacksNames[i] + "'");
-                    
                     //set name of game-object (will be used later as chosen resource-pack identifier]
-                    gameTiles[i].name = resPacksNames[i];
+                    string[] s = resourcePacks[i].Split('\\');
+                    gameTiles[i].name = s[s.Length - 1];
 
                     //use first image in pack as tile texture
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
+                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + s[s.Length - 1] + "/00") as Texture2D;
                 }
-
                 //tiles without resource packs 
                 else
                 {
-                    gameTiles[i].name = "Empty";
-
-                    //use "back" texture...
-                    //TODO hard-code path here...
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;
+                    Destroy(gameTiles[i]);
                 }
             }
         }
@@ -93,7 +81,7 @@ namespace MinigamePexeso
 	        {
 	            if (Input.GetMouseButtonUp(0) && hit.collider.tag == "PicMenuItem" && hit.collider.name != "Empty")
 	            {
-	                StartCoroutine(DropOther(hit.collider.gameObject, gameTiles));
+                    StartCoroutine(DropOther(hit.collider.gameObject, gameTiles));
 	            }
 	        }
 		}
@@ -111,9 +99,12 @@ namespace MinigamePexeso
 	        {
 	            if(chosenButton != buttons[i])
 	            {
-                    buttons[i].rigidbody.isKinematic = false;
-	                buttons[i].rigidbody.useGravity = true;
-	                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+                    if(buttons[i] != null)
+					{
+						buttons[i].rigidbody.isKinematic = false;
+		                buttons[i].rigidbody.useGravity = true;
+		                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+					}
 	            }
 	        }
 	        
@@ -123,7 +114,6 @@ namespace MinigamePexeso
 	            yield return null;
 	        }
 	        StartCoroutine(SelectButton(chosenButton));
-	        //yield return 0;
 	    }
 	    
 	    /// <summary>
@@ -149,8 +139,6 @@ namespace MinigamePexeso
 
 	        CreateMainGameObject(chosenButton);
 	        chosenButton.transform.position = endPosition;
-	        
-	        //yield return 0;
 	    }
 
 	    private void CreateMainGameObject(GameObject chosenButton)
@@ -161,8 +149,9 @@ namespace MinigamePexeso
 	        {
                 GameObject.Destroy(gameTiles[i]);
 	        }
-            print("Chosen resource pack: " + chosenButton.name);
+            Debug.Log("Chosen resource pack: " + chosenButton.name);
 	        mainGameScript.resourcePack = chosenButton.name;
+			mainGameScript.currentGame = currentGame;
 
 	        gameStart.enabled = true;
             this.gameObject.SetActive(false);
