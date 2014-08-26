@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Help settings sets initial parameters of help bubble GUI texture.
-/// \author: Milan Doležal
-/// </summary>
 namespace Game
 {
-	public class BrainHelpSettings : MonoBehaviour {
+    /// <summary>
+    /// Help settings sets initial parameters of help bubble GUI texture.
+    /// \author: Milan Doležal
+    /// </summary>
+
+	public class BrainHelpSettings : MonoBehaviour 
+    {
+        [Range(0.1f, 1f)]
+        public float helpSize = 0.6f;
+
 		private Color originalColor;
 		private Color targetColor;
 		private bool canControl;
 
-		void Start () {
+		void Start () 
+        {
 			GameObject.Find ("Neuron").GetComponent<Game.BrainHelp> ().helpExists = true;
 			canControl = true;
 			originalColor = this.guiTexture.color;
@@ -20,7 +26,8 @@ namespace Game
 			originalColor.a = 0;
 			targetColor.a = 1;
 			this.guiTexture.color = originalColor;
-			this.guiTexture.pixelInset = new Rect (Screen.width / 4, Screen.height / 4, Screen.width / 2, Screen.height / 2);
+
+            this.guiTexture.pixelInset = new Rect(Screen.width * (0.5f * (1.0f - helpSize)), Screen.height * (0.5f * (1.0f - helpSize)), Screen.width * helpSize, Screen.height * helpSize);
 			this.transform.position = new Vector2(0, 0);
 			StartCoroutine("FadeIn");
 		}
