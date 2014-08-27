@@ -6,39 +6,49 @@ using UnityEngine;
 using System.Collections;
 using Game;
 
-namespace MinigameSelection {
-	public class SelectMinigame : MonoBehaviour {
+namespace MinigameSelection 
+{
+	public class SelectMinigame : MonoBehaviour 
+    {
 		public string minigameName;
-		public float cameraDistance = 1;
-		public string iconName;
+		public float cameraDistance = 5;
+		public Texture minigameIcon;
+		public Texture minigameHelp;
 
 		//Will be changed according to currently selected brain part.
 		public Vector3 CameraDefaultPosition { get; set; }
 
-		private GameObject gameManager;
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private bool OnSelection { get; set; }
-		private Camera mainCamera { get; set; }
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
+		private Vector3 OriginalIconScale { get; set; }
 
 		void Start()
 		{
 			OnSelection = false;
-			gameManager = GameObject.Find ("_GameManager");
-			mainCamera = Camera.main;
-			CameraDefaultPosition = gameManager.GetComponent<GameManager>().currentCameraDefaultPosition;
-			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
+			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
+			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
-			Icon = GameObject.Find ("Selection Part Icon");
-			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			if(gameManager.GetComponent<MinigameStates> ().GetPlayed (minigameName))
+			if(minigameIcon)
 			{
-				(this.GetComponent("Halo") as Behaviour).enabled = true;
-				this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+				Icon = (GameObject)Instantiate(GameObject.Find ("Selection Part Icon"));
+				Icon.transform.position = this.transform.position;
+				Icon.renderer.material.mainTexture = minigameIcon;
+				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				Icon.transform.parent = this.transform;
+				OriginalIconScale = Icon.transform.localScale;
+				//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			}
-			if(minigameName == "")
+
+            if(MGC.Instance.minigameStates.GetPlayed(minigameName))
+            {
+                (this.GetComponent("Halo") as Behaviour).enabled = true;
+                this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+            }
+			
+            if(minigameName == "")
 			{
 				this.renderer.material.color = Color.gray;
 				this.GetComponent<SelectMinigame>().enabled = false;
@@ -72,50 +82,60 @@ namespace MinigameSelection {
 		{
 			OriginalColor = this.renderer.material.color;
 			this.renderer.material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
-			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
-			if(tmp)
-			{
-				Icon.renderer.material.mainTexture = tmp;
-				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
-				Icon.transform.position = this.transform.position;
-			}
+//			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
+//			if(tmp)
+//			{
+//				Icon.renderer.material.mainTexture = tmp;
+//				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
+//				Icon.transform.position = this.transform.position;
+//			}
+			if(Icon)
+				Icon.transform.localScale = new Vector3 (1, 1, 1);
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
-	        Logger.addLogEntry("Mouse enter the object: '" + this.name + "'");
+	        MGC.Instance.logger.addEntry("Mouse enter the object: '" + this.name + "'");
 		}
 
 		void OnMouseExit()
 		{
 			this.renderer.material.color = OriginalColor;
-			Icon.renderer.material.mainTexture = null;
-			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
+			//Icon.renderer.material.mainTexture = null;
+			//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
-
-	        Logger.addLogEntry("Mouse exit the object: '" + this.name + "'");
+			if(Icon)
+				Icon.transform.localScale = OriginalIconScale;
+	        MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
 		void OnMouseUp()
 		{
-			//load minigame if zooming or zoomed
+			//load mini-game if zooming or zoomed
 			if(OnSelection)
 			{
-				GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
+				//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-				gameManager.GetComponent<GameManager>().currentCameraDefaultPosition = CameraZoom;
-				gameManager.GetComponent<GameManager>().selectedBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
-				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, minigameName));
+				if(minigameHelp && GameObject.Find("Neuron"))
+					GameObject.Find("Neuron").GetComponent<BrainHelp>().helpTexture = minigameHelp;
+				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
+                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+                MGC.Instance.sceneLoader.LoadScene(minigameName);
 			}
 
-			//set target position of camera near to minigame buble
+			//set target position of camera near to mini-game bubble
 			else
 			{
+				GameObject cameraPoint = new GameObject("cameraPoint");
+				cameraPoint.transform.parent = this.transform;
+				cameraPoint.transform.localPosition = new Vector3(0, 0, cameraDistance);
+
+				CameraZoom = cameraPoint.transform.position;
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
-				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
-				mainCamera.GetComponent<CameraControl>().ReadyToLeave = false;
+				Camera.main.GetComponent<SmoothCameraMove>().Move = true;
+				Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
+				Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
+				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
+				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
 				OnSelection = true;
 			}
 		}

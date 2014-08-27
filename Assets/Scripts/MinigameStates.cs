@@ -6,7 +6,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Game {
+namespace Game 
+{
+	[System.Serializable]
 	public class Minigame
 	{
 		internal string minigameName;
@@ -19,24 +21,25 @@ namespace Game {
 		}
 	}
 
-	public class MinigameStates : MonoBehaviour {
-		//Status of each minigame. True if minigame was played.
-		//Minigames needs to be set in Start() function manualy in this scrip.
-		public List<Minigame> minigames = new List<Minigame>();
+	public class MinigameStates : MonoBehaviour 
+    {
+		/// <summary>
+        /// Status of each minigame. True if minigame was played.
+        /// Minigames needs to be set in Start() function manualy in this script.
+		/// </summary>
+		internal List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
 		{
-			DontDestroyOnLoad (this.gameObject);
-
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
-			Minigame silhouette = new Minigame ("Silhouette");
+			Minigame similarities = new Minigame ("Similaries");
+			minigames.Add (similarities);
+			Minigame silhouette = new Minigame ("Silhouettes");
 			minigames.Add (silhouette);
-			Minigame splashScreen = new Minigame ("SplashScreen");
-			minigames.Add (splashScreen);
 			Minigame puzzle = new Minigame ("Puzzle");
 			minigames.Add (puzzle);
 		}
@@ -56,8 +59,10 @@ namespace Game {
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-				if(game.minigameName == minigameName)
-					return game.played;
+			if(game.minigameName == minigameName)
+			{
+				return game.played;
+			}
 			return false;
 		}
 	}

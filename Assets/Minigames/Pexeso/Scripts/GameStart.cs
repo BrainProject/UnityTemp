@@ -74,9 +74,12 @@ namespace MinigamePexeso
 	        {
 	            if(chosenButton != buttons[i])
 	            {
-                    buttons[i].rigidbody.isKinematic = false;
-	                buttons[i].rigidbody.useGravity = true;
-	                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+					if(buttons[i] != null)
+					{
+						buttons[i].rigidbody.isKinematic = false;
+		                buttons[i].rigidbody.useGravity = true;
+		                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+					}
 	            }
 	        }
 
@@ -86,8 +89,6 @@ namespace MinigamePexeso
 	            yield return null;
 	        }
 	        StartCoroutine(SelectButton(chosenButton));
-	        
-            //yield return 0;
 	    }
 
 	    /// <summary>
@@ -112,8 +113,6 @@ namespace MinigamePexeso
 	        }
 	        CreateMainGameObject(chosenButton);
 	        chosenButton.transform.position = endPosition;
-
-	        //yield return 0;
 	    }
 
 	    /// <summary>
@@ -122,7 +121,9 @@ namespace MinigamePexeso
 	    /// <param name="chosenButton">Chosen button.</param>
 	    private void CreateMainGameObject(GameObject chosenButton)
 	    {
-	        string[] dimensions = chosenButton.name.Split('x');
+            Debug.Log("Selected board size: " + chosenButton.name);
+            
+            string[] dimensions = chosenButton.name.Split('x');
 	        int rows = Int32.Parse(dimensions [0]);
 	        int columns = Int32.Parse(dimensions [1]);
 

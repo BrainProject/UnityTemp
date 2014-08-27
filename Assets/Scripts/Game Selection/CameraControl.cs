@@ -4,7 +4,7 @@
 
 using UnityEngine;
 using System.Collections;
-using Game;
+//using Game;
 
 namespace MinigameSelection 
 {
@@ -17,14 +17,16 @@ namespace MinigameSelection
 		//public bool ReadyToLeave { get; set; }
 
 		private bool OnTransition { get; set; }
-		private GameManager gameManager;
+		
+        private MGC mgc;
 
 		void Start()
 		{
-			print (currentWaypoint.name);
+			print ("Initial waypoint is: " + currentWaypoint.name);
 			OnTransition = false;
-			gameManager = GameObject.Find ("_GameManager").GetComponent<GameManager> ();
-			this.transform.position = gameManager.currentCameraDefaultPosition;
+            mgc = MGC.Instance;
+			this.transform.position = mgc.currentCameraDefaultPosition;
+			this.transform.rotation = currentWaypoint.transform.rotation;
 			//this.transform.position = currentWaypoint.transform.position;
 		}
 		
@@ -40,7 +42,7 @@ namespace MinigameSelection
 					if(currentWaypoint.GetComponent<DefaultCameraPosition>().left != null)
 					{
 						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().left;
-						gameManager.currentCameraDefaultPosition = 
+						mgc.currentCameraDefaultPosition = 
 							currentWaypoint.transform.position;
 					}
 				}
@@ -50,13 +52,15 @@ namespace MinigameSelection
 					if(currentWaypoint.GetComponent<DefaultCameraPosition>().right != null)
 					{
 						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().right;
-						gameManager.currentCameraDefaultPosition = currentWaypoint.transform.position;
+						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 				}
 				this.GetComponent<SmoothCameraMove>().Move = true;
 				this.GetComponent<SmoothCameraMove>().Speed = sweepSpeed;
 				this.GetComponent<SmoothCameraMove>().From = this.transform.position;
 				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
+				this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
+				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
 			}
 		}
 
@@ -75,8 +79,10 @@ namespace MinigameSelection
 		{
 			if(ReadyToLeave)
 			{
-				StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadSeledctedLevelWithColorLerp(false, "Main"));
-				gameManager.GetComponent<GameManager>().fromSelection = true;
+				//StartCoroutine(GameObject.Find ("LoadLevelWithFade").GetComponent<LoadLevelWithFade>().LoadMainLevel(false, "Main"));
+                mgc.sceneLoader.LoadScene("Main");
+
+				mgc.fromSelection = true;
 			}
 		}
 	}
