@@ -10,6 +10,7 @@ namespace MainScene
 	public class MakeTransparrent : MonoBehaviour 
     {
         //float transparencyDelayTime = 0f;
+        public float alpha = 0.3f;
 
 		private bool clicked;
 		private bool fading;
@@ -23,7 +24,7 @@ namespace MainScene
 			fading = false;
 			originalColor = this.renderer.material.color;
 			targetColor = this.renderer.material.color;
-			targetColor.a = 0.2f;
+			targetColor.a = alpha;
             if (MGC.Instance.fromSelection)
 			{
 				this.renderer.material.color = targetColor;
