@@ -15,7 +15,12 @@ namespace MinigamePexeso
         public GameScript mainGameScript;
         public GameObject gameTilePrefab;
 
+        //TODO find better solution...
+        public string[] resPacksNames;
+
         private string resPackPath;
+
+        
 
         private GameObject[] gameTiles;
 
@@ -50,8 +55,9 @@ namespace MinigamePexeso
 
             gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
 
-            string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
-            int resPackCount = resourcePacks.Length;
+            //string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
+            //int resPackCount = resourcePacks.Length;
+            int resPackCount = resPacksNames.Length;
             print("Number of available res. packs: " + resPackCount); 
 
             for (int i = 0; i < menuColumns * menuRows; i++)
@@ -59,12 +65,14 @@ namespace MinigamePexeso
                 //while we have some resource packs left
                 if (i < resPackCount)
                 {
+                    print("Resource pack name: '" + resPacksNames[i] + "'");
+
                     //set name of game-object (will be used later as chosen resource-pack identifier]
-                    string[] s = resourcePacks[i].Split('\\');
-                    gameTiles[i].name = s[s.Length - 1];
+                    //string[] s = resourcePacks[i].Split('\\');
+                    gameTiles[i].name = resPacksNames[i];
 
                     //use first image in pack as tile texture
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + s[s.Length - 1] + "/00") as Texture2D;
+                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
                 }
                 //tiles without resource packs 
                 else
