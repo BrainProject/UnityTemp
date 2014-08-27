@@ -10,7 +10,7 @@ using System.Collections;
 namespace Game
 {
 	public class BrainHelp : MonoBehaviour {
-		internal Texture helpTexture;
+		public Texture helpTexture;
 		public bool helpExists;
 
 		private GameObject helpObject;
@@ -51,7 +51,10 @@ namespace Game
 			if(level > 2)
 				ShowHelpBubble();
 			else
+			{
 				helpExists = false;
+				helpTexture = null;
+			}
 		}
 	}
 }
