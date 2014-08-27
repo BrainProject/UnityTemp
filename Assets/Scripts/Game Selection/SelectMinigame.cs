@@ -11,7 +11,7 @@ namespace MinigameSelection
 	public class SelectMinigame : MonoBehaviour 
     {
 		public string minigameName;
-		public float cameraDistance = 1;
+		public float cameraDistance = 5;
 		public Texture minigameIcon;
 		public Texture minigameHelp;
 
@@ -21,7 +21,6 @@ namespace MinigameSelection
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private bool OnSelection { get; set; }
-		private Camera mainCamera { get; set; }
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
 		private Vector3 OriginalIconScale { get; set; }
@@ -29,9 +28,8 @@ namespace MinigameSelection
 		void Start()
 		{
 			OnSelection = false;
-			mainCamera = Camera.main;
 			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
-			CameraZoom = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - cameraDistance);
+			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
 			if(minigameIcon)
 			{
@@ -127,12 +125,17 @@ namespace MinigameSelection
 			//set target position of camera near to mini-game bubble
 			else
 			{
+				GameObject cameraPoint = new GameObject("cameraPoint");
+				cameraPoint.transform.parent = this.transform;
+				cameraPoint.transform.localPosition = new Vector3(0, 0, cameraDistance);
+
+				CameraZoom = cameraPoint.transform.position;
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
-				mainCamera.GetComponent<SmoothCameraMove>().To = CameraZoom;
-				mainCamera.GetComponent<CameraControl>().ReadyToLeave = false;
+				Camera.main.GetComponent<SmoothCameraMove>().Move = true;
+				Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
+				Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
+				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
+				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
 				OnSelection = true;
 			}
 		}

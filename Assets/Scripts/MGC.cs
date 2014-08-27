@@ -44,17 +44,19 @@ public class MGC : Singleton<MGC>
 	{
 	}
 	// guarantee this will be always a singleton only - can't use the constructor!
-	/// <summary>
-	/// Logs players actions
-	/// </summary>
-	public Logger logger;
-	public SceneLoader sceneLoader;
-	public MinigameStates minigameStates;
+
+	
 	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
 	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
+	/// <summary>
+	/// Logs players actions
+	/// </summary>
+	internal Logger logger;
+	internal SceneLoader sceneLoader;
+	internal MinigameStates minigameStates;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
@@ -75,11 +77,6 @@ public class MGC : Singleton<MGC>
 
 		//initiate help gui
 
-	}
-
-	void Start()
-	{
-		LoadGame ();
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -145,13 +142,13 @@ public class MGC : Singleton<MGC>
 			Application.Quit ();
 		}
 		if (GUI.Button (new Rect (Screen.width - 130, 500, 110, 30), "Save")) {
-			SaveGame();
+			SaveGame ();
 		}
 		if (GUI.Button (new Rect (Screen.width - 130, 540, 110, 30), "Load")) {
 			LoadGame ();
 		}
 		if (GUI.Button (new Rect (Screen.width - 130, 580, 110, 30), "Reset status")) {
-
+			ResetGameStatus ();
 		}
 	}
 
@@ -183,16 +180,22 @@ public class MGC : Singleton<MGC>
 			print ("Game loaded.");
 			file.Close();
 		}
+
+		if(Application.loadedLevelName == "GameSelection")
+			sceneLoader.LoadScene("GameSelection");
 	}
 
 	void ResetGameStatus()
 	{		
-		foreach(Game.Minigame minigameData in this.GetComponent<Game.MinigameStates>().minigames)
+		foreach(Minigame minigameData in this.GetComponent<MinigameStates>().minigames)
 		{
 			minigameData.played = false;
 		}
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
+
+		if(Application.loadedLevelName == "GameSelection")
+			sceneLoader.LoadScene("GameSelection");
 	}
 
 

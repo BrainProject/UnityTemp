@@ -22,10 +22,11 @@ namespace MinigameSelection
 
 		void Start()
 		{
-			print (currentWaypoint.name);
+			print ("Initial waypoint is: " + currentWaypoint.name);
 			OnTransition = false;
             mgc = MGC.Instance;
 			this.transform.position = mgc.currentCameraDefaultPosition;
+			this.transform.rotation = currentWaypoint.transform.rotation;
 			//this.transform.position = currentWaypoint.transform.position;
 		}
 		
@@ -58,6 +59,8 @@ namespace MinigameSelection
 				this.GetComponent<SmoothCameraMove>().Speed = sweepSpeed;
 				this.GetComponent<SmoothCameraMove>().From = this.transform.position;
 				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
+				this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
+				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
 			}
 		}
 
