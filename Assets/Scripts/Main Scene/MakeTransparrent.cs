@@ -9,7 +9,7 @@ namespace MainScene
 {
 	public class MakeTransparrent : MonoBehaviour 
     {
-        float transparencyDelayTime = 0f;
+        //float transparencyDelayTime = 0f;
 
 		private bool clicked;
 		private bool fading;
@@ -38,14 +38,14 @@ namespace MainScene
 		
 		void Update () 
         {
-			if((Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1")) && !clicked)
+			if((Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1") || Mathf.RoundToInt(Time.timeSinceLevelLoad) == 2) && !clicked)
 			{
 				//fading = true;
 				clicked = true;
 				startTime = Time.time;
 			}
 
-            if (clicked && !fading && ((Time.time - startTime) > transparencyDelayTime) )
+            if (clicked && !fading)
             {
                 fading = true;
                 startTime = Time.time;
