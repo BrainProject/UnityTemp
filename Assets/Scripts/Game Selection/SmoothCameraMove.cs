@@ -49,7 +49,7 @@ namespace MinigameSelection {
 				{
 					FromYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 					ToYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
-					print (FromYRot + " and " + ToYRot);
+					//print (FromYRot + " and " + ToYRot);
 				}
 			}
 

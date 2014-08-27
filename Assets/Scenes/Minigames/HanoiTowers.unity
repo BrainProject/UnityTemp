@@ -306,7 +306,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .500000119
+  m_Radius: 2
   m_Height: 2.25
   m_Direction: 1
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
@@ -384,7 +384,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 2
+  m_RootOrder: 5
 --- !u!65 &207015514
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -559,7 +559,7 @@ Skybox:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 263965708}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 3b583c2cb946ef04a832288ac4bdbb76, type: 2}
+  m_CustomSkybox: {fileID: 2100000, guid: fa9991c23ee7b624bbb6e567d2ac5832, type: 2}
 --- !u!114 &263965715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9624b018ef97d4bb6c9b4bd54d73dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 73479876}
 --- !u!1001 &344555383
 Prefab:
   m_ObjectHideFlags: 0
@@ -914,7 +913,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 4
+  m_RootOrder: 7
 --- !u!54 &684843553
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1167,7 +1166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 3
+  m_RootOrder: 6
 --- !u!65 &817961454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1430,7 +1429,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .500000119
+  m_Radius: 2
   m_Height: 2.25
   m_Direction: 1
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
@@ -1521,7 +1520,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 5
+  m_RootOrder: 0
 --- !u!54 &1256585177
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1612,7 +1611,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 7
+  m_RootOrder: 2
 --- !u!65 &1270382869
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2093,7 +2092,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 1
+  m_RootOrder: 4
 --- !u!54 &1789927700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2210,7 +2209,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .500000119
+  m_Radius: 2
   m_Height: 2.25
   m_Direction: 1
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
@@ -2288,7 +2287,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 6
+  m_RootOrder: 1
 --- !u!65 &1888834566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2502,7 +2501,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2091740748}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!65 &1991067944
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2657,14 +2656,14 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1256585176}
+  - {fileID: 1888834565}
+  - {fileID: 1270382868}
   - {fileID: 1991067943}
   - {fileID: 1789927699}
   - {fileID: 207015513}
   - {fileID: 817961453}
   - {fileID: 684843551}
-  - {fileID: 1256585176}
-  - {fileID: 1888834565}
-  - {fileID: 1270382868}
   m_Father: {fileID: 0}
   m_RootOrder: 5
 --- !u!1 &2124479452

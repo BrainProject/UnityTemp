@@ -63,7 +63,7 @@ namespace MinigameSelection
 				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
 			}
 		}
-
+		/*
 		void OnGUI()
 		{
 			if(GUI.Button(new Rect(20, 200, 100, 30), "Reset pos"))
@@ -74,7 +74,7 @@ namespace MinigameSelection
 				this.transform.position = currentWaypoint.transform.position;
 			}
 		}
-
+		*/
 		public void BackToMain()
 		{
 			if(ReadyToLeave)

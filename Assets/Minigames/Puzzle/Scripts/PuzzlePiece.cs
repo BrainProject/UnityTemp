@@ -41,6 +41,8 @@ namespace Puzzle
             this.left = left;
 
             gameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            gameObject.renderer.material.shader = Shader.Find("VertexLit");
+            Debug.Log(gameObject.renderer.material.shader.name);
             gameObject.renderer.material.mainTexture = texture;
             gameObject.AddComponent("MouseScript");
             gameObject.renderer.material.shader = Shader.Find("Particles/Alpha Blended");

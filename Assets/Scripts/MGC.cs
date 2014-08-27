@@ -140,7 +140,7 @@ public class MGC : Singleton<MGC>
 				//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
 				//}
 	}
-
+/*
 	//Only for debugging and testing purposes
 	void OnGUI ()
 	{
@@ -163,7 +163,7 @@ public class MGC : Singleton<MGC>
 			ResetGameStatus ();
 		}
 	}
-
+*/
 	public void SaveGame()
 	{
 		BinaryFormatter bf = new BinaryFormatter();

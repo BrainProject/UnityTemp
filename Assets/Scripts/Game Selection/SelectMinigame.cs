@@ -97,7 +97,7 @@ namespace MinigameSelection
 //				Icon.transform.position = this.transform.position;
 //			}
 			if(Icon)
-				Icon.transform.localScale = new Vector3 (1, 1, 1);
+				Icon.transform.localScale = new Vector3 (0.6f, 0.6f, 1);
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
