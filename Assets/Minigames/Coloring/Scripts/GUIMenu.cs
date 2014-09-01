@@ -26,7 +26,7 @@ public class GUIMenu : MonoBehaviour {
 
 	void OnGUI (){	
 		if(GUI.Button (new Rect(100,100,205,50),"Znovu")){
-			Application.LoadLevel("scene_1");
+			Application.LoadLevel("Coloring");
 		}
 
 		if(GUI.Button (new Rect(100,170,205,50),"Další obrázek")){
