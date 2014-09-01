@@ -63,18 +63,18 @@ namespace MinigameSelection
 				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
 			}
 		}
-		/*
+
 		void OnGUI()
 		{
 			if(GUI.Button(new Rect(20, 200, 100, 30), "Reset pos"))
 			{
-				currentWaypoint = GameObject.Find ("BluePos");
-				this.GetComponent<SmoothCameraMove>().From = GameObject.Find ("BluePos").transform.position;
-				this.GetComponent<SmoothCameraMove>().To = GameObject.Find ("BluePos").transform.position;
+				currentWaypoint = GameObject.Find ("OccipitalLobePos");
+				this.GetComponent<SmoothCameraMove>().From = GameObject.Find ("OccipitalLobePos").transform.position;
+				this.GetComponent<SmoothCameraMove>().To = GameObject.Find ("OccipitalLobePos").transform.position;
 				this.transform.position = currentWaypoint.transform.position;
 			}
 		}
-		*/
+
 		public void BackToMain()
 		{
 			if(ReadyToLeave)
