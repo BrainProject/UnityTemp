@@ -15,13 +15,16 @@ namespace Puzzle
 
         private void setUp()
         {
-            foreach (HashSet<GameObject> pieceSet in Camera.main.GetComponent<GameScript>().connectedComponents)
+            foreach (HashSet<GameObject> pieceSet in ((GameScript)Camera.main.GetComponent("GameScript")).connectedComponents)
             {
                 if (pieceSet.Contains(gameObject))
                 {
                     foreach (GameObject piece in pieceSet)
                     {
                         puzzlePiecesToMove.Add(piece);
+                        piece.transform.position = new Vector3(piece.transform.position.x,
+                                                               piece.transform.position.y,
+                                                               piece.transform.position.z + 1);
 
                         Vector3 scanPos = piece.transform.position;
                         screenPoint.Add(Camera.main.WorldToScreenPoint(scanPos));
@@ -56,7 +59,14 @@ namespace Puzzle
 
         void OnMouseUp()
         {
-            Camera.main.GetComponent<GameScript>().CheckPossibleConnection(gameObject);
+            ((GameScript)Camera.main.GetComponent("GameScript")).CheckPossibleConnection(gameObject);
+            foreach (GameObject piece in puzzlePiecesToMove)
+            {
+                piece.transform.position = new Vector3(piece.transform.position.x,
+                                       piece.transform.position.y,
+                                       piece.transform.position.z - 1);
+
+            }
         }
     }
 }

@@ -10,10 +10,13 @@ using Game;
 
 public enum BrainPartName
 {
-		none,
-		FrontalLobe,
-		ParietalLobe,
-		OccipitalLobe
+	none,
+	FrontalLobe,
+	ParietalLobe,
+	OccipitalLobe,
+	TemporalLobe,
+	Cerebellum,
+	BrainStem
 }
 ;
 
@@ -44,17 +47,19 @@ public class MGC : Singleton<MGC>
 	{
 	}
 	// guarantee this will be always a singleton only - can't use the constructor!
-	/// <summary>
-	/// Logs players actions
-	/// </summary>
-	public Logger logger;
-	public SceneLoader sceneLoader;
-	public MinigameStates minigameStates;
+
+	
 	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
 	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
+	/// <summary>
+	/// Logs players actions
+	/// </summary>
+	internal Logger logger;
+	internal SceneLoader sceneLoader;
+	internal MinigameStates minigameStates;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
@@ -81,6 +86,7 @@ public class MGC : Singleton<MGC>
 	{
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
+		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
@@ -101,13 +107,22 @@ public class MGC : Singleton<MGC>
 			print ("this is game selection scene...");
 			switch (currentBrainPart) {
 			case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("GreenPos");
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("FrontalLobePos");
 				break;
-			case BrainPartName.ParietalLobe: //Camera.main.transform.position = GameObject.Find ("BluePos").transform.position;
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("BluePos");
+			case BrainPartName.ParietalLobe:
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("ParietalLobePos");
 				break;
-			case BrainPartName.OccipitalLobe: //Camera.main.transform.position = GameObject.Find ("OrangePos").transform.position;
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("OrangePos");
+			case BrainPartName.OccipitalLobe:
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("OccipitalLobePos");
+				break;
+			case BrainPartName.TemporalLobe:
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("TemporalLobePos");
+				break;
+			case BrainPartName.Cerebellum:
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("CerebellumPos");
+				break;
+			case BrainPartName.BrainStem:
+				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("BrainStemPos");
 				break;
 			}
 			if (fromMain)
@@ -136,16 +151,16 @@ public class MGC : Singleton<MGC>
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
 			Application.LoadLevel ("GameSelection");
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 460, 110, 30), "QUIT")) {
+		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
 			Application.Quit ();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 500, 110, 30), "Save")) {
+		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
 			SaveGame ();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 540, 110, 30), "Load")) {
+		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
 			LoadGame ();
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, 580, 110, 30), "Reset status")) {
+		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
 			ResetGameStatus ();
 		}
 	}

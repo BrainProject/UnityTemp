@@ -29,6 +29,20 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _Detail
         second:
           m_Texture: {fileID: 0}
@@ -50,21 +64,7 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Cube
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _SpecMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -84,14 +84,6 @@ Material:
         second: .00999999978
       data:
         first:
-          name: _SpecLevel
-        second: .5
-      data:
-        first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
           name: _Gloss
         second: 0
       data:
@@ -105,16 +97,24 @@ Material:
       data:
         first:
           name: _EdgeAlpha
-        second: 1
+        second: 0
       data:
         first:
           name: _Metalics
         second: 0
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _SpecLevel
+        second: .5
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .929411769, g: .796078444, b: .635294139, a: .435294122}
+        second: {r: .929411769, g: .796078444, b: .635294139, a: .576470613}
       data:
         first:
           name: _Emission

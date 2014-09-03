@@ -22,7 +22,7 @@ namespace MinigamePexeso
 	            //user clicks left mouse button and hits scoreboard
 	            if (Input.GetMouseButtonUp(0) && hit.collider == this.collider)
 	            {
-	                Destroy(this.gameObject);
+					this.gameObject.SetActive(false);
 	            }
 	        }
 		}
