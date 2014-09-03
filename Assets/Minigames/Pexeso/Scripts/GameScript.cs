@@ -10,7 +10,7 @@ namespace MinigamePexeso
         /// <summary>
         /// How long to wait before non-matching tiles are flipped back
         /// </summary>
-        public float observationTime = 0.5f;
+        private float observationTime = 0.5f;
 
         /// <summary>
         /// not used at the moment
@@ -21,6 +21,8 @@ namespace MinigamePexeso
         /// determines current resource pack
 	    /// </summary>
 	    public string resourcePack;
+
+		public GameType currentGame;
 
 	    public GameObject menu;
 	    public GameObject resourcePackMenu;
@@ -76,11 +78,11 @@ namespace MinigamePexeso
 	    public void CreateGameBoard()
 	    {
 	        //set everything to default values
+            Debug.Log("Initializing game");
 	        correctPairs = 0;
 	        correctPairsDisplay.text = correctPairs.ToString();
 	        wrongPairs = 0;
 	        wrongPairsDisplay.text = wrongPairs.ToString();
-	        //time = 0;
             lastDisplayTime = 0;
 	        timerDisplay.text = "0 s";
             winningScore = 0;
@@ -94,25 +96,129 @@ namespace MinigamePexeso
             gameTiles = GameTiles.createTiles(rows, columns, gameTilePrefab, "gameTile");
 
             winningScore = (rows * columns) / 2;
-            //print("Winning score set to: " + winningScore);
+            Debug.Log("Winning score set to: " + winningScore);
 
             // rotate all tiles
-            // add Mover script to all tiles
+            // add Mover or Flipper script to all tiles
             for (int i = 0; i < columns; i++)
             {
                 for (int o = 0; o < rows; o++)
                 {
-                    gameTiles[rows * i + o].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                    
-                    //TODO what about namespaces here?
-                    gameTiles[rows * i + o].AddComponent("Mover");
+					if(currentGame == GameType.Pexeso)
+					{
+                        gameTiles[rows * i + o].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                        gameTiles[rows * i + o].AddComponent("Flipper");
+					}
+					else
+					{
+						gameTiles[rows * i + o].AddComponent("Mover");
+					}
                 }
             }
 
 	        AddPicturesToGameTiles ();
 	    }
 
+		private void PexesoGameTurn()
+		{
+			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(ray, out hit))
+			{
+				GameObject hittedObject = hit.collider.gameObject;
+				
+				//user clicks by left mouse button and hits tile that can be flipped
+				if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")//
+				{
+					Flipper flipper = hittedObject.GetComponent("MinigamePexeso.Flipper") as Flipper;
+					
+					//just flip it 
+					flipper.Flip();
+					
+					// is this the first flipped picture?
+					if (first == null)
+					{
+						first = hittedObject;
+						//print("First turned tile: " + first.name);
+					}
+					
+					// one tile was already flipped, user clicked on another one
+					else
+					{
+						// check if images are matching...
+						if (checkTilesMatch(first, hittedObject))
+						{
+							//increase score and display it
+							correctPairs++;
+							correctPairsDisplay.text = correctPairs.ToString();
+							
+							//run animation of removing flipped pair
+							StartCoroutine(FoundPairPexeso(first, hittedObject));
+						}
+						
+						//second picture is not matching for the first
+						else
+						{
+							wrongPairs++;
+							wrongPairsDisplay.text = wrongPairs.ToString();
+							
+							//flipped both picsture back, after some time
+							StartCoroutine(NotFoundPairPexeso(first, hittedObject));
+						}
+						
+						first = null;
+					}
+				}
+			}
+		}
 
+		private void SilhouetteGameTurn()
+		{
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                //user clicks left mouse button and hits picture
+                if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")
+                {
+                    Mover mover = hit.collider.gameObject.GetComponent("Mover") as Mover;
+                    //picture is already being removed
+                    if (mover.toRemove)
+                    {
+                        return;
+                    }
+                    //this is first selected picture
+                    if (first == null)
+                    {
+                        mover.MoveUp();
+                        first = hit.collider.gameObject;
+                    }
+                    //this is second selected picture
+                    else
+                    {
+                        //second selected picture is the same as first
+                        if (first == hit.collider.gameObject)
+                        {
+                            mover = first.GetComponent("Mover") as Mover;
+                            mover.MoveDown();
+                        }
+                        //second picture is matching for the first
+                        else if (checkTilesMatch(first, hit.collider.gameObject))
+                        {
+                            correctPairs++;
+                            correctPairsDisplay.text = correctPairs.ToString();
+                            StartCoroutine(FoundPairSilhouette(first, hit.collider.gameObject));
+                        }
+                        //seond picture is not matching for the first
+                        else
+                        {
+                            wrongPairs++;
+                            wrongPairsDisplay.text = wrongPairs.ToString();
+                            StartCoroutine(NotFoundPairSilhouette(first, hit.collider.gameObject));
+                        }
+                        first = null;
+                    }
+                }
+            }
+		}
 
 	    /// <summary>
 	    /// Infinite loop.
@@ -139,60 +245,20 @@ namespace MinigamePexeso
             //normal game turn
 	        else
 	        {
-	            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-	            if (Physics.Raycast(ray, out hit))
-	            {
-                    GameObject hittedObject = hit.collider.gameObject;
-
-	                //user clicks by left mouse button and hits tile that can be flipped
-                    if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")//
-	                {
-                        Mover mover = hittedObject.GetComponent("MinigamePexeso.Mover") as Mover;
-
-                        //just flip it 
-                        mover.Flip();
-
-	                    // is this the first flipped picture?
-	                    if (first == null)
-	                    {
-                            first = hittedObject;
-                            //print("First turned tile: " + first.name);
-						}
-
-						// one tile was already flipped, user clicked on another one
-						else
-						{
-							// check if images are matching...
-                            if (checkTilesMatch(first, hittedObject))
-	                        {
-                                //increase score and display it
-	                            correctPairs++;
-	                            correctPairsDisplay.text = correctPairs.ToString();
-
-                                //run animation of removing flipped pair
-                                StartCoroutine(FoundPair(first, hittedObject));
-							}
-
-						    //second picture is not matching for the first
-	                        else
-	                        {
-	                            wrongPairs++;
-	                            wrongPairsDisplay.text = wrongPairs.ToString();
-
-                                //flipped both picsture back, after some time
-                                StartCoroutine(NotFoundPair(first, hittedObject));
-							}
-
-							first = null;
-	                    }
-	                }
-	            }
+	            if(currentGame == GameType.Pexeso)
+				{
+					PexesoGameTurn();
+				}
+				else
+				{
+					SilhouetteGameTurn();
+				}
 	        }
 		}
 
         private void EndGame()
         {
-            print("All pairs found... game ends");
+            Debug.Log("All pairs found... game ends");
 
             //to avoid calling this method more than once
             winningScore = -1;
@@ -221,10 +287,20 @@ namespace MinigamePexeso
 	    /// <param name="tex2">Second tile</param>
 	    public bool checkTilesMatch(GameObject first, GameObject second)
 	    {
-            if (first.transform.GetChild(0).renderer.material.mainTexture.name == second.transform.GetChild(0).renderer.material.mainTexture.name)
-	        {
-	            return true;
-	        }
+            if (currentGame == GameType.Pexeso)
+			{
+				if (first.transform.GetChild (0).renderer.material.mainTexture.name == second.transform.GetChild (0).renderer.material.mainTexture.name)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				if (first.transform.GetChild (0).renderer.material.mainTexture.name + "a" == second.transform.GetChild (0).renderer.material.mainTexture.name || second.transform.GetChild (0).renderer.material.mainTexture.name + "a" == first.transform.GetChild (0).renderer.material.mainTexture.name)
+				{
+					return true;
+				}
+			}
 	        return false;
 	    }
 
@@ -236,12 +312,12 @@ namespace MinigamePexeso
         /// flip them down
 	    /// <param name="first">First game tile</param>
 	    /// <param name="second">Second game tile</param>
-	    public IEnumerator NotFoundPair(GameObject first, GameObject second)
+	    public IEnumerator NotFoundPairPexeso(GameObject first, GameObject second)
 	    {
-            Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
-            Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
+			Flipper flipper1 = first.GetComponent("MinigamePexeso.Flipper") as Flipper;
+			Flipper flipper2 = second.GetComponent("MinigamePexeso.Flipper") as Flipper;
 
-			while (mover1.isMoving || mover2.isMoving)
+			while (flipper1.isMoving || flipper2.isMoving)
 	        {
 	            yield return new WaitForSeconds(0.1f);
 	        }
@@ -249,10 +325,8 @@ namespace MinigamePexeso
             //
             yield return new WaitForSeconds(observationTime);
 
-	        mover1.Flip();
-	        mover2.Flip();
-
-	        //yield return 0;
+	        flipper1.Flip();
+	        flipper2.Flip();
 	    }
 
 	    /// <summary>
@@ -261,15 +335,13 @@ namespace MinigamePexeso
 	    /// <returns></returns>
 	    /// <param name="first">First object</param>
 	    /// <param name="second">Second object</param>
-	    public IEnumerator FoundPair(GameObject first, GameObject second)
+	    public IEnumerator FoundPairPexeso(GameObject first, GameObject second)
 	    {
-            //print("FoundPair");
-
-            Mover mover1 = first.GetComponent("MinigamePexeso.Mover") as Mover;
-            Mover mover2 = second.GetComponent("MinigamePexeso.Mover") as Mover;
+			Flipper flipper1 = first.GetComponent("MinigamePexeso.Flipper") as Flipper;
+			Flipper flipper2 = second.GetComponent("MinigamePexeso.Flipper") as Flipper;
 			
             //wait while tiles finishes their flipping
-			while (mover1.isMoving || mover2.isMoving)
+			while (flipper1.isMoving || flipper2.isMoving)
 			{
 				yield return new WaitForSeconds(0.1f);
 			}
@@ -287,64 +359,169 @@ namespace MinigamePexeso
 	        yield return new WaitForSeconds(1.3f);
 	        Destroy(first);
 	        Destroy(second);
-
-	        //yield return 0;
 	    }
+
+        /// <summary>
+        /// COROUTINE. Called when user selected two pictures which do not match.
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="first">First object</param>
+        /// <param name="second">Second object</param>
+        public IEnumerator NotFoundPairSilhouette(GameObject first, GameObject second)
+        {
+            Mover mover1 = first.GetComponent("Mover") as Mover;
+            Mover mover2 = second.GetComponent("Mover") as Mover;
+
+            mover2.MoveUp();
+
+            while (mover1.isMoving || mover2.isMoving)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            mover1.MoveDown();
+            mover2.MoveDown();
+        }
+
+        /// <summary>
+        /// COROUTINE. Called when user selected two pictures which match.
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="first">First object</param>
+        /// <param name="second">Second object</param>
+        public IEnumerator FoundPairSilhouette(GameObject first, GameObject second)
+        {
+            Mover mover1 = first.GetComponent("Mover") as Mover;
+            Mover mover2 = second.GetComponent("Mover") as Mover;
+            mover1.toRemove = true;
+            mover2.toRemove = true;
+
+            mover1.MoveUp();
+            mover2.MoveUp();
+
+            while (mover1.isMoving || mover2.isMoving)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            first.rigidbody.useGravity = true;
+            first.rigidbody.isKinematic = false;
+            second.rigidbody.useGravity = true;
+            second.rigidbody.isKinematic = false;
+
+            first.rigidbody.AddForce(second.transform.position * 100);
+            second.rigidbody.AddForce(first.transform.position * 100);
+
+            yield return new WaitForSeconds(1.3f);
+
+            Destroy(first);
+            Destroy(second);
+        }
 		
 	    /// <summary>
 	    /// Randomly assigns pictures to game tiles.
 	    /// </summary>
 		public void AddPicturesToGameTiles()
 		{
-	        List<Texture2D> classicPic = new List<Texture2D>();
-	        UnityEngine.Object[] images;
-	        System.Random random = new System.Random();
-	        int num;
-
-            //print("resPack to load: '" + resourcePack + "'");
-
-	        //Load all pictures
-			images = Resources.LoadAll("Textures/Pictures/" + resourcePack);
-
-			if (images == null)
+	        if (currentGame == GameType.Pexeso)
 			{
-				throw new UnityException("Some images failed to load");
+					List<Texture2D> classicPic = new List<Texture2D> ();
+					UnityEngine.Object[] images;
+					System.Random random = new System.Random ();
+					int num;
+	
+					//Load all pictures
+					images = Resources.LoadAll ("Textures/Pictures/Pexeso/" + resourcePack);
+	
+					if (images == null)
+					{
+							throw new UnityException ("Some images failed to load");
+					}
+	
+					for (int i = 0; i < images.Length; i++)
+					{
+							if (images [i] != null)
+							{
+									classicPic.Add (images [i] as Texture2D);
+							}
+					}
+	
+					//Choose randomly appropriate number of pictures
+					List<Texture2D> chosen = new List<Texture2D> ();
+					for (int i = 0; i < (rows * columns)/2; i++)
+					{
+							num = random.Next (0, classicPic.Count);
+							chosen.Add (classicPic [num]);
+							chosen.Add (classicPic [num]);
+							classicPic.RemoveAt (num);
+					}
+	
+					//Check if appropriate number of pics have been chosen.
+					if (chosen.Count != (rows * columns))
+					{
+							//This happens when some image fails to load
+							throw new UnityException ("Some images failed to load");
+					}
+	
+					//Assign textures to planes.
+					for (int i = 0; i < (rows * columns); i++)
+					{
+							num = random.Next (0, chosen.Count);
+							gameTiles [i].transform.GetChild (0).renderer.material.mainTexture = chosen [num];
+							chosen.RemoveAt (num);
+					}
 			}
-
-			for(int i = 0; i < images.Length; i++)
+			else
 			{
-				if(images[i] != null)
+				List<Texture2D> classicPic = new List<Texture2D>();
+				List<Texture2D> classicPic_a = new List<Texture2D>();
+				Texture2D tex, texA;
+				System.Random random = new System.Random();
+				int num;
+				
+				//Load all pictures and their matching silhouettes/similarities.
+				int o = 0;
+				while(o != -1)
 				{
-					classicPic.Add (images[i] as Texture2D);
+					tex = Resources.Load("Textures/Pictures/" + currentGame.ToString() + "/" + resourcePack + "/" + o.ToString("00")) as Texture2D;
+					texA = Resources.Load("Textures/Pictures/" + currentGame.ToString() + "/" + resourcePack + "/" + o.ToString("00") + "a") as Texture2D;
+					
+					if (tex != null && texA != null)
+					{
+						classicPic.Add(tex);
+						classicPic_a.Add(texA);
+						o++;
+					}
+					else
+					{
+						o = -1;
+					}
+				}
+				
+				//Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
+				List<Texture2D> chosen = new List<Texture2D>();
+				for (int i = 0; i < (rows * columns)/2; i++)
+				{
+					num = random.Next(0, classicPic.Count);
+					chosen.Add(classicPic[num]);
+					chosen.Add(classicPic_a[num]);
+					classicPic.RemoveAt(num);
+					classicPic_a.RemoveAt(num);
+				}
+				//Check if appropriate number of pics have been chosen.
+				if (chosen.Count != (rows * columns))
+				{
+					//This happens when some image fails to load
+					throw new UnityException("Some images failed to load");
+				}
+				//Assign textures to planes.
+				for (int i = 0; i < (rows * columns); i++)
+				{
+					num = random.Next(0, chosen.Count);
+					gameTiles [i].transform.GetChild (0).renderer.material.mainTexture = chosen[num];
+					chosen.RemoveAt(num);
 				}
 			}
-
-            print("Loaded picture count: " + images.Length);
-
-	        //Choose randomly appropriate number of pictures
-	        List<Texture2D> chosen = new List<Texture2D>();
-	        for (int i = 0; i < (rows * columns)/2; i++)
-	        {
-	            num = random.Next(0, classicPic.Count);
-	            chosen.Add(classicPic[num]);
-	            chosen.Add(classicPic[num]);
-	            classicPic.RemoveAt(num);
-	        }
-
-	        //Check if appropriate number of pics have been chosen.
-	        if (chosen.Count != (rows * columns))
-	        {
-	            //This happens when some image fails to load
-	            throw new UnityException("Some images failed to load");
-	        }
-
-	        //Assign textures to planes.
-	        for (int i = 0; i < (rows * columns); i++)
-	        {
-	            num = random.Next(0, chosen.Count);
-                gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
-	            chosen.RemoveAt(num);
-	        }
+            Debug.Log("Game initialized");
 		}
 
         public IEnumerator RestartGame()
@@ -352,7 +529,7 @@ namespace MinigamePexeso
             
             //wait some time...
             yield return new WaitForSeconds(2f);
-            print("Restarting game...");
+            Debug.Log("Restarting game");
 
             menu.SetActive(true);
             resourcePackMenu.SetActive(true);
