@@ -86,6 +86,7 @@ public class MGC : Singleton<MGC>
 	{
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
+		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)

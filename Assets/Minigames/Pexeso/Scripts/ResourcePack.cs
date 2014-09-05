@@ -31,7 +31,7 @@ namespace MinigamePexeso
 	    /// <summary>
 	    /// Number of columns of menu items.
 	    /// </summary>
-	    private int menuColumns = 2;
+	    private int menuColumns = 1;
 
         private Ray ray;
         private RaycastHit hit;
@@ -131,22 +131,36 @@ namespace MinigamePexeso
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator SelectButton(GameObject chosenButton)
 	    {
-	        Vector3 startPosition = chosenButton.transform.position;
+	        //Vector3 startPosition = chosenButton.transform.position;
 	        float t = 0;
 	        
-	        Vector3 endPosition = new Vector3(Camera.main.ViewportToWorldPoint(Vector3.zero).x,
+	        /*Vector3 endPosition = new Vector3(Camera.main.ViewportToWorldPoint(Vector3.zero).x,
 	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).y,
-	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).z);
-	        
-	        while (t - 0.9f < 0)
+	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).z);*/
+
+			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+			backTextureColor.a = 0;
+			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
+
+	        while (t - 1f < 0)
 	        {
 	            t += Time.deltaTime * 2;
-	            chosenButton.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+
+				Color frontTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+				Color backColor = chosenButton.renderer.material.color;
+
+				frontTextureColor.a = 1f - t;
+				backColor.a = 1f - t;
+
+				chosenButton.transform.GetChild(0).renderer.material.color = frontTextureColor;
+				chosenButton.renderer.material.color = backColor;
+
+	            //chosenButton.transform.position = Vector3.Lerp(startPosition, endPosition, t);
 	            yield return null;
 	        }
 
 	        CreateMainGameObject(chosenButton);
-	        chosenButton.transform.position = endPosition;
+	        //chosenButton.transform.position = endPosition;
 	    }
 
 	    private void CreateMainGameObject(GameObject chosenButton)

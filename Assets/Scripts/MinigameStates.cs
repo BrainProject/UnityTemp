@@ -42,6 +42,8 @@ namespace Game
 			minigames.Add (silhouette);
 			Minigame puzzle = new Minigame ("Puzzle");
 			minigames.Add (puzzle);
+			Minigame coloring = new Minigame ("Coloring");
+			minigames.Add (coloring);
 		}
 		
 		public void SetPlayed(string minigameName)

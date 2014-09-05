@@ -34,7 +34,6 @@ namespace MinigameSelection
 			if(minigameIcon)
 			{
 				Icon = (GameObject)Instantiate(GameObject.Find ("Selection Part Icon"));
-				Icon.transform.position = this.transform.position;
 				Icon.renderer.material.mainTexture = minigameIcon;
 				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 				Icon.transform.parent = this.transform;
@@ -59,6 +58,14 @@ namespace MinigameSelection
 
 		void Update()
 		{
+			if(Icon)
+			{
+				Icon.transform.position = this.transform.position;
+				Vector3 dir = Camera.main.transform.position - this.transform.position;
+				dir.Normalize();
+				dir = dir * this.transform.lossyScale.x*0.75f;
+				Icon.transform.position += dir;
+			}
             if (Input.GetButtonDown("Fire1") && !MouseHover)
             {
                 OnSelection = false;
@@ -90,7 +97,7 @@ namespace MinigameSelection
 //				Icon.transform.position = this.transform.position;
 //			}
 			if(Icon)
-				Icon.transform.localScale = new Vector3 (1, 1, 1);
+				Icon.transform.localScale = new Vector3 (0.6f, 0.6f, 1);
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 

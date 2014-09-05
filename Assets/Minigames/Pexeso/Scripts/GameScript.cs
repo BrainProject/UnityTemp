@@ -15,7 +15,7 @@ namespace MinigamePexeso
         /// <summary>
         /// not used at the moment
         /// </summary>
-	    public Scoreboard scoreboard;
+	    public GameObject scoreb;
 		
 	    /// <summary>
         /// determines current resource pack
@@ -270,11 +270,12 @@ namespace MinigamePexeso
 
             //game ends here, show scoreboard...
             gameEndTime = Time.time;
-            //GameObject go = Instantiate(Resources.Load("Scoreboard")) as GameObject;
-            //Scoreboard scoreboard = go.GetComponent<Scoreboard>() as Scoreboard;
-            //scoreboard.correct = correctPairsDisplay;
-            //scoreboard.wrong = wrongPairsDisplay;
-            scoreboard.time.text = (gameEndTime - gameStartTime).ToString();
+
+			/*scoreb.SetActive (true);
+            Scoreboard scoreboard = scoreb.GetComponent<Scoreboard>() as Scoreboard;
+			scoreboard.correct.text = correctPairsDisplay.text;
+			scoreboard.wrong.text = wrongPairsDisplay.text;
+            scoreboard.time.text = (gameEndTime - gameStartTime).ToString();*/
 
             StartCoroutine(RestartGame());
         }
