@@ -44,6 +44,8 @@ namespace Game
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
+
+			MGC.Instance.LoadGame ();
 		}
 		
 		public void SetPlayed(string minigameName)
@@ -56,6 +58,8 @@ namespace Game
 					break;
 				}
 			}
+
+			MGC.Instance.SaveGame ();
 		}
 
 		public bool GetPlayed(string minigameName)

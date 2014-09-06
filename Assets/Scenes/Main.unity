@@ -2453,7 +2453,6 @@ GameObject:
   - 4: {fileID: 1013238038}
   - 33: {fileID: 1013238037}
   - 23: {fileID: 1013238036}
-  - 95: {fileID: 1013238035}
   - 114: {fileID: 1013238039}
   m_Layer: 0
   m_Name: Human_Female_2
@@ -2462,22 +2461,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1013238035
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 073a938baf7a4ec428ba6e89ae56c191,
-    type: 3}
-  m_PrefabInternal: {fileID: 1548583829}
-  m_GameObject: {fileID: 1013238034}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 073a938baf7a4ec428ba6e89ae56c191, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!23 &1013238036
 Renderer:
   m_ObjectHideFlags: 0
@@ -3924,7 +3907,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 073a938baf7a4ec428ba6e89ae56c191, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 073a938baf7a4ec428ba6e89ae56c191, type: 3}
   m_RootGameObject: {fileID: 1013238034}
   m_IsPrefabParent: 0
