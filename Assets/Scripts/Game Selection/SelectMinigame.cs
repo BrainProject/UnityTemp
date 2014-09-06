@@ -16,11 +16,11 @@ namespace MinigameSelection
 		public Texture minigameHelp;
 
 		//Will be changed according to currently selected brain part.
-		public Vector3 CameraDefaultPosition { get; set; }
+		//public Vector3 CameraDefaultPosition { get; set; }
 
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
-		private bool OnSelection { get; set; }
+		public bool OnSelection;
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
 		private Vector3 OriginalIconScale { get; set; }
@@ -28,7 +28,7 @@ namespace MinigameSelection
 		void Start()
 		{
 			OnSelection = false;
-			CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
+			//CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
 			if(minigameIcon)
@@ -53,6 +53,14 @@ namespace MinigameSelection
 				this.GetComponent<SelectMinigame>().enabled = false;
 				this.collider.enabled = false;
 				//this.gameObject.SetActive(false);
+			}
+
+			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
+			{
+				OnSelection = true;
+				CameraZoom = MGC.Instance.currentCameraDefaultPosition;
+				MGC.Instance.selectedMinigame = Vector3.zero;
+				//Camera.main.GetComponent<CameraDefaultPosition
 			}
 		}
 
@@ -126,6 +134,7 @@ namespace MinigameSelection
 					GameObject.Find("Neuron").GetComponent<BrainHelp>().helpTexture = minigameHelp;
 				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
                 MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+				MGC.Instance.selectedMinigame = this.gameObject.transform.position;
                 MGC.Instance.sceneLoader.LoadScene(minigameName);
 			}
 

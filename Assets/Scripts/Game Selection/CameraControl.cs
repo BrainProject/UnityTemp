@@ -42,8 +42,7 @@ namespace MinigameSelection
 					if(currentWaypoint.GetComponent<DefaultCameraPosition>().left != null)
 					{
 						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().left;
-						mgc.currentCameraDefaultPosition = 
-							currentWaypoint.transform.position;
+						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 				}
 				else if(Input.GetAxis("Horizontal") > 0)

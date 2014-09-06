@@ -64,6 +64,7 @@ public class MGC : Singleton<MGC>
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
+	internal Vector3 selectedMinigame;
 
 	void Awake ()
 	{
