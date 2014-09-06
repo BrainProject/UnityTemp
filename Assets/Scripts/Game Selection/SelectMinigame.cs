@@ -20,13 +20,15 @@ namespace MinigameSelection
 
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
-		public bool OnSelection;
+		private bool OnSelection { get; set; }
+		private LevelManagerSelection LevelManager { get; set; }
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
 		private Vector3 OriginalIconScale { get; set; }
 
 		void Start()
 		{
+			LevelManager = GameObject.Find ("_LevelManager").GetComponent<LevelManagerSelection>();
 			OnSelection = false;
 			//CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			//CameraZoom = this.transform.position - this.transform.forward;
@@ -58,6 +60,7 @@ namespace MinigameSelection
 			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
 			{
 				OnSelection = true;
+				LevelManager.minigameOnSelection = this.gameObject;
 				CameraZoom = MGC.Instance.currentCameraDefaultPosition;
 				MGC.Instance.selectedMinigame = Vector3.zero;
 				//Camera.main.GetComponent<CameraDefaultPosition
@@ -74,15 +77,16 @@ namespace MinigameSelection
 				dir = dir * this.transform.lossyScale.x*0.75f;
 				Icon.transform.position += dir;
 			}
-            if (Input.GetButtonDown("Fire1") && !MouseHover)
-            {
-                OnSelection = false;
-            }
+//            if (Input.GetButtonDown("Fire1") && !MouseHover)
+//            {
+//                OnSelection = false;
+//            }
 
 			//Set target position of camera back to its original point
 			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
 				OnSelection = false;
+				LevelManager.minigameOnSelection = null;
 //				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
 //				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 //				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
@@ -152,6 +156,17 @@ namespace MinigameSelection
 				Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
 				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
 				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
+
+				//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame
+				//if this is the first selected minigame, set it instantly
+				if(LevelManager.minigameOnSelection == null)
+					LevelManager.minigameOnSelection = this.gameObject;
+				else
+				{
+					if(LevelManager.minigameOnSelection != this.gameObject)
+						LevelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+					LevelManager.minigameOnSelection = this.gameObject;
+				}
 				OnSelection = true;
 			}
 		}
