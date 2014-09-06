@@ -17,10 +17,10 @@ namespace MinigameSelection
 
 		//Will be changed according to currently selected brain part.
 		//public Vector3 CameraDefaultPosition { get; set; }
-
+		
+		public bool OnSelection { get; set; }
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
-		private bool OnSelection { get; set; }
 		private LevelManagerSelection LevelManager { get; set; }
 		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
@@ -151,10 +151,14 @@ namespace MinigameSelection
 
 				CameraZoom = cameraPoint.transform.position;
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+				//Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.gameObject;
+				Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
 				Camera.main.GetComponent<SmoothCameraMove>().Move = true;
 				Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
+				Camera.main.GetComponent<SmoothCameraMove>().FromYRot = Camera.main.transform.eulerAngles.y;
 				Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
 				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
+				Camera.main.GetComponent<SmoothCameraMove>().ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
 
 				//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame

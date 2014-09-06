@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 namespace MinigameSelection {
-	public class DefaultCameraPosition : MonoBehaviour {
+	public class SelectionWaypoint : MonoBehaviour {
 		public GameObject left;
 		public GameObject right;
 	}

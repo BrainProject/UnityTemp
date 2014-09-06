@@ -39,18 +39,18 @@ namespace MinigameSelection
 				if(Input.GetAxis("Horizontal") < 0)
 				{
 					//Set current waypoint to left
-					if(currentWaypoint.GetComponent<DefaultCameraPosition>().left != null)
+					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 					{
-						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().left;
+						currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 				}
 				else if(Input.GetAxis("Horizontal") > 0)
 				{
 					//Set current waypoint to right
-					if(currentWaypoint.GetComponent<DefaultCameraPosition>().right != null)
+					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 					{
-						currentWaypoint = currentWaypoint.GetComponent<DefaultCameraPosition>().right;
+						currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 				}
@@ -60,6 +60,11 @@ namespace MinigameSelection
 				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
 				this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
 				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
+				if(GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection)
+				{
+					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection = null;
+				}
 			}
 		}
 

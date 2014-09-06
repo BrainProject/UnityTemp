@@ -47,8 +47,8 @@ namespace MinigameSelection {
 				this.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(FromYRot, ToYRot, fracJourney), 0);
 				if(Vector3.Distance(this.transform.position, To) < 0.01f)
 				{
-					FromYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
-					ToYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
+					//FromYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
+					//ToYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 					//print (FromYRot + " and " + ToYRot);
 				}
 			}
@@ -63,7 +63,7 @@ namespace MinigameSelection {
 				From = this.transform.position;
 				To = this.GetComponent<CameraControl>().currentWaypoint.transform.position;
 				FromYRot = this.transform.eulerAngles.y;
-				ToYRot = this.transform.eulerAngles.y;
+				ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 				Camera.main.GetComponent<CameraControl>().BackToMain();
 				Camera.main.GetComponent<CameraControl>().ReadyToLeave = true;
 				//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
