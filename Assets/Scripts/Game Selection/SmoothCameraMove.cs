@@ -45,12 +45,12 @@ namespace MinigameSelection {
 			{
 				this.transform.position = Vector3.Lerp(From, To, fracJourney);
 				this.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(FromYRot, ToYRot, fracJourney), 0);
-				if(Vector3.Distance(this.transform.position, To) < 0.01f)
-				{
+				//if(Vector3.Distance(this.transform.position, To) < 0.01f)
+				//{
 					//FromYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 					//ToYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 					//print (FromYRot + " and " + ToYRot);
-				}
+				//}
 			}
 
 

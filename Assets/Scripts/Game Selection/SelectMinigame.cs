@@ -153,6 +153,7 @@ namespace MinigameSelection
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
 				//Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.gameObject;
 				Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
+				Camera.main.GetComponent<CameraControl>().targetWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
 				Camera.main.GetComponent<SmoothCameraMove>().Move = true;
 				Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
 				Camera.main.GetComponent<SmoothCameraMove>().FromYRot = Camera.main.transform.eulerAngles.y;
