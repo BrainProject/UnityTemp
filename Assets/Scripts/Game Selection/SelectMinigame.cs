@@ -161,6 +161,8 @@ namespace MinigameSelection
 				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
 				Camera.main.GetComponent<SmoothCameraMove>().ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
+				Camera.main.GetComponent<CameraControl>().movingLeft = false;
+				Camera.main.GetComponent<CameraControl>().movingRight = false;
 
 				//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame
 				//if this is the first selected minigame, set it instantly

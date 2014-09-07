@@ -9,16 +9,27 @@ using System.Collections;
 namespace Game
 {
 	public class CursorSize : MonoBehaviour {
-
+		public Texture2D cur;
 		// Use this for initialization
-		void Start () {
+		int x = Screen.width / 10;
+		int y = Screen.height / 10;
+		int w = Screen.width / 16;
+		int h = Screen.height / 9;
+		void Start ()
+		{
 			this.transform.position = Vector3.zero;
 			this.transform.localScale = Vector3.zero;
-			int x = Screen.width / 100;
-			int y = Screen.height / 100;
-			int w = 10;
-			int h = 10;
 			this.guiTexture.pixelInset = new Rect (x, y, w, h);
+			//Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
+			//Screen.showCursor = false;
 		}
+
+//		void OnGUI()
+//		{	
+//			if(true)
+//			{
+//				GUI.DrawTextureWithTexCoords (new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, x, y),cur,new Rect(0,0,0,0));
+//			}
+//		}
 	}
 }
