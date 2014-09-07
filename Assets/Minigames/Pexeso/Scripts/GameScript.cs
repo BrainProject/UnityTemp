@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MinigamePexeso 
 {
@@ -28,6 +29,8 @@ namespace MinigamePexeso
 	    public GameObject resourcePackMenu;
 
         public GameObject gameTilePrefab;
+
+		public Boolean customPack;
 
         /// <summary>
         /// array of tiles
@@ -116,7 +119,14 @@ namespace MinigamePexeso
                 }
             }
 
-	        AddPicturesToGameTiles ();
+			if (customPack)
+			{
+				StartCoroutine(AddCustomPicturesToGameTiles());
+			}
+			else
+			{
+				AddPicturesToGameTiles ();
+			}
 	    }
 
 		private void PexesoGameTurn()
@@ -417,6 +427,142 @@ namespace MinigamePexeso
             Destroy(first);
             Destroy(second);
         }
+
+		public IEnumerator AddCustomPicturesToGameTiles()
+		{
+			if (currentGame == GameType.Pexeso)
+			{
+				List<Texture2D> classicPic = new List<Texture2D> ();
+				
+				System.Random random = new System.Random ();
+				int num;
+				
+				//Load all pictures
+				string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\", "*.png");
+				images = new UnityEngine.Object[files.Length];
+				
+				WWW www;
+				for(int i = 0; i < files.Length; i++)
+				{
+					www = new WWW ("file://" + files[i]);
+					yield return www;
+					images[i] = www.texture;
+					images[i].name = i.ToString("00");
+				}
+				
+				if (images == null)
+				{
+					throw new UnityException ("Some images failed to load");
+				}
+				
+				for (int i = 0; i < images.Length; i++)
+				{
+					if (images [i] != null)
+					{
+						classicPic.Add (images [i] as Texture2D);
+					}
+				}
+				
+				//Choose randomly appropriate number of pictures
+				List<Texture2D> chosen = new List<Texture2D> ();
+				for (int i = 0; i < (rows * columns)/2; i++)
+				{
+					num = random.Next (0, classicPic.Count);
+					chosen.Add (classicPic [num]);
+					chosen.Add (classicPic [num]);
+					classicPic.RemoveAt (num);
+				}
+				
+				//Check if appropriate number of pics have been chosen.
+				if (chosen.Count != (rows * columns))
+				{
+					//This happens when some image fails to load
+					throw new UnityException ("Some images failed to load");
+				}
+				
+				//Assign textures to planes.
+				for (int i = 0; i < (rows * columns); i++)
+				{
+					num = random.Next (0, chosen.Count);
+					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen [num];
+					chosen.RemoveAt (num);
+				}
+			}
+			else
+			{
+				List<Texture2D> classicPic = new List<Texture2D>();
+				List<Texture2D> classicPic_a = new List<Texture2D>();
+				Texture2D tex, texA;
+				System.Random random = new System.Random();
+				int num;
+
+				string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\");
+				//Load all pictures and their matching silhouettes/similarities.
+				int o = 0;
+				while(o != -1)
+				{
+					WWW www = new WWW ("file://" + Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" + resourcePack + "\\" + o.ToString("00") + ".png");
+					yield return www;
+					WWW wwwA = new WWW ("file://" + Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" + resourcePack + "\\" + o.ToString("00") + "a.png");
+					yield return wwwA;
+
+					tex = www.texture;
+					texA = wwwA.texture;
+
+					if(www.error != null)
+					{
+						Debug.Log (www.error);
+						tex = null;
+					}
+					if(wwwA.error != null)
+					{
+						Debug.Log (wwwA.error);
+						texA = null;
+					}
+
+					if (tex != null && texA != null)
+					{
+						tex.name = o.ToString("00");
+						texA.name = o.ToString("00") + "a";
+
+						classicPic.Add(tex);
+						classicPic_a.Add(texA);
+						o++;
+					}
+					else
+					{
+						o = -1;
+					}
+				}
+				
+				//Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
+				List<Texture2D> chosen = new List<Texture2D>();
+				for (int i = 0; i < (rows * columns)/2; i++)
+				{
+					num = random.Next(0, classicPic.Count);
+					chosen.Add(classicPic[num]);
+					chosen.Add(classicPic_a[num]);
+					classicPic.RemoveAt(num);
+					classicPic_a.RemoveAt(num);
+				}
+				//Check if appropriate number of pics have been chosen.
+				if (chosen.Count != (rows * columns))
+				{
+					//This happens when some image fails to load
+					throw new UnityException("Some images failed to load");
+				}
+				//Assign textures to planes.
+				for (int i = 0; i < (rows * columns); i++)
+				{
+					num = random.Next(0, chosen.Count);
+					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
+					chosen.RemoveAt(num);
+				}
+			}
+			Debug.Log("Game initialized");
+		}
+
+		UnityEngine.Object[] images;
 		
 	    /// <summary>
 	    /// Randomly assigns pictures to game tiles.
@@ -426,12 +572,14 @@ namespace MinigamePexeso
 	        if (currentGame == GameType.Pexeso)
 			{
 					List<Texture2D> classicPic = new List<Texture2D> ();
-					UnityEngine.Object[] images;
+					
 					System.Random random = new System.Random ();
 					int num;
 	
 					//Load all pictures
 					images = Resources.LoadAll ("Textures/Pictures/Pexeso/" + resourcePack);
+
+					//images = Resources.LoadAll ("Textures/Pictures/Pexeso/" + resourcePack);
 	
 					if (images == null)
 					{
@@ -467,7 +615,7 @@ namespace MinigamePexeso
 					for (int i = 0; i < (rows * columns); i++)
 					{
 							num = random.Next (0, chosen.Count);
-							gameTiles [i].transform.GetChild (0).renderer.material.mainTexture = chosen [num];
+							gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen [num];
 							chosen.RemoveAt (num);
 					}
 			}
@@ -518,7 +666,7 @@ namespace MinigamePexeso
 				for (int i = 0; i < (rows * columns); i++)
 				{
 					num = random.Next(0, chosen.Count);
-					gameTiles [i].transform.GetChild (0).renderer.material.mainTexture = chosen[num];
+					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
 					chosen.RemoveAt(num);
 				}
 			}
@@ -527,7 +675,6 @@ namespace MinigamePexeso
 
         public IEnumerator RestartGame()
         {
-            
             //wait some time...
             yield return new WaitForSeconds(2f);
             Debug.Log("Restarting game");
