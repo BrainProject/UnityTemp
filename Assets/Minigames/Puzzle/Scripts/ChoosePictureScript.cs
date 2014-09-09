@@ -13,7 +13,7 @@ namespace Puzzle
         {
             PlayerPrefs.SetString("Image", gameObject.renderer.material.mainTexture.name);
             PuzzleStatistics.pictureName = gameObject.renderer.material.mainTexture.name;
-            Application.LoadLevel("ChooseDifficulty");
+            Application.LoadLevel("PuzzleChooseDifficulty");
         }
     }
 }

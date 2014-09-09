@@ -123,7 +123,7 @@ namespace FindIt
         {
             if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal)
             {
-                Application.LoadLevel("VictoryScene");
+                Application.LoadLevel("FindItVictory");
             }
         }
 
