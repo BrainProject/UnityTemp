@@ -10,5 +10,6 @@ namespace MinigameSelection
 	public class BrainPart : MonoBehaviour 
     {
 		public BrainPartName brainPart;
+		public GameObject waypoint;
 	}
 }

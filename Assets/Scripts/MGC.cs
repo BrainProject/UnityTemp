@@ -60,9 +60,11 @@ public class MGC : Singleton<MGC>
 	internal Logger logger;
 	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
+	internal GameObject kinectManager;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
+	internal Vector3 selectedMinigame;
 
 	void Awake ()
 	{
@@ -78,8 +80,9 @@ public class MGC : Singleton<MGC>
 		//initiate minigame states
 		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
 
-		//initiate help gui
-
+		//initiate kinect manager
+		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
+		kinectManager.transform.parent = this.transform;
 	}
 
 	void OnLevelWasLoaded (int level)
