@@ -33,6 +33,11 @@ namespace MinigamePexeso
 		public Boolean customPack;
 
         /// <summary>
+        /// path to custom image-sets
+        /// </summary>
+        private string customResPackPath = "\\CustomImages\\";
+
+        /// <summary>
         /// array of tiles
         /// </summary>
         private GameObject[] gameTiles;
@@ -438,7 +443,7 @@ namespace MinigamePexeso
 				int num;
 				
 				//Load all pictures
-				string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\", "*.png");
+                string[] files = Directory.GetFiles(Environment.CurrentDirectory + customResPackPath + currentGame.ToString() + "\\" + resourcePack + "\\", "*.png");
 				images = new UnityEngine.Object[files.Length];
 				
 				WWW www;
@@ -675,6 +680,8 @@ namespace MinigamePexeso
 
         public IEnumerator RestartGame()
         {
+            //TODO do not restart automatically - display "end-game GUI" instead
+
             //wait some time...
             yield return new WaitForSeconds(2f);
             Debug.Log("Restarting game");

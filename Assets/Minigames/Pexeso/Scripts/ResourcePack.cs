@@ -7,6 +7,10 @@ namespace MinigamePexeso
 {
 	public enum GameType { Pexeso, Similarity, Silhouette };
 
+    /// <summary>
+    /// Creates a tile for each image-set (resourcePack) a lets player choose which set will be used for game
+    /// </summary>
+    /// @author Michal Hroš
 	public class ResourcePack : MonoBehaviour 
     {
         public GameType currentGame = GameType.Similarity;
@@ -19,6 +23,7 @@ namespace MinigamePexeso
         public string[] resPacksNames;
 
         private string resPackPath;
+        private string customResPackPath = "\\CustomImages\\";
 
         private GameObject[] gameTiles;
 
@@ -26,6 +31,7 @@ namespace MinigamePexeso
 	    /// Number of rows of menu items.
 	    /// </summary>
 		private int menuRows;// = 2;
+
 	    /// <summary>
 	    /// Number of columns of menu items.
 	    /// </summary>
@@ -67,12 +73,16 @@ namespace MinigamePexeso
 
 		private int GetCustomResroucePacksCount()
 		{
-			return Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\").Length;
+            //sort of tests, if directories exists
+            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath);
+            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath + "\\" + currentGame);
+            
+            return Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\").Length;
 		}
 
 		private IEnumerator LoadCustomResourcePacks()
 		{
-			string[] customResourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
+            string[] customResourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\");
 
 			//Run from 0 to number of menu items minus default resource packs
 			for (int i = 0; i < (menuColumns * menuRows) - resPacksNames.Length; i++)
@@ -82,7 +92,7 @@ namespace MinigamePexeso
 				{
 					//set name of game-object (will be used later as chosen resource-pack identifier]
 					string[] s = customResourcePacks[i].Split('\\');
-					Debug.Log(s[s.Length - 1]);
+					Debug.Log("Custom resource pack name: '" + s[s.Length - 1] + "'");
 					gameTiles[i + resPacksNames.Length].name = "[CUSTOM]" + s[s.Length - 1];
 
 					//use first image in pack as tile texture
@@ -109,8 +119,12 @@ namespace MinigamePexeso
 			int menuLength = resPacksNames.Length;
 
 			//Check for custom resource packs
-			#if UNITY_STANDALONE_WIN
-			menuLength += GetCustomResroucePacksCount();
+            #if UNITY_EDITOR
+            print("code for editor");
+            #endif
+            
+            #if UNITY_STANDALONE_WIN
+            menuLength += GetCustomResroucePacksCount();
 			Debug.Log("Running on WIN, found " + menuLength + " resrouce packs (" + resPacksNames.Length + " are default)");
 			#endif
 
@@ -120,18 +134,14 @@ namespace MinigamePexeso
 			menuRows = menu [0];
 			menuColumns = menu [1];
 
-			gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
-
 			//Create menu
 	        CreateMenu();
-			//Add custom resoruce packs
-			#if UNITY_STANDALONE_WIN
-			StartCoroutine(LoadCustomResourcePacks());
-			#endif
 		}
 
 	    public void CreateMenu()
 	    {
+            gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
+
 	        if (mainGameScript.enabled)
 	        {
 	            mainGameScript.enabled = false;
@@ -140,7 +150,8 @@ namespace MinigamePexeso
             //string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
             //int resPackCount = resourcePacks.Length;
             int resPackCount = resPacksNames.Length;
-            print("Number of available res. packs: " + resPackCount); 
+            print("Number of standard res. packs: " + resPackCount);
+            print("Number of game tiles: " + gameTiles.Length);
 
             for (int i = 0; i < menuColumns * menuRows; i++)
             {
@@ -162,6 +173,11 @@ namespace MinigamePexeso
                     Destroy(gameTiles[i]);
                 }*/
             }
+
+            //Add custom resoruce packs
+            #if UNITY_STANDALONE_WIN
+            StartCoroutine(LoadCustomResourcePacks());
+            #endif
         }
 
 		void Update ()
