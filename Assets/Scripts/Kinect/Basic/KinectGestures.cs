@@ -55,7 +55,8 @@ namespace Kinect {
 			Squat,
 			Push,
 			Pull,
-			Move
+			Move,
+			ShowRightHand
 		}
 		
 		
@@ -520,7 +521,7 @@ namespace Kinect {
 							break;
 					
 						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
+							if((timestamp - gestureData.timestamp) < 0.5f)
 							{	
 								bool isInPose = gestureData.joint == rightHandIndex ?
 								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
@@ -575,7 +576,7 @@ namespace Kinect {
 							break;
 					
 						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
+							if((timestamp - gestureData.timestamp) < 0.5f)
 							{
 								bool isInPose = gestureData.joint == rightHandIndex ?
 								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
@@ -1061,31 +1062,57 @@ namespace Kinect {
 							break;
 					}
 					break;
-			case Gestures.Move:
+//			case Gestures.Move:
+//				switch(gestureData.state)
+//				{
+//				case 0:
+//					if(jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Mathf.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f)
+//					{
+//						SetGestureJoint(ref gestureData,timestamp,leftKneeIndex,jointsPos[leftKneeIndex]);
+//					}
+//					break;
+//				case 1:
+//					bool isInPose = jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Mathf.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f;
+//					if(isInPose)
+//					{
+//						gestureData.timestamp = timestamp;
+//						gestureData.progress = 0.7f;
+//						gestureData.screenPos.z = jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z;
+//						Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_S);
+//					}
+//					else
+//					{
+//						SetGestureCancelled(ref gestureData);
+//
+//					}
+//					break;
+//					
+//					
+//				}
+//				break;
+				
+			case Gestures.ShowRightHand:
 				switch(gestureData.state)
 				{
-				case 0:
-					if(jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Mathf.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f)
+				case 0:  // gesture detection
+					if(jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
+					   (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f)
 					{
-						SetGestureJoint(ref gestureData,timestamp,leftKneeIndex,jointsPos[leftKneeIndex]);
-					}
-					break;
-				case 1:
-					bool isInPose = jointsTracked[leftKneeIndex] && jointsTracked[rightKneeIndex] && Mathf.Abs(jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z) >0.1f;
-					if(isInPose)
-					{
-						gestureData.timestamp = timestamp;
-						gestureData.progress = 0.7f;
-						gestureData.screenPos.z = jointsPos[leftKneeIndex].z - jointsPos[rightKneeIndex].z;
-						Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_S);
-					}
-					else
-					{
-						SetGestureCancelled(ref gestureData);
+						SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
 					}
 					break;
 					
-					
+				case 1:  // gesture complete
+					if((timestamp - gestureData.timestamp) > 1.5f)					
+					{
+						bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
+							(jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f;
+						
+						Vector3 jointPos = jointsPos[gestureData.joint];
+						CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectWrapper.Constants.PoseCompleteDuration);
+						Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_O);
+					}
+					break;
 				}
 				break;
 				// here come more gesture-cases
