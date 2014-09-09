@@ -267,10 +267,7 @@ namespace Puzzle
             if (CheckVictory())
             {
                 PuzzleStatistics.StopMeasuringTime();
-                ///System.Threading.Thread.Sleep(3000);
-                Application.LoadLevel("Victory");
-                //AutoFade.LoadLevel("Victory", 3, 1, Color.white);
-
+                Application.LoadLevel("PuzzleVictory");
             }
         }
 
