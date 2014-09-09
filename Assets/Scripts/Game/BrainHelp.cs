@@ -49,7 +49,9 @@ namespace Game
 		void OnLevelWasLoaded(int level)
 		{
 			if(level > 2)
+			{
 				ShowHelpBubble();
+			}
 			else
 			{
 				helpExists = false;

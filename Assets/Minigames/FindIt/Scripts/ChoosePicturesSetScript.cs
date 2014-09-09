@@ -15,7 +15,7 @@ namespace FindIt
         {
             PlayerPrefs.SetString("resourcePackName", resourcePackName);
             PlayerPrefs.SetInt("numberPieces", initial_number_pieces);
-            Application.LoadLevel("GameScene");
+            Application.LoadLevel("FindItGame");
         }
 
         void OnMouseEnter()

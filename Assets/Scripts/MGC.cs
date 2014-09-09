@@ -60,9 +60,11 @@ public class MGC : Singleton<MGC>
 	internal Logger logger;
 	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
+	internal GameObject kinectManager;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
+	internal Vector3 selectedMinigame;
 
 	void Awake ()
 	{
@@ -78,8 +80,18 @@ public class MGC : Singleton<MGC>
 		//initiate minigame states
 		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
 
-		//initiate help gui
+		//initiate kinect manager
+		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
+		kinectManager.transform.parent = this.transform;
+	}
 
+	void Update()
+	{
+		if(Input.GetKeyDown (KeyCode.Escape))
+		   Application.Quit();
+
+		if(Input.GetKeyDown (KeyCode.O))
+			print ("GOOOOOOOOOOOOOOD");
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -151,15 +163,15 @@ public class MGC : Singleton<MGC>
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
 			Application.LoadLevel ("GameSelection");
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
-			Application.Quit ();
-		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-			SaveGame ();
-		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-			LoadGame ();
-		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
+//			Application.Quit ();
+//		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
+//			SaveGame ();
+//		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
+//			LoadGame ();
+//		}
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
 			ResetGameStatus ();
 		}

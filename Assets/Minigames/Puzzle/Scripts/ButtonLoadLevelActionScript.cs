@@ -7,7 +7,7 @@ namespace Puzzle
     {
         public bool shouldExitApplication = false;
 
-        public string targetLevel = "ChoosePicture";
+        public string targetLevel = "PuzzleChoosePicture";
 
         private Color noActionColor = new Color32(0x33, 0x33, 0x33, 0xFF);
 
