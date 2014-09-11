@@ -66,6 +66,10 @@ public class MGC : Singleton<MGC>
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
 
+	private float inactivityTimestamp;
+	private float inactivityLenght = 5f;
+	private string inactivityScene = "SocialGame";
+
 	void Awake ()
 	{
 		print ("Master Game Controller starts...");
@@ -85,6 +89,11 @@ public class MGC : Singleton<MGC>
 		kinectManager.transform.parent = this.transform;
 	}
 
+	void Start()
+	{
+		inactivityTimestamp = Time.time;
+	}
+
 	void Update()
 	{
 		if(Input.GetKeyDown (KeyCode.Escape))
@@ -92,6 +101,12 @@ public class MGC : Singleton<MGC>
 
 		if(Input.GetKeyDown (KeyCode.I))
 			print ("GOOOOOOOOOOOOOOD");
+
+		if(Input.anyKeyDown)
+			inactivityTimestamp = Time.time;
+
+		if(Time.time - inactivityTimestamp > inactivityLenght)
+			InactivityReaction();
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -221,6 +236,22 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
+	}
+
+
+	void InactivityReaction()
+	{
+		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
+		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
+		if(Application.loadedLevelName != inactivityScene)
+		{
+			//load inactivityMinigame
+		}
+		else
+		{
+			//load either previous scene or selection scene
+		}
+		inactivityTimestamp = Time.time;
 	}
 
 
