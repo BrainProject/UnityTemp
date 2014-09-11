@@ -12,6 +12,7 @@ namespace Game
 	public class BrainHelp : MonoBehaviour {
 		public Texture helpTexture;
 		public bool helpExists;
+		public GameObject pictureInHands;
 
 		private GameObject helpObject;
 		private Animator animator;
@@ -20,12 +21,15 @@ namespace Game
 		{
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
+			MGC.Instance.neuronHelp = this.gameObject;
 		}
 
 		void LateUpdate()
 		{
 			if(animator.GetBool("noAnimation"))
 				animator.SetBool("noAnimation", false);
+			if(animator.GetBool("sadSmile"))
+				animator.SetBool("sadSmile", false);
 		}
 
 		//Attach GUI texture
