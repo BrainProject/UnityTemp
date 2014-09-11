@@ -123,9 +123,15 @@ public class MGC : Singleton<MGC>
 
 		//DEV NOTE: Only temporary until we unify cursor styles.
 		if (Application.loadedLevelName == "Coloring")
+		{
 			mouseCursor.SetActive (false);
+			//Screen.showCursor = true;
+		}
 		else if(mouseCursor)
+		{
 			mouseCursor.SetActive(true);
+			//Screen.showCursor = false;
+		}
 
 		if (!mouseCursor && Application.loadedLevel > 0)
 		{
@@ -208,9 +214,9 @@ public class MGC : Singleton<MGC>
 			ResetGameStatus ();
 		}
 	}
-
 	public void SaveGame()
 	{
+		#if !UNITY_WEBPLAYER
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -218,13 +224,14 @@ public class MGC : Singleton<MGC>
 		{
 			bf.Serialize(file, minigameData);
 		}
-
 		print ("Game saved.");
 		file.Close();
+		#endif
 	}
 
 	public void LoadGame()
 	{
+		#if !UNITY_WEBPLAYER
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
@@ -240,11 +247,13 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
+		#endif
 	}
 
 	public void ShowCustomCursor()
 	{
 		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+		mouseCursor.guiTexture.enabled = false;
 		mouseCursor.transform.parent = this.transform;
 	}
 

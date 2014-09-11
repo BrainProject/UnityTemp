@@ -36,8 +36,11 @@ namespace Game
 		void ShowHelpBubble () {
 			if(helpTexture && !helpExists)
 			{
-				helpObject = (GameObject)Instantiate ((Resources.Load ("Help/Help")));
+				helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 				helpObject.guiTexture.texture = helpTexture;
+				//helpObject.transform.parent = this.transform;
+				//helpObject.layer = this.gameObject.layer;
+				helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
 			}
 			else
 			{
@@ -52,6 +55,9 @@ namespace Game
 
 		void OnLevelWasLoaded(int level)
 		{
+			if(helpObject)
+				Destroy(helpObject);
+
 			if(level > 2)
 			{
 				ShowHelpBubble();
