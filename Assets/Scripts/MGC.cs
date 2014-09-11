@@ -90,7 +90,7 @@ public class MGC : Singleton<MGC>
 		if(Input.GetKeyDown (KeyCode.Escape))
 		   Application.Quit();
 
-		if(Input.GetKeyDown (KeyCode.O))
+		if(Input.GetKeyDown (KeyCode.I))
 			print ("GOOOOOOOOOOOOOOD");
 	}
 
