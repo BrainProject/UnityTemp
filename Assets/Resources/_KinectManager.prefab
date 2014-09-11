@@ -103,7 +103,7 @@ MonoBehaviour:
   MirroredMovement: 0
   VerticalMovement: 0
   MoveRate: 1
-  SmoothFactor: 3
+  SmoothFactor: 10
   Hips: {fileID: 0}
   Spine: {fileID: 0}
   Neck: {fileID: 0}
@@ -154,19 +154,18 @@ MonoBehaviour:
   smoothing: 1
   UseBoneOrientationsFilter: 0
   UseClippedLegsFilter: 0
-  UseBoneOrientationsConstraint: 0
+  UseBoneOrientationsConstraint: 1
   UseSelfIntersectionConstraint: 0
-  Player1Avatars:
-  - {fileID: 100002}
+  Player1Avatars: []
   Player2Avatars: []
   Player1CalibrationPose: 0
   Player2CalibrationPose: 0
-  Player1Gestures: 0700000008000000
+  Player1Gestures: 07000000080000001500000016000000
   Player2Gestures: 
   MinTimeBetweenGestures: .699999988
   GestureListeners: []
   CalibrationText: {fileID: 0}
-  HandCursor1: {fileID: 0}
+  HandCursor1: {fileID: 100004}
   HandCursor2: {fileID: 0}
   ControlMouseCursor: 0
 --- !u!114 &11400004
@@ -184,7 +183,7 @@ MonoBehaviour:
   gripHandTexture: {fileID: 2800000, guid: 1f5092c753e725643a02c6322ec846b5, type: 3}
   releaseHandTexture: {fileID: 2800000, guid: e7ce4c73cd4503343ac3a8b050224a7e, type: 3}
   normalHandTexture: {fileID: 2800000, guid: e7ce4c73cd4503343ac3a8b050224a7e, type: 3}
-  smoothFactor: 2
+  smoothFactor: 3
   controlMouseCursor: 1
   debugText: {fileID: 0}
 --- !u!114 &11400006
@@ -220,7 +219,7 @@ GUITexture:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: b025dd7475ec23c4f8474db1c7295c49, type: 3}
+  m_Texture: {fileID: 2800000, guid: e7ce4c73cd4503343ac3a8b050224a7e, type: 3}
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2

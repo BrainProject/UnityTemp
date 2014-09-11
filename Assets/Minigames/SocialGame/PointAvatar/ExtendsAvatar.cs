@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_STANDALONE
+using UnityEngine;
 using System.Collections;
 using Kinect;
 
@@ -14,3 +15,4 @@ public class ExtendsAvatar : AvatarController {
 	
 	}*/
 }
+#endif

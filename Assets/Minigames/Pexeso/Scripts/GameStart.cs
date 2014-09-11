@@ -39,11 +39,11 @@ namespace MinigamePexeso
 
 	        gameTiles [0].name = "2x2";
             gameTiles[0].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/2x2") as Texture2D;
-	        gameTiles [1].name = "2x3";
+			gameTiles [1].name = "2x3";
             gameTiles[1].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/2x3") as Texture2D;
-	        gameTiles [2].name = "3x4";
+			gameTiles [2].name = "3x4";
             gameTiles[2].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/3x4") as Texture2D;
-	        gameTiles [3].name = "4x4";
+			gameTiles [3].name = "4x4";
             gameTiles[3].transform.GetChild(0).renderer.material.mainTexture = Resources.Load("Textures/Menu/4x4") as Texture2D;
 	    }
 		

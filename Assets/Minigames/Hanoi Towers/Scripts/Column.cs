@@ -9,7 +9,6 @@ namespace HanoiTowers
     {
 
         public GameController gameController;
-        public GUIText winText;
 
         public bool starting;
         public bool ending;
@@ -29,7 +28,6 @@ namespace HanoiTowers
         void Start()
         {
             startcolor = renderer.material.color;
-            winText.enabled = false;
         }
 
         public void addDisk(Disk newDisk)
@@ -50,11 +48,10 @@ namespace HanoiTowers
                     print("WIN");
                     MGC.Instance.logger.addEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getScore());
 
-
-                    //winText.text = "test";
-                    winText.enabled = true;
+                    gameController.endGame();
                 }
             }
+
         }
 
         bool isValidTarget(int diskSize)

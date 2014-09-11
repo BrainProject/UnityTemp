@@ -14,10 +14,8 @@ namespace HanoiTowers
     public class GameController : MonoBehaviour
     {
 
-        //TODO HUD - score, ...
-        //TODO proper initialization
+        //TODO proper initialization - ??
         //TODO better graphics
-
 
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
@@ -36,9 +34,8 @@ namespace HanoiTowers
         public GameObject[] columns;
         public GameObject[] disks;
         public GameObject ceilingObject;
-        public GUIText winText;
 
-
+        public GameObject endGameGUI;
 
         private Column startingColumn;
         private Column endingColumn;
@@ -64,9 +61,7 @@ namespace HanoiTowers
 
             ResetGame();
 
-
             //QualitySettings.antiAliasing = 4;
-
         }
 
         public void ResetGame()
@@ -104,7 +99,6 @@ namespace HanoiTowers
 
             score = 0;
             gameStartTime = Time.time;
-            winText.enabled = false;
         }
 
         public void increaseScore()
@@ -116,7 +110,6 @@ namespace HanoiTowers
         public float getCeilingPosition()
         {
             return ceilingObject.transform.position.y + ceilingObject.transform.localScale.y;
-
         }
 
         public int getScore()
@@ -150,6 +143,11 @@ namespace HanoiTowers
             waitingForTarget = disk;
         }
 
+
+        public void endGame()
+        {
+            endGameGUI.SetActive(true);
+        }
 
     }
 

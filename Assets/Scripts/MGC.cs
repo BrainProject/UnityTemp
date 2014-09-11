@@ -85,6 +85,15 @@ public class MGC : Singleton<MGC>
 		kinectManager.transform.parent = this.transform;
 	}
 
+	void Update()
+	{
+		if(Input.GetKeyDown (KeyCode.Escape))
+		   Application.Quit();
+
+		if(Input.GetKeyDown (KeyCode.I))
+			print ("GOOOOOOOOOOOOOOD");
+	}
+
 	void OnLevelWasLoaded (int level)
 	{
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
@@ -154,15 +163,15 @@ public class MGC : Singleton<MGC>
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
 			Application.LoadLevel ("GameSelection");
 		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
-			Application.Quit ();
-		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-			SaveGame ();
-		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-			LoadGame ();
-		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
+//			Application.Quit ();
+//		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
+//			SaveGame ();
+//		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
+//			LoadGame ();
+//		}
 		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
 			ResetGameStatus ();
 		}
