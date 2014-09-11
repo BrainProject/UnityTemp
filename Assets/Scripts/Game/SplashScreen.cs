@@ -38,7 +38,7 @@ namespace Game
             //Load next level immediately if player press the button
 			if(Input.GetMouseButtonDown(0))
 			{
-				Screen.showCursor = true;
+				//Screen.showCursor = true;
                 Application.LoadLevel(Application.loadedLevel + 1);
 			}
 		}
@@ -56,7 +56,8 @@ namespace Game
 				yield return null;
 			}
 			
-            Screen.showCursor = true;
+            //Screen.showCursor = true;
+			MGC.Instance.ShowCustomCursor();
 
             //we want 'fade-in' effect for main scene
             MGC.Instance.sceneLoader.doFade = true;

@@ -61,6 +61,7 @@ public class MGC : Singleton<MGC>
 	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
 	internal GameObject kinectManager;
+	internal GameObject mouseCursor;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
@@ -223,6 +224,12 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
+	}
+
+	public void ShowCustomCursor()
+	{
+		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+		mouseCursor.transform.parent = this.transform;
 	}
 
 	void ResetGameStatus()
