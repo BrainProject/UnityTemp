@@ -125,12 +125,12 @@ public class MGC : Singleton<MGC>
 		if (Application.loadedLevelName == "Coloring")
 		{
 			mouseCursor.SetActive (false);
-			//Screen.showCursor = true;
+			Screen.showCursor = true;
 		}
 		else if(mouseCursor)
 		{
 			mouseCursor.SetActive(true);
-			//Screen.showCursor = false;
+			Screen.showCursor = false;
 		}
 
 		if (!mouseCursor && Application.loadedLevel > 0)
