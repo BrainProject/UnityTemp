@@ -41,11 +41,11 @@ namespace Puzzle
             this.left = left;
 
             gameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            gameObject.renderer.material.shader = Shader.Find("VertexLit");
+            //gameObject.renderer.material.shader = Shader.Find("VertexLit");
             Debug.Log(gameObject.renderer.material.shader.name);
             gameObject.renderer.material.mainTexture = texture;
             gameObject.AddComponent("MouseScript");
-            gameObject.renderer.material.shader = Shader.Find("Particles/Alpha Blended");
+            //gameObject.renderer.material.shader = Shader.Find("Particles/Alpha Blended");
             Quaternion q = new Quaternion(0, 0, 0, 1);
             q.SetLookRotation(new Vector3(0, -1, 0), new Vector3(0, 1, 0));
             gameObject.transform.rotation = q;
