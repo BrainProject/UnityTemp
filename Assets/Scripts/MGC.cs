@@ -70,6 +70,11 @@ public class MGC : Singleton<MGC>
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
+
+    /// <summary>
+    /// TODO just a temporary solution, before mini-games statistics will be properly saved
+    /// </summary>
+    internal int hanoiTowersNumberOfDisks = 3;
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
@@ -127,6 +132,17 @@ public class MGC : Singleton<MGC>
         if (Input.GetKeyDown(KeyCode.I))
         {
             print("Show hidden menu.");
+
+            if (!minigamesGUIObject.activeSelf)
+            {
+                minigamesGUI.show();
+            }
+            else
+            {
+                minigamesGUI.hide();
+            }
+            
+
         }
 
 		if(Input.anyKeyDown)

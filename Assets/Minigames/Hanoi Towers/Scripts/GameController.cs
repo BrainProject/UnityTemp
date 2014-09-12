@@ -68,6 +68,9 @@ namespace HanoiTowers
 
         public void ResetGame()
         {
+            //TODO temporary hack
+            numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
+
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 
             //reset columns
@@ -167,6 +170,9 @@ namespace HanoiTowers
                 float h = Screen.height;
 
                 numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
+                
+                //TODO temporary hack - solve by implementing mini-game statistics saving
+                MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
             }
         }
     }
