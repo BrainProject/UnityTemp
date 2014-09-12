@@ -44,6 +44,8 @@ namespace Game
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
+			Minigame findIt = new Minigame ("FindItChooseImageSet");
+			minigames.Add (findIt);
 
 			MGC.Instance.LoadGame ();
 		}

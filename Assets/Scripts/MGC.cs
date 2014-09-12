@@ -63,10 +63,18 @@ public class MGC : Singleton<MGC>
 	internal GameObject kinectManager;
 	internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
+
+    internal GameObject minigamesGUIObject;
+    internal MinigamesGUI minigamesGUI;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
+
+    /// <summary>
+    /// TODO just a temporary solution, before mini-games statistics will be properly saved
+    /// </summary>
+    internal int hanoiTowersNumberOfDisks = 3;
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
@@ -87,6 +95,23 @@ public class MGC : Singleton<MGC>
 		//initiate minigame states
 		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
 
+        //initiate minigames GUI
+        minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
+        if (minigamesGUIObject == null)
+        {
+            Debug.LogError("Nenelazen prefab pro MinigamesGUI");
+        }
+
+        //make GUI a child of MGC 
+        minigamesGUIObject.transform.parent = this.transform;
+        
+        minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
+        if (minigamesGUI == null)
+        {
+            Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
+        }
+
+        
 		//initiate kinect manager
 		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManager.transform.parent = this.transform;
@@ -99,11 +124,26 @@ public class MGC : Singleton<MGC>
 
 	void Update()
 	{
-		if(Input.GetKeyDown (KeyCode.Escape))
-		   Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
-		if(Input.GetKeyDown (KeyCode.I))
-			print ("Show hidden menu.");
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            print("Show hidden menu.");
+
+            if (!minigamesGUIObject.activeSelf)
+            {
+                minigamesGUI.show();
+            }
+            else
+            {
+                minigamesGUI.hide();
+            }
+            
+
+        }
 
 		if(Input.anyKeyDown)
 		{
@@ -111,8 +151,10 @@ public class MGC : Singleton<MGC>
 			inactivityCounter = 0;
 		}
 
-		if(Time.time - inactivityTimestamp > inactivityLenght)
-			InactivityReaction();
+        if (Time.time - inactivityTimestamp > inactivityLenght)
+        {
+            InactivityReaction();
+        }
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -133,10 +175,10 @@ public class MGC : Singleton<MGC>
 			Screen.showCursor = false;
 		}
 
-		if (!mouseCursor && Application.loadedLevel > 0)
-		{
-			ShowCustomCursor ();
-		}
+//		if (!mouseCursor && Application.loadedLevel > 0)
+//		{
+//			ShowCustomCursor ();
+//		}
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
@@ -294,8 +336,7 @@ public class MGC : Singleton<MGC>
 		{
 			if(neuronHelp)
 			{
-				neuronHelp.GetComponent<Animator>().SetBool("sadSmile", true);
-				neuronHelp.GetComponent<BrainHelp>().pictureInHands.renderer.material.mainTexture = Resources.Load("Neuron/sadface") as Texture;
+				neuronHelp.GetComponent<BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
 				++inactivityCounter;
 			}
 		}

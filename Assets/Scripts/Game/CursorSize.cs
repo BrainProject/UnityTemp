@@ -21,8 +21,8 @@ namespace Game
 		void Start ()
 		{
 			this.transform.position = new Vector3 (0, 0, 1000);
-			this.transform.localScale = Vector3.zero;
-			this.guiTexture.pixelInset = new Rect (x, y, w, h);
+			//this.transform.localScale = Vector3.zero;
+			//this.guiTexture.pixelInset = new Rect (x, y, w, h);
 			currentCursor = cursorNormal;
 			Screen.showCursor = false;
 			//Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
@@ -52,6 +52,11 @@ namespace Game
 		{
 			if(currentCursor)
 				GUI.DrawTexture (new Rect (Input.mousePosition.x - x, Screen.height - Input.mousePosition.y - y, w, h), currentCursor);
+		}
+		
+		void OnLevelWasLoaded(int level)
+		{
+			currentCursor = cursorNormal;
 		}
 	}
 }
