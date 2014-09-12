@@ -12,6 +12,7 @@ namespace Game
 	public class BrainHelp : MonoBehaviour {
 		public Texture helpTexture;
 		public bool helpExists;
+		public GameObject pictureInHands;
 
 		private GameObject helpObject;
 		private Animator animator;
@@ -20,20 +21,26 @@ namespace Game
 		{
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
+			MGC.Instance.neuronHelp = this.gameObject;
 		}
 
 		void LateUpdate()
 		{
 			if(animator.GetBool("noAnimation"))
 				animator.SetBool("noAnimation", false);
+			if(animator.GetBool("sadSmile"))
+				animator.SetBool("sadSmile", false);
 		}
 
 		//Attach GUI texture
 		void ShowHelpBubble () {
 			if(helpTexture && !helpExists)
 			{
-				helpObject = (GameObject)Instantiate ((Resources.Load ("Help/Help")));
+				helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 				helpObject.guiTexture.texture = helpTexture;
+				//helpObject.transform.parent = this.transform;
+				//helpObject.layer = this.gameObject.layer;
+				helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
 			}
 			else
 			{
@@ -48,6 +55,9 @@ namespace Game
 
 		void OnLevelWasLoaded(int level)
 		{
+			if(helpObject)
+				Destroy(helpObject);
+
 			if(level > 2)
 			{
 				ShowHelpBubble();

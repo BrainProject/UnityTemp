@@ -62,14 +62,16 @@ public class MGC : Singleton<MGC>
 	internal MinigameStates minigameStates;
 	internal GameObject kinectManager;
 	internal GameObject mouseCursor;
+	internal GameObject neuronHelp;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
-
+	
 	private float inactivityTimestamp;
-	private float inactivityLenght = 5f;
-	private string inactivityScene = "SocialGame";
+	private float inactivityLenght = 60f;
+	private int inactivityCounter = 0;
+	private string inactivityScene = "HanoiTowers";
 
 	void Awake ()
 	{
@@ -101,10 +103,13 @@ public class MGC : Singleton<MGC>
 		   Application.Quit();
 
 		if(Input.GetKeyDown (KeyCode.I))
-			print ("GOOOOOOOOOOOOOOD");
+			print ("Show hidden menu.");
 
 		if(Input.anyKeyDown)
+		{
 			inactivityTimestamp = Time.time;
+			inactivityCounter = 0;
+		}
 
 		if(Time.time - inactivityTimestamp > inactivityLenght)
 			InactivityReaction();
@@ -115,6 +120,23 @@ public class MGC : Singleton<MGC>
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
 		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+
+		//DEV NOTE: Only temporary until we unify cursor styles.
+		if (Application.loadedLevelName == "Coloring")
+		{
+			mouseCursor.SetActive (false);
+			Screen.showCursor = true;
+		}
+		else if(mouseCursor)
+		{
+			mouseCursor.SetActive(true);
+			Screen.showCursor = false;
+		}
+
+		if (!mouseCursor && Application.loadedLevel > 0)
+		{
+			ShowCustomCursor ();
+		}
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
@@ -192,9 +214,9 @@ public class MGC : Singleton<MGC>
 			ResetGameStatus ();
 		}
 	}
-
 	public void SaveGame()
 	{
+		#if !UNITY_WEBPLAYER
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -202,13 +224,14 @@ public class MGC : Singleton<MGC>
 		{
 			bf.Serialize(file, minigameData);
 		}
-
 		print ("Game saved.");
 		file.Close();
+		#endif
 	}
 
 	public void LoadGame()
 	{
+		#if !UNITY_WEBPLAYER
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
@@ -224,11 +247,13 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
+		#endif
 	}
 
 	public void ShowCustomCursor()
 	{
 		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+		mouseCursor.guiTexture.enabled = false;
 		mouseCursor.transform.parent = this.transform;
 	}
 
@@ -250,16 +275,33 @@ public class MGC : Singleton<MGC>
 	{
 		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
 		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
-		if(Application.loadedLevelName != inactivityScene)
+		if(inactivityCounter == 5)
 		{
-			//load inactivityMinigame
+			inactivityCounter = 0;
+			print ("Load another scene. Im getting bored here.");
+			if(Application.loadedLevelName != inactivityScene)
+			{
+				//load inactivityMinigame
+				Application.LoadLevel(inactivityScene);
+			}
+			else
+			{
+				//load either previous scene or selection scene
+				Application.LoadLevel(1);
+			}
 		}
 		else
 		{
-			//load either previous scene or selection scene
+			if(neuronHelp)
+			{
+				neuronHelp.GetComponent<Animator>().SetBool("sadSmile", true);
+				neuronHelp.GetComponent<BrainHelp>().pictureInHands.renderer.material.mainTexture = Resources.Load("Neuron/sadface") as Texture;
+				++inactivityCounter;
+			}
 		}
 		inactivityTimestamp = Time.time;
 	}
+
 
 
 

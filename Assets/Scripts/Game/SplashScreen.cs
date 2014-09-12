@@ -57,7 +57,7 @@ namespace Game
 			}
 			
             //Screen.showCursor = true;
-			MGC.Instance.ShowCustomCursor();
+			//MGC.Instance.ShowCustomCursor();
 
             //we want 'fade-in' effect for main scene
             MGC.Instance.sceneLoader.doFade = true;
