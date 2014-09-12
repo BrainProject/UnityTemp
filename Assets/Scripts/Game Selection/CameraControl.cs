@@ -30,7 +30,7 @@ namespace MinigameSelection
             mgc = MGC.Instance;
 			this.transform.position = mgc.currentCameraDefaultPosition;
 			this.transform.rotation = currentWaypoint.transform.rotation;
-			//this.transform.position = currentWaypoint.transform.position;
+			this.transform.position = currentWaypoint.transform.position;
 		}
 		
 		void Update()

@@ -22,6 +22,7 @@ namespace Game
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
+			MGC.Instance.ShowCustomCursor ();
 		}
 
 		void LateUpdate()
@@ -32,7 +33,7 @@ namespace Game
 				animator.SetBool("sadSmile", false);
 		}
 
-		//Attach GUI texture
+		//Attach GUI texture to make this function working
 		void ShowHelpBubble () {
 			if(helpTexture && !helpExists)
 			{

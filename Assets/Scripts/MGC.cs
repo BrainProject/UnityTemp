@@ -133,10 +133,10 @@ public class MGC : Singleton<MGC>
 			Screen.showCursor = false;
 		}
 
-		if (!mouseCursor && Application.loadedLevel > 0)
-		{
-			ShowCustomCursor ();
-		}
+//		if (!mouseCursor && Application.loadedLevel > 0)
+//		{
+//			ShowCustomCursor ();
+//		}
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
