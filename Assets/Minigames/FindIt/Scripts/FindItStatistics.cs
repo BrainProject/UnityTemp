@@ -2,9 +2,12 @@
 using System.Timers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
+
 
 namespace FindIt
 {
+
     public static class FindItStatistics //: MonoBehaviour
     {
        // private static Timer timer = new Timer();
@@ -154,5 +157,32 @@ namespace FindIt
         {
             gameTime++;
         }
+
+		public static double GetAverageClickFindTimeLeft()
+		{
+			double sum = 0;
+			foreach(double time in findTimesLeft)
+				sum += time;
+			return Math.Round(sum / findTimesLeft.Count / 1000,3);
+		}
+
+		public static double GetAverageClickFindTimeRight()
+		{
+			double sum = 0;
+			foreach(double time in findTimesRight)
+				sum += time;
+
+			return Math.Round(sum / findTimesRight.Count / 1000,3);
+		}
+
+		public static double GetAverageClickFindTimeTotal()
+		{
+			double sum = 0;
+			foreach(double time in findTimesLeft)
+				sum += time;
+			foreach(double time in findTimesRight)
+				sum += time;
+			return Math.Round(sum / (findTimesLeft.Count + findTimesRight.Count) / 1000,3);
+		}
     }
 }

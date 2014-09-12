@@ -81,32 +81,32 @@ namespace Puzzle
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint[i].z);
                 Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset[i];
 
-				/*Vector3 piecePosition = puzzlePiecesToMove[i].transform.position;
+				Vector3 piecePosition = puzzlePiecesToMove[i].transform.position;
 
-				if(curScreenPoint.x < prevScreenPoint.x) // going left
+				/*if(!(curScreenPoint.x < prevScreenPoint.x)) // going left
 				{
 					if(!(mix<minX - pieceSetWidth))
 						piecePosition.x = (curPosition.x);
 				}
-				else if(curScreenPoint.x > prevScreenPoint.x) // going left
+				else if(!(curScreenPoint.x > prevScreenPoint.x)) // going left
 				{
 					if(!(max>maxX + pieceSetWidth))
 						piecePosition.x = (curPosition.x);
 				}
 
-				if(curScreenPoint.y > prevScreenPoint.y) // going down
+				if(!(curScreenPoint.y > prevScreenPoint.y)) // going down
 				{
 					if(!(miy<minY - pieceSetHeight))
 						piecePosition.y = (curPosition.y);
 				}
-				else if(curScreenPoint.y < prevScreenPoint.y) // going up
+				else if(!(curScreenPoint.y < prevScreenPoint.y)) // going up
 				{
 					if(!(miy>maxY + pieceSetHeight))
 						piecePosition.y = (curPosition.y);
 				}
 				puzzlePiecesToMove[i].transform.position = piecePosition;
 				prevScreenPoint = curScreenPoint;*/
-				if(!(mix<minX - pieceSetWidth || //max>maxX + pieceSetWidth ||
+				if(!(mix<minX - pieceSetWidth || max>maxX + pieceSetWidth ||
 				   miy<minY - pieceSetHeight || may>maxY + pieceSetHeight ))
                 	puzzlePiecesToMove[i].transform.position = (curPosition);
             }

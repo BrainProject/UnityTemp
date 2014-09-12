@@ -14,7 +14,7 @@ namespace Puzzle
 		//new Color32(0xFF, 0x77, 0x44, 0xFF);
 
 
-        public string filename = "statistics.csv";
+        public string filename = "statistics_puzzle.csv";
 
         private bool message = false;
 

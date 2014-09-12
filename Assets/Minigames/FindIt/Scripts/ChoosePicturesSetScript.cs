@@ -27,5 +27,12 @@ namespace FindIt
         {
 
         }
+
+		public bool checkResourcePackForEnoughImages(int numberImages)
+		{
+			Sprite[] images = Resources.LoadAll<Sprite>(resourcePackName);
+			Debug.Log ("Resource pack " + resourcePackName + " loaded " + images.Length + " images.");
+			return (images.Length >= numberImages);
+		}
     }
 }
