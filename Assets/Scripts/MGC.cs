@@ -43,24 +43,34 @@ public enum BrainPartName
 /// \date 07-2014
 public class MGC : Singleton<MGC>
 {
+    // guarantee this will be always a singleton only - can't use the constructor!
 	protected MGC ()
 	{
 	}
-	// guarantee this will be always a singleton only - can't use the constructor!
-
 	
-	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
-	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
-	/// <summary>
+
+    /// <summary>
 	/// Logs players actions
 	/// </summary>
 	internal Logger logger;
-	internal SceneLoader sceneLoader;
+	
+    /// <summary>
+    /// For more simple loading of scenes with fade effect, logger entry, ...
+    /// </summary>
+    internal SceneLoader sceneLoader;
+
+    /// <summary>
+    /// GUI for minigames - "replay, back to selection, reward, ... icons"
+    /// </summary>
+    private GameObject minigamesGUIObject;
+    internal MinigamesGUI minigamesGUI;
+
 	internal MinigameStates minigameStates;
 	internal GameObject kinectManager;
+
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
@@ -79,6 +89,15 @@ public class MGC : Singleton<MGC>
 			
 		//initiate minigame states
 		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
+
+        //initiate minigames GUI
+        minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
+        minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
+        
+        //make GUI a child of MGC, to be part of it and don't be destroyed during scene switching
+        minigamesGUIObject.transform.parent = this.transform;
+
+        //minigamesGUI = this.gameObject.AddComponent<MinigamesGUI>();
 
 		//initiate kinect manager
 		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
@@ -110,9 +129,6 @@ public class MGC : Singleton<MGC>
 			gameObject.guiTexture.enabled = false;
 		}
             
-
-		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
-		//print("calling object ID: " + this.GetInstanceID());
 
 		if (Application.loadedLevelName == gameSelectionSceneName)
 		{
@@ -206,8 +222,10 @@ public class MGC : Singleton<MGC>
 			file.Close();
 		}
 
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
+        if (Application.loadedLevelName == "GameSelection")
+        {
+            sceneLoader.LoadScene("GameSelection");
+        }
 	}
 
 	void ResetGameStatus()
@@ -219,8 +237,10 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
+        if (Application.loadedLevelName == "GameSelection")
+        {
+            sceneLoader.LoadScene("GameSelection");
+        }
 	}
 
 

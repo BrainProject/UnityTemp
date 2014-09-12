@@ -146,7 +146,7 @@ namespace HanoiTowers
 
         public void endGame()
         {
-            endGameGUI.SetActive(true);
+            MGC.Instance.minigamesGUI.show();
         }
 
     }
