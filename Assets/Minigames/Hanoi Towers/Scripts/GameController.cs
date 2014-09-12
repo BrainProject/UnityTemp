@@ -147,6 +147,7 @@ namespace HanoiTowers
         public void endGame()
         {
             endGameGUI.SetActive(true);
+			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp> ().ShowSmile (Resources.Load ("Neuron/smilyface") as Texture);
         }
 
     }

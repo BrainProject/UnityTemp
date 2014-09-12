@@ -294,8 +294,7 @@ public class MGC : Singleton<MGC>
 		{
 			if(neuronHelp)
 			{
-				neuronHelp.GetComponent<Animator>().SetBool("sadSmile", true);
-				neuronHelp.GetComponent<BrainHelp>().pictureInHands.renderer.material.mainTexture = Resources.Load("Neuron/sadface") as Texture;
+				neuronHelp.GetComponent<BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
 				++inactivityCounter;
 			}
 		}

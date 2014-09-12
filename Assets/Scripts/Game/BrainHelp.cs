@@ -14,8 +14,9 @@ namespace Game
 		public bool helpExists;
 		public GameObject pictureInHands;
 
+		internal Animator animator;
+
 		private GameObject helpObject;
-		private Animator animator;
 
 		void Start()
 		{
@@ -27,10 +28,10 @@ namespace Game
 
 		void LateUpdate()
 		{
-			if(animator.GetBool("noAnimation"))
-				animator.SetBool("noAnimation", false);
-			if(animator.GetBool("sadSmile"))
-				animator.SetBool("sadSmile", false);
+			if(animator.GetBool("wave"))
+				animator.SetBool("wave", false);
+			if(animator.GetBool("smile"))
+				animator.SetBool("smile", false);
 		}
 
 		//Attach GUI texture to make this function working
@@ -45,7 +46,7 @@ namespace Game
 			}
 			else
 			{
-				this.GetComponent<Animator>().SetBool("noAnimation", true);
+				this.GetComponent<Animator>().SetBool("wave", true);
 			}
 		}
 
@@ -68,6 +69,12 @@ namespace Game
 				helpExists = false;
 				helpTexture = null;
 			}
+		}
+
+		public void ShowSmile(Texture smileTexture)
+		{
+			animator.SetBool ("smile", true);
+			pictureInHands.renderer.material.mainTexture = smileTexture;
 		}
 	}
 }
