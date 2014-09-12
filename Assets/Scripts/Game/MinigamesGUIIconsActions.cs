@@ -25,19 +25,32 @@ namespace Game
 
         void OnMouseDown()
         {
+            
+
+            //resolve action
             if (action == "Restart")
             {
+                //hide GUI
+                MGC.Instance.minigamesGUI.hide();
+
+                //load proper scene
                 MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
             }
 
-            if (action == "GameSelection")
+            else if (action == "GameSelection")
             {
+                //hide GUI
+                MGC.Instance.minigamesGUI.hide();
+
+                //return to game selection scene
                 MGC.Instance.sceneLoader.LoadScene("GameSelection");
             }
 
-            if (action == "Reward")
+            else if (action == "Reward")
             {
-                //System.Diagnostics.Process.Start("iexplore.exe");
+                
+                //run external application with reward
+                //TODO solve things like controlling and closing external application and mainly - how to return to Unity
 
                 string path = @"-k http://musee.louvre.fr/visite-louvre/index.html?defaultView=rdc.s46.p01&lang=ENG";
                 Process foo = new Process();

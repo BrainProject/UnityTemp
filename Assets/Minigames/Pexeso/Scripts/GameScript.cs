@@ -286,13 +286,15 @@ namespace MinigamePexeso
             //game ends here, show scoreboard...
             gameEndTime = Time.time;
 
+            MGC.Instance.minigamesGUI.show(true);
+
 			/*scoreb.SetActive (true);
             Scoreboard scoreboard = scoreb.GetComponent<Scoreboard>() as Scoreboard;
 			scoreboard.correct.text = correctPairsDisplay.text;
 			scoreboard.wrong.text = wrongPairsDisplay.text;
             scoreboard.time.text = (gameEndTime - gameStartTime).ToString();*/
 
-            StartCoroutine(RestartGame());
+            //StartCoroutine(RestartGame());
         }
 
 	    /// <summary>
