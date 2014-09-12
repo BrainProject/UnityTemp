@@ -43,38 +43,38 @@ public enum BrainPartName
 /// \date 07-2014
 public class MGC : Singleton<MGC>
 {
-    // guarantee this will be always a singleton only - can't use the constructor!
 	protected MGC ()
 	{
 	}
+	// guarantee this will be always a singleton only - can't use the constructor!
+
 	
+	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
+	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
-
-    /// <summary>
+	/// <summary>
 	/// Logs players actions
 	/// </summary>
 	internal Logger logger;
-	
-    /// <summary>
-    /// For more simple loading of scenes with fade effect, logger entry, ...
-    /// </summary>
-    internal SceneLoader sceneLoader;
-
-    /// <summary>
-    /// GUI for minigames - "replay, back to selection, reward, ... icons"
-    /// </summary>
-    private GameObject minigamesGUIObject;
-    internal MinigamesGUI minigamesGUI;
-
+	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
 	internal GameObject kinectManager;
+	internal GameObject mouseCursor;
+	internal GameObject neuronHelp;
 
+    internal GameObject minigamesGUIObject;
+    internal MinigamesGUI minigamesGUI;
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
+	
+	private float inactivityTimestamp;
+	private float inactivityLenght = 60f;
+	private int inactivityCounter = 0;
+	private string inactivityScene = "HanoiTowers";
 
 	void Awake ()
 	{
@@ -92,25 +92,53 @@ public class MGC : Singleton<MGC>
 
         //initiate minigames GUI
         minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
-        minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
-        
-        //make GUI a child of MGC, to be part of it and don't be destroyed during scene switching
+        if (minigamesGUIObject == null)
+        {
+            Debug.LogError("Nenelazen prefab pro MinigamesGUI");
+        }
+
+        //make GUI a child of MGC 
         minigamesGUIObject.transform.parent = this.transform;
+        
+        minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
+        if (minigamesGUI == null)
+        {
+            Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
+        }
 
-        //minigamesGUI = this.gameObject.AddComponent<MinigamesGUI>();
-
+        
 		//initiate kinect manager
 		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManager.transform.parent = this.transform;
 	}
 
+	void Start()
+	{
+		inactivityTimestamp = Time.time;
+	}
+
 	void Update()
 	{
-		if(Input.GetKeyDown (KeyCode.Escape))
-		   Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
-		if(Input.GetKeyDown (KeyCode.O))
-			print ("GOOOOOOOOOOOOOOD");
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            print("Show hidden menu.");
+        }
+
+		if(Input.anyKeyDown)
+		{
+			inactivityTimestamp = Time.time;
+			inactivityCounter = 0;
+		}
+
+        if (Time.time - inactivityTimestamp > inactivityLenght)
+        {
+            InactivityReaction();
+        }
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -118,6 +146,23 @@ public class MGC : Singleton<MGC>
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
 		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+
+		//DEV NOTE: Only temporary until we unify cursor styles.
+		if (Application.loadedLevelName == "Coloring")
+		{
+			mouseCursor.SetActive (false);
+			Screen.showCursor = true;
+		}
+		else if(mouseCursor)
+		{
+			mouseCursor.SetActive(true);
+			Screen.showCursor = false;
+		}
+
+		if (!mouseCursor && Application.loadedLevel > 0)
+		{
+			ShowCustomCursor ();
+		}
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
@@ -129,6 +174,9 @@ public class MGC : Singleton<MGC>
 			gameObject.guiTexture.enabled = false;
 		}
             
+
+		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
+		//print("calling object ID: " + this.GetInstanceID());
 
 		if (Application.loadedLevelName == gameSelectionSceneName)
 		{
@@ -192,9 +240,9 @@ public class MGC : Singleton<MGC>
 			ResetGameStatus ();
 		}
 	}
-
 	public void SaveGame()
 	{
+		#if !UNITY_WEBPLAYER
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -202,13 +250,14 @@ public class MGC : Singleton<MGC>
 		{
 			bf.Serialize(file, minigameData);
 		}
-
 		print ("Game saved.");
 		file.Close();
+		#endif
 	}
 
 	public void LoadGame()
 	{
+		#if !UNITY_WEBPLAYER
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
@@ -222,10 +271,16 @@ public class MGC : Singleton<MGC>
 			file.Close();
 		}
 
-        if (Application.loadedLevelName == "GameSelection")
-        {
-            sceneLoader.LoadScene("GameSelection");
-        }
+		if(Application.loadedLevelName == "GameSelection")
+			sceneLoader.LoadScene("GameSelection");
+		#endif
+	}
+
+	public void ShowCustomCursor()
+	{
+		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+		mouseCursor.guiTexture.enabled = false;
+		mouseCursor.transform.parent = this.transform;
 	}
 
 	void ResetGameStatus()
@@ -237,11 +292,42 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 
-        if (Application.loadedLevelName == "GameSelection")
-        {
-            sceneLoader.LoadScene("GameSelection");
-        }
+		if(Application.loadedLevelName == "GameSelection")
+			sceneLoader.LoadScene("GameSelection");
 	}
+
+
+	void InactivityReaction()
+	{
+		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
+		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
+		if(inactivityCounter == 5)
+		{
+			inactivityCounter = 0;
+			print ("Load another scene. Im getting bored here.");
+			if(Application.loadedLevelName != inactivityScene)
+			{
+				//load inactivityMinigame
+				Application.LoadLevel(inactivityScene);
+			}
+			else
+			{
+				//load either previous scene or selection scene
+				Application.LoadLevel(1);
+			}
+		}
+		else
+		{
+			if(neuronHelp)
+			{
+				neuronHelp.GetComponent<Animator>().SetBool("sadSmile", true);
+				neuronHelp.GetComponent<BrainHelp>().pictureInHands.renderer.material.mainTexture = Resources.Load("Neuron/sadface") as Texture;
+				++inactivityCounter;
+			}
+		}
+		inactivityTimestamp = Time.time;
+	}
+
 
 
 

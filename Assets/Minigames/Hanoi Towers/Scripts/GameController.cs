@@ -44,6 +44,8 @@ namespace HanoiTowers
         private Disk waitingForTarget;
 
         private float gameStartTime;
+
+        private bool showEndGameGUI = false;
         void Start()
         {
             //set up columns
@@ -146,9 +148,27 @@ namespace HanoiTowers
 
         public void endGame()
         {
-            MGC.Instance.minigamesGUI.show();
+            //global GUI
+            MGC.Instance.minigamesGUI.show(true);
+
+            //mini-game specific gui
+            endGameGUI.SetActive(true);
+            showEndGameGUI = true;
+
         }
 
+
+        
+        void OnGUI()
+        {
+            if (showEndGameGUI)
+            {
+                float w = Screen.width;
+                float h = Screen.height;
+
+                numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
+            }
+        }
     }
 
 }

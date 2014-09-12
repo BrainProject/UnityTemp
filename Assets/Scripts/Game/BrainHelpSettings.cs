@@ -13,13 +13,15 @@ namespace Game
         [Range(0.1f, 1f)]
         public float helpSize = 0.6f;
 
+		internal GameObject neuronHelp;
+
 		private Color originalColor;
 		private Color targetColor;
 		private bool canControl;
 
 		void Start () 
         {
-			GameObject.Find ("Neuron").GetComponent<Game.BrainHelp> ().helpExists = true;
+			neuronHelp.GetComponent<Game.BrainHelp> ().helpExists = true;
 			canControl = true;
 			originalColor = this.guiTexture.color;
 			targetColor = this.guiTexture.color;
@@ -36,7 +38,7 @@ namespace Game
 		{
 			if(Input.GetButtonDown("Horizontal") && canControl)
 			{
-				GameObject.Find ("Neuron").GetComponent<Game.BrainHelp> ().helpExists = false;
+				neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 				StartCoroutine (MoveAway(Input.GetAxis("Horizontal")));
 				StartCoroutine ("FadeOut");
 			}
@@ -44,7 +46,7 @@ namespace Game
 
 		void OnMouseDown()
 		{
-			GameObject.Find ("Neuron").GetComponent<Game.BrainHelp> ().helpExists = false;
+			neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 			canControl = false;
 			StopCoroutine ("FadeIn");
 			StartCoroutine ("FadeOut");
