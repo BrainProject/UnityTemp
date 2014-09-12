@@ -20,6 +20,11 @@ namespace Puzzle
         public HashSet<HashSet<GameObject>> connectedComponents;
         public Dictionary<string, PuzzlePiece> pieces;
 
+		public float minPositionX = 0;
+		public float maxPositionX = 0;
+
+		public float minPositionY = 0;
+		public float maxPositionY = 0;
 
         // Use this for initialization
         void Start()
@@ -85,6 +90,9 @@ namespace Puzzle
             }
             System.Random random = new System.Random();
             Debug.Log("Starting loops.");
+
+			bool size_to_set = true;
+
             for (int i = 1; i <= dim; i++)
             {
                 for (int j = 1; j <= dim; j++)
@@ -213,6 +221,15 @@ namespace Puzzle
                     piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
                                                             2 * j * (float)piece_size,
                                                             0.0f));
+
+					if(size_to_set)
+					{
+						minPositionX = - 2*(float)piece_size;
+						maxPositionX = 2 * dim * (float)piece_size + (float)piece_size;
+						minPositionY = - 2*(float)piece_size;
+						maxPositionY = 2 * dim * (float)piece_size + (float)piece_size;
+						size_to_set = false;
+					}
                 }
                 // placement in grid
                 //placePuzzlePieces();
@@ -533,5 +550,58 @@ namespace Puzzle
                 Debug.Log("trans. set");
             }
         }
+
+
+		public float getMinPiecePositionX()
+		{
+			float min = float.MaxValue;
+			foreach(PuzzlePiece piece in pieces.Values)
+			{
+				if(piece.gameObject.transform.position.x < min)
+				{
+					min = piece.gameObject.transform.position.x;
+				}
+			}
+			return min;
+		}
+
+		public float getMaxPiecePositionX()
+		{
+			float max = float.MinValue;
+			foreach(PuzzlePiece piece in pieces.Values)
+			{
+				if(piece.gameObject.transform.position.x > max)
+				{
+					max = piece.gameObject.transform.position.x;
+				}
+			}
+			return max;
+		}
+
+		public float getMinPiecePositionY()
+		{
+			float min = float.MaxValue;
+			foreach(PuzzlePiece piece in pieces.Values)
+			{
+				if(piece.gameObject.transform.position.y < min)
+				{
+					min = piece.gameObject.transform.position.y;
+				}
+			}
+			return min;
+		}
+
+		public float getMaxPiecePositionY()
+		{
+			float max = float.MinValue;
+			foreach(PuzzlePiece piece in pieces.Values)
+			{
+				if(piece.gameObject.transform.position.y > max)
+				{
+					max = piece.gameObject.transform.position.y;
+				}
+			}
+			return max;
+		}
     }
 }
