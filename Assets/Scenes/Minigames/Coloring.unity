@@ -569,8 +569,7 @@ GameObject:
   - 33: {fileID: 81306255}
   - 23: {fileID: 81306253}
   - 114: {fileID: 81306252}
-  - 65: {fileID: 81306256}
-  - 65: {fileID: 81306254}
+  - 64: {fileID: 81306254}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -623,8 +622,8 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &81306254
-BoxCollider:
+--- !u!64 &81306254
+MeshCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -633,8 +632,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.82627892, y: 5.98415327, z: 7.69485712}
-  m_Center: {x: 3.08686972, y: 2.04046297, z: -1.15318882}
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &81306255
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -642,18 +642,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 81306250}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &81306256
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 81306250}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.49299669, y: 3.57440802e-13, z: 10.0000048}
-  m_Center: {x: -2.51621056, y: -4.19381223e-07, z: -.000238414592}
 --- !u!1 &84051737
 GameObject:
   m_ObjectHideFlags: 0
