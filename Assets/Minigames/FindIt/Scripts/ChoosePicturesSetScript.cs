@@ -3,36 +3,48 @@ using System.Collections;
 
 namespace FindIt
 {
+	
+	public class ChoosePicturesSetScript : MonoBehaviour
+	{
+		
+		const int BIG_SIZE = 44;
+		const int SMALL_SIZE = 20;
 
-    public class ChoosePicturesSetScript : MonoBehaviour
-    {
+		public string resourcePackName = "Animals";
 
-        public string resourcePackName = "Animals";
-        public int initial_number_pieces = 8;
+		// Use this for initialization
+		void OnMouseDown()
+		{
+			PlayerPrefs.SetString("resourcePackName", resourcePackName);
 
-        // Use this for initialization
-        void OnMouseDown()
-        {
-            PlayerPrefs.SetString("resourcePackName", resourcePackName);
-            PlayerPrefs.SetInt("numberPieces", initial_number_pieces);
-            Application.LoadLevel("FindItGame");
-        }
+			if(!checkResourcePackForEnoughImages(BIG_SIZE))
+			{
+				PlayerPrefs.SetInt("numberPieces", SMALL_SIZE);
+				Application.LoadLevel("FindItGame");
+			}
+			else 
+			{
+				Application.LoadLevel("FindItSize");
+			}
 
-        void OnMouseEnter()
-        {
 
-        }
-
-        void OnMouseLeave()
-        {
-
-        }
-
+		}
+		
+		void OnMouseEnter()
+		{
+			
+		}
+		
+		void OnMouseLeave()
+		{
+			
+		}
+		
 		public bool checkResourcePackForEnoughImages(int numberImages)
 		{
 			Sprite[] images = Resources.LoadAll<Sprite>(resourcePackName);
 			Debug.Log ("Resource pack " + resourcePackName + " loaded " + images.Length + " images.");
 			return (images.Length >= numberImages);
 		}
-    }
+	}
 }

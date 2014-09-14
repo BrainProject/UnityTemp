@@ -27,7 +27,7 @@ public class EnablePictureSetsWithEnoughPictures : MonoBehaviour
 				{
 					chooser.GetComponent<BoxCollider2D>().enabled = true;
 					chooser.GetComponent<SpriteRenderer>().color = Color.white;
-					chooser.GetComponent<ChoosePicturesSetScript>().initial_number_pieces = numberImagesRequired;
+					chooser.GetComponent<FindIt_backup.ChoosePicturesSetScript>().initial_number_pieces = numberImagesRequired;
 				}
 				else
 				{
