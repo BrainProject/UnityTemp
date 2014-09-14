@@ -12,6 +12,9 @@ namespace Game
         public Texture2D texture_normal;
         public Texture2D texture_hover;
 
+		private bool restartDifferentScene = false;
+		private string differentSceneName;
+
 
         void OnMouseOver()
         {
@@ -34,7 +37,12 @@ namespace Game
                 MGC.Instance.minigamesGUI.hide();
 
                 //load proper scene
-                MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
+				if(restartDifferentScene)
+				{
+					restartDifferentScene = false;
+					MGC.Instance.sceneLoader.LoadScene(differentSceneName);
+				}
+				else MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
             }
 
             else if (action == "GameSelection")
@@ -60,6 +68,12 @@ namespace Game
             }
             
         }
+
+		public void SetRestartDifferentScene(bool shouldRestartDifferentScene,string differentRestartSceneName)
+		{
+			this.restartDifferentScene = shouldRestartDifferentScene;
+			this.differentSceneName = differentRestartSceneName;
+		}
 
     }
 

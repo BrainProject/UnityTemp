@@ -19,9 +19,13 @@ namespace Puzzle
 
 		double piece_size;
 
+		bool gameWon = false;
+
         // Use this for initialization
         void Start()
         {
+			gameWon = false;
+
             Debug.Log("Trying to load image texture.");
             // loading image texture
             try
@@ -216,10 +220,13 @@ namespace Puzzle
         void Update()
         {
             updateOrthographicCameraPosition();
-            if (CheckVictory())
+            if (CheckVictory() && !gameWon)
             {
+				gameWon = true;
                 PuzzleStatistics.StopMeasuringTime();
-                Application.LoadLevel("PuzzleVictory");
+                //Application.LoadLevel("PuzzleVictory");
+
+				EndGame();
             }
         }
 
@@ -581,6 +588,14 @@ namespace Puzzle
 				}
 			}
 			return max;
+		}
+
+		private void EndGame()
+		{
+			//animate Neuron
+			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+			
+			MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
 		}
     }
 }
