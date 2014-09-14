@@ -19,7 +19,7 @@ namespace FindIt
         private static Stopwatch gameStopwatch = new Stopwatch();
 
         // last stopwath value when the time was read
-        private static double lastTimeRecord = 0;
+        private static long lastTimeRecord = 0;
 
         public static ulong gameTime
         {
@@ -99,10 +99,6 @@ namespace FindIt
             gameStopwatch.Stop();
             gameStopwatch.Reset();
 
-
-
-
-
             FindItStatistics.gameTime = 0;
 
            /* timer = new Timer();
@@ -112,7 +108,7 @@ namespace FindIt
 
         public static void RecordLeftGoodClick()
         {
-            double actualTime = gameStopwatch.ElapsedMilliseconds;
+            long actualTime = gameStopwatch.ElapsedMilliseconds;
 
             goodClicksLeft++;
             turnsPassed++;
@@ -123,7 +119,7 @@ namespace FindIt
 
         public static void RecordRightGoodClick()
         {
-            double actualTime = gameStopwatch.ElapsedMilliseconds;
+            long actualTime = gameStopwatch.ElapsedMilliseconds;
             turnsPassed++;
             goodClicksRight++;
             findTimesRight.Add(actualTime - lastTimeRecord);

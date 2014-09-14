@@ -14,10 +14,10 @@ namespace Puzzle
         private List<GameObject> puzzlePiecesToMove = new List<GameObject>();
 
 		// Global of all pieces in the scene
-		private float minX = float.MinValue;
-		private float maxX = float.MaxValue;
-		private float minY = float.MinValue;
-		private float maxY = float.MaxValue;
+		private float allPiecesMinX = float.MinValue;
+		private float allPiecesMaxX = float.MaxValue;
+		private float allPiecesMinY = float.MinValue;
+		private float allPiecesMaxY = float.MaxValue;
 
         private void setUp()
         {
@@ -46,14 +46,15 @@ namespace Puzzle
 		{
 			GameScript gs = Camera.main.GetComponent<GameScript>();
 
-			minX = gs.getMinPiecePositionX() - renderer.bounds.size.magnitude*0.75f;
-			maxX = gs.getMaxPiecePositionX()  + renderer.bounds.size.magnitude*0.75f;
-			minY = gs.getMinPiecePositionY() - renderer.bounds.size.magnitude*0.75f;
-			maxY = gs.getMaxPiecePositionY()  + renderer.bounds.size.magnitude*0.75f;
+			allPiecesMinX = gs.GetMinPiecePositionX(gameObject);// - renderer.bounds.size.magnitude*0.75f;
+			allPiecesMaxX = gs.GetMaxPiecePositionX(gameObject);// + renderer.bounds.size.magnitude*0.75f;
+			allPiecesMinY = gs.GetMinPiecePositionY(gameObject);// - renderer.bounds.size.magnitude*0.75f;
+			allPiecesMaxY = gs.GetMaxPiecePositionY(gameObject);// + renderer.bounds.size.magnitude*0.75f;
 		}
 
         void OnMouseDown()
         {
+			Debug.Log("OnMouseDown called");
             screenPoint.Clear();
             offset.Clear();
             puzzlePiecesToMove.Clear();
@@ -61,60 +62,106 @@ namespace Puzzle
             setUp();
 			setMinMax();
 
-			prevScreenPoint = Input.mousePosition;
+			/*prevScreenPoint = Input.mousePosition;
+
+			Vector3 moveBy = Camera.main.ScreenToWorldPoint(prevScreenPoint) - gameObject.transform.position + new Vector3(0,0,10);
+
+			foreach(GameObject obj in puzzlePiecesToMove)
+			{
+				obj.transform.position += moveBy;
+			}*/
         }
 
-		private Vector3 prevScreenPoint;
+		//private Vector3 prevScreenPoint;
 
-        void OnMouseDrag()
-        {
-			float pieceSetWidth = getPieceSetWidth();
-			float pieceSetHeight = getPieceSetHeight();
+		System.Object locker = new System.Object();
 
-			float mix = getPieceSetMinX();
-			float max = getPieceSetMaxX();
-			float miy = getPieceSetMinY();
-			float may = getPieceSetMaxY();
+		void OnMouseDrag()
+		{
+			lock(locker)
+			{
+			Debug.Log("OnMouseDrag called");
+			float pieceSetWidth = GetPieceSetWidth();
+			float pieceSetHeight = GetPieceSetHeight();
+
+			//Debug.Log ("Piece set width: " + pieceSetWidth);
+			//Debug.Log ("Piece set height: " + pieceSetHeight);
+
+			float pieceSetMinX = GetPieceSetMinX();
+			float pieceSetMaxX = GetPieceSetMaxX();
+			float pieceSetMinY = GetPieceSetMinY();
+			float pieceSetMaxY = GetPieceSetMaxY();
+
+			//Debug.Log("pieceSetMinX: " + pieceSetMinX + "; pieceSetMaxX: " + pieceSetMaxX +
+			//         "; pieceSetMinY: " + pieceSetMinY + "; pieceSetMaxY: " + pieceSetMaxY);
 
             for (int i = 0; i < puzzlePiecesToMove.Count; i++)
             {
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint[i].z);
                 Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset[i];
-
+			   
+				Vector3 prevScreenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+				
 				Vector3 piecePosition = puzzlePiecesToMove[i].transform.position;
 
-				/*if(!(curScreenPoint.x < prevScreenPoint.x)) // going left
+				//Debug.Log("Piece position: " + piecePosition.ToString());
+
+				//Debug.Log ("Current Screen Point: " + curScreenPoint + "; Previous screen point: " + prevScreenPoint);
+				//Debug.Log ("PieceSetMaxX: " + pieceSetMaxX + "; allPiecesMaxX: " + allPiecesMaxX);
+				//Debug.Log("Piece width: " + pieceSetWidth);
+				//Debug.Log("Piece position: " + piecePosition + "; current position: " + curPosition);
+
+				if((curScreenPoint.x > prevScreenPoint.x)) // going right
 				{
-					if(!(mix<minX - pieceSetWidth))
-						piecePosition.x = (curPosition.x);
+					if((pieceSetMaxX < (allPiecesMaxX + pieceSetWidth)))
+					{
+						piecePosition.x = curPosition.x;
+					}
 				}
-				else if(!(curScreenPoint.x > prevScreenPoint.x)) // going left
+				else 
 				{
-					if(!(max>maxX + pieceSetWidth))
-						piecePosition.x = (curPosition.x);
+					if((curScreenPoint.x < prevScreenPoint.x)) // going left
+					{
+						if((pieceSetMinX > (allPiecesMinX - pieceSetWidth)))
+						{
+							piecePosition.x = curPosition.x;
+						}
+					}
 				}
 
-				if(!(curScreenPoint.y > prevScreenPoint.y)) // going down
+				if((curScreenPoint.y > prevScreenPoint.y)) // going up
 				{
-					if(!(miy<minY - pieceSetHeight))
+					if((pieceSetMaxY < (allPiecesMaxY + pieceSetHeight)))
+					{
 						piecePosition.y = (curPosition.y);
+					}
 				}
-				else if(!(curScreenPoint.y < prevScreenPoint.y)) // going up
+				else 
 				{
-					if(!(miy>maxY + pieceSetHeight))
-						piecePosition.y = (curPosition.y);
+					if((curScreenPoint.y < prevScreenPoint.y)) // going up
+					{
+						if((pieceSetMinY > (allPiecesMinY - pieceSetHeight)))
+						{
+							piecePosition.y = curPosition.y;
+						}
+					}
 				}
 				puzzlePiecesToMove[i].transform.position = piecePosition;
-				prevScreenPoint = curScreenPoint;*/
-				if(!(mix<minX - pieceSetWidth || max>maxX + pieceSetWidth ||
-				   miy<minY - pieceSetHeight || may>maxY + pieceSetHeight ))
-                	puzzlePiecesToMove[i].transform.position = (curPosition);
+				//if(!(mix<minX - pieceSetWidth || max>maxX + pieceSetWidth ||
+				//   miy<minY - pieceSetHeight || may>maxY + pieceSetHeight ))
+                //	puzzlePiecesToMove[i].transform.position = (curPosition);
             }
+				//prevScreenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+
+			}
         }
 
         void OnMouseUp()
         {
-            ((GameScript)Camera.main.GetComponent("GameScript")).CheckPossibleConnection(gameObject);
+			Debug.Log("OnMouseUp called");
+			((GameScript)Camera.main.GetComponent("GameScript")).CheckPossibleConnection(gameObject);
+
+
             foreach (GameObject piece in puzzlePiecesToMove)
             {
                 piece.transform.position = new Vector3(piece.transform.position.x,
@@ -125,17 +172,21 @@ namespace Puzzle
 
         }
 
-		private float getPieceSetHeight()
+		private float GetPieceSetHeight()
 		{
-			return getPieceSetMaxY()-getPieceSetMinY();
+			return GetPieceSetMaxY() + (gameObject.renderer.bounds.size.y / 2) 
+				- (GetPieceSetMinY()  - (gameObject.renderer.bounds.size.y / 2));
+			//return GetPieceSetMaxY() - GetPieceSetMinY();
 		}
 
-		private float getPieceSetWidth()
+		private float GetPieceSetWidth()
 		{
-			return getPieceSetMaxX() - getPieceSetMinX();
+			return GetPieceSetMaxX() + (gameObject.renderer.bounds.size.x / 2) 
+				- (GetPieceSetMinX() - (gameObject.renderer.bounds.size.x / 2));
+			//return GetPieceSetMaxX() - GetPieceSetMinX();
 		}
 
-		private float getPieceSetMinX()
+		private float GetPieceSetMinX()
 		{
 			float min = float.MaxValue;
 
@@ -147,7 +198,7 @@ namespace Puzzle
 			return min;
 		}
 
-		private float getPieceSetMinY()
+		private float GetPieceSetMinY()
 		{
 			float min = float.MaxValue;
 			
@@ -159,7 +210,7 @@ namespace Puzzle
 			return min;
 		}
 
-		private float getPieceSetMaxX()
+		private float GetPieceSetMaxX()
 		{
 			float max = float.MinValue;
 			
@@ -171,7 +222,7 @@ namespace Puzzle
 			return max;
 		}
 
-		private float getPieceSetMaxY()
+		private float GetPieceSetMaxY()
 		{
 			float max = float.MinValue;
 			

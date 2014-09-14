@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +47,12 @@ namespace Puzzle
             gameObject.AddComponent("MouseScript");
             //gameObject.renderer.material.shader = Shader.Find("Particles/Alpha Blended");
             Quaternion q = new Quaternion(0, 0, 0, 1);
-            q.SetLookRotation(new Vector3(0, -1, 0), new Vector3(0, 1, 0));
+            //q.SetLookRotation(new Vector3(1/3, 2/3, 0), new Vector3(0, 1, 0));
+			q.eulerAngles = new Vector3(90,180,0);
             gameObject.transform.rotation = q;
             gameObject.transform.position = position;
+			gameObject.AddComponent("BoxCollider2D");
+
         }
 
 
