@@ -83,11 +83,9 @@ namespace MinigameSelection
 					}
 				}
 			}
-		}
 
-		void OnGUI()
-		{
-			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
+			//Debug actions
+			if(Input.GetKeyDown(KeyCode.Keypad0)) //Reset position
 			{
 				currentWaypoint = GameObject.Find ("OccipitalLobePos");
 				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
@@ -99,6 +97,23 @@ namespace MinigameSelection
 				movingLeft = false;
 				movingRight = false;
 			}
+		}
+
+		void OnGUI()
+		{
+//			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
+//			{
+//				currentWaypoint = GameObject.Find ("OccipitalLobePos");
+//				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
+//				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
+//				this.GetComponent<SmoothCameraMove>().FromYRot = currentWaypoint.transform.eulerAngles.y;
+//				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
+//				this.transform.position = currentWaypoint.transform.position;
+//				this.transform.rotation = currentWaypoint.transform.rotation;
+//				movingLeft = false;
+//				movingRight = false;
+//			}
+			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
 			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
 			{
 				targetWaypoint = GameObject.Find ("OccipitalLobePos");
@@ -108,6 +123,24 @@ namespace MinigameSelection
 			if(GUI.Button(new Rect(20, 100, 100, 30), "Temporal"))
 			{
 				targetWaypoint = GameObject.Find ("TemporalLobePos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}
+			if(GUI.Button(new Rect(20, 140, 100, 30), "Frontal"))
+			{
+				targetWaypoint = GameObject.Find ("FrontalLobePos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}
+			if(GUI.Button(new Rect(20, 180, 100, 30), "Parietal"))
+			{
+				targetWaypoint = GameObject.Find ("ParietalLobePos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}
+			if(GUI.Button(new Rect(20, 220, 100, 30), "Cerebellum"))
+			{
+				targetWaypoint = GameObject.Find ("CerebellumPos");
 				FindShorterDirectionToWaypoint();
 				SetNewTarget();
 			}

@@ -129,6 +129,7 @@ public class MGC : Singleton<MGC>
             Application.Quit();
         }
 
+		//Hidden menu possible to show with secret gesture
         if (Input.GetKeyDown(KeyCode.I))
         {
             print("Show hidden menu.");
@@ -145,6 +146,7 @@ public class MGC : Singleton<MGC>
 
         }
 
+		//Inactivity detection
 		if(Input.anyKeyDown)
 		{
 			inactivityTimestamp = Time.time;
@@ -155,6 +157,27 @@ public class MGC : Singleton<MGC>
         {
             InactivityReaction();
         }
+
+		//Debug actions
+		if (Input.GetKeyDown(KeyCode.F11))
+		{
+			Application.LoadLevel ("Main");
+		}
+		if (Input.GetKeyDown(KeyCode.F12))
+		{
+			Application.LoadLevel ("GameSelection");
+		}
+		if (Input.GetKeyDown(KeyCode.F5)) {
+			SaveGame ();
+		}
+		if (Input.GetKeyDown(KeyCode.F8))
+		{
+			LoadGame ();
+		}
+		if (Input.GetKeyDown (KeyCode.F1))
+		{
+			ResetGameStatus ();
+		}
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -235,14 +258,14 @@ public class MGC : Singleton<MGC>
 	}
 
 	//Only for debugging and testing purposes
-	void OnGUI ()
-	{
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 80, 110, 30), "Brain")) {
-			Application.LoadLevel ("Main");
-		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
-			Application.LoadLevel ("GameSelection");
-		}
+//	void OnGUI ()
+//	{
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 80, 110, 30), "Brain")) {
+//			Application.LoadLevel ("Main");
+//		}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
+//			Application.LoadLevel ("GameSelection");
+//		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
 //			Application.Quit ();
 //		}
@@ -252,10 +275,10 @@ public class MGC : Singleton<MGC>
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
 //			LoadGame ();
 //		}
-		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
-			ResetGameStatus ();
-		}
-	}
+//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
+//			ResetGameStatus ();
+//		}
+//	}
 	public void SaveGame()
 	{
 		#if !UNITY_WEBPLAYER
