@@ -46,11 +46,11 @@ namespace Game
 			minigames.Add (hanoi);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
-			Minigame similarities = new Minigame ("Similaries");
+			Minigame similarities = new Minigame ("Similarities");
 			minigames.Add (similarities);
 			Minigame silhouette = new Minigame ("Silhouettes");
 			minigames.Add (silhouette);
-			Minigame puzzle = new Minigame ("Puzzle", "PuzzleGame");
+			Minigame puzzle = new Minigame ("PuzzleChoosePicture", "PuzzleGame");
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
@@ -64,7 +64,7 @@ namespace Game
 		{
 			foreach(Minigame game in minigames)
 			{
-				if(game.initialScene == minigameName)
+				if(game.sceneWithHelp == minigameName)
 				{
 					game.played = true;
 					break;
@@ -77,7 +77,7 @@ namespace Game
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-			if(game.initialScene == minigameName)
+			if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
 			{
 				return game.played;
 			}
@@ -91,5 +91,17 @@ namespace Game
 				minigamesWithHelp.Add(game.sceneWithHelp);
 			return minigamesWithHelp;
 		}
+
+//		public Minigame GetMinigame(string minigameName)
+//		{
+//			foreach(Minigame game in minigames)
+//			{
+//				if(game.initialScene == minigameName || game.sceneWithHelp == minigameName)
+//				{
+//					return game;
+//				}
+//			}
+//			return null;
+//		}
 	}
 }

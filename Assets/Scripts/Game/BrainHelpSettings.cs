@@ -12,11 +12,11 @@ namespace Game
     {
         [Range(0.1f, 1f)]
         public float helpSize = 0.6f;
-		public GameObject blockBorder;
 
 		internal GameObject neuronHelp;
 		internal GameObject blockBorderClone;
-
+		
+		public GameObject blockBorder;
 		private Color originalColor;
 		private Color targetColor;
 		private bool canControl;
