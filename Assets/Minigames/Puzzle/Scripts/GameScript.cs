@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Puzzle
@@ -9,8 +8,6 @@ namespace Puzzle
     {
         public int numberPieces = 4;
         public Texture2D puzzleImage;// = Resources.Load ("Pictures/cute-cat") as Texture2D;
-
-
 
         // size of one piece of puzzle
         private const uint CELL_SIZE = 50;
@@ -44,7 +41,25 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
+			GameObject targetImageGUITexture = new GameObject("TargetImage");
 
+			targetImageGUITexture.AddComponent("GUITexture");
+
+			targetImageGUITexture.guiTexture.texture = puzzleImage;
+
+			targetImageGUITexture.transform.localScale = 
+				new Vector3(0.3f,
+				            0.3f * Screen.width/Screen.height,
+				            1.0f);
+
+			targetImageGUITexture.transform.position = 
+				new Vector3(0.15F,
+				            1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
+				            1.0f);
+
+			
+			
+			
             Debug.Log("Trying to load number of pieces.");
             // loading number of pieces
             try
@@ -60,6 +75,7 @@ namespace Puzzle
                 numberPieces = 4;
                 PuzzleStatistics.numberPieces = numberPieces;
             }
+
 
             Debug.Log("Allocating collections.");
             connectedComponents = new HashSet<HashSet<GameObject>>();
@@ -187,8 +203,8 @@ namespace Puzzle
                 }
             }
 
-            Camera.main.transform.position = new Vector3((min_x + max_x) / 2, (min_y + max_y) / 2, -10);
-            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 1;
+            Camera.main.transform.position = new Vector3((min_x + max_x) / 2 - 15, (min_y + max_y) / 2, -10);
+            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 7;
         }
 
         private bool CheckVictory()

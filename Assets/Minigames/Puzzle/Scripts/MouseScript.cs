@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Puzzle;
-using System;
 using System.Collections.Generic;
 
 namespace Puzzle
 {
     public class MouseScript : MonoBehaviour
     {
-
         private List<Vector3> screenPoint = new List<Vector3>();
         private List<Vector3> offset = new List<Vector3>();
         private List<GameObject> puzzlePiecesToMove = new List<GameObject>();
