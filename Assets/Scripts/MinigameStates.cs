@@ -11,12 +11,22 @@ namespace Game
 	[System.Serializable]
 	public class Minigame
 	{
-		internal string minigameName;
+		public string initialScene;
+		public string sceneWithHelp;
 		internal bool played;
+		//internal List<string> scenes = new List<string>();
 
 		public Minigame(string minigameName)
 		{
-			this.minigameName = minigameName;
+			this.initialScene = minigameName;
+			this.sceneWithHelp = minigameName;
+			played = false;
+		}
+
+		public Minigame(string minigameName, string sceneWithHelp)
+		{
+			this.initialScene = minigameName;
+			this.sceneWithHelp = sceneWithHelp;
 			played = false;
 		}
 	}
@@ -27,7 +37,7 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		internal List<Minigame> minigames = new List<Minigame>();
+		public List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
 		{
@@ -40,11 +50,11 @@ namespace Game
 			minigames.Add (similarities);
 			Minigame silhouette = new Minigame ("Silhouettes");
 			minigames.Add (silhouette);
-			Minigame puzzle = new Minigame ("Puzzle");
+			Minigame puzzle = new Minigame ("Puzzle", "PuzzleGame");
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
-			Minigame findIt = new Minigame ("FindItChooseImageSet");
+			Minigame findIt = new Minigame ("FindIt", "FindItGame");
 			minigames.Add (findIt);
 
 			MGC.Instance.LoadGame ();
@@ -54,7 +64,7 @@ namespace Game
 		{
 			foreach(Minigame game in minigames)
 			{
-				if(game.minigameName == minigameName)
+				if(game.initialScene == minigameName)
 				{
 					game.played = true;
 					break;
@@ -67,11 +77,19 @@ namespace Game
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-			if(game.minigameName == minigameName)
+			if(game.initialScene == minigameName)
 			{
 				return game.played;
 			}
 			return false;
+		}
+
+		public List<string> GetMinigamesWithHelp()
+		{
+			List <string> minigamesWithHelp = new List<string> ();
+			foreach(Minigame game in minigames)
+				minigamesWithHelp.Add(game.sceneWithHelp);
+			return minigamesWithHelp;
 		}
 	}
 }

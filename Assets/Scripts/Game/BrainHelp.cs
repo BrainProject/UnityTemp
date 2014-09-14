@@ -36,7 +36,7 @@ namespace Game
 
 		//Attach GUI texture to make this function working
 		void ShowHelpBubble () {
-			if(helpTexture && !helpExists)
+			if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 			{
 				helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 				helpObject.guiTexture.texture = helpTexture;
@@ -60,10 +60,11 @@ namespace Game
 			if(helpObject)
 				Destroy(helpObject);
 
-			if(level > 2)
+			if(level > 2)// && MGC.Instance.minigameStates.minigames.Contains(minigame)
 			{
 				ShowHelpBubble();
 			}
+
 			else
 			{
 				helpExists = false;
