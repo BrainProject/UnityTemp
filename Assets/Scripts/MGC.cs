@@ -325,6 +325,11 @@ public class MGC : Singleton<MGC>
 		mouseCursor.transform.parent = this.transform;
 	}
 
+	public void HideCustomCursor()
+	{
+		Destroy(mouseCursor);
+	}
+
 	void ResetGameStatus()
 	{		
 		foreach(Minigame minigameData in this.GetComponent<MinigameStates>().minigames)

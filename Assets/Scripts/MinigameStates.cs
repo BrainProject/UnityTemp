@@ -54,6 +54,8 @@ namespace Game
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
+			Minigame socialGame = new Minigame ("SocialGame");
+			minigames.Add (socialGame);
 			Minigame findIt = new Minigame ("FindIt", "FindItGame");
 			minigames.Add (findIt);
 
