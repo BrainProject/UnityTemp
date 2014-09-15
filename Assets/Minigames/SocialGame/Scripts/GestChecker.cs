@@ -12,14 +12,20 @@ public class GestChecker : MonoBehaviour {
 	public bool player1;
 	public bool player2;
 	private Vector3 temp;
+	public Kinect.KinectManager KManager;
 	// Use this for initialization
 	void Start () {
+		GameObject temp = GameObject.FindWithTag("GameController");
+		if(temp != null)
+		{
+			KManager = temp.GetComponent<Kinect.KinectManager>();
+		}
 		if(handMode)
 		{
 				List<Transform> Targets = new List<Transform>();
-				if(player1 && Kinect.KinectManager.Instance)
+				if(player1 && KManager)
 				{
-					foreach(GameObject avatar in Kinect.KinectManager.Instance.Player1Avatars)
+					foreach(GameObject avatar in KManager.Player1Avatars)
 					{
 						Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
 						if(avatarControler)
@@ -31,7 +37,7 @@ public class GestChecker : MonoBehaviour {
 				}
 				if(player2)
 				{
-					foreach(GameObject avatar in Kinect.KinectManager.Instance.Player2Avatars)
+					foreach(GameObject avatar in KManager.Player2Avatars)
 					{
 						Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
 						if(avatarControler)
@@ -82,7 +88,7 @@ public class GestChecker : MonoBehaviour {
 		{
 			Transform child = transform.GetChild(i);
 			Check script = child.GetComponent<Check>();
-			if(script != null && script.active)
+			if(script  && script.active)
 			{
 				Transform[] targets = script.target;
 				foreach(Transform target in targets)
@@ -103,7 +109,10 @@ public class GestChecker : MonoBehaviour {
 		}
 		if(complete)
 		{
-			GameObject.Instantiate(this.next);
+			if(next)
+			{
+				GameObject.Instantiate(this.next);
+			}
 			Destroy(gameObject);
 		}
 	}

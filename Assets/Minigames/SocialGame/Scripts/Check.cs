@@ -24,6 +24,7 @@ public class Check : MonoBehaviour {
 			}
 			active = false;
 			show ();
+			thisActivate();
 			return false;
 		}
 		else
@@ -32,7 +33,11 @@ public class Check : MonoBehaviour {
 		}
 	}
 
+	public virtual void thisActivate()
+	{
 
+	}
+	
 	public void activate()
 	{
 		active = true;
