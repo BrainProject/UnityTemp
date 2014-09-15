@@ -46,7 +46,7 @@ namespace MinigameSelection
             if(MGC.Instance.minigameStates.GetPlayed(minigameName))
             {
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
-                this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);
             }
 			
             if(minigameName == "")
