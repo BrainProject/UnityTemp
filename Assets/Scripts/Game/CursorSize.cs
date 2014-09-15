@@ -20,6 +20,8 @@ namespace Game
 		private int h = Screen.height / 9;
 		void Start ()
 		{
+			if(GameObject.Find("MouseCursor(Clone)") != this.gameObject)
+				Destroy(this.gameObject);
 			this.transform.position = new Vector3 (0, 0, 1000);
 			//this.transform.localScale = Vector3.zero;
 			//this.guiTexture.pixelInset = new Rect (x, y, w, h);

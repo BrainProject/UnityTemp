@@ -70,6 +70,7 @@ public class MGC : Singleton<MGC>
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
+	internal string inactivityScene = "SocialGame";
 
     /// <summary>
     /// TODO just a temporary solution, before mini-games statistics will be properly saved
@@ -79,7 +80,6 @@ public class MGC : Singleton<MGC>
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
 	private int inactivityCounter = 0;
-	private string inactivityScene = "HanoiTowers";
 
 	void Awake ()
 	{
@@ -120,6 +120,9 @@ public class MGC : Singleton<MGC>
 	void Start()
 	{
 		inactivityTimestamp = Time.time;
+		#if UNITY_WEBPLAYER
+		inacivityScene = "HanoiTowers";
+		#endif
 	}
 
 	void Update()
@@ -338,8 +341,8 @@ public class MGC : Singleton<MGC>
 
 	void InactivityReaction()
 	{
-		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
-		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght + " seconds.");
+		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
+		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
 		if(inactivityCounter == 5)
 		{
 			inactivityCounter = 0;
