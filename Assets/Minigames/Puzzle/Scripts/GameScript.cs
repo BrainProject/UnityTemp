@@ -7,7 +7,7 @@ namespace Puzzle
     public class GameScript : MonoBehaviour
     {
         public int numberPieces = 4;
-        public Texture2D puzzleImage;// = Resources.Load ("Pictures/cute-cat") as Texture2D;
+        public Texture2D puzzleImage;
 
         // size of one piece of puzzle
         private const uint CELL_SIZE = 50;
@@ -90,15 +90,10 @@ namespace Puzzle
             int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
             numberPieces = dim * dim;
 
-
-            //double pos_x = -(dim * cell_size + (dim - 1) * cell_space) / 2.0;
-            //double pos_y = pos_x; //-(dim * cell_size + (dim-1) * cell_space) / 2.0;
-
             int pixels_per_cell_x = (int)Math.Floor((double)puzzleImage.width / dim);
             int pixels_per_cell_y = (int)Math.Floor((double)puzzleImage.height / dim);
 
             // IN CASE EVERY CONNECTION HAD A NUMBER
-            //uint num_connections = (uint)(2 * (dim - 1) * dim); // in the end not needed.
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
             for (int i = 0; i < dim; i++)
@@ -114,9 +109,6 @@ namespace Puzzle
                 {
                     // Create texture
                     Texture2D texture = new Texture2D(pixels_per_cell_x, pixels_per_cell_y);
-
-                    // this is not correct because [0,0] is bottom left corner and not the top left
-                    //Color[] pixels = puzzle_image.GetPixels((j-1)*pix_per_cell_x,(i-1)*pix_per_cell_y,pix_per_cell_x,pix_per_cell_y);
 
                     Debug.Log("Copying texture pixels.");
                     Color[] pixels = puzzleImage.GetPixels(
@@ -169,7 +161,6 @@ namespace Puzzle
                    // piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
                    //                                         2 * j * (float)piece_size,
                    //                                         0.0f));
-
                 }
                 // placement in grid
                 placePuzzlePieces();
@@ -292,11 +283,6 @@ namespace Puzzle
                                     }
                                 }
 
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
@@ -330,12 +316,6 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
@@ -369,16 +349,9 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
-
                         }
 
                         // CHECK OTHER ON RIGHT OF MINE
@@ -408,23 +381,11 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
                         }
                     }
-                    //if (components_connected)
-                    //{
-                    //    my_component.UnionWith(other_component);
-                    //    connected_components.Remove(other_component);
-                    //    components_connected = false;
-                    //}
                 }
             }
             if (toConnect.Count > 0)
@@ -454,8 +415,6 @@ namespace Puzzle
 
 			bool[] occupied = new bool[numberPieces];
 
-			//float CELL_SIZE = 0;
-
             foreach (PuzzlePiece piece in pieces.Values)
             {
                 int pos = random.Next(numberPieces);
@@ -473,26 +432,7 @@ namespace Puzzle
 				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,// - (Screen.width / 2),
 				                                                  2 * (pos % dim) * pieceSize,// - (Screen.height / 2),
 				                                            0);
-
-
-
-
-				//CELL_SIZE = (float)Math.Ceiling(piece.GetPieceSize().magnitude / 2.0f);
             }
-
-           /* for (int i = 0; i < objects.Length; i++)
-            {
-                int x = i / dim;
-                int y = i % dim;
-
-                // suppose that pieces are squared all of the same size
-                //float size = objects[i].renderer.bounds.size.x;
-
-
-                objects[i].transform.position = new Vector3(2 * x * CELL_SIZE,// - (Screen.width / 2),
-                                                            2 * y * CELL_SIZE,// - (Screen.height / 2),
-                                                            0);
-            }*/
         }
 
 
