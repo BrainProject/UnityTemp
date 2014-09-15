@@ -61,6 +61,7 @@ namespace Puzzle
 				            1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
 				            1.0f);
 
+			targetImageGUITexture.layer = 13;	// PuzzleTargetImage
 			
 			
 			
@@ -165,13 +166,13 @@ namespace Puzzle
 
 					piece_size = Math.Ceiling(piece.GetPieceSize().magnitude / 2.0);
 
-                    piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
-                                                            2 * j * (float)piece_size,
-                                                            0.0f));
+                   // piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
+                   //                                         2 * j * (float)piece_size,
+                   //                                         0.0f));
 
                 }
                 // placement in grid
-                //placePuzzlePieces();
+                placePuzzlePieces();
 
             }
             Debug.Log("Updating camera position.");
@@ -207,8 +208,8 @@ namespace Puzzle
                 }
             }
 
-            Camera.main.transform.position = new Vector3((min_x + max_x) / 2 - 15, (min_y + max_y) / 2, -10);
-            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 7;
+            Camera.main.transform.position = new Vector3((min_x + max_x) / 2 - 10, (min_y + max_y) / 2, -10);
+            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 3;
         }
 
         private bool CheckVictory()
@@ -447,54 +448,51 @@ namespace Puzzle
         // did not work, do not know why... 
         private void placePuzzlePieces()
         {
-
             int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
-            Debug.Log("Dim: " + dim);
-            Debug.Log("numberPieces: " + numberPieces);
-            GameObject[] objects = new GameObject[numberPieces];
-            Debug.Log("objects size: " + objects.Length);
-            System.Random random = new System.Random();
+            
+			System.Random random = new System.Random();
 
-            Debug.Log("pieces values count: " + pieces.Values.Count);
+			bool[] occupied = new bool[numberPieces];
+
+			//float CELL_SIZE = 0;
 
             foreach (PuzzlePiece piece in pieces.Values)
             {
                 int pos = random.Next(numberPieces);
-                Debug.Log("generated pos: " + pos);
-                while (objects[pos] != null)
+                
+                while (occupied[pos])
                 {
                     pos++;
                     if (pos >= numberPieces)
                     {
                         pos = 0;
                     }
-                    Debug.Log("pos updated: " + pos);
                 }
-                Debug.Log("pos: ");
-                objects[pos] = piece.gameObject;
-                Debug.Log("number pieces: " + pos);
+                occupied[pos] = true;
+				float pieceSize = (float)Math.Ceiling(piece.GetPieceSize().magnitude / 2.0f);
+				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,// - (Screen.width / 2),
+				                                                  2 * (pos % dim) * pieceSize,// - (Screen.height / 2),
+				                                            0);
 
+
+
+
+				//CELL_SIZE = (float)Math.Ceiling(piece.GetPieceSize().magnitude / 2.0f);
             }
 
-            for (int i = 0; i < numberPieces; i++)
+           /* for (int i = 0; i < objects.Length; i++)
             {
-                //Debug.Log("for loop: " + i);
-
                 int x = i / dim;
                 int y = i % dim;
-
-                //Debug.Log("(x,y) = (" + x + ", " + y + ")");
-
 
                 // suppose that pieces are squared all of the same size
                 //float size = objects[i].renderer.bounds.size.x;
 
+
                 objects[i].transform.position = new Vector3(2 * x * CELL_SIZE,// - (Screen.width / 2),
                                                             2 * y * CELL_SIZE,// - (Screen.height / 2),
                                                             0);
-
-                Debug.Log("trans. set");
-            }
+            }*/
         }
 
 
