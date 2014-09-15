@@ -29,6 +29,11 @@ namespace Game
         {
             gameObject.SetActive(false);
         }
+
+		void OnLevelWasLoaded (int level)
+		{
+			gameObject.SetActive(false);
+		}
     }
 
 }
