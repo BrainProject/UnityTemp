@@ -12,32 +12,41 @@ namespace Game
 	public class BrainHelp : MonoBehaviour {
 		public Texture helpTexture;
 		public bool helpExists;
+		public GameObject pictureInHands;
+
+		internal Animator animator;
 
 		private GameObject helpObject;
-		private Animator animator;
 
 		void Start()
 		{
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
+			MGC.Instance.neuronHelp = this.gameObject;
+			MGC.Instance.ShowCustomCursor ();
 		}
 
 		void LateUpdate()
 		{
-			if(animator.GetBool("noAnimation"))
-				animator.SetBool("noAnimation", false);
+			if(animator.GetBool("wave"))
+				animator.SetBool("wave", false);
+			if(animator.GetBool("smile"))
+				animator.SetBool("smile", false);
 		}
 
-		//Attach GUI texture
+		//Attach GUI texture to make this function working
 		void ShowHelpBubble () {
-			if(helpTexture && !helpExists)
+			if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 			{
-				helpObject = (GameObject)Instantiate ((Resources.Load ("Help/Help")));
+				helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 				helpObject.guiTexture.texture = helpTexture;
+				//helpObject.transform.parent = this.transform;
+				//helpObject.layer = this.gameObject.layer;
+				helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
 			}
 			else
 			{
-				this.GetComponent<Animator>().SetBool("noAnimation", true);
+				this.GetComponent<Animator>().SetBool("wave", true);
 			}
 		}
 
@@ -48,15 +57,25 @@ namespace Game
 
 		void OnLevelWasLoaded(int level)
 		{
-			if(level > 2)
+			if(helpObject)
+				Destroy(helpObject);
+
+			if(level > 2)// && MGC.Instance.minigameStates.minigames.Contains(minigame)
 			{
 				ShowHelpBubble();
 			}
+
 			else
 			{
 				helpExists = false;
 				helpTexture = null;
 			}
+		}
+
+		public void ShowSmile(Texture smileTexture)
+		{
+			animator.SetBool ("smile", true);
+			pictureInHands.renderer.material.mainTexture = smileTexture;
 		}
 	}
 }

@@ -17,8 +17,6 @@ namespace Game
 		private float startTime;
 		private string levelName;
 
-        
-
 		void Start()
 		{
             print("SceneLoader start...");
@@ -59,8 +57,9 @@ namespace Game
 
         private IEnumerator FadeInCoroutine()
         {
-            print("fading in...");
-            guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+			print("fading in...");
+			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
+			guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
             //print("initial alpha = " + guiTexture.color.a);
             float startTime = Time.time;
             originalColor = guiTexture.color;
@@ -77,6 +76,7 @@ namespace Game
                 yield return null;
             }
             guiTexture.enabled = false;
+			Destroy (blockBorderClone);
         }
 
         /// <summary>
@@ -85,8 +85,9 @@ namespace Game
         /// <param name="levelName"></param>
         /// <returns></returns>
         private IEnumerator LoadWithFadeOut(string levelName)
-        {
-            print("fading out coroutine...");
+		{
+			Instantiate (Resources.Load ("BlockBorder"));
+			print("fading out coroutine...");
             if (levelName == "")
             {
                 Debug.LogError("Level name not defined.");

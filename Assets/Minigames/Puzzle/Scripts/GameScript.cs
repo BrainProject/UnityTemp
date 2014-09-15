@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Puzzle
@@ -8,9 +7,7 @@ namespace Puzzle
     public class GameScript : MonoBehaviour
     {
         public int numberPieces = 4;
-        public Texture2D puzzleImage;// = Resources.Load ("Pictures/cute-cat") as Texture2D;
-
-
+        public Texture2D puzzleImage;
 
         // size of one piece of puzzle
         private const uint CELL_SIZE = 50;
@@ -20,10 +17,15 @@ namespace Puzzle
         public HashSet<HashSet<GameObject>> connectedComponents;
         public Dictionary<string, PuzzlePiece> pieces;
 
+		double piece_size;
+
+		bool gameWon = false;
 
         // Use this for initialization
         void Start()
         {
+			gameWon = false;
+
             Debug.Log("Trying to load image texture.");
             // loading image texture
             try
@@ -43,7 +45,26 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
+			GameObject targetImageGUITexture = new GameObject("TargetImage");
 
+			targetImageGUITexture.AddComponent("GUITexture");
+
+			targetImageGUITexture.guiTexture.texture = puzzleImage;
+
+			targetImageGUITexture.transform.localScale = 
+				new Vector3(0.3f,
+				            0.3f * Screen.width/Screen.height,
+				            1.0f);
+
+			targetImageGUITexture.transform.position = 
+				new Vector3(0.15F,
+				            1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
+				            1.0f);
+
+			targetImageGUITexture.layer = 13;	// PuzzleTargetImage
+			
+			
+			
             Debug.Log("Trying to load number of pieces.");
             // loading number of pieces
             try
@@ -60,6 +81,7 @@ namespace Puzzle
                 PuzzleStatistics.numberPieces = numberPieces;
             }
 
+
             Debug.Log("Allocating collections.");
             connectedComponents = new HashSet<HashSet<GameObject>>();
             pieces = new Dictionary<string, PuzzlePiece>();
@@ -68,15 +90,10 @@ namespace Puzzle
             int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
             numberPieces = dim * dim;
 
-
-            //double pos_x = -(dim * cell_size + (dim - 1) * cell_space) / 2.0;
-            //double pos_y = pos_x; //-(dim * cell_size + (dim-1) * cell_space) / 2.0;
-
             int pixels_per_cell_x = (int)Math.Floor((double)puzzleImage.width / dim);
             int pixels_per_cell_y = (int)Math.Floor((double)puzzleImage.height / dim);
 
             // IN CASE EVERY CONNECTION HAD A NUMBER
-            //uint num_connections = (uint)(2 * (dim - 1) * dim); // in the end not needed.
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
             for (int i = 0; i < dim; i++)
@@ -85,15 +102,13 @@ namespace Puzzle
             }
             System.Random random = new System.Random();
             Debug.Log("Starting loops.");
+
             for (int i = 1; i <= dim; i++)
             {
                 for (int j = 1; j <= dim; j++)
                 {
                     // Create texture
                     Texture2D texture = new Texture2D(pixels_per_cell_x, pixels_per_cell_y);
-
-                    // this is not correct because [0,0] is bottom left corner and not the top left
-                    //Color[] pixels = puzzle_image.GetPixels((j-1)*pix_per_cell_x,(i-1)*pix_per_cell_y,pix_per_cell_x,pix_per_cell_y);
 
                     Debug.Log("Copying texture pixels.");
                     Color[] pixels = puzzleImage.GetPixels(
@@ -113,19 +128,12 @@ namespace Puzzle
                     Debug.Log("Creating Puzzle Piece.");
                     PuzzlePiece piece = new PuzzlePiece(texture,
                                                         i == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 2) + j,
-                                                        j == dim_x ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j,
+					                                    j == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j - 1,
                                                         i == dim_y ? -1 : (dim_x - 1) * i + dim_y * (i - 1) + j,
-                                                        j == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j - 1,
-                                                        Vector3.zero);
+					                                    j == dim_x ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j,
+					                                    Vector3.zero);
 
                     Debug.Log("Puzzle Piece created.");
-
-
-                    // PuzzlePiece piece = new PuzzlePiece(texture,
-                    //                  i == 1 ? -1 : id - (int)dim,
-                    //                  j == (int)dim ? -1 : id + 1,
-                    //                  i == (int)dim ? -1 : id + (int)dim,
-                    //                  j == 1 ? -1 : id - 1);
 
                     // add to pieces
 
@@ -148,74 +156,14 @@ namespace Puzzle
                     pieceSet.Add(piece.gameObject);
                     connectedComponents.Add(pieceSet);
 
+					piece_size = Math.Ceiling(piece.GetPieceSize().magnitude / 2.0);
 
-
-
-
-                    // this is circular placement of pieces
-
-                    /*double angle = 2 * Math.PI / (Math.Pow(dim, 2));
-                    double angle_triangle = (Math.PI / 2.0 - angle / 2.0f);
-                    double piece_size = Math.Ceiling(piece.GetPieceSize().magnitude / 2.0);
-                    double radius = Math.Ceiling((piece_size - Math.Sin(angle_triangle) * piece_size) / Math.Sin(angle_triangle));
-                    Debug.Log("Angle: " + angle * Mathf.Rad2Deg);
-                    Debug.Log("Size of the piece: " + piece_size);
-                    Debug.Log("Radius: " + radius);
-
-                    Debug.Log("Setting piece position.");
-
-                    piece.SetGameObjectPosition(new Vector3((float)((radius + piece_size) * Math.Cos(angle * piece.id)),
-                                                            (float)((radius + piece_size) * Math.Sin(angle * piece.id)),
-                                                            0.0f));
-                    
-                    //Debug.Log("position set.");*/
-                    
-                    /*int x1 = random.Next(dim);
-                    //does not work with while loop
-                    // while (y[y1])
-                    for (int k = 0; k <= dim; k++)
-                    {
-                        if (x[x1])
-                        {
-                            x1++;
-                            if (x1 >= dim)
-                            {
-                                x1 = 0;
-                            }
-                        }
-                        else
-                        {
-                            x[x1] = true;
-                            break;
-                        }
-                    }
-
-                    int y1 = random.Next(dim);
-
-                    for (int k = 0; k <= dim; k++)
-                    {
-                        if (y[y1])
-                        {
-                            y1++;
-                            if (y1 >= dim)
-                            {
-                                y1 = 0;
-                            }
-                        }
-                        else
-                        {
-                            y[y1] = true;
-                            break;
-                        }
-                    }
-                    */
-                    double piece_size = Math.Ceiling(piece.GetPieceSize().magnitude / 2.0);
-                    piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
-                                                            2 * j * (float)piece_size,
-                                                            0.0f));
+                   // piece.SetGameObjectPosition(new Vector3(2 * i * (float)piece_size,
+                   //                                         2 * j * (float)piece_size,
+                   //                                         0.0f));
                 }
                 // placement in grid
-                //placePuzzlePieces();
+                placePuzzlePieces();
 
             }
             Debug.Log("Updating camera position.");
@@ -251,8 +199,8 @@ namespace Puzzle
                 }
             }
 
-            Camera.main.transform.position = new Vector3((min_x + max_x) / 2, (min_y + max_y) / 2, 2);
-            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 1;
+            Camera.main.transform.position = new Vector3((min_x + max_x) / 2 - 10, (min_y + max_y) / 2, -10);
+            Camera.main.orthographicSize = Math.Max(max_x - min_x, max_y - min_y) / 2 + 3;
         }
 
         private bool CheckVictory()
@@ -264,15 +212,18 @@ namespace Puzzle
         void Update()
         {
             updateOrthographicCameraPosition();
-            if (CheckVictory())
+            if (CheckVictory() && !gameWon)
             {
+				gameWon = true;
                 PuzzleStatistics.StopMeasuringTime();
-                Application.LoadLevel("PuzzleVictory");
+                //Application.LoadLevel("PuzzleVictory");
+
+				EndGame();
             }
         }
 
 
-        public void CheckPossibleConnection(GameObject puzzleObject)
+        public bool CheckPossibleConnection(GameObject puzzleObject)
         {
             // distance, in which two pieces will be connected.
             const int diff = 5;
@@ -332,12 +283,6 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
@@ -371,12 +316,6 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
@@ -410,16 +349,9 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
-
                         }
 
                         // CHECK OTHER ON RIGHT OF MINE
@@ -449,23 +381,11 @@ namespace Puzzle
                                     }
                                 }
 
-
-                                // seems like it does not work
-                                //my_component_object.transform.parent = other_component_object.transform;
-                                //other_component_object.transform.parent = my_component_object.transform;
-
-                                //components_connected = true;
                                 toConnect.Add(other_component);
                                 continue;
                             }
                         }
                     }
-                    //if (components_connected)
-                    //{
-                    //    my_component.UnionWith(other_component);
-                    //    connected_components.Remove(other_component);
-                    //    components_connected = false;
-                    //}
                 }
             }
             if (toConnect.Count > 0)
@@ -477,61 +397,143 @@ namespace Puzzle
                     connectedComponents.Remove(set);
                 }
                 toConnect.Clear();
+				return true;
             }
-            else PuzzleStatistics.RegisterClickWithoutConnection();
+            else 
+			{
+				PuzzleStatistics.RegisterClickWithoutConnection();
+				return false;
+			}
         }
 
         // did not work, do not know why... 
         private void placePuzzlePieces()
         {
-
             int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
-            Debug.Log("Dim: " + dim);
-            Debug.Log("numberPieces: " + numberPieces);
-            GameObject[] objects = new GameObject[numberPieces];
-            Debug.Log("objects size: " + objects.Length);
-            System.Random random = new System.Random();
+            
+			System.Random random = new System.Random();
 
-            Debug.Log("pieces values count: " + pieces.Values.Count);
+			bool[] occupied = new bool[numberPieces];
 
             foreach (PuzzlePiece piece in pieces.Values)
             {
                 int pos = random.Next(numberPieces);
-                Debug.Log("generated pos: " + pos);
-                while (objects[pos] != null)
+                
+                while (occupied[pos])
                 {
                     pos++;
                     if (pos >= numberPieces)
                     {
                         pos = 0;
                     }
-                    Debug.Log("pos updated: " + pos);
                 }
-                Debug.Log("pos: ");
-                objects[pos] = piece.gameObject;
-                Debug.Log("number pieces: " + pos);
-
-            }
-
-            for (int i = 0; i < numberPieces; i++)
-            {
-                Debug.Log("for loop: " + i);
-
-                int x = i / dim;
-                int y = i % dim;
-
-                Debug.Log("(x,y) = (" + x + ", " + y + ")");
-
-
-                // suppose that pieces are squared all of the same size
-                //float size = objects[i].renderer.bounds.size.x;
-
-                objects[i].transform.position = new Vector3(2 * x * CELL_SIZE,// - (Screen.width / 2),
-                                                            2 * y * CELL_SIZE,// - (Screen.height / 2),
-                                                            0);
-
-                Debug.Log("trans. set");
+                occupied[pos] = true;
+				float pieceSize = (float)Math.Ceiling(piece.GetPieceSize().magnitude / 2.0f);
+				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,// - (Screen.width / 2),
+				                                                  2 * (pos % dim) * pieceSize,// - (Screen.height / 2),
+				                                            0);
             }
         }
+
+
+		public float GetMinPiecePositionX(GameObject excludeComponent = null)
+		{
+			float min = float.MaxValue;
+			foreach(HashSet<GameObject> component in connectedComponents)
+			{
+				if(component.Contains(excludeComponent))
+				{
+					continue;
+				}
+				else
+				{
+					foreach(GameObject piece in component)
+					{
+						if(piece.transform.position.x < min)
+						{
+							min = piece.gameObject.transform.position.x;
+						}
+					}
+				}
+			}
+			return min;
+		}
+
+		public float GetMaxPiecePositionX(GameObject excludeComponent = null)
+		{
+			float max = float.MinValue;
+			foreach(HashSet<GameObject> component in connectedComponents)
+			{
+				if(component.Contains(excludeComponent))
+				{
+					continue;
+				}
+				else
+				{
+					foreach(GameObject piece in component)
+					{
+						if(piece.transform.position.x > max)
+						{
+							max = piece.gameObject.transform.position.x;
+						}
+					}
+				}
+			}
+			return max;
+		}
+
+		public float GetMinPiecePositionY(GameObject excludeComponent = null)
+		{
+			float min = float.MaxValue;
+			foreach(HashSet<GameObject> component in connectedComponents)
+			{
+				if(component.Contains(excludeComponent))
+				{
+					continue;
+				}
+				else
+				{
+					foreach(GameObject piece in component)
+					{
+						if(piece.transform.position.y < min)
+						{
+							min = piece.gameObject.transform.position.y;
+						}
+					}
+				}
+			}
+			return min;
+		}
+
+		public float GetMaxPiecePositionY(GameObject excludeComponent = null)
+		{
+			float max = float.MinValue;
+			foreach(HashSet<GameObject> component in connectedComponents)
+			{
+				if(component.Contains(excludeComponent))
+				{
+					continue;
+				}
+				else
+				{
+					foreach(GameObject piece in component)
+					{
+						if(piece.gameObject.transform.position.y > max)
+						{
+							max = piece.transform.position.y;
+						}
+					}
+				}
+			}
+			return max;
+		}
+
+		private void EndGame()
+		{
+			//animate Neuron
+			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+			
+			MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+		}
     }
 }

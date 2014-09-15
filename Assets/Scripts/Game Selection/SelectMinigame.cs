@@ -57,7 +57,7 @@ namespace MinigameSelection
 				//this.gameObject.SetActive(false);
 			}
 
-			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
+/*			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
 			{
 				OnSelection = true;
 				LevelManager.minigameOnSelection = this.gameObject;
@@ -65,7 +65,7 @@ namespace MinigameSelection
 				MGC.Instance.selectedMinigame = Vector3.zero;
 				//Camera.main.GetComponent<CameraDefaultPosition
 			}
-		}
+*/		}
 
 		void Update()
 		{
@@ -136,7 +136,7 @@ namespace MinigameSelection
 				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
 				if(minigameHelp && GameObject.Find("Neuron"))
 					GameObject.Find("Neuron").GetComponent<BrainHelp>().helpTexture = minigameHelp;
-				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
+				//MGC.Instance.currentCameraDefaultPosition = CameraZoom;
                 MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 				MGC.Instance.selectedMinigame = this.gameObject.transform.position;
                 MGC.Instance.sceneLoader.LoadScene(minigameName);

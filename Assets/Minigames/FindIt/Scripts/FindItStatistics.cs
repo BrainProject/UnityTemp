@@ -2,9 +2,12 @@
 using System.Timers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
+
 
 namespace FindIt
 {
+
     public static class FindItStatistics //: MonoBehaviour
     {
        // private static Timer timer = new Timer();
@@ -16,7 +19,7 @@ namespace FindIt
         private static Stopwatch gameStopwatch = new Stopwatch();
 
         // last stopwath value when the time was read
-        private static double lastTimeRecord = 0;
+        private static long lastTimeRecord = 0;
 
         public static ulong gameTime
         {
@@ -96,10 +99,6 @@ namespace FindIt
             gameStopwatch.Stop();
             gameStopwatch.Reset();
 
-
-
-
-
             FindItStatistics.gameTime = 0;
 
            /* timer = new Timer();
@@ -109,7 +108,7 @@ namespace FindIt
 
         public static void RecordLeftGoodClick()
         {
-            double actualTime = gameStopwatch.ElapsedMilliseconds;
+            long actualTime = gameStopwatch.ElapsedMilliseconds;
 
             goodClicksLeft++;
             turnsPassed++;
@@ -120,7 +119,7 @@ namespace FindIt
 
         public static void RecordRightGoodClick()
         {
-            double actualTime = gameStopwatch.ElapsedMilliseconds;
+            long actualTime = gameStopwatch.ElapsedMilliseconds;
             turnsPassed++;
             goodClicksRight++;
             findTimesRight.Add(actualTime - lastTimeRecord);
@@ -154,5 +153,32 @@ namespace FindIt
         {
             gameTime++;
         }
+
+		public static double GetAverageClickFindTimeLeft()
+		{
+			double sum = 0;
+			foreach(double time in findTimesLeft)
+				sum += time;
+			return Math.Round(sum / findTimesLeft.Count / 1000,3);
+		}
+
+		public static double GetAverageClickFindTimeRight()
+		{
+			double sum = 0;
+			foreach(double time in findTimesRight)
+				sum += time;
+
+			return Math.Round(sum / findTimesRight.Count / 1000,3);
+		}
+
+		public static double GetAverageClickFindTimeTotal()
+		{
+			double sum = 0;
+			foreach(double time in findTimesLeft)
+				sum += time;
+			foreach(double time in findTimesRight)
+				sum += time;
+			return Math.Round(sum / (findTimesLeft.Count + findTimesRight.Count) / 1000,3);
+		}
     }
 }

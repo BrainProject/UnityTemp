@@ -278,6 +278,9 @@ namespace MinigamePexeso
             //to avoid calling this method more than once
             winningScore = -1;
 
+            //animate Neuron
+            MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+
             //stop game music and play wictory sound
             AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
             musicPlayer.Stop();
@@ -286,13 +289,15 @@ namespace MinigamePexeso
             //game ends here, show scoreboard...
             gameEndTime = Time.time;
 
+            MGC.Instance.minigamesGUI.show(true);
+
 			/*scoreb.SetActive (true);
             Scoreboard scoreboard = scoreb.GetComponent<Scoreboard>() as Scoreboard;
 			scoreboard.correct.text = correctPairsDisplay.text;
 			scoreboard.wrong.text = wrongPairsDisplay.text;
             scoreboard.time.text = (gameEndTime - gameStartTime).ToString();*/
 
-            StartCoroutine(RestartGame());
+            //StartCoroutine(RestartGame());
         }
 
 	    /// <summary>
