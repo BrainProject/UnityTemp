@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lastPosition = transform.position;
-		var rotation = transform.rotation;
+//		var rotation = transform.rotation;
 		addParent();
 		transform.localPosition = Vector3.zero;
 		transform.rotation = Quaternion.LookRotation(Vector3.up);

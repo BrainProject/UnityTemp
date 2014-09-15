@@ -3,11 +3,12 @@ using System.Collections;
 using Kinect;
 
 public class KinectManagerSwitcher : MonoBehaviour {
-	public GameObject thisLevelKManager;
-	GameObject defaultKManager;
+	public static GameObject thisLevelKManager;
+	public static GameObject defaultKManager;
 	// Use this for initialization
 	void Awake () {
-		//defaultKManager = MGC.Instance.kinectManager;
+		setThisLevelManager();
+		defaultKManager = MGC.Instance.kinectManager;
 		activateThisLevelKManager();
 	}
 	
@@ -16,34 +17,55 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	
 	}
 
-	void activateThisLevelKManager()
-	{ 
-		if(defaultKManager)
+	void setThisLevelManager()
+	{
+		GameObject kinectObj = GameObject.FindGameObjectWithTag("GameController");
+		if(kinectObj)
 		{
-			defaultKManager.SetActive(false);
+			thisLevelKManager = kinectObj;
+			/*KinectManager kinectMan = kinectObj.GetComponentInChildren<KinectManager>();
+			if(kinectMan)
+			{
+				thisLevelKManager = kinectMan;
+			}*/
 		}
+	}
+
+	void activateThisLevelKManager()
+	{ 	
+		setActiveMGC(false);
+		
 		if(thisLevelKManager)
 		{
 			thisLevelKManager.SetActive(true);
 		}
 		else
 		{
-			if(defaultKManager)
-			{
-				defaultKManager.SetActive(true);
-			}
+			setActiveMGC(true);
 		}
 	}
 
-	public void deactivateThisLevelKManager()
+	public static void setActiveMGC(bool active)
+	{
+		if(defaultKManager)
+			defaultKManager.SetActive(active);
+		if(MGC.Instance.mouseCursor)
+			MGC.Instance.mouseCursor.SetActive(active);
+	}
+
+
+
+	public static void deactivateThisLevelKManager()
 	{
 		if(thisLevelKManager)
 		{
 			thisLevelKManager.SetActive(false);
 		}
-		if(defaultKManager)
-		{
-			defaultKManager.SetActive(true);
-		}
+		setActiveMGC(true);
+	}
+
+	public void OnDestroy()
+	{
+		deactivateThisLevelKManager();
 	}
 }

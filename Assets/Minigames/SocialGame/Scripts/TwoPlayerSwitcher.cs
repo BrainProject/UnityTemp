@@ -3,11 +3,13 @@ using System.Collections;
 using Kinect;
 
 
+namespace SocialGame{
 public class TwoPlayerSwitcher : MonoBehaviour {
 	KinectManager KManager;
 	public bool TwoPlayer;
 	public SkinnedMeshRenderer player2;
 	public Animator animPlayer2;
+	public Check button;
 	// Use this for initialization
 	void Start () {
 		GameObject temp = GameObject.FindWithTag("GameController");
@@ -19,8 +21,8 @@ public class TwoPlayerSwitcher : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(KManager.GetPlayer2ID());
-		if(KManager.GetPlayer2ID() != 0)
+		//Debug.Log(KManager.GetPlayer2ID());
+		if(KManager && KManager.GetPlayer2ID() != 0)
 		{
 			if(!TwoPlayer)
 			{
@@ -49,6 +51,10 @@ public class TwoPlayerSwitcher : MonoBehaviour {
 		TwoPlayer = true;
 		animPlayer2.SetBool("TwoPlayers",true);
 		player2.enabled = true;
+		if(SocialGame.LevelManager.gameSelected == 0 && button)
+		{
+				button.activate();
+		}
 	}
 
 	public void Deactivate2player()
@@ -56,5 +62,10 @@ public class TwoPlayerSwitcher : MonoBehaviour {
 		TwoPlayer = false;
 		animPlayer2.SetBool("TwoPlayers",false);
 		player2.enabled = false;
+		if(SocialGame.LevelManager.gameSelected == 0 && button)
+		{
+				button.deactivate();
+		}
 	}
+}
 }

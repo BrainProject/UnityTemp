@@ -4,24 +4,26 @@ using System.Collections.Generic;
 
 namespace SocialGame
 {
-public class GestChecker : MonoBehaviour {
-	public float distance;
-	public GameObject next;
-	public string clipBone;
-	public bool handMode = true;
-	public bool player1;
-	public bool player2;
-	private Vector3 temp;
-	public Kinect.KinectManager KManager;
-	// Use this for initialization
-	void Start () {
-		GameObject temp = GameObject.FindWithTag("GameController");
-		if(temp != null)
-		{
-			KManager = temp.GetComponent<Kinect.KinectManager>();
-		}
-		if(handMode)
-		{
+	public class GestChecker : MonoBehaviour {
+		public float distance;
+		public GameObject next;
+		public string clipBone;
+		public bool handMode = true;
+		public bool player1;
+		public bool player2;
+		public bool destroy = true;
+		public bool finish = true;
+		private Vector3 temp;
+		public Kinect.KinectManager KManager;
+		// Use this for initialization
+		void Start () {
+			GameObject temp = GameObject.FindWithTag("GameController");
+			if(temp != null)
+			{
+				KManager = temp.GetComponent<Kinect.KinectManager>();
+			}
+			if(handMode)
+			{
 				List<Transform> Targets = new List<Transform>();
 				if(player1 && KManager)
 				{
@@ -88,7 +90,7 @@ public class GestChecker : MonoBehaviour {
 		{
 			Transform child = transform.GetChild(i);
 			Check script = child.GetComponent<Check>();
-			if(script  && script.active)
+			if(script  && script.activated)
 			{
 				Transform[] targets = script.target;
 				foreach(Transform target in targets)
@@ -96,7 +98,7 @@ public class GestChecker : MonoBehaviour {
 					bool next = Vector2.Distance(child.position,target.position) < distance;
 					if(next)
 					{
-						complete = script.Checked();
+						complete = script.Checked(target);
 						Debug.DrawRay(target.position,child.position - target.position,Color.green);
 						break;
 					}
@@ -113,9 +115,34 @@ public class GestChecker : MonoBehaviour {
 			{
 				GameObject.Instantiate(this.next);
 			}
-			Destroy(gameObject);
+			if(finish && (next== null))
+			{
+					Debug.Log("blbnu " + gameObject.name);
+					finishHim();
+			}
+			if(destroy)
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
+
+
+		void finishHim()
+		{
+			GameObject root = gameObject.transform.root.gameObject;
+			if(!transform.parent)
+			{
+				FinalCount script = root.GetComponent<FinalCount>();
+				if(script)
+				{
+					script.next();
+					return;
+				}
+			}
+			LevelManager.finish();
+
+		}
 
 	void MoveParentOnBone(string boneName)
 	{

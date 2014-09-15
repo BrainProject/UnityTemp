@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 public class CheckDestroy : Check {
+	public GameObject obj;
 
 	/*// Use this for initialization
 	void Start () {
@@ -16,7 +17,11 @@ public class CheckDestroy : Check {
 
 	public override void thisActivate()
 	{
-		GameObject.Destroy(gameObject);
+			if(obj)
+			{
+				GameObject.Instantiate(obj,transform.position,Quaternion.identity);
+			}
+			GameObject.Destroy(gameObject);
 	}
 }
 }

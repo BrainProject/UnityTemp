@@ -319,7 +319,7 @@ public class MGC : Singleton<MGC>
 	{
 		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
 		mouseCursor.guiTexture.enabled = false;
-		mouseCursor.transform.parent = this.transform;
+		mouseCursor.transform.parent = kinectManager.transform;
 	}
 
 	void ResetGameStatus()
