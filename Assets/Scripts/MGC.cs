@@ -185,6 +185,8 @@ public class MGC : Singleton<MGC>
 
 	void OnLevelWasLoaded (int level)
 	{
+		inactivityTimestamp = Time.time;
+		inactivityCounter = 0;
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
 		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
@@ -335,12 +337,21 @@ public class MGC : Singleton<MGC>
 		foreach(Minigame minigameData in this.GetComponent<MinigameStates>().minigames)
 		{
 			minigameData.played = false;
+			minigameData.initialShowHelpCounter = 0;
 		}
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
+	}
+
+	public void ShowHelpBubble()
+	{
+		if(neuronHelp)
+		{
+			neuronHelp.GetComponent<BrainHelp>().ShowHelpBubble();
+		}
 	}
 
 

@@ -31,7 +31,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		}
 	}
 
-	void activateThisLevelKManager()
+	public static void activateThisLevelKManager()
 	{ 	
 		setActiveMGC(false);
 		
