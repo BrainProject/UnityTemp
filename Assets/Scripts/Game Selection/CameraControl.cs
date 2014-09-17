@@ -113,6 +113,7 @@ namespace MinigameSelection
 //				movingLeft = false;
 //				movingRight = false;
 //			}
+			/*
 			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
 			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
 			{
@@ -143,7 +144,7 @@ namespace MinigameSelection
 				targetWaypoint = GameObject.Find ("CerebellumPos");
 				FindShorterDirectionToWaypoint();
 				SetNewTarget();
-			}
+			}*/
 		}
 
 		public void BackToMain()
