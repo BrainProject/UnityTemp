@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 public class OnDestroyDestroy : MonoBehaviour {
 
 	public int game;
@@ -20,3 +21,4 @@ public class OnDestroyDestroy : MonoBehaviour {
 		}
 	}
 }
+#endif

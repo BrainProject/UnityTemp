@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_STANDALONE
 using Kinect;
 
 
@@ -74,3 +75,4 @@ namespace SocialGame{
 		}
 	}
 }
+#endif

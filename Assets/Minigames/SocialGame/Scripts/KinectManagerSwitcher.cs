@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_STANDALONE
 using Kinect;
+
 
 public class KinectManagerSwitcher : MonoBehaviour {
 	public static GameObject thisLevelKManager;
@@ -72,3 +74,4 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		deactivateThisLevelKManager();
 	}*/
 }
+#endif

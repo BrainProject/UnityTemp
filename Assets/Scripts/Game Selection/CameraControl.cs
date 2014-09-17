@@ -40,7 +40,7 @@ namespace MinigameSelection
 			#if UNITY_STANDALONE
 			if(Input.GetButtonDown("Horizontal") && Input.GetMouseButton(0))
 			#else
-			if(Input.GetButtonDown("Horizontal))
+			if(Input.GetButtonDown("Horizontal"))
 			#endif
 			{
 				if(Input.GetAxis("Horizontal") < 0 && !movingLeft)

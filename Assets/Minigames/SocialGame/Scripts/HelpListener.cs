@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 public class HelpListener : MonoBehaviour {
 	public bool activated = false;
 
@@ -46,3 +47,4 @@ public class HelpListener : MonoBehaviour {
 		}
 	}
 }
+#endif

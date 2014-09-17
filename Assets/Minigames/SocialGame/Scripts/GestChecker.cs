@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace SocialGame
 {
 	public class GestChecker : MonoBehaviour {
@@ -158,3 +159,4 @@ namespace SocialGame
 	}
 }
 }
+#endif

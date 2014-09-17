@@ -121,7 +121,7 @@ public class MGC : Singleton<MGC>
 	{
 		inactivityTimestamp = Time.time;
 		#if UNITY_WEBPLAYER
-		inacivityScene = "HanoiTowers";
+		inactivityScene = "HanoiTowers";
 		#endif
 	}
 
