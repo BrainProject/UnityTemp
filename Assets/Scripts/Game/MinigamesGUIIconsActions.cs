@@ -15,6 +15,10 @@ namespace Game
 		private bool restartDifferentScene = false;
 		private string differentSceneName;
 
+        public void resetState()
+        {
+            renderer.material.mainTexture = texture_normal;
+        }
 
         void OnMouseOver()
         {
@@ -23,7 +27,7 @@ namespace Game
 
         void OnMouseExit()
         {
-            renderer.material.mainTexture = texture_normal;
+            resetState();
         }
 
         void OnMouseDown()
