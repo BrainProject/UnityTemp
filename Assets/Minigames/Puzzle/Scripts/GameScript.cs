@@ -431,7 +431,7 @@ namespace Puzzle
 				float pieceSize = (float)Math.Ceiling(piece.GetPieceSize().magnitude / 2.0f);
 				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,// - (Screen.width / 2),
 				                                                  2 * (pos % dim) * pieceSize,// - (Screen.height / 2),
-				                                            0);
+				                                            1);
             }
         }
 
