@@ -8,7 +8,9 @@ namespace MinigamePexeso
 {
 	public class GameScript : MonoBehaviour 
     {
-        /// <summary>
+		public bool enableSound;
+
+		// <summary>
         /// How long to wait before non-matching tiles are flipped back
         /// </summary>
         private float observationTime = 0.5f;
@@ -279,9 +281,12 @@ namespace MinigamePexeso
             winningScore = -1;
 
             //stop game music and play wictory sound
-            AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
-            musicPlayer.Stop();
-            this.gameObject.audio.Play();
+			if (enableSound)
+			{
+				AudioSource musicPlayer = GameObject.Find ("MusicPlayer").GetComponent ("AudioSource") as AudioSource;
+				musicPlayer.Stop ();
+				this.gameObject.audio.Play ();
+			}
 
             //game ends here, show scoreboard...
             gameEndTime = Time.time;

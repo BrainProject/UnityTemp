@@ -154,12 +154,15 @@ namespace MinigamePexeso
                 mainGameScript.enabled = true;
                 mainGameScript.CreateGameBoard();
 
-                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
-                if (musicPlayer == null)
-                {
-                    Debug.Log("ERROR");
-                }
-                musicPlayer.Play();
+				if(mainGameScript.enableSound)
+				{
+	                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+	                if (musicPlayer == null)
+	                {
+	                    Debug.Log("ERROR");
+	                }
+	                musicPlayer.Play();
+				}
             }
             else
             {
