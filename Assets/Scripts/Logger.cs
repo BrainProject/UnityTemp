@@ -24,7 +24,7 @@ public class Logger : MonoBehaviour
     private StreamWriter logfile;
 
     // in case of web build, logger can't be use, so there are only empty method definitions
-    #if UNITY_WEBPLAYER
+	#if UNITY_WEBPLAYER || UNITY_ANDROID
         
         public void Initialize(string path, string filename)
         {
