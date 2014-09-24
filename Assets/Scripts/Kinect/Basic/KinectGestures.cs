@@ -588,11 +588,11 @@ namespace Kinect {
 								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
 									//Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
 									Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < -0.55f :
+									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < -0.25f :
 									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
 									//Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
 									Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < -0.55f;
+									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < -0.25f;
 							
 							if(isInPose)
 							{
@@ -701,11 +701,11 @@ namespace Kinect {
 								jointsTracked[rightHandIndex] && jointsTracked[rightElbowIndex] &&
 									//Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
 									Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) > 0.55f :
+									(jointsPos[rightHandIndex].x - gestureData.jointPos.x) > 0.25f :
 									jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
 									//Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
 									Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.08f && 
-									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) > 0.55f;
+									(jointsPos[leftHandIndex].x - gestureData.jointPos.x) > 0.25f;
 							
 							if(isInPose)
 							{
