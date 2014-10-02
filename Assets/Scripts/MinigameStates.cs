@@ -11,13 +11,26 @@ namespace Game
 	[System.Serializable]
 	public class Minigame
 	{
-		internal string minigameName;
+		public string initialScene;
+		public string sceneWithHelp;
 		internal bool played;
+		internal int initialShowHelpCounter;
+		//internal List<string> scenes = new List<string>();
 
 		public Minigame(string minigameName)
 		{
-			this.minigameName = minigameName;
+			this.initialScene = minigameName;
+			this.sceneWithHelp = minigameName;
 			played = false;
+			initialShowHelpCounter = 0;
+		}
+
+		public Minigame(string minigameName, string sceneWithHelp)
+		{
+			this.initialScene = minigameName;
+			this.sceneWithHelp = sceneWithHelp;
+			played = false;
+			initialShowHelpCounter = 0;
 		}
 	}
 
@@ -27,7 +40,7 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		internal List<Minigame> minigames = new List<Minigame>();
+		public List<Minigame> minigames = new List<Minigame>();
 
 		void Start()
 		{
@@ -36,34 +49,70 @@ namespace Game
 			minigames.Add (hanoi);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
-			Minigame similarities = new Minigame ("Similaries");
+			Minigame similarities = new Minigame ("Similarities");
 			minigames.Add (similarities);
 			Minigame silhouette = new Minigame ("Silhouettes");
 			minigames.Add (silhouette);
-			Minigame puzzle = new Minigame ("Puzzle");
+			Minigame puzzle = new Minigame ("PuzzleChoosePicture", "PuzzleGame");
 			minigames.Add (puzzle);
+			Minigame coloring = new Minigame ("Coloring");
+			minigames.Add (coloring);
+			Minigame socialGame = new Minigame ("SocialGame");
+			minigames.Add (socialGame);
+			Minigame findIt = new Minigame ("FindIt", "FindItGame");
+			minigames.Add (findIt);
+
+			MGC.Instance.LoadGame ();
 		}
 		
 		public void SetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
 			{
-				if(game.minigameName == minigameName)
+				if(game.sceneWithHelp == minigameName)
 				{
 					game.played = true;
 					break;
 				}
 			}
+
+			MGC.Instance.SaveGame ();
 		}
 
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-			if(game.minigameName == minigameName)
-			{
-				return game.played;
-			}
+				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+					return game.played;
 			return false;
 		}
+
+		public Minigame GetMinigame(string minigameName)
+		{
+			foreach(Minigame game in minigames)
+				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+					return game;
+			return null;
+		}
+
+		public List<string> GetMinigamesWithHelp()
+		{
+			List <string> minigamesWithHelp = new List<string> ();
+			foreach(Minigame game in minigames)
+				minigamesWithHelp.Add(game.sceneWithHelp);
+			return minigamesWithHelp;
+		}
+
+//		public void IncreaseHelpShowCounter(string minigameName)
+//		{
+//			foreach(Minigame game in minigames)
+//			{
+//				if(game.sceneWithHelp == minigameName)
+//				{
+//					++game.initialShowHelpCounter;
+//					break;
+//				}
+//			}
+//		}
 	}
 }

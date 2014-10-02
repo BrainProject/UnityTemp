@@ -10,7 +10,8 @@ namespace Puzzle
         void OnMouseDown()
         {
             PlayerPrefs.SetInt("size", size);
-            Application.LoadLevel("Game");
+            PuzzleStatistics.numberPieces = size;
+            Application.LoadLevel("PuzzleGame");
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Puzzle
         void OnMouseDown()
         {
             PlayerPrefs.SetString("Image", gameObject.renderer.material.mainTexture.name);
-            Application.LoadLevel("Puzzle");
+            PuzzleStatistics.pictureName = gameObject.renderer.material.mainTexture.name;
+            Application.LoadLevel("PuzzleChooseDifficulty");
         }
     }
 }

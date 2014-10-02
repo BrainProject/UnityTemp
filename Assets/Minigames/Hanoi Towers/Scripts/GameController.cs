@@ -14,10 +14,8 @@ namespace HanoiTowers
     public class GameController : MonoBehaviour
     {
 
-        //TODO HUD - score, ...
-        //TODO proper initialization
+        //TODO proper initialization - ??
         //TODO better graphics
-
 
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
@@ -36,9 +34,8 @@ namespace HanoiTowers
         public GameObject[] columns;
         public GameObject[] disks;
         public GameObject ceilingObject;
-        public GUIText winText;
 
-
+        public GameObject endGameGUI;
 
         private Column startingColumn;
         private Column endingColumn;
@@ -47,6 +44,8 @@ namespace HanoiTowers
         private Disk waitingForTarget;
 
         private float gameStartTime;
+
+        private bool showEndGameGUI = false;
         void Start()
         {
             //set up columns
@@ -64,13 +63,14 @@ namespace HanoiTowers
 
             ResetGame();
 
-
             //QualitySettings.antiAliasing = 4;
-
         }
 
         public void ResetGame()
         {
+            //TODO temporary hack
+            numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
+
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 
             //reset columns
@@ -104,7 +104,6 @@ namespace HanoiTowers
 
             score = 0;
             gameStartTime = Time.time;
-            winText.enabled = false;
         }
 
         public void increaseScore()
@@ -116,7 +115,6 @@ namespace HanoiTowers
         public float getCeilingPosition()
         {
             return ceilingObject.transform.position.y + ceilingObject.transform.localScale.y;
-
         }
 
         public int getScore()
@@ -151,6 +149,36 @@ namespace HanoiTowers
         }
 
 
+        public void endGame()
+        {
+            //animate Neuron
+            MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+
+            //global GUI
+            MGC.Instance.minigamesGUI.show(true);
+
+            //mini-game specific gui
+            endGameGUI.SetActive(true);
+            showEndGameGUI = true;
+
+
+        }
+
+
+        
+        void OnGUI()
+        {
+            if (showEndGameGUI)
+            {
+                float w = Screen.width;
+                float h = Screen.height;
+
+                numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
+                
+                //TODO temporary hack - solve by implementing mini-game statistics saving
+                MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
+            }
+        }
     }
 
 }

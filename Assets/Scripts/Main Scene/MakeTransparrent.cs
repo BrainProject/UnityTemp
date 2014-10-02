@@ -9,7 +9,8 @@ namespace MainScene
 {
 	public class MakeTransparrent : MonoBehaviour 
     {
-        float transparencyDelayTime = 0f;
+        //float transparencyDelayTime = 0f;
+        public float alpha = 0.3f;
 
 		private bool clicked;
 		private bool fading;
@@ -23,7 +24,7 @@ namespace MainScene
 			fading = false;
 			originalColor = this.renderer.material.color;
 			targetColor = this.renderer.material.color;
-			targetColor.a = 0.2f;
+			targetColor.a = alpha;
             if (MGC.Instance.fromSelection)
 			{
 				this.renderer.material.color = targetColor;
@@ -38,14 +39,14 @@ namespace MainScene
 		
 		void Update () 
         {
-			if((Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1")) && !clicked)
+			if((Input.GetButtonDown ("Vertical") || Input.GetButtonDown ("Fire1") || Mathf.RoundToInt(Time.timeSinceLevelLoad) == 2) && !clicked)
 			{
 				//fading = true;
 				clicked = true;
 				startTime = Time.time;
 			}
 
-            if (clicked && !fading && ((Time.time - startTime) > transparencyDelayTime) )
+            if (clicked && !fading)
             {
                 fading = true;
                 startTime = Time.time;
