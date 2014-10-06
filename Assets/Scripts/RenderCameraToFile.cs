@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 
+#if UNITY_STANDALONE
 public class RenderCameraToFile : MonoBehaviour 
 {
     public Camera cam;
@@ -46,3 +47,4 @@ public class RenderCameraToFile : MonoBehaviour
         }        
     }
 }
+#endif

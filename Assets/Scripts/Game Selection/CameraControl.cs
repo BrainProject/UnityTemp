@@ -37,7 +37,11 @@ namespace MinigameSelection
 		{
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
+			#if UNITY_STANDALONE
+			if(Input.GetButtonDown("Horizontal") && Input.GetMouseButton(0))
+			#else
 			if(Input.GetButtonDown("Horizontal"))
+			#endif
 			{
 				if(Input.GetAxis("Horizontal") < 0 && !movingLeft)
 				{
@@ -113,6 +117,7 @@ namespace MinigameSelection
 //				movingLeft = false;
 //				movingRight = false;
 //			}
+			/*
 			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
 			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
 			{
@@ -143,7 +148,7 @@ namespace MinigameSelection
 				targetWaypoint = GameObject.Find ("CerebellumPos");
 				FindShorterDirectionToWaypoint();
 				SetNewTarget();
-			}
+			}*/
 		}
 
 		public void BackToMain()

@@ -6,9 +6,9 @@ namespace Game
 {
     public class MinigamesGUI : MonoBehaviour
     {
-        public GameObject rewardIcon;
-
-		public GameObject restartIcon;
+        public MinigamesGUIIconsActions rewardIcon;
+        public MinigamesGUIIconsActions gameSelectionIcon;
+        public MinigamesGUIIconsActions restartIcon;
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -19,8 +19,13 @@ namespace Game
         
 		public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
         {
+            //reset state of all icons
+            rewardIcon.resetState();
+            gameSelectionIcon.resetState();
+            restartIcon.resetState();
+
             gameObject.SetActive(true);
-            rewardIcon.SetActive(showReward);    
+            rewardIcon.gameObject.SetActive(showReward);
 
 			restartIcon.GetComponent<MinigamesGUIIconsActions>().SetRestartDifferentScene(differentRestartScene,differentRestartSceneName);
         }

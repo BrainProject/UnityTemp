@@ -14,6 +14,7 @@ namespace Game
 		public string initialScene;
 		public string sceneWithHelp;
 		internal bool played;
+		internal int initialShowHelpCounter;
 		//internal List<string> scenes = new List<string>();
 
 		public Minigame(string minigameName)
@@ -21,6 +22,7 @@ namespace Game
 			this.initialScene = minigameName;
 			this.sceneWithHelp = minigameName;
 			played = false;
+			initialShowHelpCounter = 0;
 		}
 
 		public Minigame(string minigameName, string sceneWithHelp)
@@ -28,6 +30,7 @@ namespace Game
 			this.initialScene = minigameName;
 			this.sceneWithHelp = sceneWithHelp;
 			played = false;
+			initialShowHelpCounter = 0;
 		}
 	}
 
@@ -79,11 +82,17 @@ namespace Game
 		public bool GetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
-			if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
-			{
-				return game.played;
-			}
+				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+					return game.played;
 			return false;
+		}
+
+		public Minigame GetMinigame(string minigameName)
+		{
+			foreach(Minigame game in minigames)
+				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+					return game;
+			return null;
 		}
 
 		public List<string> GetMinigamesWithHelp()
@@ -94,16 +103,16 @@ namespace Game
 			return minigamesWithHelp;
 		}
 
-//		public Minigame GetMinigame(string minigameName)
+//		public void IncreaseHelpShowCounter(string minigameName)
 //		{
 //			foreach(Minigame game in minigames)
 //			{
-//				if(game.initialScene == minigameName || game.sceneWithHelp == minigameName)
+//				if(game.sceneWithHelp == minigameName)
 //				{
-//					return game;
+//					++game.initialShowHelpCounter;
+//					break;
 //				}
 //			}
-//			return null;
 //		}
 	}
 }

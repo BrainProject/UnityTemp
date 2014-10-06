@@ -11,12 +11,12 @@ namespace Game
 	public class BrainHelpSettings : MonoBehaviour 
     {
         [Range(0.1f, 1f)]
-        public float helpSize = 0.6f;
+		public float helpSize = 0.6f;
+		public GameObject blockBorder;
 
 		internal GameObject neuronHelp;
 		internal GameObject blockBorderClone;
-		
-		public GameObject blockBorder;
+
 		private Color originalColor;
 		private Color targetColor;
 		private bool canControl;
@@ -38,7 +38,11 @@ namespace Game
 
 		void Update()
 		{
+			#if UNITY_STANDALONE
+			if(Input.GetButtonDown("Horizontal") && Input.GetMouseButton(0) && canControl)
+			#else
 			if(Input.GetButtonDown("Horizontal") && canControl)
+			#endif
 			{
 				neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 				StartCoroutine (MoveAway(Input.GetAxis("Horizontal")));
@@ -46,7 +50,7 @@ namespace Game
 			}
 		}
 
-		void OnMouseDown()
+		void OnMouseUp()
 		{
 			neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 			canControl = false;

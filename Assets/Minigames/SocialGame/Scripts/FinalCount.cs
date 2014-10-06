@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 namespace SocialGame{
 	public class FinalCount : MonoBehaviour {
 
@@ -16,3 +17,4 @@ namespace SocialGame{
 	}
 }
 }
+#endif

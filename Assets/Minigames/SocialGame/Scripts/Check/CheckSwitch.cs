@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 namespace SocialGame{
 public class CheckSwitch : Check {
 
@@ -26,3 +27,4 @@ public class CheckSwitch : Check {
 		}*/
 	}
 }
+#endif

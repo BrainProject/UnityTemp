@@ -152,7 +152,12 @@ namespace HanoiTowers
         public void endGame()
         {
             //animate Neuron
-            MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            
+            GameObject Neuronek = MGC.Instance.neuronHelp;
+            if (Neuronek)
+            {
+                Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            }
 
             //global GUI
             MGC.Instance.minigamesGUI.show(true);

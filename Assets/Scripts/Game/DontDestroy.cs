@@ -5,7 +5,7 @@ namespace Game {
 	public class DontDestroy : MonoBehaviour {
 
 		// Use this for initialization
-		void Start()
+		void Awake()
 		{
 			if(GameObject.Find(this.name) != this.gameObject)
 				Destroy (this.gameObject);
