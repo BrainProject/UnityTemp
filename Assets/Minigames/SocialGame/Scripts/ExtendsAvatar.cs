@@ -4,6 +4,7 @@ using System.Collections;
 using Kinect;
 
 public class ExtendsAvatar : AvatarController {
+	private Vector3 newPos;
 
 	// Use this for initialization
 	/*void Start () {
@@ -14,5 +15,12 @@ public class ExtendsAvatar : AvatarController {
 	void Update () {
 	
 	}*/
+
+	void Update()
+	{
+		newPos = this.transform.position;
+		newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
+		this.transform.position = newPos;
+	}
 }
 #endif
