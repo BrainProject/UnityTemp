@@ -10,14 +10,14 @@ public class Check : MonoBehaviour {
 	public Check[] next;
 	protected Transform finishTarget;
 
-	void Start()
+	protected virtual void Start()
 	{
 		show();
 	}
 
 	public bool Checked(Transform target)
 	{
-		bool last;
+		bool last = false;
 		finishTarget = target;
 		if(next.Length > 0)
 		{
@@ -25,22 +25,20 @@ public class Check : MonoBehaviour {
 			{
 				obj.activate();
 			}
-			last = false;
 		}
 		else
 		{
 			
 			last = true;
 		}
-		activated = false;
-		show ();
 		thisActivate();
 		return last;
 	}
 
 	public virtual void thisActivate()
 	{
-			Debug.Log("jsem normalni.");
+			activated = false;
+			show ();
 	}
 	
 	public void activate()

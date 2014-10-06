@@ -13,6 +13,7 @@ namespace SocialGame
 		public bool player2;
 		public bool destroy = true;
 		public bool finish = true;
+		public bool allChecked = false;
 		private Vector3 temp;
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
@@ -60,72 +61,72 @@ namespace SocialGame
 					}
 				}
 
+				}
+				else
+				{
+					findTartgetByCheckName();
+					if(clipBone != null)
+					{
+						MoveParentOnBone(clipBone);
+					}
+				}
 		}
-		else
-		{
-			for(int i =0; i <transform.childCount; i++)
+
+	
+		// Update is called once per frame
+		void Update () {
+			bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+			for(int i = 0; i< transform.childCount; i++)
 			{
 				Transform child = transform.GetChild(i);
-				string nameGest = child.name;
-				string[] names =nameGest.Split('-');
-				GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
-				Check che =child.GetComponent<Check>();
-				if (che != null)
+				Check script = child.GetComponent<Check>();
+				if(script  && script.activated)
 				{
-						Transform[] targ = new Transform[] {obj.transform};
-						che.target = targ;
-				}
-			}
-			if(clipBone != null)
-			{
-			MoveParentOnBone(clipBone);
-			}
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		bool complete = false;
-		for(int i = 0; i< transform.childCount; i++)
-		{
-			Transform child = transform.GetChild(i);
-			Check script = child.GetComponent<Check>();
-			if(script  && script.activated)
-			{
-				Transform[] targets = script.target;
-				foreach(Transform target in targets)
-				{
-					bool next = Vector2.Distance(child.position,target.position) < distance;
-					if(next)
+					Transform[] targets = script.target;
+					foreach(Transform target in targets)
 					{
-						complete = script.Checked(target);
-						Debug.DrawRay(target.position,child.position - target.position,Color.green);
-						break;
-					}
-					else
-					{
-						Debug.DrawRay(target.position,child.position - target.position,Color.red);
+						bool next = Vector2.Distance(child.position,target.position) < distance;
+						if(next)
+						{
+							if(!allChecked)
+							{
+								complete = script.Checked(target);
+							}
+							else
+							{
+								complete = script.Checked(target) && complete;
+							}
+							Debug.DrawRay(target.position,child.position - target.position,Color.green);
+							break;
+						}	
+						else
+						{
+							if(allChecked)
+							{
+								complete = false;
+							}
+							Debug.DrawRay(target.position,child.position - target.position,Color.red);
+						}
 					}
 				}
 			}
-		}
-		if(complete)
-		{
-			if(next)
+			if(complete)
 			{
-				GameObject.Instantiate(this.next);
-			}
-			if(finish && (next== null))
-			{
+				if(next)
+				{
+					GameObject.Instantiate(this.next);
+				}
+				if(finish && (next== null))
+				{
 					Debug.Log("blbnu " + gameObject.name);
 					finishHim();
-			}
-			if(destroy)
-			{
-				Destroy(gameObject);
+				}
+				if(destroy)
+				{
+					Destroy(gameObject);
+				}
 			}
 		}
-	}
 
 
 		void finishHim()
@@ -143,18 +144,36 @@ namespace SocialGame
 			LevelManager.finish();
 
 		}
+	
 
-	void MoveParentOnBone(string boneName)
-	{
-		GameObject bone = GameObjectEx.findGameObjectWithNameTag(boneName,gameObject.tag);
-		if(bone != null)
+		public void MoveParentOnBone(string boneName)
 		{
-			Vector3 pos =transform.position;
-			Quaternion rot = transform.rotation;
-			gameObject.transform.parent= bone.transform;
-			transform.localPosition = Vector3.zero + pos;
-			transform.localRotation = rot;
+			GameObject bone = GameObjectEx.findGameObjectWithNameTag(boneName,gameObject.tag);
+			if(bone != null)
+			{
+				Vector3 pos =transform.position;
+				Quaternion rot = transform.rotation;
+				gameObject.transform.parent= bone.transform;
+				transform.localPosition = Vector3.zero + pos;
+				transform.localRotation = rot;
+			}
+		}
+
+		public void findTartgetByCheckName()
+		{
+			for(int i =0; i <transform.childCount; i++)
+			{
+				Transform child = transform.GetChild(i);
+				string nameGest = child.name;
+				string[] names =nameGest.Split('-');
+				GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+				Check che =child.GetComponent<Check>();
+				if (che != null)
+				{
+					Transform[] targ = new Transform[] {obj.transform};
+					che.target = targ;
+				}
+			}
 		}
 	}
-}
 }

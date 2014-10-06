@@ -8,6 +8,8 @@ public class CheckSwitch : Check {
 
 		public override void thisActivate()
 		{
+			activated = false;
+			show ();
 			finishTarget.parent = null;
 			finishTarget.position = transform.position;
 			finishTarget.rotation = transform.rotation;
