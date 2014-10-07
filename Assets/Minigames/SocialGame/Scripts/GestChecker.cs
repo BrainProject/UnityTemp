@@ -17,6 +17,7 @@ namespace SocialGame
 		public bool finish = true;
 		public bool allChecked = false;
 		private Vector3 temp;
+		private List<Transform> Targets = new List<Transform>();
 
 		#if UNITY_STANDALONE
 		public Kinect.KinectManager KManager;
@@ -29,7 +30,6 @@ namespace SocialGame
 			}
 			if(handMode)
 			{
-				List<Transform> Targets = new List<Transform>();
 				if(player1 && KManager)
 				{
 					foreach(GameObject avatar in KManager.Player1Avatars)
@@ -179,6 +179,38 @@ namespace SocialGame
 				}
 			}
 		}
+
+		public void findTartgetByCheckName(Transform child)
+		{
+			string nameGest = child.name;
+			string[] names =nameGest.Split('-');
+			GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+			Check che =child.GetComponent<Check>();
+			if (che != null)
+			{
+				Transform[] targ = new Transform[] {obj.transform};
+				che.target = targ;
+			}										
+		}
+
+		public void addCheck(Transform check)
+		{
+			check.parent = transform;
+
+			if(handMode)
+			{
+				Check che =check.GetComponent<Check>();
+				if (che != null)
+				{
+					Transform[] targ = Targets.ToArray();
+					che.target = targ;
+				}
+			}
+			else
+			{
+				findTartgetByCheckName(check);
+			}
+		}
 		#else
 		public void findTartgetByCheckName()
 		{
@@ -186,6 +218,11 @@ namespace SocialGame
 		}
 
 		public void MoveParentOnBone(string boneName)
+		{
+
+		}
+
+		public void addCheck(Transform check)
 		{
 
 		}
