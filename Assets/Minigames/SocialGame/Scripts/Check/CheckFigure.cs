@@ -5,6 +5,7 @@ namespace SocialGame{
 	public class CheckFigure : Check {
 		public bool check;
 		private bool checkedLastUpdate;
+		public MonoBehaviour halo;
 
 		public override void thisActivate()
 		{
@@ -28,5 +29,6 @@ namespace SocialGame{
 			}
 			checkedLastUpdate = false;
 		}
+
 	}
 }

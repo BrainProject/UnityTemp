@@ -2,9 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 namespace SocialGame
 {
 	public class GestChecker : MonoBehaviour {
+
 		public float distance;
 		public GameObject next;
 		public string clipBone;
@@ -15,6 +17,8 @@ namespace SocialGame
 		public bool finish = true;
 		public bool allChecked = false;
 		private Vector3 temp;
+
+		#if UNITY_STANDALONE
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
@@ -38,7 +42,7 @@ namespace SocialGame
 						}
 					}
 				}
-				if(player2)
+				if(player2 && KManager)
 				{
 					foreach(GameObject avatar in KManager.Player2Avatars)
 					{
@@ -175,5 +179,17 @@ namespace SocialGame
 				}
 			}
 		}
+		#else
+		public void findTartgetByCheckName()
+		{
+
+		}
+
+		public void MoveParentOnBone(string boneName)
+		{
+
+		}
+		#endif
 	}
 }
+

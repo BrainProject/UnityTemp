@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 
 public class FigureCreate : MonoBehaviour {
+	public Material mat;
+	public GameObject mesh;
 	public GameObject checke;
 	public GameObject checker;
 	// Use this for initialization
@@ -15,7 +17,6 @@ public class FigureCreate : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.E))
 		{
-			Debug.LogWarning("go!!");
 			createPoints();
 		}
 	}
@@ -27,6 +28,8 @@ public class FigureCreate : MonoBehaviour {
 		fronta.Enqueue(transform);
 		bool end= false;
 		GameObject checkerClone = (GameObject) GameObject.Instantiate(checker,transform.position,Quaternion.identity);
+		GameObject fig = figureCopy();
+		fig.transform.parent = checkerClone.transform;
 		while(fronta.Count>0)
 		{
 			Transform last = fronta.Dequeue();
@@ -43,6 +46,33 @@ public class FigureCreate : MonoBehaviour {
 
 		}
 		return checkerClone;
+	}
 
+	GameObject figureCopy()
+	{
+		GameObject figure = (GameObject) GameObject.Instantiate(mesh,transform.position,Quaternion.AngleAxis(180,Vector3.up));
+		ExtendsAvatar avatar = figure.GetComponentInChildren<ExtendsAvatar>();
+		if(avatar)
+		{
+			Destroy(avatar);
+		}
+		FigureCreate creator = figure.GetComponentInChildren<FigureCreate>();
+		if(creator)
+		{
+			Destroy(creator);
+		}
+		if(mat)
+		{
+			SkinnedMeshRenderer render = figure.GetComponentInChildren<SkinnedMeshRenderer>();
+			if(render)
+			{
+				render.material = mat;
+			}
+			if(!render.enabled)
+			{
+				render.enabled = true;
+			}
+		}
+		return figure;
 	}
 }

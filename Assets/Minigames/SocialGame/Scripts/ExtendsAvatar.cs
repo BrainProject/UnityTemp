@@ -18,9 +18,12 @@ public class ExtendsAvatar : AvatarController {
 
 	void Update()
 	{
-		newPos = this.transform.position;
-		newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
-		this.transform.position = newPos;
+		if(Kinect.KinectManager.Instance)
+		{
+			newPos = this.transform.position;
+			newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
+			this.transform.position = newPos;
+		}
 	}
 }
 #endif
