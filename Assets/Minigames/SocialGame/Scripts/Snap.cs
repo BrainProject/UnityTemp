@@ -56,11 +56,15 @@ namespace SocialGame{
 			}
 		}
 
+
+
 		public void setCheckerScript(GestChecker script)
 		{
 			script.handMode = false;
 			script.finish = false;
 			script.allChecked = true;
+			script.destroy = true;
+			script.distance = 0.2f;
 			script.next = after;
 			if(player == 1 )
 			{

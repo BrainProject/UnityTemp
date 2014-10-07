@@ -5,7 +5,13 @@ namespace SocialGame{
 	public class CheckFigure : Check {
 		public bool check;
 		private bool checkedLastUpdate;
-		public MonoBehaviour halo;
+
+		protected override void Start()
+		{
+			base.Start();
+			changeColorMaterial(Color.red);
+		}
+
 
 		public override void thisActivate()
 		{
@@ -19,15 +25,34 @@ namespace SocialGame{
 				if(check)
 				{
 					check = false;
+					changeColorMaterial(Color.red);
 					//do samething
 				}
 				else
 				{
 					check = true;
+					changeColorMaterial(Color.green);
 					//do samething
 				}
 			}
 			checkedLastUpdate = false;
+		}
+
+		void changeColorMaterial(Color color)
+		{
+			MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
+			if(render)
+			{
+				render.material.color = color;	
+			}
+			else
+			{
+				SpriteRenderer spriteRender = gameObject.GetComponent<SpriteRenderer>();
+				if(spriteRender)
+				{
+					spriteRender.color = color;
+				}
+			}
 		}
 
 	}
