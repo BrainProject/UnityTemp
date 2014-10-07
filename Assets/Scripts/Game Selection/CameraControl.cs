@@ -38,12 +38,12 @@ namespace MinigameSelection
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
 			#if UNITY_STANDALONE
-			if(Input.GetButtonDown("Horizontal") && Input.GetMouseButton(0))
+			if(Input.GetButtonDown("Horizontal") || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
 			#else
 			if(Input.GetButtonDown("Horizontal"))
 			#endif
 			{
-				if(Input.GetAxis("Horizontal") < 0 && !movingLeft)
+				if((Input.GetAxis("Horizontal") < 0 || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
@@ -54,7 +54,7 @@ namespace MinigameSelection
 					movingLeft = true;
 					movingRight = false;
 				}
-				else if(Input.GetAxis("Horizontal") > 0 && !movingRight)
+				else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
