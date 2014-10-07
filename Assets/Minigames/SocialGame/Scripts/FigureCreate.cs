@@ -8,10 +8,6 @@ public class FigureCreate : MonoBehaviour {
 	public GameObject mesh;
 	public GameObject checke;
 	public GameObject checker;
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,7 +46,7 @@ public class FigureCreate : MonoBehaviour {
 
 	GameObject figureCopy()
 	{
-		GameObject figure = (GameObject) GameObject.Instantiate(mesh,transform.position,Quaternion.AngleAxis(180,Vector3.up));
+		GameObject figure = (GameObject) GameObject.Instantiate(mesh,mesh.transform.position,Quaternion.AngleAxis(180,Vector3.up));
 		ExtendsAvatar avatar = figure.GetComponentInChildren<ExtendsAvatar>();
 		if(avatar)
 		{

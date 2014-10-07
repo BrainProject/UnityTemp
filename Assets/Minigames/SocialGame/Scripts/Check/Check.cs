@@ -70,6 +70,24 @@ public class Check : MonoBehaviour {
 		}
 	}
 
+		public void show(bool showObj)
+		{
+			MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
+			if(render)
+			{
+				render.enabled = showObj;	
+			}
+			else
+			{
+				SpriteRenderer spriteRender = gameObject.GetComponent<SpriteRenderer>();
+				if(spriteRender)
+				{
+					spriteRender.enabled = showObj;
+				}
+			}
+		}
+
+
 
 }
 }
