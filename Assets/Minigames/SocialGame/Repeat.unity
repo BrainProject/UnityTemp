@@ -634,13 +634,13 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
   m_PrefabInternal: {fileID: 813547238}
   m_GameObject: {fileID: 155431992}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .241847724, y: 2.01454258, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -.754749656, y: 1.01454258, z: -1.09229231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 980225726}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 1332182057}
+  m_RootOrder: 2
 --- !u!114 &155431994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,19 +1714,19 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1332182057}
     m_Modifications:
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .241847724
+      value: -.754749656
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.01454258
+      value: 1.01454258
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.09229231
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1734,7 +1734,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalRotation.z
@@ -1742,11 +1742,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8df913eaae23fd74ca1db2d838d0f8c1, type: 2}
       propertyPath: m_Name
@@ -1828,7 +1828,7 @@ MonoBehaviour:
   TwoPlayer: 1
   player2: {fileID: 1332182059}
   animPlayer2: {fileID: 999714152}
-  button: {fileID: 0}
+  button: {fileID: 980225727}
 --- !u!1 &980225724
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,6 +2242,7 @@ Transform:
   m_Children:
   - {fileID: 1831594618}
   - {fileID: 1398229683}
+  - {fileID: 155431993}
   m_Father: {fileID: 918832623}
   m_RootOrder: 0
 --- !u!95 &1332182058
