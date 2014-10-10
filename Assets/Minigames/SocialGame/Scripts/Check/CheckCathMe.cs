@@ -13,7 +13,7 @@ namespace SocialGame{
 		private bool good;
 
 
-		void Start () {
+		protected override void Start () {
 			good =  Random.Range(0,100) <= ChanceOfGood;
 			if(good && goodObj)
 			{

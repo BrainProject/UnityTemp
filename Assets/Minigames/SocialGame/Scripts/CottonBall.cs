@@ -40,6 +40,7 @@ namespace SocialGame{
 				yield return null;
 			}
 			targetAnim.activated = false;
+			LevelManager.finish();
 			Destroy(transform.parent.gameObject);
 		}
 	}

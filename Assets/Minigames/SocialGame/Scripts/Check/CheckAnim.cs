@@ -10,7 +10,7 @@ namespace SocialGame{
 		public bool walk;
 		private Animator anim;
 		// Use this for initialization
-		void Start () {
+		protected override void Start () {
 			anim = gameObject.GetComponent<Animator>();
 		}
 		

@@ -1223,6 +1223,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426779118}
   - 114: {fileID: 426779119}
+  - 114: {fileID: 426779120}
   m_Layer: 0
   m_Name: Root
   m_TagString: Player1
@@ -1280,6 +1281,21 @@ MonoBehaviour:
   RightToes: {fileID: 1658867240}
   Root: {fileID: 426779118}
   offsetNode: {fileID: 1672922319}
+--- !u!114 &426779120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 426779117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef03bef4e17e4554196598ac993d0fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: f6c9f14c35ac58345a26e4224f720707, type: 2}
+  mesh: {fileID: 1672922319}
+  checke: {fileID: 100000, guid: 71b697e38a52076469c7e38dddff8374, type: 2}
+  checker: {fileID: 100000, guid: 575bc86832658eb419f8ccd385632cf5, type: 2}
 --- !u!1 &461550363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +2004,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 999714146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7335966ed229b9342937a777f9a4b31e, type: 2}
   m_CullingMode: 0
@@ -3108,7 +3124,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1831594617}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef03bef4e17e4554196598ac993d0fe3, type: 3}
   m_Name: 
