@@ -13,6 +13,7 @@ GameObject:
   - 58: {fileID: 5800000}
   - 232: {fileID: 23200000}
   - 114: {fileID: 11400000}
+  - 120: {fileID: 12000000}
   m_Layer: 0
   m_Name: ballPhysic
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.759699583, y: 1.36570334, z: -3}
+  m_LocalPosition: {x: 2.99550867, y: 1.57380283, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -69,6 +70,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f335edfa430bd047bf502efcdcb993a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joint: {fileID: 0}
+  render: {fileID: 0}
+  lineRender: {fileID: 0}
+--- !u!120 &12000000
+LineRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 551b83f7d1d05fd48a29318ed6a5c981, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 1, y: 1, z: 1}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    startWidth: .0199999996
+    endWidth: .0199999996
+    m_StartColor:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_EndColor:
+      serializedVersion: 2
+      rgba: 4294967295
+  m_UseWorldSpace: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
