@@ -19,10 +19,9 @@ public class FigureCreate : MonoBehaviour {
 
 	public GameObject createPoints()
 	{
-		int count = transform.childCount;
+		//int count = transform.childCount;
 		Queue<Transform> fronta = new Queue<Transform>();
 		fronta.Enqueue(transform);
-		bool end= false;
 		GameObject checkerClone = (GameObject) GameObject.Instantiate(checker,transform.position,Quaternion.identity);
 		GameObject fig = figureCopy();
 		fig.transform.parent = checkerClone.transform;
@@ -34,8 +33,6 @@ public class FigureCreate : MonoBehaviour {
 			{
 				fronta.Enqueue(last.GetChild(i));
 			}
-			//bugbug
-			Debug.LogWarning(last.name);
 			GameObject clone = (GameObject) GameObject.Instantiate(checke,last.position,Quaternion.identity);
 			clone.name = last.name+"-check";
 			clone.transform.parent = checkerClone.transform;
