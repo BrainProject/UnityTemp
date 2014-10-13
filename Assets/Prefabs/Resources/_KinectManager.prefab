@@ -139,11 +139,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TwoUsers: 0
   NearMode: 0
-  ComputeUserMap: 1
+  ComputeUserMap: 0
   ComputeColorMap: 0
-  DisplayUserMap: 1
+  DisplayUserMap: 0
   DisplayColorMap: 0
-  DisplaySkeletonLines: 1
+  DisplaySkeletonLines: 0
   MapsPercentWidth: 0
   MapsPercentHeight: 0
   SensorHeight: 1
@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f56d5fdd38a86eb4a9ea82816f0af233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cur: {fileID: 2800000, guid: 8c046bcaf8f33fd4b9281c373e3bfc6e, type: 3}
+  cursorNormal: {fileID: 0}
+  cursorDrag: {fileID: 0}
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1

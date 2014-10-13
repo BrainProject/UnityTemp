@@ -11,9 +11,13 @@ namespace SocialGame{
 		public SkinnedMeshRenderer player2;
 		public Animator animPlayer2;
 		public Check button;
+
+		public Material ghost;
+		private Material normal;
 		// Use this for initialization
 		void Start () {
-				SocialGame.LevelManager.gameSelected = 0;
+			SocialGame.LevelManager.gameSelected = 0;
+			normal = player2.material;
 			GameObject temp = GameObject.FindWithTag("GameController");
 			if(temp != null)
 			{
@@ -51,8 +55,16 @@ namespace SocialGame{
 		 public void Activate2player()
 		{
 			TwoPlayer = true;
-			animPlayer2.SetBool("TwoPlayers",true);
-			player2.enabled = true;
+			if(ghost)
+			{
+				player2.material = normal;
+			}
+			else
+			{
+				player2.enabled = true;
+			}
+			if(animPlayer2)
+				animPlayer2.SetBool("TwoPlayers",true);
 			if(LevelManager.gameSelected == 0 && button)
 			{
 				button.activate();
@@ -62,8 +74,16 @@ namespace SocialGame{
 		public void Deactivate2player()
 		{
 			TwoPlayer = false;
-			animPlayer2.SetBool("TwoPlayers",false);
-			player2.enabled = false;
+			if(ghost)
+			{
+				player2.material = ghost;
+			}
+			else
+			{
+				player2.enabled = false;
+			}
+			if(animPlayer2)
+				animPlayer2.SetBool("TwoPlayers",false);
 			if(LevelManager.gameSelected == 0 && button)
 			{
 				button.deactivate();
