@@ -28,9 +28,9 @@ namespace SocialGame
 			{
 				KManager = temp.GetComponent<Kinect.KinectManager>();
 			}
-			if(handMode)
+			if(handMode && KManager)
 			{
-				if(player1 && KManager)
+				if(player1)
 				{
 					foreach(GameObject avatar in KManager.Player1Avatars)
 					{
@@ -42,7 +42,7 @@ namespace SocialGame
 						}
 					}
 				}
-				if(player2 && KManager)
+				if(player2 && KManager.TwoUsers)
 				{
 					foreach(GameObject avatar in KManager.Player2Avatars)
 					{
@@ -116,21 +116,27 @@ namespace SocialGame
 			}
 			if(complete)
 			{
-				if(next)
-				{
-					GameObject.Instantiate(this.next);
-				}
-				if(finish && (next== null))
-				{
-					Debug.Log("blbnu " + gameObject.name);
-					finishHim();
-				}
-				if(destroy)
-				{
-					Destroy(gameObject);
-				}
+				CompleteGest();
 			}
 		}
+
+		protected virtual void CompleteGest()
+		{
+			if(next)
+			{
+				GameObject.Instantiate(this.next);
+			}
+			if(finish && (next== null))
+			{
+				Debug.Log("blbnu " + gameObject.name);
+				finishHim();
+			}
+			if(destroy)
+			{
+				Destroy(gameObject);
+			}
+		}
+
 
 
 		void finishHim()
