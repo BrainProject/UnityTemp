@@ -8,12 +8,13 @@ public class GenerateNext : MonoBehaviour {
 
 	public void Next()
 	{
-		int rnd = Random.Range(0,GestChecker.Length-1);
+		int rnd = Random.Range(0,GestChecker.Length);
 		GameObject.Instantiate(GestChecker[rnd],position,Quaternion.identity);
 	}
 
 	void Start()
 	{
+		Debug.Log("test");
 		Next();
 	}
 }

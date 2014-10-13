@@ -79,7 +79,7 @@ namespace SocialGame
 			}
 			else
 			{
-				Debug.LogError("Kinect Manager not founded");
+				Debug.LogWarning("Kinect Manager not founded");
 			}
 		}
 
