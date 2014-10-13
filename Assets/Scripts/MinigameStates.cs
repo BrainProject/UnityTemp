@@ -57,10 +57,20 @@ namespace Game
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
-			Minigame socialGame = new Minigame ("SocialGame");
-			minigames.Add (socialGame);
 			Minigame findIt = new Minigame ("FindIt", "FindItGame");
 			minigames.Add (findIt);
+			Minigame socialGame = new Minigame ("_XSocialGame");
+			minigames.Add (socialGame);
+			Minigame dodge = new Minigame("Dodge");
+			minigames.Add (dodge);
+			Minigame figure = new Minigame ("Figure");
+			minigames.Add (figure);
+			Minigame interaction = new Minigame ("Interaction");
+			minigames.Add (interaction);
+			Minigame repeat = new Minigame ("Repeat");
+			minigames.Add (repeat);
+			Minigame cooperative = new Minigame ("Cooperative");
+			minigames.Add (cooperative);
 
 			MGC.Instance.LoadGame ();
 		}
