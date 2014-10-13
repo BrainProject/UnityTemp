@@ -1007,6 +1007,8 @@ namespace Kinect {
 			{
 				Debug.Log ("Kinect is not connected, deactivating KinectManager.");
 				this.transform.parent.gameObject.SetActive(false);
+				this.gameObject.SetActive(false);
+				MGC.Instance.inactivityScene = "HanoiTowers";
 				string message = e.Message + " - " + KinectWrapper.GetNuiErrorString(hr);
 				//Debug.LogError(message);
 				//Debug.LogError(e.ToString());

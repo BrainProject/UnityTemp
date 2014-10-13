@@ -30,16 +30,20 @@ namespace MinigameSelection
             mgc = MGC.Instance;
 			this.transform.position = mgc.currentCameraDefaultPosition;
 			this.transform.rotation = currentWaypoint.transform.rotation;
-			//this.transform.position = currentWaypoint.transform.position;
+			this.transform.position = currentWaypoint.transform.position;
 		}
 		
 		void Update()
 		{
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
+			#if UNITY_STANDALONE
+			if(Input.GetButtonDown("Horizontal") || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
+			#else
 			if(Input.GetButtonDown("Horizontal"))
+			#endif
 			{
-				if(Input.GetAxis("Horizontal") < 0 && !movingLeft)
+				if((Input.GetAxis("Horizontal") < 0 || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
@@ -50,7 +54,7 @@ namespace MinigameSelection
 					movingLeft = true;
 					movingRight = false;
 				}
-				else if(Input.GetAxis("Horizontal") > 0 && !movingRight)
+				else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
@@ -83,11 +87,9 @@ namespace MinigameSelection
 					}
 				}
 			}
-		}
 
-		void OnGUI()
-		{
-			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
+			//Debug actions
+			if(Input.GetKeyDown(KeyCode.Keypad0)) //Reset position
 			{
 				currentWaypoint = GameObject.Find ("OccipitalLobePos");
 				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
@@ -99,6 +101,24 @@ namespace MinigameSelection
 				movingLeft = false;
 				movingRight = false;
 			}
+		}
+
+		void OnGUI()
+		{
+//			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
+//			{
+//				currentWaypoint = GameObject.Find ("OccipitalLobePos");
+//				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
+//				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
+//				this.GetComponent<SmoothCameraMove>().FromYRot = currentWaypoint.transform.eulerAngles.y;
+//				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
+//				this.transform.position = currentWaypoint.transform.position;
+//				this.transform.rotation = currentWaypoint.transform.rotation;
+//				movingLeft = false;
+//				movingRight = false;
+//			}
+			/*
+			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
 			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
 			{
 				targetWaypoint = GameObject.Find ("OccipitalLobePos");
@@ -111,6 +131,24 @@ namespace MinigameSelection
 				FindShorterDirectionToWaypoint();
 				SetNewTarget();
 			}
+			if(GUI.Button(new Rect(20, 140, 100, 30), "Frontal"))
+			{
+				targetWaypoint = GameObject.Find ("FrontalLobePos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}
+			if(GUI.Button(new Rect(20, 180, 100, 30), "Parietal"))
+			{
+				targetWaypoint = GameObject.Find ("ParietalLobePos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}
+			if(GUI.Button(new Rect(20, 220, 100, 30), "Cerebellum"))
+			{
+				targetWaypoint = GameObject.Find ("CerebellumPos");
+				FindShorterDirectionToWaypoint();
+				SetNewTarget();
+			}*/
 		}
 
 		public void BackToMain()

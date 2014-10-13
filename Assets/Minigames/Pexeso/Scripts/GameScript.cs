@@ -278,6 +278,9 @@ namespace MinigamePexeso
             //to avoid calling this method more than once
             winningScore = -1;
 
+            //animate Neuron
+            MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+
             //stop game music and play wictory sound
             AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
             musicPlayer.Stop();
@@ -286,13 +289,15 @@ namespace MinigamePexeso
             //game ends here, show scoreboard...
             gameEndTime = Time.time;
 
+            MGC.Instance.minigamesGUI.show(true);
+
 			/*scoreb.SetActive (true);
             Scoreboard scoreboard = scoreb.GetComponent<Scoreboard>() as Scoreboard;
 			scoreboard.correct.text = correctPairsDisplay.text;
 			scoreboard.wrong.text = wrongPairsDisplay.text;
             scoreboard.time.text = (gameEndTime - gameStartTime).ToString();*/
 
-            StartCoroutine(RestartGame());
+            //StartCoroutine(RestartGame());
         }
 
 	    /// <summary>
@@ -489,6 +494,21 @@ namespace MinigamePexeso
 				for (int i = 0; i < (rows * columns); i++)
 				{
 					num = random.Next (0, chosen.Count);
+
+					float height = chosen[num].height;
+					float width = chosen[num].width;
+					float tileSize = gameTiles[i].transform.GetChild(0).transform.localScale.x;
+					if(height > width)
+					{
+						tileSize = (width / height) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(tileSize, gameTiles[i].transform.GetChild(0).transform.localScale.y, gameTiles[i].transform.GetChild(0).transform.localScale.z);
+					}
+					else
+					{
+						tileSize = (height / width) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
+					}
+
 					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen [num];
 					chosen.RemoveAt (num);
 				}
@@ -560,6 +580,21 @@ namespace MinigamePexeso
 				for (int i = 0; i < (rows * columns); i++)
 				{
 					num = random.Next(0, chosen.Count);
+
+					float height = chosen[num].height;
+					float width = chosen[num].width;
+					float tileSize = gameTiles[i].transform.GetChild(0).transform.localScale.x;
+					if(height > width)
+					{
+						tileSize = (width / height) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(tileSize, gameTiles[i].transform.GetChild(0).transform.localScale.y, gameTiles[i].transform.GetChild(0).transform.localScale.z);
+					}
+					else
+					{
+						tileSize = (height / width) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
+					}
+
 					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
 					chosen.RemoveAt(num);
 				}
@@ -619,9 +654,24 @@ namespace MinigamePexeso
 					//Assign textures to planes.
 					for (int i = 0; i < (rows * columns); i++)
 					{
-							num = random.Next (0, chosen.Count);
-							gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen [num];
-							chosen.RemoveAt (num);
+						num = random.Next (0, chosen.Count);
+						gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen [num];
+						
+						float height = chosen[num].height;
+						float width = chosen[num].width;
+						float tileSize = gameTiles[i].transform.GetChild(0).transform.localScale.x;
+						if(height > width)
+						{
+							tileSize = (width / height) / 10;
+							gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(tileSize, gameTiles[i].transform.GetChild(0).transform.localScale.y, gameTiles[i].transform.GetChild(0).transform.localScale.z);
+						}
+						else
+						{
+							tileSize = (height / width) / 10;
+							gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
+						}
+
+						chosen.RemoveAt (num);
 					}
 			}
 			else
@@ -671,6 +721,21 @@ namespace MinigamePexeso
 				for (int i = 0; i < (rows * columns); i++)
 				{
 					num = random.Next(0, chosen.Count);
+
+					float height = chosen[num].height;
+					float width = chosen[num].width;
+					float tileSize = gameTiles[i].transform.GetChild(0).transform.localScale.x;
+					if(height > width)
+					{
+						tileSize = (width / height) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(tileSize, gameTiles[i].transform.GetChild(0).transform.localScale.y, gameTiles[i].transform.GetChild(0).transform.localScale.z);
+					}
+					else
+					{
+						tileSize = (height / width) / 10;
+						gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
+					}
+
 					gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
 					chosen.RemoveAt(num);
 				}

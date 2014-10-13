@@ -46,7 +46,7 @@ namespace MinigameSelection
             if(MGC.Instance.minigameStates.GetPlayed(minigameName))
             {
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
-                this.renderer.material = GameObject.Find("VictoriousSphere").renderer.material;
+				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);
             }
 			
             if(minigameName == "")
@@ -57,7 +57,7 @@ namespace MinigameSelection
 				//this.gameObject.SetActive(false);
 			}
 
-			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
+/*			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
 			{
 				OnSelection = true;
 				LevelManager.minigameOnSelection = this.gameObject;
@@ -65,7 +65,7 @@ namespace MinigameSelection
 				MGC.Instance.selectedMinigame = Vector3.zero;
 				//Camera.main.GetComponent<CameraDefaultPosition
 			}
-		}
+*/		}
 
 		void Update()
 		{
@@ -129,52 +129,55 @@ namespace MinigameSelection
 
 		void OnMouseUp()
 		{
-			//load mini-game if zooming or zoomed
-			if(OnSelection)
+			if(!Camera.main.GetComponent<CameraControl>().movingLeft && !Camera.main.GetComponent<CameraControl>().movingRight)
 			{
-				//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
-				//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-				if(minigameHelp && GameObject.Find("Neuron"))
-					GameObject.Find("Neuron").GetComponent<BrainHelp>().helpTexture = minigameHelp;
-				MGC.Instance.currentCameraDefaultPosition = CameraZoom;
-                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
-				MGC.Instance.selectedMinigame = this.gameObject.transform.position;
-                MGC.Instance.sceneLoader.LoadScene(minigameName);
-			}
+				//load mini-game if zooming or zoomed
+				if(OnSelection)
+				{
+					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
+					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
+					if(minigameHelp && MGC.Instance.neuronHelp)
+						MGC.Instance.neuronHelp.GetComponent<BrainHelp>().helpTexture = minigameHelp;
+					//MGC.Instance.currentCameraDefaultPosition = CameraZoom;
+	                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+					MGC.Instance.selectedMinigame = this.gameObject.transform.position;
+	                MGC.Instance.sceneLoader.LoadScene(minigameName);
+				}
 
-			//set target position of camera near to mini-game bubble
-			else
-			{
-				GameObject cameraPoint = new GameObject("cameraPoint");
-				cameraPoint.transform.parent = this.transform;
-				cameraPoint.transform.localPosition = new Vector3(0, 0, cameraDistance);
-
-				CameraZoom = cameraPoint.transform.position;
-				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-				//Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.gameObject;
-				Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
-				Camera.main.GetComponent<CameraControl>().targetWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
-				Camera.main.GetComponent<SmoothCameraMove>().Move = true;
-				Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
-				Camera.main.GetComponent<SmoothCameraMove>().FromYRot = Camera.main.transform.eulerAngles.y;
-				Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
-				Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
-				Camera.main.GetComponent<SmoothCameraMove>().ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
-				Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
-				Camera.main.GetComponent<CameraControl>().movingLeft = false;
-				Camera.main.GetComponent<CameraControl>().movingRight = false;
-
-				//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame
-				//if this is the first selected minigame, set it instantly
-				if(LevelManager.minigameOnSelection == null)
-					LevelManager.minigameOnSelection = this.gameObject;
+				//set target position of camera near to mini-game bubble
 				else
 				{
-					if(LevelManager.minigameOnSelection != this.gameObject)
-						LevelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
-					LevelManager.minigameOnSelection = this.gameObject;
+					GameObject cameraPoint = new GameObject("cameraPoint");
+					cameraPoint.transform.parent = this.transform;
+					cameraPoint.transform.localPosition = new Vector3(0, 0, cameraDistance);
+
+					CameraZoom = cameraPoint.transform.position;
+					//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+					//Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.gameObject;
+					Camera.main.GetComponent<CameraControl>().currentWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
+					Camera.main.GetComponent<CameraControl>().targetWaypoint = this.transform.parent.GetComponent<BrainPart>().waypoint;
+					Camera.main.GetComponent<SmoothCameraMove>().Move = true;
+					Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
+					Camera.main.GetComponent<SmoothCameraMove>().FromYRot = Camera.main.transform.eulerAngles.y;
+					Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
+					Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
+					Camera.main.GetComponent<SmoothCameraMove>().ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
+					Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;
+					Camera.main.GetComponent<CameraControl>().movingLeft = false;
+					Camera.main.GetComponent<CameraControl>().movingRight = false;
+
+					//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame
+					//if this is the first selected minigame, set it instantly
+					if(LevelManager.minigameOnSelection == null)
+						LevelManager.minigameOnSelection = this.gameObject;
+					else
+					{
+						if(LevelManager.minigameOnSelection != this.gameObject)
+							LevelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+						LevelManager.minigameOnSelection = this.gameObject;
+					}
+					OnSelection = true;
 				}
-				OnSelection = true;
 			}
 		}
 	}

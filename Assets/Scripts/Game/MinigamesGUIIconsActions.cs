@@ -12,6 +12,13 @@ namespace Game
         public Texture2D texture_normal;
         public Texture2D texture_hover;
 
+		private bool restartDifferentScene = false;
+		private string differentSceneName;
+
+        public void resetState()
+        {
+            renderer.material.mainTexture = texture_normal;
+        }
 
         void OnMouseOver()
         {
@@ -20,24 +27,42 @@ namespace Game
 
         void OnMouseExit()
         {
-            renderer.material.mainTexture = texture_normal;
+            resetState();
         }
 
         void OnMouseDown()
         {
+            
+
+            //resolve action
             if (action == "Restart")
             {
-                MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
+                //hide GUI
+                MGC.Instance.minigamesGUI.hide();
+
+                //load proper scene
+				if(restartDifferentScene)
+				{
+					restartDifferentScene = false;
+					MGC.Instance.sceneLoader.LoadScene(differentSceneName);
+				}
+				else MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
             }
 
-            if (action == "GameSelection")
+            else if (action == "GameSelection")
             {
+                //hide GUI
+                MGC.Instance.minigamesGUI.hide();
+
+                //return to game selection scene
                 MGC.Instance.sceneLoader.LoadScene("GameSelection");
             }
 
-            if (action == "Reward")
+            else if (action == "Reward")
             {
-                //System.Diagnostics.Process.Start("iexplore.exe");
+                
+                //run external application with reward
+                //TODO solve things like controlling and closing external application and mainly - how to return to Unity
 
                 string path = @"-k http://musee.louvre.fr/visite-louvre/index.html?defaultView=rdc.s46.p01&lang=ENG";
                 Process foo = new Process();
@@ -47,6 +72,12 @@ namespace Game
             }
             
         }
+
+		public void SetRestartDifferentScene(bool shouldRestartDifferentScene,string differentRestartSceneName)
+		{
+			this.restartDifferentScene = shouldRestartDifferentScene;
+			this.differentSceneName = differentRestartSceneName;
+		}
 
     }
 

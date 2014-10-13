@@ -54,7 +54,7 @@ namespace MinigameSelection {
 			}
 
 
-			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
+			if(((Input.GetAxis("Vertical") > 0) && Input.GetMouseButton(0)) || Input.GetMouseButtonDown(1))
 			{
 				//OnSelection = false;
 				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));

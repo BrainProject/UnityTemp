@@ -19,7 +19,7 @@ namespace FindIt
                 }
                 else if (this.gameObject.tag == "Right")
                 {
-                    FindItStatistics.RecordLeftGoodClick();
+                    FindItStatistics.RecordRightGoodClick();
                 }
                 // else unexpected error
                 Camera.main.GetComponent<GameScript>().newTargetImage();
@@ -32,7 +32,7 @@ namespace FindIt
                 }
                 else if (this.gameObject.tag == "Right")
                 {
-                    FindItStatistics.RecordLeftWrongClick();
+                    FindItStatistics.RecordRightWrongClick();
                 }
             }
         }

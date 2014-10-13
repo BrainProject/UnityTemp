@@ -83,7 +83,7 @@ namespace Kinect {
 		private Quaternion originalRotation;
 		
 		// Lastly used Kinect UserID
-		private uint LastUserID;
+		internal uint LastUserID;
 		
 		// private instance of the KinectManager
 		private KinectManager kinectManager;

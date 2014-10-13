@@ -4,7 +4,7 @@ using System.Collections;
 public class SelectColor : MonoBehaviour {
 
 	public GameObject Brush;
-
+	public Texture2D cursorTexture;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +19,8 @@ public class SelectColor : MonoBehaviour {
 	void OnMouseDown () {
 		Color purple = new Color(0.5f, 0, 0.9f);
 		Color orange = new Color(1.0f, 0.6f, 0);
+
+		Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
 		switch(name)
 		{

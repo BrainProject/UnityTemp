@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace FindIt
@@ -25,6 +24,10 @@ namespace FindIt
         private List<int> usedIndices = new List<int>();
 
         private int selectedImage = 0;
+
+		public GameObject clona;
+
+		private bool gameWon = false;
 
         private void LoadResourcePack()
         {
@@ -107,10 +110,10 @@ namespace FindIt
         }
 
         
-
-
         void Start()
         {
+			clona.SetActive(false);
+			gameWon = false;
             LoadResourcePack();
             SetUpSprites(numberPieces);
             UpdateCameraSize();
@@ -121,9 +124,16 @@ namespace FindIt
 
         void CheckEndGame()
         {
-            if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal)
+            if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal && !gameWon)
             {
-                Application.LoadLevel("FindItVictory");
+				gameWon = true;
+                //Application.LoadLevel("FindItVictory");
+				FindItStatistics.StopMeasuringTime();
+				clona.SetActive(true);
+
+				MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+				MGC.Instance.minigamesGUI.show(false,true,"FindIt");
+
             }
         }
 
