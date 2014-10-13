@@ -28,52 +28,59 @@ namespace SocialGame
 			{
 				KManager = temp.GetComponent<Kinect.KinectManager>();
 			}
-			if(handMode && KManager)
+			if(KManager)
 			{
-				if(player1)
+				if(handMode)
 				{
-					foreach(GameObject avatar in KManager.Player1Avatars)
+					if(player1)
 					{
-						Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-						if(avatarControler)
+						foreach(GameObject avatar in KManager.Player1Avatars)
 						{
-							Targets.Add(avatarControler.LeftHand);
-							Targets.Add(avatarControler.RightHand);
+							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+							if(avatarControler)
+							{
+								Targets.Add(avatarControler.LeftHand);
+								Targets.Add(avatarControler.RightHand);
+							}
 						}
 					}
-				}
-				if(player2 && KManager.TwoUsers)
-				{
-					foreach(GameObject avatar in KManager.Player2Avatars)
+					if(player2 && KManager.TwoUsers)
 					{
-						Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-						if(avatarControler)
+						foreach(GameObject avatar in KManager.Player2Avatars)
 						{
-							Targets.Add(avatarControler.LeftHand);
-							Targets.Add(avatarControler.RightHand);
+							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+							if(avatarControler)
+							{
+								Targets.Add(avatarControler.LeftHand);
+								Targets.Add(avatarControler.RightHand);
+							}
 						}
 					}
-				}
-				for(int i =0; i <transform.childCount; i++)
-				{
-					Transform child = transform.GetChild(i);
-					Check che =child.GetComponent<Check>();
-					if (che != null)
+					for(int i =0; i <transform.childCount; i++)
 					{
-						Transform[] targ = Targets.ToArray();
-						che.target = targ;
+						Transform child = transform.GetChild(i);
+						Check che =child.GetComponent<Check>();
+						if (che != null)
+						{
+							Transform[] targ = Targets.ToArray();
+							che.target = targ;
+						}
 					}
-				}
 
-				}
-				else
-				{
-					findTartgetByCheckName();
-					if(clipBone != null)
-					{
-						MoveParentOnBone(clipBone);
 					}
-				}
+					else
+					{
+						findTartgetByCheckName();
+						if(clipBone != null)
+						{
+							MoveParentOnBone(clipBone);
+						}
+					}
+			}
+			else
+			{
+				Debug.LogError("Kinect Manager not founded");
+			}
 		}
 
 	
