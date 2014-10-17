@@ -25,7 +25,7 @@ namespace Game
             restartIcon.resetState();
 
             gameObject.SetActive(true);
-            rewardIcon.gameObject.SetActive(showReward);
+            rewardIcon.gameObject.SetActive(false);
 
 			restartIcon.GetComponent<MinigamesGUIIconsActions>().SetRestartDifferentScene(differentRestartScene,differentRestartSceneName);
         }

@@ -83,7 +83,7 @@ public class MGC : Singleton<MGC>
 
 	void Awake ()
 	{
-		print ("Master Game Controller starts...");
+		print ("Master Game Controller Awake()...");
 
 		//Initiate Logger
 		logger = this.gameObject.AddComponent<Logger> ();
@@ -119,6 +119,8 @@ public class MGC : Singleton<MGC>
 
 	void Start()
 	{
+        print("Master Game Controller Start()...");
+
 		inactivityTimestamp = Time.time;
 		#if UNITY_WEBPLAYER
 		inactivityScene = "HanoiTowers";
@@ -311,7 +313,7 @@ public class MGC : Singleton<MGC>
 				minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
 			}
 
-			print ("Game loaded.");
+			print ("Saved game-data loaded.");
 			file.Close();
 		}
 

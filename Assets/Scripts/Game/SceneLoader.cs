@@ -19,7 +19,7 @@ namespace Game
 
 		void Start()
 		{
-            print("SceneLoader start...");
+            print("SceneLoader::Start()...");
 
             gameObject.AddComponent<GUITexture>();
             guiTexture.texture = Resources.Load("Textures/white") as Texture;
