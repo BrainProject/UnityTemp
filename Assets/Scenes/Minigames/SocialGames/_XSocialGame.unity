@@ -399,7 +399,7 @@ MonoBehaviour:
   - {fileID: 1831594617}
   Player1CalibrationPose: 0
   Player2CalibrationPose: 0
-  Player1Gestures: 070000000800000016000000
+  Player1Gestures: 070000000800000018000000
   Player2Gestures: 070000000800000016000000
   MinTimeBetweenGestures: .699999988
   GestureListeners: []
@@ -840,6 +840,7 @@ MonoBehaviour:
   player2: 1
   destroy: 0
   finish: 0
+  allChecked: 0
   KManager: {fileID: 0}
 --- !u!4 &239276471
 Transform:
@@ -1637,6 +1638,7 @@ MonoBehaviour:
   player2: {fileID: 1332182059}
   animPlayer2: {fileID: 999714152}
   button: {fileID: 85811906}
+  ghost: {fileID: 0}
 --- !u!1 &999714146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,7 +1739,6 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &999714153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,6 +1844,7 @@ MonoBehaviour:
   player2: 1
   destroy: 1
   finish: 0
+  allChecked: 0
   KManager: {fileID: 0}
 --- !u!4 &1088359294
 Transform:
@@ -2077,7 +2079,6 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!137 &1332182059
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -2625,7 +2626,6 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!137 &1672922322
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -3168,6 +3168,7 @@ MonoBehaviour:
   player2: 0
   destroy: 0
   finish: 0
+  allChecked: 0
   KManager: {fileID: 0}
 --- !u!1 &1942529274
 GameObject:
@@ -3332,7 +3333,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 05040d5ee6d161845ba71f6ae6eeef94, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 05040d5ee6d161845ba71f6ae6eeef94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2060098694
 GameObject:
@@ -3398,6 +3399,7 @@ MonoBehaviour:
   player2: 1
   destroy: 1
   finish: 0
+  allChecked: 0
   KManager: {fileID: 0}
 --- !u!1 &2086377466
 GameObject:
@@ -3544,5 +3546,5 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 05040d5ee6d161845ba71f6ae6eeef94, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 05040d5ee6d161845ba71f6ae6eeef94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: .235294119}
