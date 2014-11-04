@@ -40,10 +40,15 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		public List<Minigame> minigames = new List<Minigame>();
+		internal List<Minigame> minigames = new List<Minigame>();
 
-		void Start()
+		public void Start ()
 		{
+			Minigame main = new Minigame ("Main");
+			minigames.Add (main);
+			Minigame selection = new Minigame ("GameSelection");
+			selection.initialShowHelpCounter = 2;
+			minigames.Add (selection);
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);

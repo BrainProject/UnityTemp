@@ -80,6 +80,7 @@ public class MGC : Singleton<MGC>
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
 	private int inactivityCounter = 0;
+	private GameObject controlsGUI;
 
 	void Awake ()
 	{
@@ -119,7 +120,11 @@ public class MGC : Singleton<MGC>
 
 	void Start()
 	{
-        print("Master Game Controller Start()...");
+		print("Master Game Controller Start()...");
+
+		//due to unknown reason, I doesn't set the list
+		//in the MinigameStates script correctly without this command.
+		minigameStates.Start ();
 
 		inactivityTimestamp = Time.time;
 		#if UNITY_WEBPLAYER
@@ -147,9 +152,8 @@ public class MGC : Singleton<MGC>
             {
                 minigamesGUI.hide();
             }
-            
-
         }
+
 
 		//Inactivity detection
 		if(Input.anyKeyDown)
@@ -179,7 +183,7 @@ public class MGC : Singleton<MGC>
 		{
 			LoadGame ();
 		}
-		if (Input.GetKeyDown (KeyCode.F1))
+		if (Input.GetKeyDown (KeyCode.F3))
 		{
 			ResetGameStatus ();
 		}
@@ -289,6 +293,11 @@ public class MGC : Singleton<MGC>
 	public void SaveGame()
 	{
 		#if !UNITY_WEBPLAYER
+		//remove delete of the save file feature when finished, it will no longer be necessary
+		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
+		{
+			File.Delete(Application.persistentDataPath + "/newron.sav");
+		}
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -344,6 +353,7 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 
+		SaveGame ();
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
 	}
