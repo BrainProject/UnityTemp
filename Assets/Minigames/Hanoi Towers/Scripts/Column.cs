@@ -5,6 +5,11 @@ using System.Collections.Generic;
 namespace HanoiTowers
 {
 
+    /**
+     * \brief Handles logic of one column in Hanoi Towers mini-game
+     * 
+     * Allows add and remove disks to/from column, handles reactions on mouse events, 
+     * */
     public class Column : MonoBehaviour
     {
 
@@ -30,6 +35,10 @@ namespace HanoiTowers
             startcolor = renderer.material.color;
         }
 
+        /// <summary>
+        /// Add disk to this column
+        /// </summary>
+        /// <param name="newDisk">reference to disk to be added</param>
         public void addDisk(Disk newDisk)
         {
             disks.Push(newDisk);
@@ -37,7 +46,9 @@ namespace HanoiTowers
         }
 
 
-
+        /// <summary>
+        /// Check if winning condidtions are fulfilled. If so, calls <code>gameController.endGame()</code>
+        /// </summary>
         void checkWinningCondition()
         {
             if (ending)
@@ -54,6 +65,11 @@ namespace HanoiTowers
 
         }
 
+        /// <summary>
+        /// Checks, if this column is valid target for disk of given size.
+        /// </summary>
+        /// <param name="diskSize">size of disk to be moved on this columnn</param>
+        /// <returns>true if this column is valid target, false otherwise</returns>
         bool isValidTarget(int diskSize)
         {
             if (topDisk() == null)
@@ -65,6 +81,10 @@ namespace HanoiTowers
                 return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>current number of disks on this column</returns>
         public int getNumberofDisks()
         {
             return disks.Count;
@@ -73,7 +93,9 @@ namespace HanoiTowers
 
 
 
-        // highlighting 
+        /// <summary>
+        /// hightlight column on mouse enter
+        /// </summary>
         void OnMouseEnter()
         {
             Disk disk = gameController.getWaitingForTarget();
@@ -103,12 +125,21 @@ namespace HanoiTowers
             coloredLight.enabled = true;
         }
 
-        // highlighting 
+        /// <summary>
+        /// Turn off highlight on mouse exit
+        /// </summary>
         void OnMouseExit()
         {
             coloredLight.enabled = false;
             renderer.material.color = startcolor;
         }
+
+        /// <summary>
+        /// solve mouse click on this column. 
+        /// </summary>
+        ///  
+        /// Checks, if there is a disk in motion. If not, returns.
+        /// Checks if this column is valid target. If so, move moving disk on this column
 
         void OnMouseUp()
         {

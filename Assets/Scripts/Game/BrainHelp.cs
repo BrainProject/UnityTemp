@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
+
+/**
+ * \brief Various classes and methods available across all scenes 
+ */
+namespace Game
+{
+	
+	/// <summary>
 /// Help handles pop-up bubbles showing how to play currently started minigame.
 /// Attach this scrip to object that lives across scenes (e.g.: Neuron)
 /// \author: Milan Doležal
 /// </summary>
-
-namespace Game
-{
 	public class BrainHelp : MonoBehaviour{
 		public Texture helpTexture;
 		public bool helpExists;

@@ -1,9 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * \brief namespace for Hanoi Towers mini-game 
+ * Hanoi Towers mini-game
+ * 
+ * The of the game is to move all disks from one column to another. Only top disk can be moved
+ * 
+ * Functionality is divided into GameController class,
+ * Column class and Disk class.
+ * There is also simple end-game GUI
+ *
+ */
 namespace HanoiTowers
 {
-
+    /// <summary>
+    /// Enumerate names of columns. Just for convenience
+    /// </summary>
     public enum ColumnsNames
     {
         Left,
@@ -15,12 +28,12 @@ namespace HanoiTowers
     {
 
         //TODO proper initialization - ??
-        //TODO better graphics
+        //TODO better graphics ??
 
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
 
-        [Range(1, 8)]
+        [Range(2, 8)]
         public int numberOfDisks;
 
 
@@ -106,6 +119,16 @@ namespace HanoiTowers
             gameStartTime = Time.time;
         }
 
+        // parameter has to be float to be usable with Unity UI
+        public void setDifficulty(float newNumberofDisks)
+        {
+            print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
+            numberOfDisks = (int)newNumberofDisks;
+
+            //TODO temporary hack - solve by implementing mini-game statistics saving
+            MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
+        }
+
         public void increaseScore()
         {
             score++;
@@ -171,19 +194,19 @@ namespace HanoiTowers
 
 
         
-        void OnGUI()
-        {
-            if (showEndGameGUI)
-            {
-                float w = Screen.width;
-                float h = Screen.height;
+        //void OnGUI()
+        //{
+        //    if (showEndGameGUI)
+        //    {
+        //        //float w = Screen.width;
+        //        //float h = Screen.height;
 
-                numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
+        //        //numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
                 
-                //TODO temporary hack - solve by implementing mini-game statistics saving
-                MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-            }
-        }
+        //        ////TODO temporary hack - solve by implementing mini-game statistics saving
+        //        //MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
+        //    }
+        //}
     }
 
 }
