@@ -6,6 +6,9 @@ using UnityEngine;
 using System.Collections;
 using Game;
 
+/**
+ * \brief name-space for classes and method related to main scene
+ */
 namespace MainScene {
 	public class SelectBrainPart : MonoBehaviour {
 		public string descriptionText;

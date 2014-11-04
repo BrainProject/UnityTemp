@@ -1,3 +1,21 @@
+/**
+ * @mainpage Newron 
+ *
+ * @section About
+ * 
+ * The Newron is therapeutic software for children with autism spectrum disorder. The softwrae is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
+ * 
+ * It is based on Unity game engine.
+  * 
+ * 
+ * @section Manual
+ * 
+ * This pages serves mainly as a class and method reference. Detailed description of project can be found at official project web page:
+ * 
+ * http://www.newron.cz
+ * 
+ */
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
