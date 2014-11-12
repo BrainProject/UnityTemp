@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
+
+/**
+ * \brief Various classes and methods available across all scenes 
+ */
+namespace Game
+{
+	
+	/// <summary>
 /// Help handles pop-up bubbles showing how to play currently started minigame.
 /// Attach this scrip to object that lives across scenes (e.g.: Neuron)
 /// \author: Milan Doležal
 /// </summary>
-
-namespace Game
-{
 	public class BrainHelp : MonoBehaviour{
 		public Texture helpTexture;
 		public bool helpExists;
@@ -37,17 +41,15 @@ namespace Game
 		//Attach GUI texture to make this function working
 		public void ShowHelpBubble (bool initialHelp = false) {
 			Minigame thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
-
 			if(initialHelp)
 			{
 				print (thisMinigame.initialShowHelpCounter);
 				++thisMinigame.initialShowHelpCounter;
-
 				if(thisMinigame.initialShowHelpCounter < 3)
 				{
 					if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 					{
-						helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
+						helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
 						helpObject.guiTexture.texture = helpTexture;
 						//helpObject.transform.parent = this.transform;
 						//helpObject.layer = this.gameObject.layer;
@@ -72,6 +74,8 @@ namespace Game
 				}
 				else
 				{
+					//print ("here " + helpExists + ", '" + MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
+					//       + Application.loadedLevelName + ", ");
 					this.GetComponent<Animator>().SetBool("wave", true);
 				}
 			}
@@ -89,15 +93,19 @@ namespace Game
 			{
 				Destroy(helpObject);
 			}
-
-			if(level > 2)
+			
+			if(level == 2)
+			{
+				helpTexture = (Texture)(Resources.Load("Textures/HelpText"));
+				ShowHelpBubble(true);
+			}
+			else if(level > 2)
 			{
 				//if(!MGC.Instance.minigameStates.GetPlayed(Application.loadedLevelName))
-				{
+				//{
 					ShowHelpBubble(true);
-				}
+				//}
 			}
-
 			else
 			{
 				helpExists = false;

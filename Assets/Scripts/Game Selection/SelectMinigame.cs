@@ -14,6 +14,7 @@ namespace MinigameSelection
 		public float cameraDistance = 5;
 		public Texture minigameIcon;
 		public Texture minigameHelp;
+		public bool kinectRequired = false;
 
 		//Will be changed according to currently selected brain part.
 		//public Vector3 CameraDefaultPosition { get; set; }
@@ -134,6 +135,13 @@ namespace MinigameSelection
 				//load mini-game if zooming or zoomed
 				if(OnSelection)
 				{
+					//check if Kinect is connected
+					if(kinectRequired)
+					{
+						print("Kinect is required for this game.");
+						if(!MGC.Instance.kinectManager.activeSelf)
+							return;
+					}
 					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
 					if(minigameHelp && MGC.Instance.neuronHelp)

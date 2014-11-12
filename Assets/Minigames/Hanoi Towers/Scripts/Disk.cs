@@ -13,11 +13,17 @@ namespace HanoiTowers
         public float yMax = 5.5f;
     }
 
+    /**
+     * \brief Handles logic of one disk in Hanoi Towers mini-game
+     * 
+     * Allows add and remove disks to/from column, handles reactions on mouse events, 
+     * */
     public class Disk : MonoBehaviour
     {
 
         public GameController gameController;
 
+        /// size of this disk - larger disk can not be put on top of smaller one
         public int size;
 
 
@@ -63,7 +69,10 @@ namespace HanoiTowers
 
         }
 
-
+        /// <summary>
+        /// returns true if disk can be lifted right now (it is top disk on column)
+        /// </summary>
+        /// <returns>true if disk can be lifted right now (it is top disk on column), else otherwise</returns>
         private bool isMovable()
         {
             if (actualColumn == null)
@@ -78,6 +87,7 @@ namespace HanoiTowers
 
             return false;
         }
+
 
         public void moveToColumn(Column target, bool animate)
         {
@@ -179,49 +189,6 @@ namespace HanoiTowers
             actualColumn = newColumn;
         }
 
-
-        //void OnMouseDown()
-        //{
-        //print("Mouse down");
-        //Vector3 diskPosition = transform.position;
-
-        //initialScreenPoint = Camera.main.WorldToScreenPoint(diskPosition);
-
-        //compute offset, that will be used during 'dragging' the disk
-        //we are interested only in X axis offset...
-        //offset = diskPosition - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-        //offset = diskPosition - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, initialScreenPoint.y, initialScreenPoint.z));
-        //}
-
-
-        //void FixedUpdate()
-        //{
-        //    if (draggingEnabled)
-        //    {
-
-
-        //Vector3 currentMouseScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-        //Vector3 currentDiskSreenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        //float horizontalDistance = currentMouseScreenPoint.x - currentDiskSreenPoint.x;
-        //float verticalDistance = currentMouseScreenPoint.y - currentDiskSreenPoint.y; 
-
-        ////print("Mouse distance: " + horizontalDistance);
-
-        ////move disk horizontally
-        //float force = 0.01f * horizontalDistance;
-        //rigidbody.AddForce(transform.right * force, ForceMode.VelocityChange);
-
-        ////if (verticalDistance > 0)
-        ////{
-        ////    rigidbody.AddForce(transform.up * 0.1f * verticalDistance);
-        ////}
-
-        ////Vector3 curPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint) + offset;
-        ////transform.position = curPosition;
-        //    }
-
-        //}
-
         //update position of disk
         private void updatePosition(float fallHeight)
         {
@@ -243,9 +210,7 @@ namespace HanoiTowers
             rigidbody.position = newPos;
         }
 
-
-
-
+        
         void Update()
         {
             if (jumpInProgress)
@@ -285,21 +250,6 @@ namespace HanoiTowers
 
             }
 
-
-            //    float deltaTime = Time.time - animationStartTime;
-            //    animationFraction = deltaTime / gameController.animationTime;
-
-            //    //Debug.Log("Delta time: " + deltaTime);
-            //    //Debug.Log("fraction: " + animationFraction);
-
-
-            //    transform.position = Vector3.Lerp(transform.position, animationTarget, animationFraction);
-
-            //    if(animationFraction >= 1.0f)
-            //    {
-            //        jumpInProgress = false;
-            //    }
-            //}
         }
     }
 

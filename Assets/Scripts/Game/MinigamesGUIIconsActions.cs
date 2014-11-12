@@ -55,7 +55,7 @@ namespace Game
                 MGC.Instance.minigamesGUI.hide();
 
                 //return to game selection scene
-                MGC.Instance.sceneLoader.LoadScene("GameSelection");
+                MGC.Instance.sceneLoader.LoadScene(2);
             }
 
             else if (action == "Reward")
