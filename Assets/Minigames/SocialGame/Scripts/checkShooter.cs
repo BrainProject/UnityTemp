@@ -12,7 +12,7 @@ namespace SocialGame{
 		private GestChecker checker;
 		private float nextTime;
 		private float time = 0;
-
+		private bool run = true;
 		// Use this for initialization
 		void Start () {
 			/*Vector3  offset = Vector3.right *range.x;
@@ -26,7 +26,7 @@ namespace SocialGame{
 		void Update () {
 			time += Time.deltaTime;
 
-			if(time > nextTime)
+			if(time > nextTime && run)
 			{
 				if(transform.childCount < maxNumOfcheck)
 					shoot();
@@ -50,6 +50,11 @@ namespace SocialGame{
 					shoot.rigidbody.AddForce(Vector3.down * power,ForceMode.Impulse);
 				}
 			}
+		}
+
+		public void stop()
+		{
+			run = false;
 		}
 	}
 }

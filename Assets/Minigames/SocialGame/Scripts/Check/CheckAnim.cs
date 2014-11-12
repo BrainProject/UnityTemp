@@ -9,6 +9,7 @@ namespace SocialGame{
 		public bool run;
 		public bool walk;
 		private Animator anim;
+		private float WalkTime;
 		// Use this for initialization
 		protected override void Start () {
 			anim = gameObject.GetComponent<Animator>();
@@ -20,10 +21,8 @@ namespace SocialGame{
 		}*/
 
 		IEnumerator Walk() {
-			float curretTime = 0;
-			while((curretTime < time) && !run)
+			while((Time.time < WalkTime) && !run)
 			{
-				curretTime += Time.deltaTime;
 				transform.Translate(translate);
 				yield return null;
 			}
@@ -42,7 +41,12 @@ namespace SocialGame{
 			if(!walk && !run)
 			{
 				playAnim(true);
+				WalkTime = Time.time + time;
 				StartCoroutine("Walk");
+			}
+			if(walk)
+			{
+				WalkTime = Time.time + time;
 			}
 		}
 
