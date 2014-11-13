@@ -34,7 +34,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	}
 
 	public static void activateThisLevelKManager()
-	{ 	
+	{
 		setActiveMGC(false);
 		
 		if(thisLevelKManager)
@@ -50,7 +50,10 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	public static void setActiveMGC(bool active)
 	{
 		if(defaultKManager)
+		{
+			MGC.Instance.checkInactivity = active;
 			defaultKManager.SetActive(active);
+		}
 		if(!active && MGC.Instance.mouseCursor)
 			MGC.Instance.HideCustomCursor();
 		else if(active)

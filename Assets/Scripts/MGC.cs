@@ -88,7 +88,8 @@ public class MGC : Singleton<MGC>
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
-	internal string inactivityScene = "SocialGame";
+	internal string inactivityScene = "Figure";
+	internal bool checkInactivity = true;
 
     /// <summary>
     /// TODO just a temporary solution, before mini-games statistics will be properly saved
@@ -97,7 +98,7 @@ public class MGC : Singleton<MGC>
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
-	private int inactivityCounter = 0;
+	private int inactivityCounter = 1;
 	private GameObject controlsGUI;
 
 	void Awake ()
@@ -172,7 +173,6 @@ public class MGC : Singleton<MGC>
             }
         }
 
-
 		//Inactivity detection
 		if(Input.anyKeyDown)
 		{
@@ -180,10 +180,13 @@ public class MGC : Singleton<MGC>
 			inactivityCounter = 0;
 		}
 
-        if (Time.time - inactivityTimestamp > inactivityLenght)
-        {
-            InactivityReaction();
-        }
+		if(checkInactivity)
+		{
+			if (Time.time - inactivityTimestamp > inactivityLenght)
+    	    {
+        	    InactivityReaction();
+        	}
+		}
 
 		//Debug actions
 		if (Input.GetKeyDown(KeyCode.F11))
