@@ -55,9 +55,9 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			defaultKManager.SetActive(active);
 		}
 		if(!active && MGC.Instance.mouseCursor)
-			MGC.Instance.HideCustomCursor();
+			MGC.Instance.ShowCustomCursor(false);
 		else if(active)
-			MGC.Instance.ShowCustomCursor();
+			MGC.Instance.ShowCustomCursor(true);
 			//MGC.Instance.mouseCursor.SetActive(active);*/
 	}
 

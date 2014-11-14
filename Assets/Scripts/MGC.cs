@@ -216,20 +216,20 @@ public class MGC : Singleton<MGC>
 		inactivityCounter = 0;
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
-		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+		//Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
 
 		//DEV NOTE: Only temporary until we unify cursor styles.
-		if (Application.loadedLevelName == "Coloring")
-		{
-			mouseCursor.SetActive (false);
-			Screen.showCursor = true;
-		}
-		else if(mouseCursor)
-		{
-			mouseCursor.SetActive(true);
-			Screen.showCursor = false;
-		}
-
+//		if (Application.loadedLevelName == "Coloring")
+//		{
+//			mouseCursor.SetActive (false);
+//			Screen.showCursor = true;
+//		}
+//		else if(mouseCursor)
+//		{
+//			mouseCursor.SetActive(true);
+//			Screen.showCursor = false;
+//		}
+//
 //		if (!mouseCursor && Application.loadedLevel > 0)
 //		{
 //			ShowCustomCursor ();
@@ -352,11 +352,18 @@ public class MGC : Singleton<MGC>
 		#endif
 	}
 
-	public void ShowCustomCursor()
+	public void ShowCustomCursor(bool isShown)
 	{
-		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-		mouseCursor.guiTexture.enabled = false;
-		mouseCursor.transform.parent = this.transform;
+		if(isShown)
+		{
+			mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+			mouseCursor.guiTexture.enabled = false;
+			mouseCursor.transform.parent = this.transform;
+		}
+		else
+		{
+			Destroy(mouseCursor);
+		}
 	}
 
 	public void HideCustomCursor()

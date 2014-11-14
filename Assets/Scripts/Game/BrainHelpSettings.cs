@@ -78,8 +78,6 @@ namespace Game
 		IEnumerator FadeOut()
 		{
 			Destroy (blockBorderClone);
-			//Tell to MGC that this minigame was played.
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
 			originalColor = this.guiTexture.color;

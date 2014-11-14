@@ -27,7 +27,7 @@ namespace Game
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
-			MGC.Instance.ShowCustomCursor ();
+			MGC.Instance.ShowCustomCursor (true);
 		}
 
 		void LateUpdate()
