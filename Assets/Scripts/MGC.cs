@@ -356,13 +356,20 @@ public class MGC : Singleton<MGC>
 	{
 		if(isShown)
 		{
-			mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-			mouseCursor.guiTexture.enabled = false;
-			mouseCursor.transform.parent = this.transform;
+			if(!mouseCursor)
+			{
+				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+				mouseCursor.guiTexture.enabled = false;
+				mouseCursor.transform.parent = this.transform;
+			}
+			else
+			{
+				mouseCursor.SetActive(true);
+			}
 		}
 		else
 		{
-			Destroy(mouseCursor);
+			mouseCursor.SetActive(false);
 		}
 	}
 

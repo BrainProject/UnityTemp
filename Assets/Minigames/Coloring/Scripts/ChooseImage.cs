@@ -10,13 +10,16 @@ namespace Coloring
 		public LevelManagerColoring thisLevelManager;
 
 		void OnMouseDown(){
-			Image.SetActive(true);
 
 			if(!DeskAnimation.IsPlaying("deskRotation") && !DeskAnimation.IsPlaying("deskRotation2"))
 			{
+				Image.SetActive(true);
 				DeskAnimation.Play("deskRotation2");
 				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
-				thisLevelManager.CursorType(true);
+				thisLevelManager.painting = true;
+				thisLevelManager.backGUI.SetActive(true);
+				if(!thisLevelManager.hiddenGUIwhilePainting)
+					MGC.Instance.ShowCustomCursor(false);
 			}
 		}
 	}

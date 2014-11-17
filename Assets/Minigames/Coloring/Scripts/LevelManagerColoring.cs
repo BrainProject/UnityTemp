@@ -6,30 +6,44 @@ namespace Coloring
 	public class LevelManagerColoring : MonoBehaviour
 	{
 		public Texture brush;
+		public GameObject backGUI;
 
 		internal bool painting = false;
+		internal bool hiddenGUIwhilePainting = false;
 
 		private int x = (Screen.width / 10)/3;
 		private int y = (Screen.height / 10)/2;
 		private int w = Screen.width / 16;
 		private int h = Screen.height / 9;
 
-		public void CursorType (bool isPainting)
+
+		void Update()
 		{
-			painting = isPainting;
-
-			if(isPainting)
+			if(Input.GetKeyDown(KeyCode.I))
 			{
+				hiddenGUIwhilePainting = !hiddenGUIwhilePainting;
 
-				print ("show brush now");
+				if(painting && hiddenGUIwhilePainting)
+					MGC.Instance.ShowCustomCursor(true);
+				if(painting && !hiddenGUIwhilePainting)
+					MGC.Instance.ShowCustomCursor(false);
+
+				PaintingCursor();
 			}
-			MGC.Instance.ShowCustomCursor(!isPainting);
+		}
+
+
+		public void PaintingCursor ()
+		{
+			//painting = isPainting;
+			//if(painting && !hiddenGUIwhilePainting)
+			//	MGC.Instance.ShowCustomCursor(false);
 		}
 
 		void OnGUI()
 		{
-			if(painting)
-				GUI.DrawTexture (new Rect (Input.mousePosition.x - x, Screen.height - Input.mousePosition.y - y, w, h), brush);
+			if(painting && !hiddenGUIwhilePainting)
+				GUI.DrawTexture (new Rect (Input.mousePosition.x - x*2, Screen.height - Input.mousePosition.y - y*2, w*2, h*2), brush);
 		}
 	}
 }
