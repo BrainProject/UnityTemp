@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Coloring
 {
-	public class NewronGui : MonoBehaviour {
+	public class BackGUI : MonoBehaviour {
 		public Texture normal;
 		public Texture hover;
 		
@@ -33,6 +33,7 @@ namespace Coloring
 			{
 				DeskAnimation.CrossFade("deskRotation");
 				thisLevelManager.painting = false;
+				thisLevelManager.ShowColoringGUI(false);
 				MGC.Instance.ShowCustomCursor(true);
 			}
 		}

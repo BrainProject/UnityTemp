@@ -615,7 +615,7 @@ Transform:
   - {fileID: 78607960}
   - {fileID: 251665182}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 7
+  m_RootOrder: 0
 --- !u!95 &50235375
 Animator:
   serializedVersion: 3
@@ -843,7 +843,7 @@ Transform:
   - {fileID: 181248155}
   - {fileID: 503679450}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!95 &84051739
 Animator:
   serializedVersion: 3
@@ -1166,7 +1166,7 @@ Transform:
   - {fileID: 1379882828}
   - {fileID: 1881054963}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!95 &124827931
 Animator:
   serializedVersion: 3
@@ -2340,7 +2340,7 @@ Transform:
   - {fileID: 1551179605}
   - {fileID: 1529726850}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!95 &367348694
 Animator:
   serializedVersion: 3
@@ -2761,6 +2761,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 859462363}
   m_RootOrder: 0
+--- !u!1 &464385359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 464385361}
+  - 131: {fileID: 464385360}
+  m_Layer: 0
+  m_Name: SavePictureGUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!131 &464385360
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 464385359}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: f418b9b4acd9191468d8d1560d76b13c, type: 3}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 100
+    y: 0
+    width: 100
+    height: 100
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
+--- !u!4 &464385361
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 464385359}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
 --- !u!1 &483411723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,7 +3051,7 @@ Transform:
   - {fileID: 32237275}
   - {fileID: 983687590}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!95 &528464497
 Animator:
   serializedVersion: 3
@@ -5145,7 +5192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!131 &1039476857
 GUITexture:
   m_ObjectHideFlags: 0
@@ -6762,7 +6809,7 @@ Transform:
   - {fileID: 1928327708}
   - {fileID: 1679696505}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!95 &1347843059
 Animator:
   serializedVersion: 3
@@ -7144,7 +7191,7 @@ Transform:
   - {fileID: 1498221345}
   - {fileID: 1089764563}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!95 &1407879733
 Animator:
   serializedVersion: 3
@@ -7699,7 +7746,7 @@ Transform:
   - {fileID: 996570574}
   - {fileID: 1955666708}
   m_Father: {fileID: 1597765298}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!95 &1482169957
 Animator:
   serializedVersion: 3
@@ -8625,6 +8672,7 @@ Transform:
   m_LocalPosition: {x: -.27976346, y: .648856401, z: .0352551043}
   m_LocalScale: {x: 1.49735641, y: 1.49735641, z: 1.49735641}
   m_Children:
+  - {fileID: 50235374}
   - {fileID: 84051738}
   - {fileID: 1407879732}
   - {fileID: 367348693}
@@ -8632,7 +8680,6 @@ Transform:
   - {fileID: 528464496}
   - {fileID: 1347843058}
   - {fileID: 124827930}
-  - {fileID: 50235374}
   m_Father: {fileID: 1507728635}
   m_RootOrder: 2
 --- !u!1 &1605609745

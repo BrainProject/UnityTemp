@@ -27,17 +27,14 @@ namespace Coloring
 					MGC.Instance.ShowCustomCursor(true);
 				if(painting && !hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);
-
-				PaintingCursor();
 			}
 		}
 
 
-		public void PaintingCursor ()
+		public void ShowColoringGUI(bool isVisible)
 		{
-			//painting = isPainting;
-			//if(painting && !hiddenGUIwhilePainting)
-			//	MGC.Instance.ShowCustomCursor(false);
+			backGUI.SetActive (isVisible);
+			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
 		}
 
 		void OnGUI()
