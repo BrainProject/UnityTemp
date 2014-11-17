@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class Basket : MonoBehaviour {
+#if !UNITY_WEBPLAYER
 		public int max;
 		public float speed;
 		public float step;
@@ -35,5 +36,6 @@ namespace SocialGame{
 				up = true;
 			}
 		}
+#endif
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class CottonBall : MonoBehaviour {
+#if !UNITY_WEBPLAYER
 		public Transform target;
 		public float distance;
 		public float deathZone;
@@ -43,5 +44,6 @@ namespace SocialGame{
 			LevelManager.finish();
 			Destroy(transform.parent.gameObject);
 		}
+#endif
 	}
 }
