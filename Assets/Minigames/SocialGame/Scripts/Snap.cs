@@ -66,6 +66,7 @@ namespace SocialGame{
 			script.destroy = true;
 			script.distance = 0.2f;
 			script.next = after;
+			script.clipBone = "root";
 			if(player == 1 )
 			{
 				script.player1 = false;

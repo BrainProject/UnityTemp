@@ -107,7 +107,7 @@ namespace SocialGame
 							{
 								complete = script.Checked(target) && complete;
 							}
-							Debug.DrawRay(target.position,child.position - target.position,Color.green);
+							//Debug.DrawRay(target.position,child.position - target.position,Color.green);
 							break;
 						}	
 						else
@@ -116,7 +116,8 @@ namespace SocialGame
 							{
 								complete = false;
 							}
-							Debug.DrawRay(target.position,child.position - target.position,Color.red);
+							//Debug.DrawRay(target.position,child.position - target.position,Color.red);
+							//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 						}
 					}
 				}
@@ -135,7 +136,7 @@ namespace SocialGame
 			}
 			if(finish && (next== null))
 			{
-				Debug.Log("blbnu " + gameObject.name);
+				//Debug.Log("blbnu " + gameObject.name);
 				finishHim();
 			}
 			if(destroy)

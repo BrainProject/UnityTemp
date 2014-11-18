@@ -52,9 +52,9 @@ namespace SocialGame{
 			}
 		}
 
-		public void stop()
+		public void Stop(bool stop)
 		{
-			run = false;
+			run = !stop;
 		}
 	}
 }

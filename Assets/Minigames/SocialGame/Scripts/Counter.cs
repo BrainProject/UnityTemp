@@ -46,7 +46,7 @@ namespace SocialGame{
 				checkShooter check = (checkShooter) FindObjectOfType(typeof(checkShooter));
 				if(check)
 				{
-					check.stop();
+					check.Stop(true);
 				}
 			}
 		}
