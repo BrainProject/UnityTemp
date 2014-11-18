@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class GestChecker : MonoBehaviour {
-
+#if !UNITY_WEBPLAYER
 		public float distance;
 		public GameObject next;
 		public string clipBone;
@@ -19,7 +19,6 @@ namespace SocialGame
 		private Vector3 temp;
 		private List<Transform> Targets = new List<Transform>();
 
-		#if UNITY_STANDALONE
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
@@ -240,7 +239,7 @@ namespace SocialGame
 		{
 
 		}
-		#endif
+#endif
 	}
 }
 

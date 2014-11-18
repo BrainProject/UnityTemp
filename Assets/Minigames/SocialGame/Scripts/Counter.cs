@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class Counter : MonoBehaviour {
+#if !UNITY_WEBPLAYER
 		public int max;
 		private int points = 0;
 		private float step;
@@ -50,5 +51,6 @@ namespace SocialGame{
 				}
 			}
 		}
+#endif
 	}
 }

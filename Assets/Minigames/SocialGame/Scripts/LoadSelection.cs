@@ -7,7 +7,7 @@ public class LoadSelection : MonoBehaviour {
 	void Start ()
 	{
 		print(MGC.Instance);
-		MGC.Instance.ShowCustomCursor ();
+		MGC.Instance.ShowCustomCursor (true);
 		Application.LoadLevel (Application.loadedLevel + 1);
 	}
 }

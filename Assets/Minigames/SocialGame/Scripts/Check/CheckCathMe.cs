@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class CheckCathMe : Check {
+#if !UNITY_WEBPLAYER
 		public GameObject obj;
 		public float deathZone;
 		public GameObject goodObj;
@@ -62,5 +63,6 @@ namespace SocialGame{
 			}
 			Destroy(gameObject);
 		}
+#endif
 	}
 }

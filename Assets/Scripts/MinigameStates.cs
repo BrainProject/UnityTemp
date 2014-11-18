@@ -79,7 +79,11 @@ namespace Game
 
 			MGC.Instance.LoadGame ();
 		}
-		
+
+		/// <summary>
+		/// Sets the minigame status to "played".
+		/// </summary>
+		/// <param name="minigameName">Minigame name.</param>
 		public void SetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)

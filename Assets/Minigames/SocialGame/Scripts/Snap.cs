@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class Snap : MonoBehaviour {
-
+#if !UNITY_WEBPLAYER
 		public int player;
 		public GameObject after;
 		public Vector3 position;
@@ -78,6 +78,6 @@ namespace SocialGame{
 				script.player2 = false;
 			}
 		}
+#endif
 	}
-	
 }

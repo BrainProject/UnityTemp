@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class CheckBallon : Check {
+#if !UNITY_WEBPLAYER
 		public GameObject obj;
 		public GameObject basket;
 
@@ -46,5 +47,6 @@ namespace SocialGame{
 			}
 			GameObject.Destroy(gameObject);
 		}
+#endif
 	}
 }

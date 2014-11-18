@@ -144,7 +144,7 @@ namespace MinigameSelection
 					}
 					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-					if(minigameHelp && MGC.Instance.neuronHelp)
+					//if(minigameHelp && MGC.Instance.neuronHelp)
 						MGC.Instance.neuronHelp.GetComponent<BrainHelp>().helpTexture = minigameHelp;
 					//MGC.Instance.currentCameraDefaultPosition = CameraZoom;
 	                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;

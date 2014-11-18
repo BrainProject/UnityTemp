@@ -10,7 +10,7 @@ namespace Game
 	
 	/// <summary>
 /// Help handles pop-up bubbles showing how to play currently started minigame.
-/// Attach this scrip to object that lives across scenes (e.g.: Neuron)
+/// Attach this scrip to Neuron character.
 /// \author: Milan Doležal
 /// </summary>
 	public class BrainHelp : MonoBehaviour{
@@ -27,7 +27,7 @@ namespace Game
 			animator = this.GetComponent<Animator> ();
 			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
-			MGC.Instance.ShowCustomCursor ();
+			MGC.Instance.ShowCustomCursor (true);
 		}
 
 		void LateUpdate()

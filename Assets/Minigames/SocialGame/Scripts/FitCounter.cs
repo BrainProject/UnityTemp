@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class FitCounter : MonoBehaviour {
+#if !UNITY_WEBPLAYER
 		public  int max;
 		private int count;
 
@@ -76,5 +77,6 @@ namespace SocialGame{
 				}
 			}
 		}
+#endif
 	}
 }

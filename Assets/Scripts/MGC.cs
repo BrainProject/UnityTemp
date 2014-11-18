@@ -88,7 +88,8 @@ public class MGC : Singleton<MGC>
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
-	internal string inactivityScene = "SocialGame";
+	internal string inactivityScene = "Figure";
+	internal bool checkInactivity = true;
 
     /// <summary>
     /// TODO just a temporary solution, before mini-games statistics will be properly saved
@@ -97,7 +98,7 @@ public class MGC : Singleton<MGC>
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
-	private int inactivityCounter = 0;
+	private int inactivityCounter = 1;
 	private GameObject controlsGUI;
 
 	void Awake ()
@@ -172,7 +173,6 @@ public class MGC : Singleton<MGC>
             }
         }
 
-
 		//Inactivity detection
 		if(Input.anyKeyDown)
 		{
@@ -180,10 +180,13 @@ public class MGC : Singleton<MGC>
 			inactivityCounter = 0;
 		}
 
-        if (Time.time - inactivityTimestamp > inactivityLenght)
-        {
-            InactivityReaction();
-        }
+		if(checkInactivity)
+		{
+			if (Time.time - inactivityTimestamp > inactivityLenght)
+    	    {
+        	    InactivityReaction();
+        	}
+		}
 
 		//Debug actions
 		if (Input.GetKeyDown(KeyCode.F11))
@@ -213,20 +216,20 @@ public class MGC : Singleton<MGC>
 		inactivityCounter = 0;
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
-		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+		//Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
 
 		//DEV NOTE: Only temporary until we unify cursor styles.
-		if (Application.loadedLevelName == "Coloring")
-		{
-			mouseCursor.SetActive (false);
-			Screen.showCursor = true;
-		}
-		else if(mouseCursor)
-		{
-			mouseCursor.SetActive(true);
-			Screen.showCursor = false;
-		}
-
+//		if (Application.loadedLevelName == "Coloring")
+//		{
+//			mouseCursor.SetActive (false);
+//			Screen.showCursor = true;
+//		}
+//		else if(mouseCursor)
+//		{
+//			mouseCursor.SetActive(true);
+//			Screen.showCursor = false;
+//		}
+//
 //		if (!mouseCursor && Application.loadedLevel > 0)
 //		{
 //			ShowCustomCursor ();
@@ -349,11 +352,25 @@ public class MGC : Singleton<MGC>
 		#endif
 	}
 
-	public void ShowCustomCursor()
+	public void ShowCustomCursor(bool isShown)
 	{
-		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-		mouseCursor.guiTexture.enabled = false;
-		mouseCursor.transform.parent = this.transform;
+		if(isShown)
+		{
+			if(!mouseCursor)
+			{
+				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+				mouseCursor.guiTexture.enabled = false;
+				mouseCursor.transform.parent = this.transform;
+			}
+			else
+			{
+				mouseCursor.SetActive(true);
+			}
+		}
+		else
+		{
+			mouseCursor.SetActive(false);
+		}
 	}
 
 	public void HideCustomCursor()

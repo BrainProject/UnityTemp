@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class NextExcer : MonoBehaviour {
+#if !UNITY_WEBPLAYER
 		public string CounterName = "FitCounter";
 		// Use this for initialization
 		void Start () {
@@ -21,5 +22,6 @@ namespace SocialGame{
 			}
 
 		}
+#endif
 	}
 }
