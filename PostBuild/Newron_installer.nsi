@@ -1,5 +1,4 @@
 ;NSIS Modern User Interface
-;Multilingual Example Script
 ;Written by Joost Verburg
 
 ;--------------------------------
@@ -13,7 +12,7 @@
   #nastaveni komprese
   SetCompressor bzip2
   
-  ;Properly display all languages (Installer will not work on Windows 95, 98 or ME!)
+  ;Properly display all languages
   Unicode true
 
   ;Name and file
@@ -26,8 +25,8 @@
   ;Get installation folder from registry if available
   #InstallDirRegKey HKCU "Software\Newron" ""
 
-  ;Request application privileges for Windows Vista
-  #RequestExecutionLevel user
+  ;Request application privileges - for SDK
+  RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
@@ -48,9 +47,12 @@
 ;--------------------------------
 ;Pages
 
+	!include "kinect.nsdinc"
+
   !insertmacro MUI_PAGE_LICENSE "Licence.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
+  Page custom fnc_kinect_Show
   !insertmacro MUI_PAGE_INSTFILES
   
   #!insertmacro MUI_UNPAGE_CONFIRM
@@ -61,9 +63,7 @@
 
   !insertmacro MUI_LANGUAGE "Czech" ;first language is the default language
   !insertmacro MUI_LANGUAGE "English"
-  !insertmacro MUI_LANGUAGE "French"
-  !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "Spanish"
+
 
 
 ;--------------------------------
@@ -78,12 +78,31 @@
 ;--------------------------------
 ;Installer Sections
 
+Section "Kinect SDK" SecKinect
+
+  #povinná položka - nelze odškrtnout
+  SectionIn RO
+
+  SetOutPath $INSTDIR\SDK
+  
+  File "SDK\KinectSDK-v1.8-Setup.exe"
+  ExecWait "$INSTDIR\SDK\KinectSDK-v1.8-Setup.exe"
+  
+
+SectionEnd
+
+
+
+
 Section "Newron" SecNewron
 
   #povinná položka - nelze odškrtnout
   SectionIn RO
 
   SetOutPath "$INSTDIR"
+    
+  ;odstranìní instalaèky Kinect SDK - zatím nefunguje
+  RMDir /r $INSTDIR/SDK
   
   ;ADD YOUR OWN FILES HERE...
   File /r Newron_Data
@@ -99,7 +118,7 @@ Section "Newron" SecNewron
 
 SectionEnd
 
-Section "Zástupce" SecShortcut
+Section "Zástupce na ploše" SecShortcut
 
   # create a shortcut named "new shortcut" in the start menu programs directory
   # presently, the new shortcut doesn't call anything (the second field is blank)
@@ -124,7 +143,8 @@ FunctionEnd
 
   ;Assign descriptions to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecNewron} "Terapeutický software Newron"
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecKinect} "Microsoft Kinect for Windows SDK 1.8"
+	!insertmacro MUI_DESCRIPTION_TEXT ${SecNewron} "Terapeutický software Newron"
     !insertmacro MUI_DESCRIPTION_TEXT ${SecShortcut} "Zástupce na ploše"
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
