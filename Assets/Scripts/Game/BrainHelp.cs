@@ -40,43 +40,46 @@ namespace Game
 
 		//Attach GUI texture to make this function working
 		public void ShowHelpBubble (bool initialHelp = false) {
-			Minigame thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
-			if(initialHelp)
+			if(MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 			{
-				print (thisMinigame.initialShowHelpCounter);
-				++thisMinigame.initialShowHelpCounter;
-				if(thisMinigame.initialShowHelpCounter < 3)
+				Minigame thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
+				if(initialHelp)
+				{
+					print (thisMinigame.initialShowHelpCounter);
+					++thisMinigame.initialShowHelpCounter;
+					if(thisMinigame.initialShowHelpCounter < 3)
+					{
+						if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+						{
+							helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
+							helpObject.guiTexture.texture = helpTexture;
+							//helpObject.transform.parent = this.transform;
+							//helpObject.layer = this.gameObject.layer;
+							helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
+						}
+						else
+						{
+							this.GetComponent<Animator>().SetBool("wave", true);
+						}
+					}
+				}
+				else
 				{
 					if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 					{
-						helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
+						helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 						helpObject.guiTexture.texture = helpTexture;
 						//helpObject.transform.parent = this.transform;
 						//helpObject.layer = this.gameObject.layer;
 						helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
+						MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
 					}
 					else
 					{
+						//print ("here " + helpExists + ", '" + MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
+						//       + Application.loadedLevelName + ", ");
 						this.GetComponent<Animator>().SetBool("wave", true);
 					}
-				}
-			}
-			else
-			{
-				if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
-				{
-					helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
-					helpObject.guiTexture.texture = helpTexture;
-					//helpObject.transform.parent = this.transform;
-					//helpObject.layer = this.gameObject.layer;
-					helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
-					MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
-				}
-				else
-				{
-					//print ("here " + helpExists + ", '" + MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
-					//       + Application.loadedLevelName + ", ");
-					this.GetComponent<Animator>().SetBool("wave", true);
 				}
 			}
 		}
