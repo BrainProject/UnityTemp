@@ -75,7 +75,7 @@ namespace HanoiTowers
             }
 
             ResetGame();
-
+			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
             //QualitySettings.antiAliasing = 4;
         }
 

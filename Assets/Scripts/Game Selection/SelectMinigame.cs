@@ -15,32 +15,35 @@ namespace MinigameSelection
 		public Texture minigameIcon;
 		public Texture minigameHelp;
 		public bool kinectRequired = false;
+		public LevelManagerSelection levelManager;
 
 		//Will be changed according to currently selected brain part.
 		//public Vector3 CameraDefaultPosition { get; set; }
+		public GameObject Icon { get; set; }
 		
 		public bool OnSelection { get; set; }
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
-		private LevelManagerSelection LevelManager { get; set; }
-		private GameObject Icon { get; set; }
 		private Color OriginalColor { get; set; }
 		private Vector3 OriginalIconScale { get; set; }
 
 		void Start()
 		{
-			LevelManager = GameObject.Find ("_LevelManager").GetComponent<LevelManagerSelection>();
+			//levelManager = GameObject.Find ("_LevelManager").GetComponent<LevelManagerSelection>();
 			OnSelection = false;
 			//CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
-			if(minigameIcon)
+			if(Icon)
 			{
-				Icon = (GameObject)Instantiate(GameObject.Find ("Selection Part Icon"));
-				Icon.renderer.material.mainTexture = minigameIcon;
+				//if(transform.childCount > 0)
+				//{
+					//Icon = transform.GetChild(0).gameObject;
+					//Icon.renderer.material.mainTexture = minigameIcon;
 				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-				Icon.transform.parent = this.transform;
+					//Icon.transform.parent = this.transform;
 				OriginalIconScale = Icon.transform.localScale;
+				//}
 				//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			}
 
@@ -87,7 +90,7 @@ namespace MinigameSelection
 			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
 				OnSelection = false;
-				LevelManager.minigameOnSelection = null;
+				levelManager.minigameOnSelection = null;
 //				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
 //				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
 //				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
@@ -110,7 +113,8 @@ namespace MinigameSelection
 //				Icon.transform.position = this.transform.position;
 //			}
 			if(Icon)
-				Icon.transform.localScale = new Vector3 (0.6f, 0.6f, 1);
+				StartCoroutine("SmoothScaleUp");
+				//Icon.transform.localScale = new Vector3 (0.8f, 0.8f, 1);
 			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 			MouseHover = true;
 
@@ -124,7 +128,8 @@ namespace MinigameSelection
 			//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
 			if(Icon)
-				Icon.transform.localScale = OriginalIconScale;
+				StartCoroutine("SmoothScaleDown");
+				//Icon.transform.localScale = OriginalIconScale;
 	        MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
@@ -176,16 +181,44 @@ namespace MinigameSelection
 
 					//deactivate OnSelection flag on previously zoomed minigame and set it to current minigame
 					//if this is the first selected minigame, set it instantly
-					if(LevelManager.minigameOnSelection == null)
-						LevelManager.minigameOnSelection = this.gameObject;
+					if(levelManager.minigameOnSelection == null)
+						levelManager.minigameOnSelection = this.gameObject;
 					else
 					{
-						if(LevelManager.minigameOnSelection != this.gameObject)
-							LevelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
-						LevelManager.minigameOnSelection = this.gameObject;
+						if(levelManager.minigameOnSelection != this.gameObject)
+							levelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+						levelManager.minigameOnSelection = this.gameObject;
 					}
 					OnSelection = true;
 				}
+			}
+		}
+
+		IEnumerator SmoothScaleUp()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("SmoothScaleDown");
+			Vector3 startScale = Icon.transform.localScale;
+			Vector3 targetScale = new Vector3(1, 1, 1);
+
+			while(Icon.transform.localScale.x < 0.99f)
+			{
+				Icon.transform.localScale = Vector3.Lerp (startScale, targetScale, (Time.time - startTime) * 1.5f);
+				yield return null;
+			}
+		}
+
+		IEnumerator SmoothScaleDown()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("SmoothScaleUp");
+			Vector3 startScale = Icon.transform.localScale;
+			Vector3 targetScale = new Vector3(0.6f, 0.6f, 1);
+
+			while(Icon.transform.localScale.x > 0.61f)
+			{
+				Icon.transform.localScale = Vector3.Lerp (startScale, targetScale, (Time.time - startTime) * 1.5f);
+				yield return null;
 			}
 		}
 	}
