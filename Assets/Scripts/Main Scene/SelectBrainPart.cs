@@ -125,7 +125,7 @@ namespace MainScene {
 			
 			while(icon.renderer.material.color.a < 0.99f)
 			{
-				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime)/2);
+				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 			//Time.timeScale = 0;

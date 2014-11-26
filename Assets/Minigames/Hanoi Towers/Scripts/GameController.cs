@@ -58,7 +58,7 @@ namespace HanoiTowers
 
         private float gameStartTime;
 
-        private bool showEndGameGUI = false;
+        //private bool showEndGameGUI = false;
         void Start()
         {
             //set up columns
@@ -187,7 +187,7 @@ namespace HanoiTowers
 
             //mini-game specific gui
             endGameGUI.SetActive(true);
-            showEndGameGUI = true;
+            //showEndGameGUI = true;
 
 
         }

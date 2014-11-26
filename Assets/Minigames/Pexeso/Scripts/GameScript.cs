@@ -72,7 +72,7 @@ namespace MinigamePexeso
         private int winningScore;
 
         private float gameStartTime;
-        private float gameEndTime;
+        //private float gameEndTime;
         private int   lastDisplayTime = 0;
 
 		/// <summary>
@@ -287,7 +287,7 @@ namespace MinigamePexeso
             this.gameObject.audio.Play();
 
             //game ends here, show scoreboard...
-            gameEndTime = Time.time;
+            //gameEndTime = Time.time;
 
             MGC.Instance.minigamesGUI.show(true);
 
@@ -521,7 +521,7 @@ namespace MinigamePexeso
 				System.Random random = new System.Random();
 				int num;
 
-				string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\");
+				//string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\");
 				//Load all pictures and their matching silhouettes/similarities.
 				int o = 0;
 				while(o != -1)
