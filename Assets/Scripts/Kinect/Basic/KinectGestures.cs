@@ -833,7 +833,8 @@ namespace Kinect {
 					break;
 				}
 				break;
-				
+			
+				/*
 				// check for SwipeUp
 			case Gestures.SwipeUp:
 				switch(gestureData.state)
@@ -931,7 +932,7 @@ namespace Kinect {
 							break;
 					}
 					break;
-
+*/
 				// check for RightHandCursor
 				case Gestures.RightHandCursor:
 					switch(gestureData.state)
