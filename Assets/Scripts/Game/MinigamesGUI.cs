@@ -9,6 +9,7 @@ namespace Game
         public MinigamesGUIIconsActions rewardIcon;
         public MinigamesGUIIconsActions gameSelectionIcon;
         public MinigamesGUIIconsActions restartIcon;
+		public MinigamesGUIIconsActions brainIcon;
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -23,6 +24,7 @@ namespace Game
             rewardIcon.resetState();
             gameSelectionIcon.resetState();
             restartIcon.resetState();
+			brainIcon.resetState();
 
             gameObject.SetActive(true);
             rewardIcon.gameObject.SetActive(false);
