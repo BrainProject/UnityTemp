@@ -97,7 +97,7 @@ public class MGC : Singleton<MGC>
     internal int hanoiTowersNumberOfDisks = 3;
 	
 	private float inactivityTimestamp;
-	private float inactivityLenght = 60f;
+	private float inactivityLenght = 16f;
 	private int inactivityCounter = 1;
 	private GameObject controlsGUI;
 

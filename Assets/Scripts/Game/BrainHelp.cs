@@ -116,7 +116,13 @@ namespace Game
 		public void ShowSmile(Texture smileTexture)
 		{
 			animator.SetBool ("smile", true);
+			collider.enabled = false;
 			pictureInHands.renderer.material.mainTexture = smileTexture;
+		}
+
+		void ActivateCollider()
+		{
+			collider.enabled = true;
 		}
 	}
 }
