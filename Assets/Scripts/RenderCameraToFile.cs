@@ -10,7 +10,7 @@ public class RenderCameraToFile : MonoBehaviour
     public int height = 900;
     public string defaultFileName = "savedCameraFrame.png";
 
-    void RenderToFile(string fileName)
+    public void RenderToFile(string fileName)
     {
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);

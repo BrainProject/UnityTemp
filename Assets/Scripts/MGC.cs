@@ -305,12 +305,20 @@ public class MGC : Singleton<MGC>
 		{
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/newron.sav", FileMode.Open);
-			for(int i=0; i<minigameStates.minigames.Count; ++i)
+			FileInfo info = new FileInfo(file.Name);
+			if(info.Length > 0)
 			{
-				minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
-			}
+				for(int i=0; i<minigameStates.minigames.Count; ++i)
+				{
+					minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
+				}
 
-			print ("Saved game-data loaded.");
+				print ("Saved game-data loaded.");
+			}
+			else
+			{
+				print ("Game NOT loaded.");
+			}
 			file.Close();
 		}
 
@@ -336,7 +344,16 @@ public class MGC : Singleton<MGC>
 		}
 		else
 		{
-			mouseCursor.SetActive(false);
+			if(!mouseCursor)
+			{
+				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+				mouseCursor.guiTexture.enabled = false;
+				mouseCursor.transform.parent = this.transform;
+			}
+			else
+			{
+				mouseCursor.SetActive(false);
+			}
 		}
 	}
 

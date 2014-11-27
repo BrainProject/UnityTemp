@@ -1154,7 +1154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &124827930
 Transform:
   m_ObjectHideFlags: 0
@@ -2774,6 +2774,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 464385361}
   - 131: {fileID: 464385360}
+  - 114: {fileID: 464385362}
   m_Layer: 0
   m_Name: SavePictureGUI
   m_TagString: Untagged
@@ -2789,7 +2790,7 @@ GUITexture:
   m_GameObject: {fileID: 464385359}
   m_Enabled: 1
   m_Texture: {fileID: 2800000, guid: f418b9b4acd9191468d8d1560d76b13c, type: 3}
-  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_Color: {r: .5, g: .5, b: .5, a: 0}
   m_PixelInset:
     serializedVersion: 2
     x: 100
@@ -2812,6 +2813,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &464385362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 464385359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1afe3f12369495e43be11521c5d2f89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: {fileID: 2800000, guid: f418b9b4acd9191468d8d1560d76b13c, type: 3}
+  hover: {fileID: 2800000, guid: 6f995e5d764c7254f897f3bc461b947a, type: 3}
 --- !u!1 &483411723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3445,7 +3459,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4d38cbb921b73fb4e8f0fe9353a46c7e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -6943,8 +6957,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc434e81c481f5748b6ddb3d9ed24272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brush: {fileID: 2800000, guid: 31784adc88bed2443926657b73be990c, type: 3}
+  brush: {fileID: 2800000, guid: 865f66c6fb419e846b79f7fe61e3c6a6, type: 3}
   backGUI: {fileID: 1039476856}
+  savePictureGUI: {fileID: 464385359}
 --- !u!1 &1373029205
 GameObject:
   m_ObjectHideFlags: 0
@@ -11162,7 +11177,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100024, guid: 927b8b26344b14b4182afb773e8fb3c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 927b8b26344b14b4182afb773e8fb3c0, type: 3}
@@ -11247,7 +11262,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

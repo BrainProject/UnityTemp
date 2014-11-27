@@ -15,11 +15,11 @@ namespace Coloring
 			{
 				Image.SetActive(true);
 				DeskAnimation.Play("deskRotation2");
-				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
 				thisLevelManager.painting = true;
 				thisLevelManager.ShowColoringGUI(true);
 				if(!thisLevelManager.hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);
+				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
 			}
 		}
 	}
