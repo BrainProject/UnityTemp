@@ -22,19 +22,19 @@ namespace MainScene {
 			{
 			case Side.Left:
 				rotatingAxis = Vector3.up;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width/8, Screen.height);
+				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width/8, Screen.height + 4);
 				break;
 			case Side.Right:
 				rotatingAxis = Vector3.down;
-				this.guiTexture.pixelInset = new Rect(Screen.width/2 - Screen.width/8, 0 - Screen.height/2, Screen.width/8, Screen.height);
+				this.guiTexture.pixelInset = new Rect(Screen.width/2 - Screen.width/8, - Screen.height/2, Screen.width/8, Screen.height + 4);
 				break;
 			case Side.Forward:
 				rotatingAxis = Vector3.forward;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, Screen.height/2 - Screen.height/8, Screen.width, Screen.height / 8);
+				this.guiTexture.pixelInset = new Rect(-Screen.width/2, Screen.height/2 - Screen.height/8, Screen.width + 4, Screen.height / 8);
 				break;
 			case Side.Backward:
 				rotatingAxis = Vector3.back;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width, Screen.height / 8);
+				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2 - 1, Screen.width + 4, Screen.height / 8);
 				break;
 			case Side.Up:
 				rotatingAxis = Vector3.left;
@@ -47,10 +47,21 @@ namespace MainScene {
 			}
 			this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0);
 		}
-		
-		// Update is called once per frame
-		void Update () {
-		
+
+		void OnMouseEnter()
+		{
+			if(CanRotate)
+			{
+				this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0.5f);
+			}
+		}
+
+		void OnMouseExit()
+		{
+			if(CanRotate)
+			{
+				this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0);
+			}
 		}
 
 		void OnMouseOver()
