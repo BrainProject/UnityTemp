@@ -103,6 +103,15 @@ public class MGC : Singleton<MGC>
 
 	void Awake ()
 	{
+        if (UnityEditorInternal.InternalEditorUtility.HasPro())
+        {
+            print("You are working with PRO version of Unity");
+        }
+        else
+        {
+            print("You are working with FREE version of Unity");
+        }
+
 		print ("Master Game Controller Awake()...");
 
 		//Initiate Logger

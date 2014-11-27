@@ -6,12 +6,18 @@ using System.IO;
 public class RenderCameraToFile : MonoBehaviour 
 {
     public Camera cam;
-    public int width = 1600;
-    public int height = 900;
+    public int width = 3840;
+    public int height = 2160;
     public string defaultFileName = "savedCameraFrame.png";
 
     public void RenderToFile(string fileName)
     {
+        if (!UnityEditorInternal.InternalEditorUtility.HasPro())
+        {
+            Debug.LogWarning("You are now working with FREE version of Unity, but this feature works only with PRO version - feature is therefore disabled, no file will be saved");
+            return;
+        }
+
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);
         cam.targetTexture = tempRT;
