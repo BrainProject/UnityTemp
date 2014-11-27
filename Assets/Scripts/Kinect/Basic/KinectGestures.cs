@@ -471,6 +471,10 @@ namespace Kinect {
 
 								Vector3 jointPos = jointsPos[gestureData.joint];
 								CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectWrapper.Constants.ClickStayDuration);
+								if(gestureData.complete)
+								{
+									MouseControl.MouseClick();
+								}
 	//							SetGestureCancelled(gestureData);
 							}
 							break;
