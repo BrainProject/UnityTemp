@@ -7,6 +7,7 @@ namespace SocialGame{
 		public int max;
 		private int points = 0;
 		private float step;
+
 		// Use this for initialization
 		void Start () {
 			step = transform.localScale.x / max;
@@ -40,7 +41,14 @@ namespace SocialGame{
 			}
 			else
 			{
+
 				LevelManager.finish();
+				transform.localScale = new Vector3 (step * max,transform.localScale.y,transform.localScale.z);
+				checkShooter check = (checkShooter) FindObjectOfType(typeof(checkShooter));
+				if(check)
+				{
+					check.Stop(true);
+				}
 			}
 		}
 #endif

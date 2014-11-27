@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SocialGame
 {
-	public class GestChecker : MonoBehaviour {
+	public class GestCheckerFigure : MonoBehaviour {
 #if !UNITY_WEBPLAYER
 		public float distance;
 		public GameObject next;
@@ -75,6 +75,7 @@ namespace SocialGame
 							MoveParentOnBone(clipBone);
 						}
 					}
+				StartCoroutine(Check());
 			}
 			else
 			{
@@ -84,46 +85,56 @@ namespace SocialGame
 
 	
 		// Update is called once per frame
-		void Update () {
-			bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
-			for(int i = 0; i< transform.childCount; i++)
+		IEnumerator Check() {
+			while(true)
 			{
-				Transform child = transform.GetChild(i);
-				Check script = child.GetComponent<Check>();
-				if(script  && script.activated)
+				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+				for(int i = 0; i< transform.childCount; i++)
 				{
-					Transform[] targets = script.target;
-					foreach(Transform target in targets)
+					Transform child = transform.GetChild(i);
+					CheckFigure script = child.GetComponent<CheckFigure>();
+					if(script  && script.activated)
 					{
-						bool next = Vector2.Distance(child.position,target.position) < distance;
-						if(next)
+						Transform[] targets = script.target;
+						foreach(Transform target in targets)
 						{
-							if(!allChecked)
+							bool next = Vector2.Distance(child.position,target.position) < distance;
+							if(next)
 							{
-								complete = script.Checked(target);
-							}
+								if(!allChecked)
+								{
+									complete = script.Checked(target);
+								}
+								else
+								{
+									complete = script.Checked(target) && complete;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.green);
+								break;
+							}	
 							else
 							{
-								complete = script.Checked(target) && complete;
+								script.UnCheck();
+								if(allChecked)
+								{
+									complete = false;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.red);
+								//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.green);
-							break;
-						}	
-						else
-						{
-							if(allChecked)
-							{
-								complete = false;
-							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.red);
-							//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 						}
 					}
 				}
-			}
-			if(complete)
-			{
-				CompleteGest();
+				if(complete)
+				{
+					CompleteGest();
+					Debug.Log("end");
+					yield return new WaitForSeconds(0.5f);
+				}
+				else
+				{
+					yield return new WaitForSeconds(0.5f);
+				}
 			}
 		}
 

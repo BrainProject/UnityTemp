@@ -37,7 +37,7 @@ namespace SocialGame{
 			{
 				FigureCreate figCreate = playerObj.GetComponentInChildren<FigureCreate>();
 				GameObject checker = figCreate.createPoints();
-				GestChecker checkerScript = checker.GetComponent<GestChecker>();
+				GestCheckerFigure checkerScript = checker.GetComponent<GestCheckerFigure>();
 				//GameObject root = GameObjectEx.findGameObjectWithNameTag("root",tag);
 				setTags(checker,tag);
 				checker.transform.position = position;
@@ -58,7 +58,7 @@ namespace SocialGame{
 
 
 
-		public void setCheckerScript(GestChecker script)
+		public void setCheckerScript(GestCheckerFigure script)
 		{
 			script.handMode = false;
 			script.finish = false;
@@ -66,6 +66,7 @@ namespace SocialGame{
 			script.destroy = true;
 			script.distance = 0.2f;
 			script.next = after;
+			script.clipBone = "root";
 			if(player == 1 )
 			{
 				script.player1 = false;

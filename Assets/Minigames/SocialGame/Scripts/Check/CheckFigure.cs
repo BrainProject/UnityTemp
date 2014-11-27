@@ -6,6 +6,12 @@ namespace SocialGame{
 		public bool check;
 		private bool checkedLastUpdate;
 
+		public void UnCheck()
+		{
+			check = false;
+			changeColorMaterial(Color.red);
+		}
+
 		protected override void Start()
 		{
 			base.Start();
@@ -15,10 +21,11 @@ namespace SocialGame{
 
 		public override void thisActivate()
 		{
-			checkedLastUpdate = true;
+			check = true;
+			changeColorMaterial(Color.green);
 		}
 
-		void LateUpdate()
+		/*void LateUpdate()
 		{
 			if(checkedLastUpdate !=  check) // xor if is check = true and *lastupdete = false, check = false and *lastupdate =  
 			{
@@ -36,7 +43,7 @@ namespace SocialGame{
 				}
 			}
 			checkedLastUpdate = false;
-		}
+		}*/
 
 		void changeColorMaterial(Color color)
 		{

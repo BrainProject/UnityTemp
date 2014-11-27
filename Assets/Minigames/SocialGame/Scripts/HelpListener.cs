@@ -4,6 +4,7 @@ using System.Collections;
 #if UNITY_STANDALONE
 public class HelpListener : MonoBehaviour {
 	public bool activated = false;
+	public GameObject[] ObjToPause;
 
 	//	public Game.BrainHelp neuronHelp;
 	
@@ -40,10 +41,24 @@ public class HelpListener : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.I))
 		{
 			if(!activated)
+			{
 				KinectManagerSwitcher.deactivateThisLevelKManager();
+			}
 			else
+			{
 				KinectManagerSwitcher.activateThisLevelKManager();
+			}
+			StopAll(!activated);
 			activated = !activated;
+
+		}
+	}
+
+	void StopAll(bool stop)
+	{
+		foreach(GameObject  obj in ObjToPause)
+		{
+			obj.SendMessage("Stop",stop);
 		}
 	}
 }

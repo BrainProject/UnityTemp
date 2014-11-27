@@ -11,7 +11,7 @@ using System.Text;
 namespace Kinect {
 	public class AvatarController : MonoBehaviour
 	{	
-		private float timestamp;
+		//private float timestamp;
 		// Bool that determines whether the avatar is active.
 		//public bool Active = true;
 		
@@ -96,7 +96,7 @@ namespace Kinect {
 		
 	    public void Start()
 	    {	
-			timestamp = Time.time;
+			//timestamp = Time.time;
 			//GestureInfo = GameObject.Find("GestureInfo");
 			//HandCursor = GameObject.Find("HandCursor");
 			
@@ -272,8 +272,8 @@ namespace Kinect {
 			// Get Kinect joint orientation
 			Vector3 jointDir = Vector3.zero;
 			
-			if(boneIndex == 16)  // Hip_center
-			{
+//			if(boneIndex == 16)  // Hip_center
+//			{
 //				if(Time.time - timestamp > 0.5f)
 //				{
 //					initialDir = hipsUp;
@@ -287,16 +287,16 @@ namespace Kinect {
 //					if(!flip)
 //						jointDir.x = -jointDir.x;
 //				}
-			}
-			else if(boneIndex == 5 || boneIndex == 11)  // Collar_left or Collar_right (shoulders)
+//			}
+/*			else*/ if(boneIndex == 5 || boneIndex == 11)  // Collar_left or Collar_right (shoulders)
 			{
-				if(Time.time - timestamp > 0.5f)
+				//if(Time.time - timestamp > 0.5f)
 				// target is a vector from shoulder_center to bone
 					jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderCenter, iJoint, !flip, true);
 			}
 			else
 			{
-				if(Time.time - timestamp > 0.5f)
+				//if(Time.time - timestamp > 0.5f)
 					jointDir = kinectManager.GetDirectionBetweenJoints(userId, iJoint - 1, iJoint, !flip, true);
 			}
 
@@ -367,8 +367,8 @@ namespace Kinect {
 	//			RestoreBone(bones[1], hipsUp, upDir);
 	//			RestoreBone(bones[1], hipsRight, rightDir);
 	//		}
-			if(Time.time - timestamp > 0.5f)
-				timestamp = Time.time;
+			//if(Time.time - timestamp > 0.5f)
+				//timestamp = Time.time;
 		}
 		
 		// Transform targetDir into bone-local space (independant of the transform of the controller)
