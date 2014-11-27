@@ -119,7 +119,9 @@ namespace FindIt
             UpdateCameraSize();
             newTargetImage();
             FindItStatistics.Clear();
-            FindItStatistics.StartMeasuringTime();
+			FindItStatistics.StartMeasuringTime();
+			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			//MGC.Instance.SaveGame ();
         }
 
         void CheckEndGame()

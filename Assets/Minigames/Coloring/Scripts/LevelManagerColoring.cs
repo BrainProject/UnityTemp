@@ -33,7 +33,8 @@ namespace Coloring
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-			backGUI.SetActive (isVisible);
+			backGUI.SetActive (true);
+			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
 			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
 		}
 

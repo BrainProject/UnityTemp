@@ -37,5 +37,46 @@ namespace Coloring
 				MGC.Instance.ShowCustomCursor(true);
 			}
 		}
+
+		public void IconVisible(bool isVisible)
+		{
+			if(isVisible)
+				StartCoroutine ("FadeInGUI");
+			else
+				StartCoroutine("FadeOutGUI");
+		}
+
+		IEnumerator FadeInGUI()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeOutGUI");
+			Color startColor = this.guiTexture.color;
+			Color targetColor = this.guiTexture.color;
+			targetColor.a = 0.5f;
+			
+			while(this.guiTexture.color.a < 0.49f)
+			{
+				this.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				yield return null;
+			}
+			//Time.timeScale = 0;
+		}
+		
+		IEnumerator FadeOutGUI()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeInGUI");
+			Color startColor = this.guiTexture.color;
+			Color targetColor = this.guiTexture.color;
+			targetColor.a = 0;
+			
+			while(this.guiTexture.color.a > 0.01f)
+			{
+				this.guiTexture.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				//Time.timeScale = state;
+				yield return null;
+			}
+			this.gameObject.SetActive (false);
+		}
 	}
 }

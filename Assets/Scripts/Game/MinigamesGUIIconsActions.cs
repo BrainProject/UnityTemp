@@ -11,11 +11,20 @@ namespace Game
         public string action;
         public Texture2D texture_normal;
         public Texture2D texture_hover;
+		
+		internal Color startColor;
+		internal Color targetColor;
 
 		private bool restartDifferentScene = false;
 		private string differentSceneName;
 
-        public void resetState()
+		void Start()
+		{
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
+		}
+        
+		public void resetState()
         {
             renderer.material.mainTexture = texture_normal;
         }
@@ -32,7 +41,7 @@ namespace Game
 
         void OnMouseDown()
         {
-            
+			transform.parent.GetComponent<MinigamesGUI> ().hide ();
 
             //resolve action
             switch(action)
@@ -97,6 +106,50 @@ namespace Game
 		{
 			this.restartDifferentScene = shouldRestartDifferentScene;
 			this.differentSceneName = differentRestartSceneName;
+		}
+
+		public void show()
+		{
+			StartCoroutine ("FadeInGUI");
+		}
+
+		public void hide()
+		{
+			StartCoroutine ("FadeOutGUI");
+		}
+
+		IEnumerator FadeInGUI()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeOutGUI");
+			collider.enabled = true;
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
+			targetColor.a = 1;
+			
+			while(this.renderer.material.color.a < 0.99f)
+			{
+				this.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				yield return null;
+			}
+			//Time.timeScale = 0;
+		}
+		
+		IEnumerator FadeOutGUI()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeInGUI");
+			collider.enabled = false;
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
+			targetColor.a = 0;
+			
+			while(this.renderer.material.color.a > 0.001f)
+			{
+				this.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				//Time.timeScale = state;
+				yield return null;
+			}
 		}
 
     }
