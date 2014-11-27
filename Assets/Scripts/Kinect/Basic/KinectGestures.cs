@@ -471,6 +471,10 @@ namespace Kinect {
 
 								Vector3 jointPos = jointsPos[gestureData.joint];
 								CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectWrapper.Constants.ClickStayDuration);
+								if(gestureData.complete)
+								{
+									MouseControl.MouseClick();
+								}
 	//							SetGestureCancelled(gestureData);
 							}
 							break;
@@ -833,7 +837,8 @@ namespace Kinect {
 					break;
 				}
 				break;
-				
+			
+				/*
 				// check for SwipeUp
 			case Gestures.SwipeUp:
 				switch(gestureData.state)
@@ -931,7 +936,7 @@ namespace Kinect {
 							break;
 					}
 					break;
-
+*/
 				// check for RightHandCursor
 				case Gestures.RightHandCursor:
 					switch(gestureData.state)

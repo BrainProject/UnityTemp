@@ -162,8 +162,7 @@ public class MGC : Singleton<MGC>
         if (Input.GetKeyDown(KeyCode.I))
         {
             print("Show hidden menu.");
-
-            if (!minigamesGUIObject.activeSelf)
+            if (!minigamesGUI.visible)
             {
                 minigamesGUI.show();
             }
@@ -249,44 +248,12 @@ public class MGC : Singleton<MGC>
 		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
 		//print("calling object ID: " + this.GetInstanceID());
 
-		if (Application.loadedLevelName == gameSelectionSceneName)
-		{
-			print ("this is game selection scene...");
-			switch (currentBrainPart) {
-			case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("FrontalLobePos");
-				break;
-			case BrainPartName.ParietalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("ParietalLobePos");
-				break;
-			case BrainPartName.OccipitalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("OccipitalLobePos");
-				break;
-			case BrainPartName.TemporalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("TemporalLobePos");
-				break;
-			case BrainPartName.Cerebellum:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("CerebellumPos");
-				break;
-			case BrainPartName.BrainStem:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("BrainStemPos");
-				break;
-			}
-			if (fromMain)
-			{
-				currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.position;
-			}
 
-			//if player comes to selection scene from main, he can leave immediately by pressing Vertical key
-			Camera.main.GetComponent<CameraControl> ().ReadyToLeave = fromMain;
-			Camera.main.transform.position = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.position;
-			fromMain = false;
-		}
 
-				//if (level > 2)
-				//{
-				//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
-				//}
+		//if (level > 2)
+		//{
+		//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
+		//}
 	}
 
 	//Only for debugging and testing purposes

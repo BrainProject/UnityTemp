@@ -11,26 +11,27 @@ using Game;
  */
 namespace MainScene {
 	public class SelectBrainPart : MonoBehaviour {
-		public string descriptionText;
-		public string iconName;
+		//public string descriptionText;
+		public GameObject icon;
 		public BrainPartName brainPartToLoad;
 		public bool CanSelect{ get; set; }
 
-		private string levelName;
+		//private string levelName;
 		private bool initialMouseOver;
 		private Color selectionColor;
 		private Color originalColor;
 		private GameObject Icon { get; set; }
-		private GameObject Description{ get; set; }
+		//private GameObject Description{ get; set; }
 
 		void Start()
 		{
 			CanSelect = false;
-			Icon = GameObject.Find ("Brain Part Icon");
-			Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
-			Description = GameObject.Find ("Description");
+			//Icon = GameObject.Find ("Brain Part Icon");
+			icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+			icon.transform.position = this.transform.parent.transform.position;
+			//Description = GameObject.Find ("Description");
 			originalColor = this.renderer.material.color;
-            levelName = "GameSelection";
+            //levelName = "GameSelection";
 			initialMouseOver = true;
 		}
 
@@ -39,13 +40,15 @@ namespace MainScene {
 		{
 			if(CanSelect)
 			{
-				Texture tmp = (Texture)Resources.Load ("Main/" + iconName, typeof(Texture));
-				if(tmp)
-				{
-					Icon.renderer.material.mainTexture = tmp;
-					Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
-					Icon.transform.position = this.transform.parent.transform.position;
-				}
+				//icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 1);
+				StartCoroutine("FadeIn");
+				//Texture tmp = (Texture)Resources.Load ("Main/" + iconName, typeof(Texture));
+				//if(tmp)
+				//{
+				//	Icon.renderer.material.mainTexture = tmp;
+				//	Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
+				//	Icon.transform.position = this.transform.parent.transform.position;
+				//}
 				
                 //this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 
@@ -63,10 +66,11 @@ namespace MainScene {
 		{
 			if(CanSelect)
 			{
-				Icon.renderer.material.mainTexture = null;
-				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
+				//Icon.renderer.material.mainTexture = null;
+				//icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+				StartCoroutine("FadeOut");
 				//this.transform.localScale = new Vector3(1, 1, 1);
-				Description.GetComponent<TextMesh> ().text = "";
+				//Description.GetComponent<TextMesh> ().text = "";
 			}
 			this.renderer.material.color = originalColor;
 		}
@@ -101,7 +105,7 @@ namespace MainScene {
                     
                     StopAllCoroutines();
 
-                    mgc.sceneLoader.LoadScene(levelName);
+                    mgc.sceneLoader.LoadScene("GameSelection");
 				}
 			}
 			if(CanSelect && initialMouseOver)
@@ -110,6 +114,41 @@ namespace MainScene {
 				print ("Mouse over from initial animation.");
 			}
 		}
+
+		IEnumerator FadeIn()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeOut");
+			Color startColor = icon.renderer.material.color;
+			Color targetColor = icon.renderer.material.color;
+			targetColor.a = 1;
+			
+			while(icon.renderer.material.color.a < 0.99f)
+			{
+				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				yield return null;
+			}
+			//Time.timeScale = 0;
+		}
+		
+		IEnumerator FadeOut()
+		{
+			float startTime = Time.time;
+			StopCoroutine ("FadeIn");
+			Color startColor = icon.renderer.material.color;
+			Color targetColor = icon.renderer.material.color;
+			targetColor.a = 0;
+			
+			while(icon.renderer.material.color.a > 0.001f)
+			{
+				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				//Time.timeScale = state;
+				yield return null;
+			}
+			//Time.timeScale = 1.0f;
+			//icon.renderer.material.color.a = 0;
+		}
+
 
 	//	void Fade(Color currentColor, Color nextColor)
 	//	{

@@ -43,8 +43,8 @@ namespace MinigameSelection {
 			float fracJourney = distCovered / journeyLength;
 			if(journeyLength > 0.0f)
 			{
-				this.transform.position = Vector3.Lerp(From, To, fracJourney);
-				this.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(FromYRot, ToYRot, fracJourney), 0);
+				this.transform.position = Vector3.Lerp(From, To, (Mathf.SmoothStep(0, 1, fracJourney)));
+				this.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(FromYRot, ToYRot, (Mathf.SmoothStep(0, 1, fracJourney))), 0);
 				//if(Vector3.Distance(this.transform.position, To) < 0.01f)
 				//{
 					//FromYRot = this.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
