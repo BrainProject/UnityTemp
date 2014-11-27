@@ -11,10 +11,20 @@ namespace Game
         public string action;
         public Texture2D texture_normal;
         public Texture2D texture_hover;
+		
+		internal Color startColor;
+		internal Color targetColor;
 
 		private bool restartDifferentScene = false;
 		private string differentSceneName;
-        public void resetState()
+
+		void Start()
+		{
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
+		}
+        
+		public void resetState()
         {
             renderer.material.mainTexture = texture_normal;
         }
@@ -113,8 +123,8 @@ namespace Game
 			float startTime = Time.time;
 			StopCoroutine ("FadeOutGUI");
 			collider.enabled = true;
-			Color startColor = this.renderer.material.color;
-			Color targetColor = this.renderer.material.color;
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
 			targetColor.a = 1;
 			
 			while(this.renderer.material.color.a < 0.99f)
@@ -128,10 +138,10 @@ namespace Game
 		IEnumerator FadeOutGUI()
 		{
 			float startTime = Time.time;
-			collider.enabled = false;
 			StopCoroutine ("FadeInGUI");
-			Color startColor = this.renderer.material.color;
-			Color targetColor = this.renderer.material.color;
+			collider.enabled = false;
+			startColor = this.renderer.material.color;
+			targetColor = this.renderer.material.color;
 			targetColor.a = 0;
 			
 			while(this.renderer.material.color.a > 0.001f)

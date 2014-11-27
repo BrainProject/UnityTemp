@@ -50,10 +50,18 @@ namespace Game
 			brainIcon.hide ();
         }
 
-//		void OnLevelWasLoaded (int level)
-//		{
-//			gameObject.SetActive(false);
-//		}
+		void OnLevelWasLoaded (int level)
+		{
+			visible = false;
+			Color tmp = gameSelectionIcon.renderer.material.color;
+			tmp.a = 0.01f;
+			gameSelectionIcon.renderer.material.color = tmp;
+			restartIcon.renderer.material.color = tmp;
+			brainIcon.renderer.material.color = tmp;
+			gameSelectionIcon.hide ();
+			restartIcon.hide ();
+			brainIcon.hide ();
+		}
     }
 
 }
