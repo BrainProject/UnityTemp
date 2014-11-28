@@ -61,9 +61,12 @@ namespace Game
 			gameSelectionIcon.renderer.material.color = tmp;
 			restartIcon.renderer.material.color = tmp;
 			brainIcon.renderer.material.color = tmp;
-			gameSelectionIcon.hide ();
-			restartIcon.hide ();
-			brainIcon.hide ();
+			if(gameSelectionIcon.gameObject.activeSelf)
+				gameSelectionIcon.hide ();
+			if(restartIcon.gameObject.activeSelf)
+				restartIcon.hide ();
+			if(brainIcon.gameObject.activeSelf)
+				brainIcon.hide ();
 		}
     }
 

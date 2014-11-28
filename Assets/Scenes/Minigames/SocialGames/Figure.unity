@@ -966,7 +966,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!95 &999714152
 Animator:
   serializedVersion: 3
@@ -1043,7 +1043,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1062897376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1203,10 @@ Prefab:
       propertyPath: Player1Avatars.Array.data[0]
       value: 
       objectReference: {fileID: 426779117}
+    - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
+      propertyPath: TwoUsers
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01cd580a2e74f284595025959431ae21, type: 2}
   m_RootGameObject: {fileID: 943453674}
@@ -1487,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00db858c1f8ff90478dad0aa1bac9a2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TwoUsers: 1
+  TwoUsers: 0
   NearMode: 0
   ComputeUserMap: 0
   ComputeColorMap: 0

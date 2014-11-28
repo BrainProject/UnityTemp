@@ -25,7 +25,7 @@ namespace Coloring
 		
 		void OnMouseDown()
 		{
-			string dateText = String.Format ("{0-yyyy-MM-dd}", DateTime.Now);
+			string dateText = "YYYY-MM-DD";//String.Format ("{0-yyyy-MM-dd}", DateTime.Now);
 			Camera.main.GetComponent<RenderCameraToFile> ().RenderToFile ("snapshot-" + dateText);
 		}
 
