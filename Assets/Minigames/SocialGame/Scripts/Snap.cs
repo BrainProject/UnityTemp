@@ -1,37 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Kinect;
 
 namespace SocialGame{
 	public class Snap : MonoBehaviour {
 #if !UNITY_WEBPLAYER
 		public int player;
 		public GameObject after;
-		public Vector3 position;
-		// Use this for initialization
-		void Start () {
-			
-		}
-		
-		// Update is called once per frame
-		void Update () {
-		
-		}
+		public Vector3 positionLeft;
+		public Vector3 positionRight;
+
+		private GameObject targetPlayer;
 
 		public void snap()
 		{
 			GameObject playerObj;
-			string tag; 
+			string tag;
+			KinectManager kinect = Kinect.KinectManager.Instance;
 			if(player <1 || player > 2)
 				return;
 			if(player == 1)
 			{
-				playerObj = GameObject.Find("P1");
+
 				tag="Player2";
+				if(kinect)
+				{
+					playerObj = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,"Player1");
+					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,tag);
+				}
+				else
+				{
+					playerObj = GameObject.Find("P1");
+				}
 			}
 			else
 			{
-				playerObj = GameObject.Find("P2");
 				tag="Player1";
+				if(kinect)
+				{
+					playerObj = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,"Player2");
+					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,tag);
+				}
+				else
+				{
+					playerObj = GameObject.Find("P2");
+				}
 			}
 			if(playerObj)
 			{
@@ -40,7 +53,14 @@ namespace SocialGame{
 				GestCheckerFigure checkerScript = checker.GetComponent<GestCheckerFigure>();
 				//GameObject root = GameObjectEx.findGameObjectWithNameTag("root",tag);
 				setTags(checker,tag);
-				checker.transform.position = position;
+				if(targetPlayer && (targetPlayer.transform.position.x > 0))
+				{
+					checker.transform.position = positionRight;
+				}
+				else
+				{
+					checker.transform.position = positionLeft;
+				}
 				checkerScript.findTartgetByCheckName();
 				setCheckerScript(checkerScript);
 			}
@@ -61,7 +81,7 @@ namespace SocialGame{
 		public void setCheckerScript(GestCheckerFigure script)
 		{
 			script.handMode = false;
-			script.finish = false;
+			//script.finish = false;
 			script.allChecked = true;
 			script.destroy = true;
 			script.distance = 0.2f;
@@ -78,6 +98,7 @@ namespace SocialGame{
 				script.player2 = false;
 			}
 		}
+
 #endif
 	}
 }
