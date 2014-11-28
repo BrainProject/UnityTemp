@@ -1394,7 +1394,7 @@ namespace Kinect {
 						//Debug.Log("DETECTING"); 
 						gestureData.progress = (timestamp - gestureData.timestamp) / 3;
 						MGC.Instance.minigamesGUI.guiDetection.ShowDetection(gestureData.progress);
-						Debug.Log ((timestamp - gestureData.timestamp) / 3);
+						//Debug.Log ((timestamp - gestureData.timestamp) / 3);
 					}
 					
 					if(timestamp - gestureData.timestamp > 3)
