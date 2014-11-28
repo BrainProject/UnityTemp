@@ -139,21 +139,14 @@ namespace MainScene {
 			Color targetColor = icon.renderer.material.color;
 			targetColor.a = 0;
 			
-			while(icon.renderer.material.color.a > 0.001f)
+			while(icon.renderer.material.color.a > 0.01f)
 			{
 				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				//Time.timeScale = state;
 				yield return null;
 			}
-			//Time.timeScale = 1.0f;
-			//icon.renderer.material.color.a = 0;
+
+			icon.renderer.material.color = targetColor;
 		}
-
-
-	//	void Fade(Color currentColor, Color nextColor)
-	//	{
-	//		duration += Time.deltaTime;
-	//		this.renderer.material.color = Color.Lerp(currentColor, nextColor, duration);
-	//	}
 	}
 }

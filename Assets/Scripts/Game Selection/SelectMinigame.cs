@@ -145,7 +145,10 @@ namespace MinigameSelection
 					{
 						print("Kinect is required for this game.");
 						if(!MGC.Instance.kinectManager.activeSelf)
+						{
+							levelManager.FadeInOutKinectIcon();
 							return;
+						}
 					}
 					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;

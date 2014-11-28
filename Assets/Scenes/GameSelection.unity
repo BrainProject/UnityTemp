@@ -5116,6 +5116,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1456585140}
   - 114: {fileID: 1456585141}
+  - 131: {fileID: 1456585139}
   m_Layer: 0
   m_Name: _LevelManager
   m_TagString: Untagged
@@ -5123,6 +5124,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!131 &1456585139
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1456585138}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: 7592fd91c33ba384aa0f4c836b03b13a, type: 3}
+  m_Color: {r: .5, g: .5, b: .5, a: 0}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 50
+    y: 50
+    width: 100
+    height: 100
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!4 &1456585140
 Transform:
   m_ObjectHideFlags: 0
@@ -5130,7 +5150,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1456585138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.26136208, y: .843546569, z: -.0149208307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5152,6 +5172,7 @@ MonoBehaviour:
   cerebellumPos: {fileID: 1407043127}
   temporalLobePos: {fileID: 984744386}
   minigameOnSelection: {fileID: 0}
+  kinectRequiredIcon: {fileID: 0}
 --- !u!1 &1505630623
 GameObject:
   m_ObjectHideFlags: 0
