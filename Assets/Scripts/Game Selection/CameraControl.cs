@@ -53,6 +53,7 @@ namespace MinigameSelection
 					}
 					movingLeft = true;
 					movingRight = false;
+					SetNewTarget();
 				}
 				else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
 				{
@@ -64,8 +65,8 @@ namespace MinigameSelection
 					}
 					movingLeft = false;
 					movingRight = true;
+					SetNewTarget();
 				}
-				SetNewTarget();
 			}
 
 			if(movingLeft || movingRight)

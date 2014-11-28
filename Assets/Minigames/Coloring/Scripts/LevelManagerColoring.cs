@@ -7,6 +7,7 @@ namespace Coloring
 	{
 		public Texture brush;
 		public GameObject backGUI;
+		public GameObject savePictureGUI;
 
 		internal bool painting = false;
 		internal bool hiddenGUIwhilePainting = false;
@@ -16,6 +17,10 @@ namespace Coloring
 		private int w = Screen.width / 16;
 		private int h = Screen.height / 9;
 
+//		void Awake()
+//		{
+//			MGC.Instance.ShowCustomCursor (true);
+//		}
 
 		void Update()
 		{
@@ -33,8 +38,14 @@ namespace Coloring
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-			backGUI.SetActive (isVisible);
+			print (isVisible);
+			backGUI.SetActive (true);
+			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
 			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
+
+			savePictureGUI.SetActive (true);
+			savePictureGUI.GetComponent<SavePictureGUI> ().IconVisible (isVisible);
+			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<SavePictureGUI> ().normal;
 		}
 
 		void OnGUI()

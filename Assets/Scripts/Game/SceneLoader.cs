@@ -79,7 +79,7 @@ namespace Game
             //print("initial alpha = " + guiTexture.color.a);
             float startTime = Time.time;
             originalColor = guiTexture.color;
-            targetColor.a = 0.0f;
+            targetColor.a = 0;
             
             guiTexture.enabled = true;
             
@@ -119,8 +119,12 @@ namespace Game
 				float startTime = Time.time;
 				originalColor.a = 0.0f;
 				targetColor.a = 1.0f;                
-				
-				this.gameObject.guiTexture.enabled = true;
+				if(!this.guiTexture)
+				{
+					print ("GUITexture not assigned to MGC.");
+					this.gameObject.AddComponent<GUITexture>();
+				}
+				this.guiTexture.enabled = true;
 				while (this.guiTexture.color.a < 0.51f)
 				{
 					this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);

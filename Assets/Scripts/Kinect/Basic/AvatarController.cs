@@ -11,6 +11,7 @@ using System.Text;
 namespace Kinect {
 	public class AvatarController : MonoBehaviour
 	{	
+		//private float timestamp;
 		// Bool that determines whether the avatar is active.
 		//public bool Active = true;
 		
@@ -95,6 +96,7 @@ namespace Kinect {
 		
 	    public void Start()
 	    {	
+			//timestamp = Time.time;
 			//GestureInfo = GameObject.Find("GestureInfo");
 			//HandCursor = GameObject.Find("HandCursor");
 			
@@ -121,7 +123,7 @@ namespace Kinect {
 		
 		// Update the avatar each frame.
 	    public void UpdateAvatar(uint UserID, bool IsNearMode)
-	    {	
+	    {
 			LastUserID = UserID;
 			bool flipJoint = !MirroredMovement;
 			
@@ -137,6 +139,9 @@ namespace Kinect {
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.NECK, 3, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.HEAD, 4, flipJoint);
 			
+			// Hips 2
+			TransformBoneDir(UserID, KinectWrapper.SkeletonJoint.HIPS, 16, flipJoint);
+
 			// Beyond this, switch the arms and legs.
 			
 			// Left Arm --> Right Arm
@@ -154,9 +159,7 @@ namespace Kinect {
 			//TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_WRIST, !MirroredMovement ? 14 : 8, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_HAND, !MirroredMovement ? 14 : 8, flipJoint);
 			TransformBone(UserID, KinectWrapper.SkeletonJoint.RIGHT_FINGERTIP, !MirroredMovement ? 16 : 10, flipJoint);
-			
-			// Hips 2
-			TransformBoneDir(UserID, KinectWrapper.SkeletonJoint.HIPS, 16, flipJoint);
+
 			
 			//if(!IsNearMode)
 			{
@@ -269,27 +272,32 @@ namespace Kinect {
 			// Get Kinect joint orientation
 			Vector3 jointDir = Vector3.zero;
 			
-			if(boneIndex == 16)  // Hip_center
+//			if(boneIndex == 16)  // Hip_center
+//			{
+//				if(Time.time - timestamp > 0.5f)
+//				{
+//					initialDir = hipsUp;
+//					
+//					// target is a vector from hip_center to average of hips left and right
+//					jointDir = ((kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipLeft) + 
+//						kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipRight)) / 2.0f) - 
+//						kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter);
+//
+//					jointDir.z = -jointDir.z;
+//					if(!flip)
+//						jointDir.x = -jointDir.x;
+//				}
+//			}
+/*			else*/ if(boneIndex == 5 || boneIndex == 11)  // Collar_left or Collar_right (shoulders)
 			{
-				initialDir = hipsUp;
-				
-				// target is a vector from hip_center to average of hips left and right
-				jointDir = ((kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipLeft) + 
-					kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipRight)) / 2.0f) - 
-					kinectManager.GetJointPosition(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter);
-
-				jointDir.z = -jointDir.z;
-				if(!flip)
-					jointDir.x = -jointDir.x;
-			}
-			else if(boneIndex == 5 || boneIndex == 11)  // Collar_left or Collar_right (shoulders)
-			{
+				//if(Time.time - timestamp > 0.5f)
 				// target is a vector from shoulder_center to bone
-				jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderCenter, iJoint, !flip, true);
+					jointDir = kinectManager.GetDirectionBetweenJoints(userId, (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderCenter, iJoint, !flip, true);
 			}
 			else
 			{
-				jointDir = kinectManager.GetDirectionBetweenJoints(userId, iJoint - 1, iJoint, !flip, true);
+				//if(Time.time - timestamp > 0.5f)
+					jointDir = kinectManager.GetDirectionBetweenJoints(userId, iJoint - 1, iJoint, !flip, true);
 			}
 
 			if(jointDir == Vector3.zero)
@@ -359,7 +367,8 @@ namespace Kinect {
 	//			RestoreBone(bones[1], hipsUp, upDir);
 	//			RestoreBone(bones[1], hipsRight, rightDir);
 	//		}
-			
+			//if(Time.time - timestamp > 0.5f)
+				//timestamp = Time.time;
 		}
 		
 		// Transform targetDir into bone-local space (independant of the transform of the controller)
