@@ -132,7 +132,6 @@ namespace Game
 				this.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
-			//Time.timeScale = 0;
 		}
 		
 		IEnumerator FadeOutGUI()
@@ -147,11 +146,11 @@ namespace Game
 			while(this.renderer.material.color.a > 0.001f)
 			{
 				this.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
-				//Time.timeScale = state;
 				yield return null;
 			}
+
+			this.renderer.material.color = targetColor;
+			this.gameObject.SetActive (false);
 		}
-
     }
-
 }

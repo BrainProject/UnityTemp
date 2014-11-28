@@ -125,6 +125,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400014}
+  - 131: {fileID: 13100000}
+  - 114: {fileID: 11400010}
+  m_Layer: 0
+  m_Name: HiddenGestureDetection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -141,6 +158,7 @@ Transform:
   - {fileID: 400004}
   - {fileID: 400002}
   - {fileID: 400012}
+  - {fileID: 400014}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &400002
@@ -215,6 +233,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400000}
   m_RootOrder: 5
+--- !u!4 &400014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 100, y: -100, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+  m_RootOrder: 6
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -454,6 +484,7 @@ MonoBehaviour:
   gameSelectionIcon: {fileID: 11400008}
   restartIcon: {fileID: 11400004}
   brainIcon: {fileID: 11400000}
+  guiDetection: {fileID: 11400010}
   visible: 0
 --- !u!114 &11400008
 MonoBehaviour:
@@ -469,6 +500,37 @@ MonoBehaviour:
   action: GameSelection
   texture_normal: {fileID: 2800000, guid: f2bbc58ca15f6f64c886d75c81f29335, type: 3}
   texture_hover: {fileID: 2800000, guid: d24a85dd04eadbe469538b0438ce4e43, type: 3}
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3147c0f8d1dfe694fbe6948ad450237a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guiIsHidden: 1
+--- !u!131 &13100000
+GUITexture:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: 34b35def07754fa4997ef0b4f813f189, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 256
+    height: 256
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

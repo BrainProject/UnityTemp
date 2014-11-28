@@ -10,6 +10,7 @@ namespace Game
         public MinigamesGUIIconsActions gameSelectionIcon;
         public MinigamesGUIIconsActions restartIcon;
 		public MinigamesGUIIconsActions brainIcon;
+		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 
 		/// <summary>
@@ -32,6 +33,7 @@ namespace Game
 			gameSelectionIcon.gameObject.SetActive (true);
 			restartIcon.gameObject.SetActive (true);
 			brainIcon.gameObject.SetActive (true);
+			guiDetection.guiIsHidden = false;
 
 			gameSelectionIcon.show ();
 			restartIcon.show ();
@@ -48,6 +50,7 @@ namespace Game
 			gameSelectionIcon.hide ();
 			restartIcon.hide ();
 			brainIcon.hide ();
+			guiDetection.guiIsHidden = true;
         }
 
 		void OnLevelWasLoaded (int level)
