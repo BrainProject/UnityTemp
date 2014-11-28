@@ -61,9 +61,9 @@ namespace MinigameSelection
 			float startTime = Time.time;
 			Color startColor = kinectRequiredIcon.guiTexture.color;
 			Color targetColor = kinectRequiredIcon.guiTexture.color;
-			targetColor.a = 0.5f;
+			targetColor.a = 1;
 			
-			while(kinectRequiredIcon.guiTexture.color.a < 0.49f)
+			while(kinectRequiredIcon.guiTexture.color.a < 0.51f)
 			{
 				kinectRequiredIcon.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
