@@ -282,9 +282,9 @@ namespace MinigamePexeso
             MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
 
             //stop game music and play wictory sound
-            AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
-            musicPlayer.Stop();
-            this.gameObject.audio.Play();
+            //AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+            //musicPlayer.Stop();
+            //this.gameObject.audio.Play();
 
             //game ends here, show scoreboard...
             //gameEndTime = Time.time;

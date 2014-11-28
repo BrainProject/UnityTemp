@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if !UNITY_WEBPLAYER
 using Kinect;
+#endif
 
 namespace SocialGame{
 	public class Snap : MonoBehaviour {

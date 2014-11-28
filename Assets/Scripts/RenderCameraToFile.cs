@@ -2,9 +2,9 @@
 using System.Collections;
 using System.IO;
 
-#if UNITY_STANDALONE
 public class RenderCameraToFile : MonoBehaviour 
 {
+#if UNITY_STANDALONE
     public Camera cam;
     public int width = 3840;
     public int height = 2160;
@@ -51,6 +51,11 @@ public class RenderCameraToFile : MonoBehaviour
             
             RenderToFile(defaultFileName);
         }        
-    }
-}
+	}
+#else
+	public void RenderToFile(string fileName)
+	{
+		Debug.LogWarning ("Fucntion not supported on platforms different than standalone.");
+	}
 #endif
+}
