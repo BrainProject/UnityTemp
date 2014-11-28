@@ -57,7 +57,7 @@ public class Ball : MonoBehaviour {
 
 	void addParent()
 	{
-		hand = GameObjectEx.findGameObjectWithNameTag(handName,gameObject.tag).transform;
+		hand = GameObjectEx.FindGameObjectWithNameTag(handName,gameObject.tag).transform;
 		if(hand == null)
 		{
 			Debug.Log("Parent not found");

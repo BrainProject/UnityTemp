@@ -165,7 +165,7 @@ namespace SocialGame
 
 		public void MoveParentOnBone(string boneName)
 		{
-			GameObject bone = GameObjectEx.findGameObjectWithNameTag(boneName,gameObject.tag);
+			GameObject bone = GameObjectEx.FindGameObjectWithNameTag(boneName,gameObject.tag);
 			if(bone != null)
 			{
 				Vector3 pos =transform.position;
@@ -183,7 +183,7 @@ namespace SocialGame
 				Transform child = transform.GetChild(i);
 				string nameGest = child.name;
 				string[] names =nameGest.Split('-');
-				GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+				GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 				Check che =child.GetComponent<Check>();
 				if (che != null)
 				{
@@ -197,7 +197,7 @@ namespace SocialGame
 		{
 			string nameGest = child.name;
 			string[] names =nameGest.Split('-');
-			GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+			GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 			Check che =child.GetComponent<Check>();
 			if (che != null)
 			{

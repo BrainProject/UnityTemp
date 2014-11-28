@@ -14,8 +14,8 @@ namespace SocialGame
 		public bool player1;
 		public bool player2;
 		public bool destroy = true;
-		public bool finish = true;
 		public bool allChecked = false;
+
 		private Vector3 temp;
 		private List<Transform> Targets = new List<Transform>();
 
@@ -70,16 +70,12 @@ namespace SocialGame
 					else
 					{
 						findTartgetByCheckName();
-						if(clipBone != null)
-						{
-							MoveParentOnBone(clipBone);
-						}
 					}
 				StartCoroutine(Check());
 			}
 			else
 			{
-				Debug.LogWarning("Kinect Manager not founded");
+				Debug.Log("Kinect Manager not founded");
 			}
 		}
 
@@ -129,7 +125,7 @@ namespace SocialGame
 				{
 					CompleteGest();
 					Debug.Log("end");
-					yield return new WaitForSeconds(0.5f);
+					StopCoroutine(Check());
 				}
 				else
 				{
@@ -144,46 +140,9 @@ namespace SocialGame
 			{
 				GameObject.Instantiate(this.next);
 			}
-			if(finish && (next== null))
-			{
-				//Debug.Log("blbnu " + gameObject.name);
-				finishHim();
-			}
 			if(destroy)
 			{
 				Destroy(gameObject);
-			}
-		}
-
-
-
-		void finishHim()
-		{
-			GameObject root = gameObject.transform.root.gameObject;
-			if(!transform.parent)
-			{
-				FinalCount script = root.GetComponent<FinalCount>();
-				if(script)
-				{
-					script.next();
-					return;
-				}
-			}
-			LevelManager.finish();
-
-		}
-	
-
-		public void MoveParentOnBone(string boneName)
-		{
-			GameObject bone = GameObjectEx.findGameObjectWithNameTag(boneName,gameObject.tag);
-			if(bone != null)
-			{
-				Vector3 pos =transform.position;
-				Quaternion rot = transform.rotation;
-				gameObject.transform.parent= bone.transform;
-				transform.localPosition = Vector3.zero + pos;
-				transform.localRotation = rot;
 			}
 		}
 
@@ -194,7 +153,7 @@ namespace SocialGame
 				Transform child = transform.GetChild(i);
 				string nameGest = child.name;
 				string[] names =nameGest.Split('-');
-				GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+				GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 				Check che =child.GetComponent<Check>();
 				if (che != null)
 				{
@@ -208,7 +167,7 @@ namespace SocialGame
 		{
 			string nameGest = child.name;
 			string[] names =nameGest.Split('-');
-			GameObject obj = GameObjectEx.findGameObjectWithNameTag(names[0],gameObject.tag);
+			GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 			Check che =child.GetComponent<Check>();
 			if (che != null)
 			{
