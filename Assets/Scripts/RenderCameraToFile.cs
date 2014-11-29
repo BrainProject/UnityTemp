@@ -11,13 +11,14 @@ public class RenderCameraToFile : MonoBehaviour
     public string defaultFileName = "savedCameraFrame.png";
 
     public void RenderToFile(string fileName)
-    {
+	{
+#if UNITY_EDITOR
         if (!UnityEditorInternal.InternalEditorUtility.HasPro())
         {
             Debug.LogWarning("You are now working with FREE version of Unity, but this feature works only with PRO version - feature is therefore disabled, no file will be saved");
             return;
         }
-
+#endif
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);
         cam.targetTexture = tempRT;

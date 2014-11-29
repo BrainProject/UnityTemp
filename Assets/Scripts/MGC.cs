@@ -103,7 +103,7 @@ public class MGC : Singleton<MGC>
 
 	void Awake ()
 	{
-#if !UNITY_WEBPLAYER
+#if UNITY_EDITOR
         if (UnityEditorInternal.InternalEditorUtility.HasPro())
         {
             print("You are working with PRO version of Unity");
