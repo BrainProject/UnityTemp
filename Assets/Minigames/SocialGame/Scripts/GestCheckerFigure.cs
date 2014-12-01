@@ -71,7 +71,7 @@ namespace SocialGame
 					{
 						findTartgetByCheckName();
 					}
-				StartCoroutine(Check());
+				StartCoroutine("Check");
 			}
 			else
 			{
@@ -82,8 +82,11 @@ namespace SocialGame
 	
 		// Update is called once per frame
 		IEnumerator Check() {
+			//string name = gameObject.name;
+
 			while(true)
 			{
+				//Debug.Log(name + " is chenking");
 				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
 				for(int i = 0; i< transform.childCount; i++)
 				{
@@ -124,8 +127,10 @@ namespace SocialGame
 				if(complete)
 				{
 					CompleteGest();
-					Debug.Log("end");
-					StopCoroutine(Check());
+					//Debug.Log( name + "finish checking");
+					//StopCoroutine("Check");
+					yield return null;
+
 				}
 				else
 				{

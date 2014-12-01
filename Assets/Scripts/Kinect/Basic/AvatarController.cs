@@ -274,7 +274,7 @@ namespace Kinect {
 			
 //			if(boneIndex == 16)  // Hip_center
 //			{
-//				if(Time.time - timestamp > 0.5f)
+//			//	if(Time.time - timestamp > 0.5f)
 //				{
 //					initialDir = hipsUp;
 //					

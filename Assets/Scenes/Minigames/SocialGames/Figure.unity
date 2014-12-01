@@ -934,6 +934,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &999714153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,7 +1162,7 @@ Prefab:
       objectReference: {fileID: 426779117}
     - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
       propertyPath: TwoUsers
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
       propertyPath: Player1Gestures.Array.data[1]
@@ -1178,6 +1179,10 @@ Prefab:
     - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
       propertyPath: UseSelfIntersectionConstraint
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
+      propertyPath: ComputeColorMap
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01cd580a2e74f284595025959431ae21, type: 2}
@@ -1412,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00db858c1f8ff90478dad0aa1bac9a2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TwoUsers: 1
+  TwoUsers: 0
   NearMode: 0
   ComputeUserMap: 0
   ComputeColorMap: 0
@@ -1624,6 +1629,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!137 &1672922322
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
