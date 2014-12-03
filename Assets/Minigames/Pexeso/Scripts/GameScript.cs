@@ -8,6 +8,9 @@ namespace MinigamePexeso
 {
 	public class GameScript : MonoBehaviour 
     {
+		/// <summary>
+		/// True if sounds are enabled.
+		/// </summary>
 		public bool enableSound;
 
 		// <summary>
@@ -16,46 +19,75 @@ namespace MinigamePexeso
         private float observationTime = 0.5f;
 
         /// <summary>
-        /// not used at the moment
+        /// Scoreboard. Not used at the moment
         /// </summary>
 	    public GameObject scoreb;
 		
 	    /// <summary>
-        /// determines current resource pack
+        /// Determines current resource pack
 	    /// </summary>
 	    public string resourcePack;
 
+		/// <summary>
+		/// Current game type.
+		/// </summary>
 		public GameType currentGame;
 
+		/// <summary>
+		/// GameStart script
+		/// </summary>
 	    public GameObject menu;
+
+		/// <summary>
+		/// ResourcePack script
+		/// </summary>
 	    public GameObject resourcePackMenu;
 
+		/// <summary>
+		/// Game tile.
+		/// </summary>
         public GameObject gameTilePrefab;
 
+		/// <summary>
+		/// True if custom resource pack is selected.
+		/// </summary>
 		public Boolean customPack;
 
         /// <summary>
-        /// path to custom image-sets
+        /// Path to custom image-sets.
         /// </summary>
         private string customResPackPath = "\\CustomImages\\";
 
         /// <summary>
-        /// array of tiles
+        /// Array of tiles.
         /// </summary>
         private GameObject[] gameTiles;
 
-	    //Number of rows.
+	    /// <summary>
+		/// Number of rows.
+	    /// </summary>
 	    public int rows = 4;
 	    
-        //number of columns.
+        /// <summary>
+		/// Number of columns.
+		/// </summary>
 	    public int columns = 4;
 
         /// <summary>
-        /// used as score
+        /// Number of correct pairs. Used as score.
         /// </summary>
 	    private int correctPairs;
+		/// <summary>
+		/// GUI Number of correct pairs. Used as score.
+		/// </summary>
 	    public GUIText correctPairsDisplay;
+		/// <summary>
+		/// Number of wrong pairs. Used as score.
+		/// </summary>
 	    private int wrongPairs;
+		/// <summary>
+		/// GUI Number of wrong pairs. Used as score.
+		/// </summary>
 	    public GUIText wrongPairsDisplay;
 
 	    /// <summary>
@@ -63,28 +95,46 @@ namespace MinigamePexeso
 	    /// </summary>
 	    public GUIText timerDisplay;
 
-        
+		/// <summary>
+		/// Used for mouse click detection
+		/// </summary>
         private Ray ray;
         private RaycastHit hit;
+
+		/// <summary>
+		/// The first selected game tile.
+		/// </summary>
         private GameObject first;
 
         /// <summary>
-        /// If correctPairs variable reaches this value, game successfully ends
+        /// If correctPairs variable reaches this value, game successfully ends.
         /// </summary>
         private int winningScore;
 
+		/// <summary>
+		/// The game start time.
+		/// </summary>
         private float gameStartTime;
+		/// <summary>
+		/// The game end time.
+		/// </summary>
         private float gameEndTime;
+		/// <summary>
+		/// The last display time.
+		/// </summary>
         private int   lastDisplayTime = 0;
 
 		/// <summary>
-	    /// Initialization. Creates all cubes and planes, sets their position etc.
+	    /// Do nothing here.
 	    /// </summary>
 		void Start ()
 		{
 	        //CreateGameBoard();
 		}
 
+		/// <summary>
+		/// Initialization. Creates all cubes and planes, sets their position etc.
+		/// </summary>
 	    public void CreateGameBoard()
 	    {
 	        //set everything to default values
@@ -136,6 +186,10 @@ namespace MinigamePexeso
 			}
 	    }
 
+		/// <summary>
+		/// Game turn of Pexeso. Calculates clicking on tiles, matching of pairs,
+		/// starting game tile flip and remove coroutines.
+		/// </summary>
 		private void PexesoGameTurn()
 		{
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -188,6 +242,10 @@ namespace MinigamePexeso
 			}
 		}
 
+		/// <summary>
+		/// Game turn of Silhouette or Similarities. Calculates clicking on tiles, matching of pairs,
+		/// starting game tile move and remove coroutines.
+		/// </summary>
 		private void SilhouetteGameTurn()
 		{
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -238,7 +296,7 @@ namespace MinigamePexeso
 		}
 
 	    /// <summary>
-	    /// Infinite loop.
+	    /// Infinite loop. Updates game time and launches specific game turn.
 	    /// </summary>
 		void Update()
 		{
@@ -273,6 +331,9 @@ namespace MinigamePexeso
 	        }
 		}
 
+		/// <summary>
+		/// Game ended. Play winning music, stop timer, etc.
+		/// </summary>
         private void EndGame()
         {
             Debug.Log("All pairs found... game ends");
@@ -301,9 +362,9 @@ namespace MinigamePexeso
         }
 
 	    /// <summary>
-        /// Returns true, if pictures of given tiles are matching.
+        /// Returns true if pictures of given tiles are matching.
 	    /// </summary>
-        /// <returns>true, if pictures of given tiles are matching.</returns>
+        /// <returns>True, if pictures of given tiles are matching.</returns>
 	    /// <param name="tex1">First tile</param>
 	    /// <param name="tex2">Second tile</param>
 	    public bool checkTilesMatch(GameObject first, GameObject second)
@@ -438,6 +499,9 @@ namespace MinigamePexeso
             Destroy(second);
         }
 
+		/// <summary>
+		/// Randomly assigns pictures from custom resource pack to game tiles.
+		/// </summary>
 		public IEnumerator AddCustomPicturesToGameTiles()
 		{
 			if (currentGame == GameType.Pexeso)
@@ -602,6 +666,9 @@ namespace MinigamePexeso
 			Debug.Log("Game initialized");
 		}
 
+		/// <summary>
+		/// The images loaded as objects.
+		/// </summary>
 		UnityEngine.Object[] images;
 		
 	    /// <summary>
@@ -743,6 +810,9 @@ namespace MinigamePexeso
             Debug.Log("Game initialized");
 		}
 
+		/// <summary>
+		/// Restarts the game.
+		/// </summary>
         public IEnumerator RestartGame()
         {
             //TODO do not restart automatically - display "end-game GUI" instead

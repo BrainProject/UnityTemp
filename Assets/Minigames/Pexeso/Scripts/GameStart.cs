@@ -6,10 +6,19 @@ namespace MinigamePexeso
 {
 	public class GameStart : MonoBehaviour 
     {
-        public GameScript mainGameScript;
+		/// <summary>
+		/// Main game script (GameScript)
+		/// </summary>
+		public GameScript mainGameScript;
 	    
+		/// <summary>
+		/// The game tile prefab.
+		/// </summary>
         public GameObject gameTilePrefab;
 
+		/// <summary>
+		/// Menu tiles.
+		/// </summary>
         private GameObject[] gameTiles;
 
 	    /// <summary>
@@ -27,8 +36,6 @@ namespace MinigamePexeso
         /// </summary>
         private Ray ray;
         private RaycastHit hit;
-
-
 
         /// <summary>
         /// creates "menu" for selecting size of board
@@ -48,7 +55,9 @@ namespace MinigamePexeso
 	    }
 		
 
-		// Update is called once per frame
+		/// <summary>
+		/// Wait for player to select menu item.
+		/// </summary>
 		void Update ()
 	    {
 	        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
