@@ -12,6 +12,7 @@ namespace Game
 		public MinigamesGUIIconsActions brainIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
+		public bool gsiStandalone;
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -32,12 +33,14 @@ namespace Game
 			//StartCoroutine (rewardIcon.FadeInGUI ());
 			gameSelectionIcon.gameObject.SetActive (true);
 			restartIcon.gameObject.SetActive (true);
-			brainIcon.gameObject.SetActive (true);
+			if(!gsiStandalone)
+				brainIcon.gameObject.SetActive (true);
 			guiDetection.guiIsHidden = false;
 
 			gameSelectionIcon.show ();
 			restartIcon.show ();
-			brainIcon.show ();
+			if(!gsiStandalone)
+				brainIcon.show ();
 
             //rewardIcon.gameObject.SetActive(false);
 
@@ -49,7 +52,8 @@ namespace Game
 			visible = false;
 			gameSelectionIcon.hide ();
 			restartIcon.hide ();
-			brainIcon.hide ();
+			if(!gsiStandalone)
+				brainIcon.hide ();
 			guiDetection.guiIsHidden = true;
         }
 

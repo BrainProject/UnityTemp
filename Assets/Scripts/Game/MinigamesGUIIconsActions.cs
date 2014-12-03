@@ -8,9 +8,11 @@ namespace Game
 
     public class MinigamesGUIIconsActions : MonoBehaviour
     {
-        public string action;
-        public Texture2D texture_normal;
-        public Texture2D texture_hover;
+		public string action;
+		public Texture2D texture_normal;
+		public Texture2D texture_hover;
+		public Texture2D texture_normalGSI;
+		public Texture2D texture_hoverGSI;
 		
 		internal Color startColor;
 		internal Color targetColor;
@@ -26,12 +28,18 @@ namespace Game
         
 		public void resetState()
         {
-            renderer.material.mainTexture = texture_normal;
+			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
+				renderer.material.mainTexture = texture_normalGSI;
+			else
+	            renderer.material.mainTexture = texture_normal;
         }
 
         void OnMouseOver()
-        {
-            renderer.material.mainTexture = texture_hover;
+		{
+			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
+          		renderer.material.mainTexture = texture_hover;
+			else
+				renderer.material.mainTexture = texture_hoverGSI;
         }
 
         void OnMouseExit()

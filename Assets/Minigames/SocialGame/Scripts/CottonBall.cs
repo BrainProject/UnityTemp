@@ -37,7 +37,7 @@ namespace SocialGame{
 		IEnumerator Running() {
 			while(deathZone < transform.position.x)
 			{
-				transform.Translate(translate);
+				transform.Translate(translate * Time.deltaTime * 100);
 				yield return null;
 			}
 			targetAnim.activated = false;

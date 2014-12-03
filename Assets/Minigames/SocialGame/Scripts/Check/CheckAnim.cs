@@ -23,7 +23,7 @@ namespace SocialGame{
 		IEnumerator Walk() {
 			while((Time.time < WalkTime) && !run)
 			{
-				transform.Translate(translate);
+				transform.Translate(translate * Time.deltaTime * 100);
 				yield return null;
 			}
 			playAnim(false);
@@ -63,9 +63,10 @@ namespace SocialGame{
 		IEnumerator Running() {
 			while(run)
 			{
-				transform.Translate(translate);
+				transform.Translate(translate * Time.deltaTime * 100);
 				yield return null;
 			}
 		}
 	}
 }
+ 

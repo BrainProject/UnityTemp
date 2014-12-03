@@ -23,7 +23,7 @@ namespace SocialGame{
 			}
 			if(up)
 			{
-				transform.Translate(Vector3.up * speed);
+				transform.Translate(Vector3.up * speed * Time.deltaTime * 4);
 				speed += step;
 			}
 		}

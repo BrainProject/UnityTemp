@@ -347,8 +347,8 @@ MonoBehaviour:
   Player2Avatars: []
   Player1CalibrationPose: 0
   Player2CalibrationPose: 0
-  Player1Gestures: 070000000800000018000000
-  Player2Gestures: 
+  Player1Gestures: 18000000
+  Player2Gestures: 18000000
   MinTimeBetweenGestures: .699999988
   GestureListeners: []
   CalibrationText: {fileID: 0}
@@ -557,7 +557,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 01cd580a2e74f284595025959431ae21, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 01cd580a2e74f284595025959431ae21, type: 2}
       propertyPath: TwoUsers
@@ -926,6 +926,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &999714153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,6 +956,7 @@ MonoBehaviour:
   - {fileID: 100002, guid: fc46a81216dc8aa4fa763e5fd08d7307, type: 2}
   - {fileID: 100000, guid: e0905ff4e6ed8a541997847637aa5b41, type: 2}
   position: {x: 0, y: 1.70000005, z: -3}
+  DebugInt: -1
 --- !u!1 &1062897376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1362,6 +1364,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!137 &1672922322
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
