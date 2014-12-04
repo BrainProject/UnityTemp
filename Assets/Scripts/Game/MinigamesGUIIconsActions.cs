@@ -34,12 +34,12 @@ namespace Game
 	            renderer.material.mainTexture = texture_normal;
         }
 
-        void OnMouseOver()
+        void OnMouseEnter()
 		{
 			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
-          		renderer.material.mainTexture = texture_hover;
+          		renderer.material.mainTexture = texture_hoverGSI;
 			else
-				renderer.material.mainTexture = texture_hoverGSI;
+				renderer.material.mainTexture = texture_hover;
         }
 
         void OnMouseExit()
