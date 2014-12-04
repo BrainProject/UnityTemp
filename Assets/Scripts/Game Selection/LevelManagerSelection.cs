@@ -53,6 +53,7 @@ namespace MinigameSelection
 
 		public void FadeInOutKinectIcon()
 		{
+			StopCoroutine ("FadeInOutKinect");
 			StartCoroutine ("FadeInOutKinect");
 		}
 
