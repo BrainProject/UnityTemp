@@ -7,26 +7,45 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Puzzle
 {
+    /// <summary>
+    /// Main game script for Puzzle mini-game
+    /// </summary>
     public class GameScript : MonoBehaviour
     {
-		// number of puzzle pieces
+		/// <summary>
+        /// number of puzzle pieces
+		/// </summary>
+ 
         public int numberPieces = 4;
 
-		// texture of image to complete in puzzle 
+		/// <summary>
+        /// texture of image to complete in puzzle 
+		/// </summary>
+ 
         public Texture2D puzzleImage;
 
-		// A set of connected components (connected component is a set of puzzle pieces, 
-		// there are used just their gameObjects
+		/// <summary>
+        /// A set of connected components (connected component is a set of puzzle pieces, 
+        /// there are used just their gameObjects
+		/// </summary>
         public HashSet<HashSet<GameObject>> connectedComponents;
 
-		// dictionary of all pieces of puzzle. Name used is ID of piece. Dictionary is used
-		// to make it faster to get demanded piece
+		/// <summary>
+		/// dictionary of all pieces of puzzle. Name used is ID of piece. Dictionary is used
+		///to make it faster to get demanded piece
+		/// </summary>
         public Dictionary<string, PuzzlePiece> pieces;
 
-		// indicates whether game was won or not
+		/// <summary>
+        /// indicates whether game was won or not
+		/// </summary>
+
+        public Image targetImage;
+
 		bool gameWon = false;
 
         /**
@@ -64,23 +83,27 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
-			GameObject targetImageGUITexture = new GameObject("TargetImage");
+            Sprite testSprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
+            targetImage.sprite = testSprite;
 
-			targetImageGUITexture.AddComponent<GUITexture>();
-			targetImageGUITexture.guiTexture.texture = puzzleImage;
-			targetImageGUITexture.transform.localScale = 
-				new Vector3(0.3f,
-				            0.3f * Screen.width/Screen.height,
-				            1.0f);
+			//GameObject targetImageGUITexture = new GameObject("TargetImage");
 
-			targetImageGUITexture.transform.position = 
-				new Vector3(0.15F,
-				            1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
-				            1.0f);
+            //targetImageGUITexture.AddComponent<GUITexture>();
+            //targetImageGUITexture.guiTexture.texture = puzzleImage;
+            //targetImageGUITexture.transform.localScale = 
+            //    new Vector3(0.3f,
+            //                0.3f * Screen.width/Screen.height,
+            //                1.0f);
 
-			targetImageGUITexture.layer = 13;
+            //targetImageGUITexture.transform.position = 
+            //    new Vector3(0.15F,
+            //                1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
+            //                1.0f);
 
-            // loading number of pieces
+            //targetImageGUITexture.layer = 13;
+
+
+            //  loading number of pieces
             try
             {
                 numberPieces = PlayerPrefs.GetInt("size");
