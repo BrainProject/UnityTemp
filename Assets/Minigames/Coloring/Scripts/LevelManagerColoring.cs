@@ -11,6 +11,7 @@ namespace Coloring
 
 		internal bool painting = false;
 		internal bool hiddenGUIwhilePainting = false;
+		internal float timestamp;
 
 		private int x = (Screen.width / 10)/3;
 		private int y = (Screen.height / 10)/2;
@@ -21,6 +22,11 @@ namespace Coloring
 //		{
 //			MGC.Instance.ShowCustomCursor (true);
 //		}
+
+		void Start()
+		{
+			timestamp = -2;
+		}
 
 		void Update()
 		{
@@ -38,7 +44,7 @@ namespace Coloring
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-			print (isVisible);
+//			print (isVisible);
 			backGUI.SetActive (true);
 			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
 			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;

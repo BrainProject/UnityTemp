@@ -7,7 +7,7 @@ namespace Coloring
 		public Texture normal;
 		public Texture hover;
 		
-		public Animation DeskAnimation;
+		public Animator deskAnimator;
 		public GameObject Images;
 		public LevelManagerColoring thisLevelManager;
 
@@ -18,7 +18,7 @@ namespace Coloring
 
 		void OnMouseEnter()
 		{
-			print ("enter");
+			//print ("enter");
 			this.guiTexture.texture = hover;
 		}
 
@@ -29,9 +29,13 @@ namespace Coloring
 
 		void OnMouseDown()
 		{
-			if(!DeskAnimation.IsPlaying("deskRotation") && !DeskAnimation.IsPlaying("deskRotation2") && Images.activeSelf)
+			if((Time.time - thisLevelManager.timestamp > 2) && Images.activeSelf)
 			{
-				DeskAnimation.CrossFade("deskRotation");
+				thisLevelManager.timestamp = Time.time;
+				deskAnimator.SetBool("painting", false);
+				deskAnimator.SetTrigger("animate");
+//				thisLevelManager.GetComponent<PaintingModeTransition>().SetImages(false);
+//				thisLevelManager.GetComponent<PaintingModeTransition>().SetPalette(false);
 				thisLevelManager.painting = false;
 				thisLevelManager.ShowColoringGUI(false);
 				MGC.Instance.ShowCustomCursor(true);

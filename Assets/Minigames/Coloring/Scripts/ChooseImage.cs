@@ -6,21 +6,35 @@ namespace Coloring
 	public class ChooseImage : MonoBehaviour
 	{
 		public GameObject Image;
-		public Animation DeskAnimation;
 		public LevelManagerColoring thisLevelManager;
+
+		private Animator deskAnimator;
+
+		void Start()
+		{
+			deskAnimator = transform.parent.transform.parent.GetComponent<Animator> ();
+		}
 
 		void OnMouseDown(){
 
-			if(!DeskAnimation.IsPlaying("deskRotation") && !DeskAnimation.IsPlaying("deskRotation2"))
+			if(Time.time - thisLevelManager.timestamp > 2)
 			{
+				thisLevelManager.timestamp = Time.time;
 				Image.SetActive(true);
-				DeskAnimation.Play("deskRotation2");
+				Image.transform.parent.gameObject.SetActive(true);
+				deskAnimator.SetBool("painting", true);
+				deskAnimator.SetTrigger("animate");
 				thisLevelManager.painting = true;
 				thisLevelManager.ShowColoringGUI(true);
 				if(!thisLevelManager.hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);
 				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
 			}
+		}
+
+		void LateUpdate()
+		{
+			deskAnimator.SetBool("painting", false);
 		}
 	}
 }
