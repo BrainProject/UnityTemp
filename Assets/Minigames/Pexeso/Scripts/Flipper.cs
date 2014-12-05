@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 
 namespace MinigamePexeso 
 {
+	/// <summary>
+	/// Flipper script.
+	/// Addached to tiles. Ensures flipping the tile image up and down.
+	/// </summary>
 	public class Flipper : MonoBehaviour 
     {
         /// <summary>
@@ -20,13 +25,21 @@ namespace MinigamePexeso
         /// </summary>
         public bool imageSideUp = false;
 
-	    
+		/// <summary>
+		/// The end position (used for rotating). Will change when tile is moved.
+		/// </summary>
 	    private Vector3 endRotation;
+
+		/// <summary>
+		/// Coroutine time variable.
+		/// </summary>
 	    private float t;
 
+		/// <summary>
+		/// Flip tile.
+		/// </summary>
 	    public void Flip()
 	    {
-            //print("Flip");
 			if (imageSideUp)
 			{
 				FlipImageDown ();
@@ -37,6 +50,9 @@ namespace MinigamePexeso
 			}
 	    }
 
+		/// <summary>
+		/// Flip tile image up.
+		/// </summary>
 	    public void FlipImageUp()
 	    {
 	        if (!imageSideUp)
@@ -50,6 +66,9 @@ namespace MinigamePexeso
 			}
 	    }
 
+		/// <summary>
+		/// Flip tile image down.
+		/// </summary>
 	    public void FlipImageDown()
 	    {
 			if (imageSideUp)
@@ -63,6 +82,10 @@ namespace MinigamePexeso
 			}
 	    }
 	    
+		/// <summary>
+		/// Flip coroutine.
+		/// Flips this tile.
+		/// </summary>
 	    private IEnumerator flipAnimation()
 		{
             //this will ensure, that user can't click on this tile while it is flipped image-side up
