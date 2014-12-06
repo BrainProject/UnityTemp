@@ -48,7 +48,7 @@ public class LondonTowerMainMenu : MonoBehaviour {
             {
 
                 LondonTowerGameManager.dataSet = 1;
-				Application.LoadLevel("LondonTowerGame");
+				MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
                 
                 //LoadLevel this
             }
@@ -57,7 +57,7 @@ public class LondonTowerMainMenu : MonoBehaviour {
             if (GUI.Button(new Rect(Screen.width / 4, Screen.height*3 / 9, Screen.width / 2, Screen.height / 7), "level 2"))
             {
                 LondonTowerGameManager.dataSet = 2;
-				Application.LoadLevel("LondonTowerGame");
+				MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
 
                 //LoadLevel this
             }
@@ -66,7 +66,7 @@ public class LondonTowerMainMenu : MonoBehaviour {
            if (GUI.Button(new Rect(Screen.width / 4, Screen.height*5 / 9, Screen.width / 2, Screen.height / 7), "level3"))
             {
                 LondonTowerGameManager.dataSet = 3;
-				Application.LoadLevel("LondonTowerGame");
+				MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
 
                 //LoadLevel this
             }
@@ -75,7 +75,7 @@ public class LondonTowerMainMenu : MonoBehaviour {
             if (GUI.Button(new Rect(Screen.width / 4, Screen.height*7 / 9, Screen.width / 2, Screen.height / 7), "level 4"))
             {
                 LondonTowerGameManager.dataSet = 4;
-				Application.LoadLevel("LondonTowerGame");
+				MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
 
                 //LoadLevel this
             }
