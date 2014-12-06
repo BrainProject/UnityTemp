@@ -48,7 +48,7 @@ namespace HanoiTowers
         public GameObject[] disks;
         public GameObject ceilingObject;
 
-        public GameObject endGameGUI;
+        //public GameObject endGameGUI;
 
         private Column startingColumn;
         private Column endingColumn;
@@ -186,7 +186,7 @@ namespace HanoiTowers
             MGC.Instance.minigamesGUI.show(true);
 
             //mini-game specific gui
-            endGameGUI.SetActive(true);
+            //endGameGUI.SetActive(true);
             //showEndGameGUI = true;
 
 

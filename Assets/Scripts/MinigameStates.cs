@@ -52,6 +52,8 @@ namespace Game
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);
+			Minigame london = new Minigame ("LondonTowerGUIMenu", "LondonTowerGame");
+			minigames.Add (london);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
 			Minigame similarities = new Minigame ("Similarities");
@@ -83,12 +85,12 @@ namespace Game
 		/// <summary>
 		/// Sets the minigame status to "played".
 		/// </summary>
-		/// <param name="minigameName">Minigame name.</param>
+		/// <param name="minigameName">Minigame scene name.</param>
 		public void SetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)
 			{
-				if(game.sceneWithHelp == minigameName)
+				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
 				{
 					game.played = true;
 					break;
