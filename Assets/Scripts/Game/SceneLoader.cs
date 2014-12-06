@@ -7,23 +7,29 @@ namespace Game
     /// <summary>
     /// For loading scenes and fading
     /// </summary>
-    /// instance of this class is member of MGC. You can access sceneLoader by: <code>MGC.Instance.sceneLoader</code>.
+    /// One instance of this class is a member of the MGC. Therefore, you can access sceneLoader simply by: <code>MGC.Instance.sceneLoader</code>.
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 5f;
+        public float fadeSpeed = 0.5f;
 
         private float speed;
-		private Color originalColor;
-		private Color targetColor;
+        private Color transparentColor;
+		private Color opaqueColor;
 		private float startTime;
 		private string levelName;
 
         private Image fadePanel;
 
+        /// <summary>
+        /// Set it up, mainly UI panel used for fading
+        /// </summary>
 		void Start()
 		{
             print("SceneLoader::Start()...");
+
+            transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
             //instatiate prefab of canvas with fadepanel
             GameObject fadeCanvas = Instantiate(Resources.Load("FadeCanvas")) as GameObject;
@@ -34,6 +40,7 @@ namespace Game
             }
             else
             {
+                print("Fade Canvas instantiated");
                 fadeCanvas.name = "Fade Canvas";
 
                 //set proper parent to canvas
@@ -41,6 +48,7 @@ namespace Game
 
                 //find 'Image' component
                 fadePanel = fadeCanvas.GetComponentInChildren<Image>();
+
                 if (fadePanel == null)
                 {
                     print("There should be <Image> component in 'FadeCanvas' prefab");
@@ -50,12 +58,7 @@ namespace Game
                     print("fadePanel founded.");
                     fadePanel.enabled = false;
                 }
-
-                
             }
-
-            speed = 0.1f * fadeSpeed;
-			
 		}
 
         public void LoadScene(string levelName, bool doFadeInOut = true)
@@ -76,7 +79,7 @@ namespace Game
 
 		public void LoadScene(int levelIndex, bool doFadeInOut = true)
 		{
-			print("Loading scene: '" + levelIndex + "'");
+			print("Loading scene with index: " + levelIndex + "");
 			
 			doFade = doFadeInOut;
 			
@@ -100,16 +103,12 @@ namespace Game
 			print("fading in...");
 			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
 			
-            fadePanel.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-
             float startTime = Time.time;
-            originalColor = fadePanel.color;
-            targetColor.a = 0;
             fadePanel.enabled = true;
             
             while (fadePanel.color.a > 0.01f)
             {
-                fadePanel.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
+                fadePanel.color = Color.Lerp(opaqueColor, transparentColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 
@@ -125,24 +124,22 @@ namespace Game
 		private IEnumerator LoadWithFadeOut(string levelName)
 		{
 			Instantiate (Resources.Load ("BlockBorder"));
+
 			print("fading out coroutine...");
 			if (levelName == "")
 			{
 				Debug.LogError("Level name not defined.");
-				this.gameObject.guiTexture.enabled = false;
+				//this.gameObject.guiTexture.enabled = false;
 			}
 			else
 			{
-				
-				float startTime = Time.time;
-				originalColor.a = 0.0f;
-				targetColor.a = 1.0f;  
-              
+				float startTime = Time.time;              
                 fadePanel.enabled = true;
 
-                while (fadePanel.color.a < 0.51f)
+                while (fadePanel.color.a < 0.99f)
                 {
-                    fadePanel.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
+                    fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                    print("barva: " + fadePanel.color);
                     yield return null;
                 }
                 
@@ -161,14 +158,11 @@ namespace Game
 			print("fading out coroutine...");
 
 			float startTime = Time.time;
-			originalColor.a = 0.0f;
-			targetColor.a = 1.0f;
-
             fadePanel.enabled = true;
 
-            while (fadePanel.color.a < 0.51f)
+            while (fadePanel.color.a < 0.99f)
             {
-                fadePanel.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
+                fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 				
