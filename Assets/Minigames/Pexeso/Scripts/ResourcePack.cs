@@ -8,15 +8,29 @@ namespace MinigamePexeso
 	public enum GameType { Pexeso, Similarity, Silhouette };
 
     /// <summary>
-    /// Creates a tile for each image-set (resourcePack) a lets player choose which set will be used for game
+    /// Creates a tile for each image-set (resourcePack) and lets player choose which set will be used for game
     /// </summary>
     /// @author Michal Hroš
 	public class ResourcePack : MonoBehaviour 
     {
-        public GameType currentGame = GameType.Similarity;
+        /// <summary>
+        /// The current game type.
+        /// </summary>
+		public GameType currentGame = GameType.Similarity;
 
+		/// <summary>
+		/// GameStart script
+		/// </summary>
         public GameStart gameStart;
+
+		/// <summary>
+		/// Main game script (GameScript)
+		/// </summary>
         public GameScript mainGameScript;
+
+		/// <summary>
+		/// The game tile prefab.
+		/// </summary>
         public GameObject gameTilePrefab;
 
         //TODO find better solution...
@@ -25,6 +39,9 @@ namespace MinigamePexeso
         private string resPackPath;
         private string customResPackPath = "\\CustomImages\\";
 
+		/// <summary>
+		/// Menu tiles.
+		/// </summary>
         private GameObject[] gameTiles;
 
 	    /// <summary>
@@ -37,6 +54,9 @@ namespace MinigamePexeso
 	    /// </summary>
 		private int menuColumns;// = 2;
 
+		/// <summary>
+		/// Used for mouse click detection
+		/// </summary>
         private Ray ray;
         private RaycastHit hit;
 
@@ -71,6 +91,10 @@ namespace MinigamePexeso
 			}
 		}
 
+		/// <summary>
+		/// Determines if there are any custom resource packs.
+		/// </summary>
+		/// <returns>Number of custom resource packs.</returns>
 		private int GetCustomResroucePacksCount()
 		{
             //sort of tests, if directories exists
@@ -80,6 +104,10 @@ namespace MinigamePexeso
             return Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\").Length;
 		}
 
+		/// <summary>
+		/// Loads the custom resource packs from external files.
+		/// </summary>
+		/// <returns>The custom resource packs.</returns>
 		private IEnumerator LoadCustomResourcePacks()
 		{
             string[] customResourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\");
@@ -109,6 +137,9 @@ namespace MinigamePexeso
 			}
 		}
 
+		/// <summary>
+		/// Get resource packs and create menu.
+		/// </summary>
 		void Start ()
 	    {
             Debug.Log("Current chosen game: " + currentGame);
@@ -138,6 +169,9 @@ namespace MinigamePexeso
 	        CreateMenu();
 		}
 
+		/// <summary>
+		/// Creates the menu and loads resource packs.
+		/// </summary>
 	    public void CreateMenu()
 	    {
             gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
@@ -180,6 +214,9 @@ namespace MinigamePexeso
             #endif
         }
 
+		/// <summary>
+		/// Wait for player to select menu item.
+		/// </summary>
 		void Update ()
 	    {
 	        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -219,7 +256,7 @@ namespace MinigamePexeso
 	            t += Time.deltaTime;
 	            yield return null;
 	        }
-	        StartCoroutine(SelectButton(chosenButton));
+			CreateMainGameObject(chosenButton);
 	    }
 	    
 	    /// <summary>
@@ -227,40 +264,45 @@ namespace MinigamePexeso
 	    /// </summary>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
-	    private IEnumerator SelectButton(GameObject chosenButton)
-	    {
+//	    private IEnumerator SelectButton(GameObject chosenButton)
+//	    {
 	        //Vector3 startPosition = chosenButton.transform.position;
-	        float t = 0;
+	  //      float t = 0;
 	        
 	        /*Vector3 endPosition = new Vector3(Camera.main.ViewportToWorldPoint(Vector3.zero).x,
 	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).y,
 	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).z);*/
 
-			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-			backTextureColor.a = 0;
-			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
-
+//			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+//			backTextureColor.a = 0;
+//			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
+/*
 	        while (t - 1f < 0)
 	        {
 	            t += Time.deltaTime * 2;
 
-				Color frontTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-				Color backColor = chosenButton.renderer.material.color;
+//				Color frontTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+//				Color backColor = chosenButton.renderer.material.color;
 
-				frontTextureColor.a = 1f - t;
+//				frontTextureColor.a = 1f - t;
 				backColor.a = 1f - t;
 
 				chosenButton.transform.GetChild(0).renderer.material.color = frontTextureColor;
 				chosenButton.renderer.material.color = backColor;
-
+*/
 	            //chosenButton.transform.position = Vector3.Lerp(startPosition, endPosition, t);
-	            yield return null;
-	        }
+	//            yield return null;
+	  //      }
 
-	        CreateMainGameObject(chosenButton);
+//	        CreateMainGameObject(chosenButton);
 	        //chosenButton.transform.position = endPosition;
-	    }
+//	    }
 
+		/// <summary>
+		/// Player selected resource pack. Enable gameScript menu (size selection)
+		/// and pass some parameters.
+		/// </summary>
+		/// <param name="chosenButton">Chosen button.</param>
 	    private void CreateMainGameObject(GameObject chosenButton)
 	    {
             //destroy used tiles 

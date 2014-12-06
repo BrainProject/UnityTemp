@@ -6,10 +6,19 @@ namespace MinigamePexeso
 {
 	public class GameStart : MonoBehaviour 
     {
-        public GameScript mainGameScript;
+		/// <summary>
+		/// Main game script (GameScript)
+		/// </summary>
+		public GameScript mainGameScript;
 	    
+		/// <summary>
+		/// The game tile prefab.
+		/// </summary>
         public GameObject gameTilePrefab;
 
+		/// <summary>
+		/// Menu tiles.
+		/// </summary>
         private GameObject[] gameTiles;
 
 	    /// <summary>
@@ -27,8 +36,6 @@ namespace MinigamePexeso
         /// </summary>
         private Ray ray;
         private RaycastHit hit;
-
-
 
         /// <summary>
         /// creates "menu" for selecting size of board
@@ -48,7 +55,9 @@ namespace MinigamePexeso
 	    }
 		
 
-		// Update is called once per frame
+		/// <summary>
+		/// Wait for player to select menu item.
+		/// </summary>
 		void Update ()
 	    {
 	        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -88,7 +97,7 @@ namespace MinigamePexeso
 	            t += Time.deltaTime;
 	            yield return null;
 	        }
-	        StartCoroutine(SelectButton(chosenButton));
+			CreateMainGameObject(chosenButton);
 	    }
 
 	    /// <summary>
@@ -96,7 +105,7 @@ namespace MinigamePexeso
 	    /// </summary>
 	    /// <param name="chosenButton">Chosen button.</param>
 	    /// <param name="buttons">Buttons.</param>
-	    private IEnumerator SelectButton(GameObject chosenButton)
+/*	    private IEnumerator SelectButton(GameObject chosenButton)
 	    {
 	        //Vector3 startPosition = chosenButton.transform.position;
 	        float t = 0;
@@ -105,11 +114,11 @@ namespace MinigamePexeso
 	                                  Camera.main.ViewportToWorldPoint(Vector3.zero).y,
 	                                  Camera.main.ViewportToWorldPoint(Vector3.zero).z);*/
 
-			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-			backTextureColor.a = 0;
-			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
+//			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+//			backTextureColor.a = 0;
+//			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
 			
-			while (t - 1f < 0)
+/*			while (t - 1f < 0)
 			{
 				t += Time.deltaTime * 2;
 				
@@ -129,7 +138,7 @@ namespace MinigamePexeso
 	        CreateMainGameObject(chosenButton);
 	        //chosenButton.transform.position = endPosition;
 	    }
-
+*/
 	    /// <summary>
 	    /// Creates new game by setting game dimensions and starting main game script.
 	    /// </summary>
@@ -137,7 +146,8 @@ namespace MinigamePexeso
 	    private void CreateMainGameObject(GameObject chosenButton)
 	    {
             Debug.Log("Selected board size: " + chosenButton.name);
-            
+			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			//MGC.Instance.SaveGame ();
             string[] dimensions = chosenButton.name.Split('x');
 	        int rows = Int32.Parse(dimensions [0]);
 	        int columns = Int32.Parse(dimensions [1]);
@@ -154,12 +164,15 @@ namespace MinigamePexeso
                 mainGameScript.enabled = true;
                 mainGameScript.CreateGameBoard();
 
-                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
-                if (musicPlayer == null)
-                {
-                    Debug.Log("ERROR");
-                }
-                musicPlayer.Play();
+				if(mainGameScript.enableSound)
+				{
+	                AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+	                if (musicPlayer == null)
+	                {
+	                    Debug.Log("ERROR");
+	                }
+	                musicPlayer.Play();
+				}
             }
             else
             {

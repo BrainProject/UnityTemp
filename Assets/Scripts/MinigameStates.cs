@@ -40,10 +40,15 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		public List<Minigame> minigames = new List<Minigame>();
+		internal List<Minigame> minigames = new List<Minigame>();
 
-		void Start()
+		public void Start ()
 		{
+			Minigame main = new Minigame ("Main");
+			minigames.Add (main);
+			Minigame selection = new Minigame ("GameSelection");
+			selection.initialShowHelpCounter = 2;
+			minigames.Add (selection);
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);
@@ -57,14 +62,28 @@ namespace Game
 			minigames.Add (puzzle);
 			Minigame coloring = new Minigame ("Coloring");
 			minigames.Add (coloring);
-			Minigame socialGame = new Minigame ("SocialGame");
-			minigames.Add (socialGame);
 			Minigame findIt = new Minigame ("FindIt", "FindItGame");
 			minigames.Add (findIt);
+			Minigame socialGame = new Minigame ("_XSocialGame");
+			minigames.Add (socialGame);
+			Minigame dodge = new Minigame("Dodge");
+			minigames.Add (dodge);
+			Minigame figure = new Minigame ("Figure");
+			minigames.Add (figure);
+			Minigame interaction = new Minigame ("Interaction");
+			minigames.Add (interaction);
+			Minigame repeat = new Minigame ("Repeat");
+			minigames.Add (repeat);
+			Minigame cooperative = new Minigame ("Cooperative");
+			minigames.Add (cooperative);
 
 			MGC.Instance.LoadGame ();
 		}
-		
+
+		/// <summary>
+		/// Sets the minigame status to "played".
+		/// </summary>
+		/// <param name="minigameName">Minigame name.</param>
 		public void SetPlayed(string minigameName)
 		{
 			foreach(Minigame game in minigames)

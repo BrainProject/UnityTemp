@@ -1,26 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChooseImage : MonoBehaviour {
+namespace Coloring
+{
+	public class ChooseImage : MonoBehaviour
+	{
+		public GameObject Image;
+		public LevelManagerColoring thisLevelManager;
 
-	public GameObject Image;
-	public Animation DeskAnimation;
+		private Animator deskAnimator;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
-	void OnMouseDown(){
-		Image.SetActive(true);
-		if(!DeskAnimation.IsPlaying("deskRotation") && !DeskAnimation.IsPlaying("deskRotation2"))
+		void Start()
 		{
-			DeskAnimation.Play("deskRotation2");
+			deskAnimator = transform.parent.transform.parent.GetComponent<Animator> ();
+		}
+
+		void OnMouseDown(){
+
+			if(Time.time - thisLevelManager.timestamp > 2)
+			{
+				thisLevelManager.timestamp = Time.time;
+				Image.SetActive(true);
+				Image.transform.parent.gameObject.SetActive(true);
+				deskAnimator.SetBool("painting", true);
+				deskAnimator.SetTrigger("animate");
+				thisLevelManager.painting = true;
+				thisLevelManager.ShowColoringGUI(true);
+				if(!thisLevelManager.hiddenGUIwhilePainting)
+					MGC.Instance.ShowCustomCursor(false);
+				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+			}
+		}
+
+		void LateUpdate()
+		{
+			deskAnimator.SetBool("painting", false);
 		}
 	}
 }

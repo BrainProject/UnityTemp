@@ -16,7 +16,8 @@ namespace FindIt
 		void OnMouseDown()
 		{
 			PlayerPrefs.SetInt("numberPieces", numberPictures);
-			Application.LoadLevel("FindItGame");
+			//Application.LoadLevel("FindItGame");
+			MGC.Instance.sceneLoader.LoadScene("FindItGame",true);
 		}
 		
 		void Start()

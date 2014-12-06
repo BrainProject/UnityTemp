@@ -2,16 +2,23 @@
 using System.Collections;
 using System.IO;
 
-#if UNITY_STANDALONE
 public class RenderCameraToFile : MonoBehaviour 
 {
+#if UNITY_STANDALONE
     public Camera cam;
-    public int width = 1600;
-    public int height = 900;
+    public int width = 3840;
+    public int height = 2160;
     public string defaultFileName = "savedCameraFrame.png";
 
-    void RenderToFile(string fileName)
-    {
+    public void RenderToFile(string fileName)
+	{
+#if UNITY_EDITOR
+        if (!UnityEditorInternal.InternalEditorUtility.HasPro())
+        {
+            Debug.LogWarning("You are now working with FREE version of Unity, but this feature works only with PRO version - feature is therefore disabled, no file will be saved");
+            return;
+        }
+#endif
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);
         cam.targetTexture = tempRT;
@@ -45,6 +52,11 @@ public class RenderCameraToFile : MonoBehaviour
             
             RenderToFile(defaultFileName);
         }        
-    }
-}
+	}
+#else
+	public void RenderToFile(string fileName)
+	{
+		Debug.LogWarning ("Fucntion not supported on platforms different than standalone.");
+	}
 #endif
+}

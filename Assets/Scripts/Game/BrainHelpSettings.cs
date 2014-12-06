@@ -39,13 +39,18 @@ namespace Game
 		void Update()
 		{
 			#if UNITY_STANDALONE
-			if(Input.GetButtonDown("Horizontal") && Input.GetMouseButton(0) && canControl)
+			if(Input.GetButtonDown("Horizontal")  || (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L)) && canControl)
 			#else
 			if(Input.GetButtonDown("Horizontal") && canControl)
 			#endif
 			{
 				neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
-				StartCoroutine (MoveAway(Input.GetAxis("Horizontal")));
+				if((Input.GetAxis("Horizontal") < 0) || (Input.GetKeyDown (KeyCode.J) && Input.GetMouseButton(0)))
+					StartCoroutine (MoveAway(-1.0f));
+				if((Input.GetAxis("Horizontal") > 0) || (Input.GetKeyDown (KeyCode.L) && Input.GetMouseButton(0)))
+					StartCoroutine (MoveAway(1.0f));
+
+				    
 				StartCoroutine ("FadeOut");
 			}
 		}
@@ -73,8 +78,6 @@ namespace Game
 		IEnumerator FadeOut()
 		{
 			Destroy (blockBorderClone);
-			//Tell to MGC that this minigame was played.
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
 			originalColor = this.guiTexture.color;

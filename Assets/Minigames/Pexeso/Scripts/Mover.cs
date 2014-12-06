@@ -3,9 +3,15 @@ using System.Collections;
 
 namespace MinigamePexeso
 {
+	/// <summary>
+	/// Mover script.
+	/// Addached to tiles. Ensures moving the tile up to the camera and back down.
+	/// </summary>
 	public class Mover : MonoBehaviour
 	{
-		// Use this for initialization
+		/// <summary>
+		/// Define down and up position.
+		/// </summary>
 		void Start ()
 		{
 			downPosition = transform.position;
@@ -16,22 +22,66 @@ namespace MinigamePexeso
 		void Update ()
 		{
 		}
-		
+
+		/// <summary>
+		/// Defines if tile is moving.
+		/// </summary>
 		public bool isMoving = false;
+
+		/// <summary>
+		/// Defines if tile is lifted.
+		/// </summary>
 		public bool isLifted = false;
+
+		/// <summary>
+		/// Defines if tile should be removed.
+		/// </summary>
 		public bool toRemove = false;
-		
+
+		/// <summary>
+		/// The move vector.
+		/// </summary>
 		private Vector3 moveVector = new Vector3(0, 0, -1);
+
+		/// <summary>
+		/// Down position. Fixed for the whole time.
+		/// </summary>
 		private Vector3 downPosition;
+
+		/// <summary>
+		/// Up position. Fixed for the whole time.
+		/// </summary>
 		public Vector3 upPosition;
-		
+
+		/// <summary>
+		/// The move speed. Fixed for the whole time.
+		/// </summary>
 		private float moveSpeed = 2f;
+
+		/// <summary>
+		/// The start position (used for moving). Will change when tile is moved.
+		/// </summary>
 		private Vector3 startPosition;
+
+		/// <summary>
+		/// The end position (used for moving). Will change when tile is moved.
+		/// </summary>
 		private Vector3 endPosition;
+
+		/// <summary>
+		/// Coroutine time variable.
+		/// </summary>
 		private float t;
-		
+
+		/// <summary>
+		/// Determines if movement should change. Used when player clicks on tile
+		/// when it is still moving.
+		/// </summary>
 		private bool switchTranslation = false;
-		
+
+		/// <summary>
+		/// Move tile.
+		/// </summary>
 		public void Move()
 		{
 			if (isLifted)
@@ -43,7 +93,10 @@ namespace MinigamePexeso
 				MoveUp();
 			}
 		}
-		
+
+		/// <summary>
+		/// Move tile up.
+		/// </summary>
 		public void MoveUp()
 		{
 			if(!isLifted)
@@ -65,7 +118,10 @@ namespace MinigamePexeso
 				MoveUp();
 			}
 		}
-		
+
+		/// <summary>
+		/// Move tile down.
+		/// </summary>
 		public void MoveDown()
 		{
 			if (isLifted)
@@ -86,7 +142,11 @@ namespace MinigamePexeso
 				MoveDown();
 			}
 		}
-		
+
+		/// <summary>
+		/// Switches end position bewteen down position and up position.
+		/// Used when tile changes position.
+		/// </summary>
 		private void SwitchTargets()
 		{
 			startPosition = transform.position;
@@ -99,7 +159,12 @@ namespace MinigamePexeso
 				endPosition = downPosition;
 			}
 		}
-		
+
+		/// <summary>
+		/// Move coroutine.
+		/// Moves the tile along given vector.
+		/// </summary>
+		/// <param name="moveVector">Move vector.</param>
 		private IEnumerator move(Vector3 moveVector)
 		{
 			isMoving = true;

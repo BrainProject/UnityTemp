@@ -20,14 +20,14 @@ namespace FindIt
 			if(!checkResourcePackForEnoughImages(BIG_SIZE))
 			{
 				PlayerPrefs.SetInt("numberPieces", SMALL_SIZE);
-				Application.LoadLevel("FindItGame");
+				//Application.LoadLevel("FindItGame");
+				MGC.Instance.sceneLoader.LoadScene("FindItGame",true);
 			}
 			else 
 			{
-				Application.LoadLevel("FindItSize");
+				//Application.LoadLevel("FindItSize");
+				MGC.Instance.sceneLoader.LoadScene("FindItSize",true);
 			}
-
-
 		}
 		
 		void OnMouseEnter()
@@ -43,7 +43,7 @@ namespace FindIt
 		public bool checkResourcePackForEnoughImages(int numberImages)
 		{
 			Sprite[] images = Resources.LoadAll<Sprite>(resourcePackName);
-			Debug.Log ("Resource pack " + resourcePackName + " loaded " + images.Length + " images.");
+			//Debug.Log ("Resource pack " + resourcePackName + " loaded " + images.Length + " images.");
 			return (images.Length >= numberImages);
 		}
 	}

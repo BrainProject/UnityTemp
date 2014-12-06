@@ -9,6 +9,10 @@ namespace Game
         public MinigamesGUIIconsActions rewardIcon;
         public MinigamesGUIIconsActions gameSelectionIcon;
         public MinigamesGUIIconsActions restartIcon;
+		public MinigamesGUIIconsActions brainIcon;
+		public MinigamesGUIDetection guiDetection;
+		public bool visible;
+		public bool gsiStandalone;
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -18,26 +22,55 @@ namespace Game
 		/// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
         
 		public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
-        {
+		{
+			visible = true;
             //reset state of all icons
             rewardIcon.resetState();
             gameSelectionIcon.resetState();
             restartIcon.resetState();
+			brainIcon.resetState();
 
-            gameObject.SetActive(true);
-            rewardIcon.gameObject.SetActive(showReward);
+			//StartCoroutine (rewardIcon.FadeInGUI ());
+			gameSelectionIcon.gameObject.SetActive (true);
+			restartIcon.gameObject.SetActive (true);
+			if(!gsiStandalone)
+				brainIcon.gameObject.SetActive (true);
+			guiDetection.guiIsHidden = false;
+
+			gameSelectionIcon.show ();
+			restartIcon.show ();
+			if(!gsiStandalone)
+				brainIcon.show ();
+
+            //rewardIcon.gameObject.SetActive(false);
 
 			restartIcon.GetComponent<MinigamesGUIIconsActions>().SetRestartDifferentScene(differentRestartScene,differentRestartSceneName);
         }
 
         public void hide()
-        {
-            gameObject.SetActive(false);
+		{
+			visible = false;
+			gameSelectionIcon.hide ();
+			restartIcon.hide ();
+			if(!gsiStandalone)
+				brainIcon.hide ();
+			guiDetection.guiIsHidden = true;
         }
 
 		void OnLevelWasLoaded (int level)
 		{
-			gameObject.SetActive(false);
+			visible = false;
+			Color tmp = gameSelectionIcon.renderer.material.color;
+			tmp.a = 0.01f;
+			gameSelectionIcon.renderer.material.color = tmp;
+			restartIcon.renderer.material.color = tmp;
+			brainIcon.renderer.material.color = tmp;
+			if(gameSelectionIcon.gameObject.activeSelf)
+				gameSelectionIcon.hide ();
+			if(restartIcon.gameObject.activeSelf)
+				restartIcon.hide ();
+			if(brainIcon.gameObject.activeSelf)
+				brainIcon.hide ();
 		}
     }
 

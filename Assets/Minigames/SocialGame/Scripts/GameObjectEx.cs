@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameObjectEx{
 
-	public static GameObject findGameObjectWithNameTag(string name, string tag)
+	public static GameObject FindGameObjectWithNameTag(string name, string tag)
 	{
 		GameObject[] objects =GameObject.FindGameObjectsWithTag(tag);
 		foreach(GameObject obj in objects)
@@ -14,5 +15,18 @@ public class GameObjectEx{
 			}
 		}
 		return null;
+	}
+
+	public static GameObject FindByTagFromList(List<GameObject> list,string tag)
+	{
+		foreach(GameObject obj in list)
+		{
+			if(obj.tag.Equals(tag))
+			{
+				return obj;
+			}
+		}
+		return null;
+
 	}
 }

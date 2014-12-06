@@ -1,3 +1,21 @@
+/**
+ * @mainpage Newron 
+ *
+ * @section About
+ * 
+ * The Newron is therapeutic software for children with autism spectrum disorder. The softwrae is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
+ * 
+ * It is based on Unity game engine.
+  * 
+ * 
+ * @section Manual
+ * 
+ * This pages serves mainly as a class and method reference. Detailed description of project can be found at official project web page:
+ * 
+ * http://www.newron.cz
+ * 
+ */
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -70,7 +88,8 @@ public class MGC : Singleton<MGC>
 	internal bool fromSelection;
 	internal bool fromMinigame;
 	internal Vector3 selectedMinigame;
-	internal string inactivityScene = "SocialGame";
+	internal string inactivityScene = "Figure";
+	internal bool checkInactivity = true;
 
     /// <summary>
     /// TODO just a temporary solution, before mini-games statistics will be properly saved
@@ -79,11 +98,22 @@ public class MGC : Singleton<MGC>
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
-	private int inactivityCounter = 0;
+	private int inactivityCounter = 1;
+	private GameObject controlsGUI;
 
 	void Awake ()
 	{
-		print ("Master Game Controller starts...");
+#if UNITY_EDITOR
+        if (UnityEditorInternal.InternalEditorUtility.HasPro())
+        {
+            print("You are working with PRO version of Unity");
+        }
+        else
+        {
+            print("You are working with FREE version of Unity");
+        }
+#endif
+		print ("Master Game Controller Awake()...");
 
 		//Initiate Logger
 		logger = this.gameObject.AddComponent<Logger> ();
@@ -119,6 +149,12 @@ public class MGC : Singleton<MGC>
 
 	void Start()
 	{
+		print("Master Game Controller Start()...");
+
+		//due to unknown reason, I doesn't set the list
+		//in the MinigameStates script correctly without this command.
+		minigameStates.Start ();
+
 		inactivityTimestamp = Time.time;
 		#if UNITY_WEBPLAYER
 		inactivityScene = "HanoiTowers";
@@ -136,8 +172,7 @@ public class MGC : Singleton<MGC>
         if (Input.GetKeyDown(KeyCode.I))
         {
             print("Show hidden menu.");
-
-            if (!minigamesGUIObject.activeSelf)
+            if (!minigamesGUI.visible)
             {
                 minigamesGUI.show();
             }
@@ -145,8 +180,6 @@ public class MGC : Singleton<MGC>
             {
                 minigamesGUI.hide();
             }
-            
-
         }
 
 		//Inactivity detection
@@ -156,10 +189,13 @@ public class MGC : Singleton<MGC>
 			inactivityCounter = 0;
 		}
 
-        if (Time.time - inactivityTimestamp > inactivityLenght)
-        {
-            InactivityReaction();
-        }
+		if(checkInactivity)
+		{
+			if (Time.time - inactivityTimestamp > inactivityLenght)
+    	    {
+        	    InactivityReaction();
+        	}
+		}
 
 		//Debug actions
 		if (Input.GetKeyDown(KeyCode.F11))
@@ -177,7 +213,7 @@ public class MGC : Singleton<MGC>
 		{
 			LoadGame ();
 		}
-		if (Input.GetKeyDown (KeyCode.F1))
+		if (Input.GetKeyDown (KeyCode.F3))
 		{
 			ResetGameStatus ();
 		}
@@ -189,20 +225,20 @@ public class MGC : Singleton<MGC>
 		inactivityCounter = 0;
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
-		Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+		//Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
 
 		//DEV NOTE: Only temporary until we unify cursor styles.
-		if (Application.loadedLevelName == "Coloring")
-		{
-			mouseCursor.SetActive (false);
-			Screen.showCursor = true;
-		}
-		else if(mouseCursor)
-		{
-			mouseCursor.SetActive(true);
-			Screen.showCursor = false;
-		}
-
+//		if (Application.loadedLevelName == "Coloring")
+//		{
+//			mouseCursor.SetActive (false);
+//			Screen.showCursor = true;
+//		}
+//		else if(mouseCursor)
+//		{
+//			mouseCursor.SetActive(true);
+//			Screen.showCursor = false;
+//		}
+//
 //		if (!mouseCursor && Application.loadedLevel > 0)
 //		{
 //			ShowCustomCursor ();
@@ -222,44 +258,12 @@ public class MGC : Singleton<MGC>
 		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
 		//print("calling object ID: " + this.GetInstanceID());
 
-		if (Application.loadedLevelName == gameSelectionSceneName)
-		{
-			print ("this is game selection scene...");
-			switch (currentBrainPart) {
-			case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("FrontalLobePos");
-				break;
-			case BrainPartName.ParietalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("ParietalLobePos");
-				break;
-			case BrainPartName.OccipitalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("OccipitalLobePos");
-				break;
-			case BrainPartName.TemporalLobe:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("TemporalLobePos");
-				break;
-			case BrainPartName.Cerebellum:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("CerebellumPos");
-				break;
-			case BrainPartName.BrainStem:
-				Camera.main.GetComponent<CameraControl> ().currentWaypoint = GameObject.Find ("BrainStemPos");
-				break;
-			}
-			if (fromMain)
-			{
-				currentCameraDefaultPosition = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.position;
-			}
 
-			//if player comes to selection scene from main, he can leave immediately by pressing Vertical key
-			Camera.main.GetComponent<CameraControl> ().ReadyToLeave = fromMain;
-			Camera.main.transform.position = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.position;
-			fromMain = false;
-		}
 
-				//if (level > 2)
-				//{
-				//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
-				//}
+		//if (level > 2)
+		//{
+		//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
+		//}
 	}
 
 	//Only for debugging and testing purposes
@@ -287,6 +291,11 @@ public class MGC : Singleton<MGC>
 	public void SaveGame()
 	{
 		#if !UNITY_WEBPLAYER
+		//remove delete of the save file feature when finished, it will no longer be necessary
+		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
+		{
+			File.Delete(Application.persistentDataPath + "/newron.sav");
+		}
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -306,12 +315,20 @@ public class MGC : Singleton<MGC>
 		{
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/newron.sav", FileMode.Open);
-			for(int i=0; i<minigameStates.minigames.Count; ++i)
+			FileInfo info = new FileInfo(file.Name);
+			if(info.Length > 0)
 			{
-				minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
-			}
+				for(int i=0; i<minigameStates.minigames.Count; ++i)
+				{
+					minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
+				}
 
-			print ("Game loaded.");
+				print ("Saved game-data loaded.");
+			}
+			else
+			{
+				print ("Game NOT loaded.");
+			}
 			file.Close();
 		}
 
@@ -320,11 +337,34 @@ public class MGC : Singleton<MGC>
 		#endif
 	}
 
-	public void ShowCustomCursor()
+	public void ShowCustomCursor(bool isShown)
 	{
-		mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-		mouseCursor.guiTexture.enabled = false;
-		mouseCursor.transform.parent = this.transform;
+		if(isShown)
+		{
+			if(!mouseCursor)
+			{
+				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+				mouseCursor.guiTexture.enabled = false;
+				mouseCursor.transform.parent = this.transform;
+			}
+			else
+			{
+				mouseCursor.SetActive(true);
+			}
+		}
+		else
+		{
+			if(!mouseCursor)
+			{
+				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
+				mouseCursor.guiTexture.enabled = false;
+				mouseCursor.transform.parent = this.transform;
+			}
+			else
+			{
+				mouseCursor.SetActive(false);
+			}
+		}
 	}
 
 	public void HideCustomCursor()
@@ -342,6 +382,7 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
 
+		SaveGame ();
 		if(Application.loadedLevelName == "GameSelection")
 			sceneLoader.LoadScene("GameSelection");
 	}
