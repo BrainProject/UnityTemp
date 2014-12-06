@@ -25,7 +25,7 @@ namespace Game
 		{
             print("SceneLoader::Start()...");
 
-            //TODO find out, how to create whole canvas in code? Why?...
+            //instatiate prefab of canvas with fadepanel
             GameObject fadeCanvas = Instantiate(Resources.Load("FadeCanvas")) as GameObject;
 
             if (fadeCanvas == null)
@@ -39,6 +39,7 @@ namespace Game
                 //set proper parent to canvas
                 fadeCanvas.transform.SetParent(gameObject.transform);
 
+                //find 'Image' component
                 fadePanel = fadeCanvas.GetComponentInChildren<Image>();
                 if (fadePanel == null)
                 {
@@ -52,15 +53,6 @@ namespace Game
 
                 
             }
-
-            //gameObject.AddComponent<GUITexture>();
-            //guiTexture.texture = Resources.Load("Textures/white") as Texture;
-            //guiTexture.pixelInset = new Rect(Screen.width / 2, Screen.height / 2, 1, 1);
-
-            //originalColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-            //targetColor = this.guiTexture.color;
-            //guiTexture.color = originalColor;
-            //guiTexture.enabled = false;
 
             speed = 0.1f * fadeSpeed;
 			
@@ -107,24 +99,20 @@ namespace Game
         {
 			print("fading in...");
 			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
-			//guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-            //print("initial alpha = " + guiTexture.color.a);
+			
+            fadePanel.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+
             float startTime = Time.time;
             originalColor = fadePanel.color;
             targetColor.a = 0;
-            
-            //guiTexture.enabled = true;
             fadePanel.enabled = true;
             
             while (fadePanel.color.a > 0.01f)
             {
-                //guiTexture.enabled = true;
-                //this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
                 fadePanel.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-                //print("alpha = " + fadePanel.color.a);
-
                 yield return null;
             }
+
             fadePanel.enabled = false;
 			Destroy (blockBorderClone);
         }
@@ -150,21 +138,6 @@ namespace Game
 				originalColor.a = 0.0f;
 				targetColor.a = 1.0f;  
               
-                //if(!this.guiTexture)
-                //{
-                //    print ("GUITexture not assigned to MGC.");
-                //    this.gameObject.AddComponent<GUITexture>();
-                //}
-
-				//this.guiTexture.enabled = true;
-                //while (this.guiTexture.color.a < 0.51f)
-                //{
-                //    //this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-                //    //print("alpha = " + this.guiTexture.color.a);
-
-                //    yield return null;
-                //}
-
                 fadePanel.enabled = true;
 
                 while (fadePanel.color.a < 0.51f)
@@ -189,14 +162,15 @@ namespace Game
 
 			float startTime = Time.time;
 			originalColor.a = 0.0f;
-			targetColor.a = 1.0f;                
+			targetColor.a = 1.0f;
 
-			this.gameObject.guiTexture.enabled = true;
-			while (this.guiTexture.color.a < 0.51f)
-			{
-				this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-				yield return null;
-			}
+            fadePanel.enabled = true;
+
+            while (fadePanel.color.a < 0.51f)
+            {
+                fadePanel.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
+                yield return null;
+            }
 				
 			Application.LoadLevel(levelIndex);
 		}
