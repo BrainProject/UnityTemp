@@ -1140,6 +1140,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0169aae3fce31f14086ca0ad4261966e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &257392270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 257392271}
+  - 33: {fileID: 257392275}
+  - 23: {fileID: 257392274}
+  - 114: {fileID: 257392273}
+  - 114: {fileID: 257392272}
+  m_Layer: 0
+  m_Name: LondonTowersIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &257392271
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257392270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1085101863}
+  m_RootOrder: 0
+--- !u!114 &257392272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257392270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0169aae3fce31f14086ca0ad4261966e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &257392273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257392270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28354e40322f75343ae14cd54ef90b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!23 &257392274
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257392270}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 6aff0e02a1a2f6a45bd0aed5ccb30612, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &257392275
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257392270}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &262994658
 GameObject:
   m_ObjectHideFlags: 0
@@ -3748,7 +3828,7 @@ GameObject:
   - 114: {fileID: 1085101864}
   - 122: {fileID: 1085101868}
   m_Layer: 0
-  m_Name: EMPTY
+  m_Name: LondonTowers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3763,7 +3843,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -.672249317, y: .742856622, z: .738435745}
   m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
-  m_Children: []
+  m_Children:
+  - {fileID: 257392271}
   m_Father: {fileID: 1744454526}
   m_RootOrder: 3
 --- !u!114 &1085101864
@@ -3777,9 +3858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1064cca7845b75241af129dfaa65a024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameName: 
+  minigameName: LondonTowerGUIMenu
   cameraDistance: 3
-  minigameIcon: {fileID: 0}
+  minigameIcon: {fileID: 2800000, guid: a41e648fa3d94704fbce0467e910f030, type: 3}
   minigameHelp: {fileID: 0}
   kinectRequired: 0
   levelManager: {fileID: 1456585141}
