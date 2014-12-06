@@ -52,6 +52,8 @@ namespace Game
 			//Set your minigame here (don't forget to add it into collection too):
 			Minigame hanoi = new Minigame ("HanoiTowers");
 			minigames.Add (hanoi);
+			Minigame london = new Minigame ("LondonTowerGUIMenu", "LondonTowerGame");
+			minigames.Add (london);
 			Minigame pexeso = new Minigame ("Pexeso");
 			minigames.Add (pexeso);
 			Minigame similarities = new Minigame ("Similarities");
