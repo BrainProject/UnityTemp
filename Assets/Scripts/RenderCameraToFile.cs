@@ -34,12 +34,18 @@ public class RenderCameraToFile : MonoBehaviour
         // can help avoid errors
         RenderTexture.active = null; 
         cam.targetTexture = null;
-        
+
+        //create directory if it don't exists already
+        Directory.CreateDirectory(Application.persistentDataPath + "/Pictures");
+
         //save Texture2D to file
         byte[] bytes;
         bytes = virtualPhoto.EncodeToPNG();
-        print("Saving picture to file: " + Application.dataPath + "/" + fileName);
-        System.IO.File.WriteAllBytes(Application.dataPath + "/" + fileName, bytes);
+        string pathString = Application.persistentDataPath + "/Pictures/" + fileName;
+        print("Saving picture to file: " + pathString + "...");
+        System.IO.File.WriteAllBytes(pathString, bytes);
+
+        MGC.Instance.logger.addEntry("Picture saved at: '" + pathString + "'.");
 
         Destroy(tempRT);
     }

@@ -52,9 +52,7 @@ public class Logger : MonoBehaviour
         
             Debug.Log("Initialization of Logger...");
             string logPath = path + "/" + filename;
-            Debug.Log("...Newron log path: " + logPath);
-            //Debug.Log("Application data path: " + Application.dataPath);
-            //Debug.Log("Application persistent data path: " + Application.persistentDataPath);
+            print("Newron Log will be saved to: '" + logPath + "PlayerActions.txt'");
 
             //create directory if it don't exists already
             Directory.CreateDirectory(path);
