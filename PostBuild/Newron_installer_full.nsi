@@ -15,6 +15,26 @@
   ;Properly display all languages
   Unicode true
 
+  # pøidání informací
+  VIProductVersion                 "0.9.5.0"
+  VIAddVersionKey ProductName      "Newron - kompletní balík"
+  VIAddVersionKey Comments         "Terapeutický software Newron"
+  VIAddVersionKey CompanyName      "Masaryk University"
+  VIAddVersionKey LegalCopyright   "Masaryk University"
+  VIAddVersionKey FileDescription  "Instálotor pro Newron"
+  VIAddVersionKey FileVersion      1
+  VIAddVersionKey ProductVersion   1
+  VIAddVersionKey InternalName     "Newron"
+  VIAddVersionKey LegalTrademarks  "CC"
+  VIAddVersionKey OriginalFilename "Newron_instalator.exe"
+
+  # nastavení ikon a loga
+  !define MUI_ICON "Newron.ico"
+  !define MUI_HEADERIMAGE
+  !define MUI_HEADERIMAGE_BITMAP "Logo-Newron.bmp"
+  !define MUI_HEADERIMAGE_RIGHT
+
+
   ;Name and file
   Name "Newron"
   OutFile "Newron_instalator.exe"
@@ -49,7 +69,7 @@
 
 	!include "kinect.nsdinc"
 
-  !insertmacro MUI_PAGE_LICENSE "Licence.txt"
+  !insertmacro MUI_PAGE_LICENSE "Licence.rtf"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   Page custom fnc_kinect_Show
@@ -100,15 +120,13 @@ Section "Newron" SecNewron
   SectionIn RO
 
   SetOutPath "$INSTDIR"
-    
-  ;odstranìní instalaèky Kinect SDK - zatím nefunguje
-  RMDir /r $INSTDIR/SDK
-  
+      
   ;ADD YOUR OWN FILES HERE...
   File /r Newron_Data
   File Newron.exe
   File README.txt
   File Version.txt
+  File *.dll
   
   ;Store installation folder
   #WriteRegStr HKCU "Software\Newron" "" $INSTDIR
@@ -150,7 +168,10 @@ FunctionEnd
 
 
 
-
+;--- After successful install, remove Kinect SDK ---
+Function .onInstSuccess
+    RMDir /r "$INSTDIR\SDK"
+FunctionEnd
 
  
 #;--------------------------------
