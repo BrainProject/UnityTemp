@@ -81,8 +81,8 @@
 ;--------------------------------
 ;Languages
 
-  !insertmacro MUI_LANGUAGE "Czech" ;first language is the default language
-  !insertmacro MUI_LANGUAGE "English"
+  #!insertmacro MUI_LANGUAGE "Czech" ;first language is the default language
+  #!insertmacro MUI_LANGUAGE "English"
 
 
 
@@ -125,7 +125,7 @@ Section "Newron" SecNewron
   File /r Newron_Data
   File Newron.exe
   File README.txt
-  File Version.txt
+  File Changelog.txt
   File *.dll
   
   ;Store installation folder
