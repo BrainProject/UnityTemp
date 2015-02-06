@@ -12,7 +12,7 @@ public class LondonTowePoleScript : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.GetComponent<LondonToweSphereScript>() != null )
         {
-            Debug.Log("kulička se dotkla tyče");
+           // Debug.Log("kulička se dotkla tyče");
             LondonToweSphereScript sphere = other.gameObject.GetComponent<LondonToweSphereScript>();
             if (sphere != null)
             {
@@ -22,14 +22,15 @@ public class LondonTowePoleScript : MonoBehaviour {
                 sphere.SetLastPolePosition(this.transform.position.x);
                 sphere.SetPoleData(id, capacity, LondonTowerGameState.game==LondonTowerGameManager.state);
                 capacity--;
+                gameManager.SetOnTop(sphere);
                 if (gameManager.CheckWin())
                 {
-                    LondonTowerGameManager.state = LondonTowerGameState.winGUI;
-                    Debug.Log("win");
+                    gameManager.GameEnd();
+                   // Debug.Log("win");
                 }
                 else
                 {
-                    Debug.Log("not win");
+                  //  Debug.Log("not win");
                 }
             }
            

@@ -7,8 +7,11 @@ using System.Collections;
 public class LondonTowerMainMenu : MonoBehaviour {
 
 
-    public Texture selectLevel, exitGame, levelSet1, levelSet2, levelSet3, levelSet4, back;
+   // public Texture selectLevel, exitGame, levelSet1, levelSet2, levelSet3, levelSet4, back;
 
+
+    public GameObject mainMenuPanel;
+    public GameObject levelSelectPanel;
 
     /// <summary>
     /// 0 main menu, 1 level select
@@ -17,7 +20,7 @@ public class LondonTowerMainMenu : MonoBehaviour {
 	
 
 
-    void OnGUI()
+  /*  void OnGUI()
     {
 
        if (guiState == 0)
@@ -90,6 +93,32 @@ public class LondonTowerMainMenu : MonoBehaviour {
             }
             
         }
+    }
+    */
+
+
+    public void SelectLevel()
+    {
+        mainMenuPanel.SetActive(false);
+        levelSelectPanel.SetActive(true);
+    }
+
+    public void Level(int level)
+    {
+        LondonTowerGameManager.dataSet = level;
+        MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
+    }
+
+    public void BackToMenu()
+    {
+        mainMenuPanel.SetActive(true);
+        levelSelectPanel.SetActive(false);
+    }
+
+    public void BackToGameSelect()
+    {
+        //pak upravit na výber her
+        Application.Quit();
     }
 
 }

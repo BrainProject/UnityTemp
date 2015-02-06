@@ -8,12 +8,13 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
 
     private Vector3 lastPosition;
     private bool clicked = false;
+    private bool lastClicked = false;
     private bool moveX = true;
     private float lastPolePolesition;
     public LondonTowerGameManager gameManager;
 
     //poměr pohybu myši - objektu ve scéně
-    private float moveConstant =(Screen.height /9.5f);
+    private float moveConstant =(Screen.height /9.3f);
     public bool start = true;
     public string idColor;
     public int currentPoleID;
@@ -35,7 +36,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         {
             //(Screen.height/6.5f) magická konstanta 6.5 ja vzálenost od podlahy do místa kde je ještě vicět koule
             Vector3 distance = Input.mousePosition - lastPosition;
-            
+
             if (moveX)
             {
                 //9,-1 jsou hrany odkud kulička nesmí utéct
@@ -47,36 +48,53 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
             }
             lastPosition = Input.mousePosition;
+            if (lastClicked)
+            {
+                lastClicked = !lastClicked;
+
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    clicked = false;
+                    this.rigidbody.useGravity = true;
+                }
+            }
+           
         }
         else
         {
-         
-                int xPosition = (((int)this.transform.position.x)/4*4);
-                float rozdil = this.transform.position.x - xPosition;
-                if (rozdil > 2)
-                {
-                    xPosition = xPosition + 4;
-                }
-                if (gameManager == null)
-                {
-                    Debug.Log("ffff");
-                }
-           
-                if (moveX && gameManager.IsPoleFull(xPosition))
-                {
-                   // Debug(xPosition);
-                    Debug.Log(lastPolePolesition);
-                //    Debug.Log(currentPoleID + "poleID");
-                this.transform.position = (new Vector3((currentPoleID-1)*4, this.transform.position.y+1, this.transform.position.z));
-                    //this.transform.position = (new Vector3(lastPolePolesition, this.transform.position.y, this.transform.position.z));
 
-                }else 
-                {
+            int xPosition = (((int)this.transform.position.x) / 4 * 4);
+            float rozdil = this.transform.position.x - xPosition;
+            if (rozdil > 2)
+            {
+                xPosition = xPosition + 4;
+            }
+            if (gameManager == null)
+            {
+                Debug.Log("ffff");
+            }
+
+            if (moveX && gameManager.IsPoleFull(xPosition))
+            {
+                // Debug(xPosition);
+                Debug.Log(lastPolePolesition);
+                //    Debug.Log(currentPoleID + "poleID");
+                this.transform.position = (new Vector3((currentPoleID - 1) * 4, this.transform.position.y + 1, this.transform.position.z));
+                //this.transform.position = (new Vector3(lastPolePolesition, this.transform.position.y, this.transform.position.z));
+
+            }
+            else
+            {
                 this.transform.position = (new Vector3(xPosition, this.transform.position.y, this.transform.position.z));
-                }
+            }
         }
 	
 	}
+
+   
 
     void OnMouseDown()
     {
@@ -87,14 +105,16 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                 clicked = true;
                 lastPosition = Input.mousePosition;
                 this.rigidbody.useGravity = false;
+                lastClicked = true;
             }
+           
         }
     }
   
     void OnMouseUp()
     {
-        clicked = false;
-        this.rigidbody.useGravity = true;
+       // clicked = false;
+       // this.rigidbody.useGravity = true;
     }
 
 
@@ -159,5 +179,19 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     {
         if (other == null) return 1;
         return orderOnPole.CompareTo(other.orderOnPole);
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<LondonTowePoleScript>() != null)
+        {
+            //Debug.Log("kulička se dotkla tyče");
+            if (clicked)
+            {
+                clicked = false;
+                this.rigidbody.useGravity = true;
+            }
+        }
     }
 }

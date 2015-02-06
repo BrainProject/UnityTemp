@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Game;
 
 /// <summary>
 /// class for taking screenshot/minimap that show player final goal
@@ -20,6 +21,8 @@ public class LondonTowerCamera : MonoBehaviour {
     public GameObject plane;
     private float change = 0.25f;
     private Texture2D minimapBacground;
+    public SceneLoader fade;
+    private float fadeTime = 3.5f;
 
 
     void Awake()
@@ -58,7 +61,13 @@ public class LondonTowerCamera : MonoBehaviour {
     {
         if (done)
         {
-            c.a = c.a + change * Time.deltaTime;
+            if (LondonTowerGameManager.state != LondonTowerGameState.animationStart)
+            {
+                LondonTowerGameManager.state = LondonTowerGameState.animationStart;
+            }
+            
+           fade.FadeIn();
+            fadeTime = fadeTime - Time.deltaTime;/*  c.a = c.a + change * Time.deltaTime;
             SetColor(c);
             if (c.a >= 1)
             {
@@ -71,10 +80,17 @@ public class LondonTowerCamera : MonoBehaviour {
             else
                 if (c.a < 0.1)
                 {
-                    animtionDone = true;
-                    done = false;
-                }
+                   
+                }*/
+            if (fadeTime < 0)
+            {
+
+                animtionDone = true;
+                done = false;
+                LondonTowerGameManager.state = LondonTowerGameState.animationEnd;
+            }
         }
+       
     }
 
     /// <summary>
