@@ -139,7 +139,7 @@ namespace Game
                 while (fadePanel.color.a < 0.99f)
                 {
                     fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
-                    print("barva: " + fadePanel.color);
+                    //print("barva: " + fadePanel.color);
                     yield return null;
                 }
                 

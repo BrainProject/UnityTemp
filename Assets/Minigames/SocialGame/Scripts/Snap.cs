@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 using Kinect;
 #endif
 
 namespace SocialGame{
 	public class Snap : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public int player;
 		public GameObject after;
 		public Vector3 positionLeft;

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace SocialGame{
 	public class Ballon : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 
 		public DistanceJoint2D joint;
 		public SpriteRenderer render;

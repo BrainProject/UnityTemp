@@ -34,6 +34,24 @@ namespace MinigameSelection
 			//CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
 			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
+
+			if(minigameName == "")
+			{
+				this.renderer.material.color = Color.gray;
+				this.GetComponent<SelectMinigame>().enabled = false;
+				this.collider.enabled = false;
+				//this.gameObject.SetActive(false);
+			}
+
+#if !UNITY_STANDALONE
+			if(kinectRequired)
+			{
+				this.renderer.material.color = Color.gray;
+				this.GetComponent<SelectMinigame>().enabled = false;
+				this.collider.enabled = false;
+			}
+#endif
+
 			if(Icon)
 			{
 				//if(transform.childCount > 0)
@@ -52,14 +70,7 @@ namespace MinigameSelection
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);
             }
-			
-            if(minigameName == "")
-			{
-				this.renderer.material.color = Color.gray;
-				this.GetComponent<SelectMinigame>().enabled = false;
-				this.collider.enabled = false;
-				//this.gameObject.SetActive(false);
-			}
+
 
 /*			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
 			{
