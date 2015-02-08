@@ -13,7 +13,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     private float lastPolePolesition;
     public LondonTowerGameManager gameManager;
 
-    //poměr pohybu myši - objektu ve scéně
+    //ratio of moving spehre by mouse - to scene
     private float moveConstant =(Screen.height /9.3f);
     public bool start = true;
     public string idColor;
@@ -34,17 +34,16 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         }
         if (clicked)
         {
-            //(Screen.height/6.5f) magická konstanta 6.5 ja vzálenost od podlahy do místa kde je ještě vicět koule
             Vector3 distance = Input.mousePosition - lastPosition;
 
             if (moveX)
             {
-                //9,-1 jsou hrany odkud kulička nesmí utéct
+                //9,-1 are bordes when sphere can be moved
                 this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstant)), this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
             }
             else
             {
-                //9,-1 jsou hrany odkud kulička nesmí utéct + nyní je na tyči tj pohybuje se nahoru/dolu
+                //9,-1 are bordes when sphere can be moved + nax can only move down/up becaus id on the pole
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
             }
             lastPosition = Input.mousePosition;
@@ -74,7 +73,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             }
             if (gameManager == null)
             {
-                Debug.Log("ffff");
+                Debug.Log("no game manager, add gammanager in editor");
             }
 
             if (moveX && gameManager.IsPoleFull(xPosition))
@@ -111,12 +110,6 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         }
     }
   
-    void OnMouseUp()
-    {
-       // clicked = false;
-       // this.rigidbody.useGravity = true;
-    }
-
 
     public void EnableXMove(bool enableX) {
         moveX = enableX;
@@ -186,7 +179,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     {
         if (other.gameObject.GetComponent<LondonTowePoleScript>() != null)
         {
-            //Debug.Log("kulička se dotkla tyče");
+            //Debug.Log(" sphere is hitted by pole");
             if (clicked)
             {
                 clicked = false;

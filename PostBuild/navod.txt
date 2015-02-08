@@ -1,0 +1,15 @@
+Jak vytvoøit instalator pro newron
+
+je potøeba NSIS: 
+http://sourceforge.net/projects/nsis/files/NSIS%203%20Pre-release/3.0b1/nsis-3.0b1-setup.exe/download?use_mirror=switch&download=
+
+Pro editování custom dialogù pak CoolSoft NSISDialogDesigner:¨
+http://coolsoft.altervista.org/en/nsisdialogdesigner
+
+Postup:
+1) Nachystat data - zkopírovat do této složky newron.exe, *.dll, složku Newron_Data a SDK\KinectSDK-v1.8-Setup.exe
+2) Upravit textové soubory - hlavnì asi changelog.txt
+3) spustit NSIS
+4) naèíst "Newron_installer_X.nsi"
+5) spustit, èekat
+6) testovat

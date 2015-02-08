@@ -14,15 +14,12 @@ public class LondonTowerCamera : MonoBehaviour {
     public Texture2D screen;
     public bool takeScreen = false;
     public bool done = false;
-    public bool animtionDone = false;
+    public bool goalShowDone = false;
     private Color c;
     private Texture2D texture;
-   // public bool ready = false;
     public GameObject plane;
-    private float change = 0.25f;
     private Texture2D minimapBacground;
-    public SceneLoader fade;
-    private float fadeTime = 3.5f;
+    private float goalTime = 3.5f;
 
 
     void Awake()
@@ -40,7 +37,7 @@ public class LondonTowerCamera : MonoBehaviour {
 
         if (takeScreen)
         {
-            Debug.Log("run");
+            //Debug.Log("star taking screen");
             Texture2D tex = new Texture2D(Screen.width, Screen.height);
             tex.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
             tex.Apply();
@@ -55,7 +52,7 @@ public class LondonTowerCamera : MonoBehaviour {
     }
 
     /// <summary>
-    /// zařizuje přechod přes černou
+    /// get enough time to show goal
     /// </summary>
     void Update()
     {
@@ -65,27 +62,18 @@ public class LondonTowerCamera : MonoBehaviour {
             {
                 LondonTowerGameManager.state = LondonTowerGameState.animationStart;
             }
-            
-           fade.FadeIn();
-            fadeTime = fadeTime - Time.deltaTime;/*  c.a = c.a + change * Time.deltaTime;
-            SetColor(c);
-            if (c.a >= 1)
-            {
-              //  plane.SetActive(true);
-              //  plane.renderer.material.mainTexture = screen;
-                change = -change;
-                LondonTowerGameManager.state = LondonTowerGameState.animationEnd;
 
-            }
-            else
-                if (c.a < 0.1)
-                {
-                   
-                }*/
-            if (fadeTime < 0)
+            /*SceneLoader loader = FindObjectOfType<SceneLoader>();
+            if (loader != null)
+            {
+                loader.FadeIn();
+            }*/
+       
+            goalTime = goalTime - Time.deltaTime;
+            if (goalTime < 0)
             {
 
-                animtionDone = true;
+                goalShowDone = true;
                 done = false;
                 LondonTowerGameManager.state = LondonTowerGameState.animationEnd;
             }
@@ -100,7 +88,7 @@ public class LondonTowerCamera : MonoBehaviour {
     void OnGUI()
     {
 
-        if (done && !animtionDone)
+        if (done && !goalShowDone)
         {
             GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height),texture,ScaleMode.StretchToFill);
         }

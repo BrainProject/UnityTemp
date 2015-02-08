@@ -12,7 +12,7 @@ public class LondonTowePoleScript : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.GetComponent<LondonToweSphereScript>() != null )
         {
-           // Debug.Log("kulička se dotkla tyče");
+           // Debug.Log("sphere hit the pole");
             LondonToweSphereScript sphere = other.gameObject.GetComponent<LondonToweSphereScript>();
             if (sphere != null)
             {
@@ -54,7 +54,7 @@ public class LondonTowePoleScript : MonoBehaviour {
     }
 
    /// <summary>
-   /// pole cant add any spehere
+   /// pole cant add any sphere
    /// </summary>
    /// <returns></returns>
     public bool IsFull()
