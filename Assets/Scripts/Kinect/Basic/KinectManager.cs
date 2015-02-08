@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Text;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectManager : MonoBehaviour
 	{
+		#if UNITY_STANDALONE
 		public enum Smoothing : int { None, Default, Medium, Aggressive }
 		
 		
@@ -2108,7 +2108,7 @@ namespace Kinect {
 			}
 			
 			return false;
-		}		
+		}	
+		#endif	
 	}
 }
-#endif

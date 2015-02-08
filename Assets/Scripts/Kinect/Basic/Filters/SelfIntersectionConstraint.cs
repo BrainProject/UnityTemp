@@ -9,13 +9,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect  {
 	/// <summary>
 	/// Filter to prevent skeleton arm joints from intersecting the "body".
 	/// </summary>
 	public class SelfIntersectionConstraint
 	{
+		#if UNITY_STANDALONE
 		// cylinder creation parameters
 	    public float ShoulderExtend = 0.5f;
 	    public float HipExtend = 6.0f;
@@ -89,7 +89,7 @@ namespace Kinect  {
 	                }
 	            }
 	        }
-	    }
+		}
+		#endif
 	}
 }
-#endif

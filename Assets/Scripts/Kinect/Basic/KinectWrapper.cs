@@ -14,12 +14,12 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text; 
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	// Wrapper class that holds the various structs and dll imports
 	// needed to set up a model with the Kinect.
 	public class KinectWrapper
 	{
+		#if UNITY_STANDALONE
 		// Kinect-given Variables to keep track of the skeleton's joints.
 		public enum SkeletonJoint
 		{ 
@@ -1230,7 +1230,7 @@ namespace Kinect {
 			        //MakeMatrixFromZ(vz, ref jointOrients[(int)NuiSkeletonPositionIndex.FootRight]);
 				}
 			}
-	    }		
+		}	
+		#endif	
 	}
 }
-#endif

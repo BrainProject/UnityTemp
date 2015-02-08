@@ -3,10 +3,10 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class SpeechManager : MonoBehaviour 
 	{
+		#if UNITY_STANDALONE
 		// Grammar XML file name
 		public string GrammarFileName;
 		
@@ -216,6 +216,6 @@ namespace Kinect {
 				}
 			}
 		}
+		#endif
 	}
 }
-#endif

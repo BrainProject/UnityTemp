@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectGestures
 	{
-
+		#if UNITY_STANDALONE
 		public interface GestureListenerInterface
 		{
 			// Invoked when a new user is detected and tracking starts
@@ -1424,6 +1423,6 @@ namespace Kinect {
 				// here come more gesture-cases
 			}
 		}
+		#endif
 	}
 }
-#endif
