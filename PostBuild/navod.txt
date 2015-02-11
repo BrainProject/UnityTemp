@@ -8,9 +8,13 @@ http://coolsoft.altervista.org/en/nsisdialogdesigner
 
 Postup:
 0) Vyrobit správný build (full, nebo GSI nebo jinou verzi) Newrona v Unity
-1) Nachystat data - zkopírovat do této složky newron.exe, *.dll, složku Newron_Data a SDK\KinectSDK-v1.8-Setup.exe
-2) Upravit textové soubory - hlavnì asi changelog.txt
+    Pro GSI verzi:
+	a) upravit build settings - zaškrtnout, odškrtnout scény které (ne)jsou potøeba
+	b) Minigames GUI prefab - zaškrtnout "GSI standalone"
+1) Zkopírovat Newron*.exe, *.dll, složku Newron_Data a SDK\KinectSDK-v1.8-Setup.exe do složky Postbuild
+2) Aktualizovat textové soubory - hlavnì asi changelog.txt
 3) spustit NSIS
 4) naèíst "Newron_installer_X.nsi"
 5) spustit, èekat
 6) testovat
+7) nahrát na web, aktualizovat stránku

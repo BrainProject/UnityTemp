@@ -16,7 +16,7 @@
   Unicode true
 
   # pøidání informací
-  VIProductVersion                 "0.9.5.0"
+  VIProductVersion                 "0.9.7.0"
   VIAddVersionKey ProductName      "Newron - kompletní balík"
   VIAddVersionKey Comments         "Terapeutický software Newron"
   VIAddVersionKey CompanyName      "Masaryk University"
@@ -31,7 +31,7 @@
   # nastavení ikon a loga
   !define MUI_ICON "Newron.ico"
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "Logo-Newron.bmp"
+  !define MUI_HEADERIMAGE_BITMAP "Logo-Newron.png"
   !define MUI_HEADERIMAGE_RIGHT
 
 
@@ -81,8 +81,8 @@
 ;--------------------------------
 ;Languages
 
-  #!insertmacro MUI_LANGUAGE "Czech" ;first language is the default language
-  #!insertmacro MUI_LANGUAGE "English"
+  !insertmacro MUI_LANGUAGE "Czech" ;first language is the default language
+  !insertmacro MUI_LANGUAGE "English"
 
 
 
