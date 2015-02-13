@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 public class OnDestroyDestroy : MonoBehaviour {
+	#if UNITY_STANDALONE
 
 	public int game;
 	public GameObject destroy;
@@ -20,5 +20,5 @@ public class OnDestroyDestroy : MonoBehaviour {
 			Destroy(destroy);
 		}
 	}
+	#endif
 }
-#endif

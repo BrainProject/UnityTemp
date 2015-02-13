@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 namespace SocialGame{
 	public class FinalCount : MonoBehaviour {
+		#if UNITY_STANDALONE
 
 	public int count;
 
@@ -14,7 +14,7 @@ namespace SocialGame{
 		{
 				LevelManager.finish();
 		}
-	}
+		}
+		#endif
 }
 }
-#endif

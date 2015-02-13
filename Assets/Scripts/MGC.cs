@@ -175,7 +175,7 @@ public class MGC : Singleton<MGC>
 
 		//Hidden menu possible to show with secret gesture
 #if UNITY_ANDROID
-		if(Input.touchCount == 2 && ((Time.time - touchBlockTimestamp) > 3))
+		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2))
 		{
 			touchBlockTimestamp = Time.time;
 #else
@@ -227,7 +227,7 @@ public class MGC : Singleton<MGC>
 		}
 			*/
 #if UNITY_ANDROID
-		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 3))
+		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
 		{
 			touchBlockTimestamp = Time.time;
 #else

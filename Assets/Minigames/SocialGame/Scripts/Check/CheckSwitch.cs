@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 namespace SocialGame{
-public class CheckSwitch : Check {
+	public class CheckSwitch : Check {
+		#if UNITY_STANDALONE
 
 		public FinalCount count;
 
@@ -25,6 +25,6 @@ public class CheckSwitch : Check {
 		{
 
 		}*/
+		#endif
 	}
 }
-#endif
