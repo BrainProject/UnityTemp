@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class KinectHelper 
 	{
+		#if UNITY_STANDALONE
 
 	    // JointPositionIsValid checks whether a skeleton joint is all 0's which can indicate not valid.  
 	    public static bool JointPositionIsValid(Vector3 jointPosition)
@@ -175,7 +175,7 @@ namespace Kinect {
 	        Vector3 normal = lineToPoint / distance;
 
 	        return new Vector4(normal.x, normal.y, normal.z, distance);
-	    }
+		}
+		#endif
 	}
 }
-#endif

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// Implementation of a Holt Double Exponential Smoothing filter for orientation. The double 
@@ -18,6 +17,7 @@ namespace Kinect {
 	/// </summary>
 	public class BoneOrientationsFilter
 	{
+		#if UNITY_STANDALONE
 	    // The previous filtered orientation data.
 	    private FilterDoubleExponentialData[] history;
 
@@ -240,7 +240,7 @@ namespace Kinect {
 
 	        // Gets or sets Historical FrameCount.  
 	        public uint FrameCount;
-	    }
+		}
+		#endif
 	}
 }
-#endif

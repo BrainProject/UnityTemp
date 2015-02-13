@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 using System;
 using System.IO;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class InteractionManager : MonoBehaviour 
 	{
+		#if UNITY_STANDALONE
 	//	/// How high off the ground is the sensor (in meters).
 	//	public float SensorHeight = 1.0f;
 
@@ -771,6 +771,6 @@ namespace Kinect {
 				}
 			}
 		}
+		#endif
 	}
 }
-#endif

@@ -2,11 +2,11 @@
 using UnityEngine;
 using System;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 public class PointManController : MonoBehaviour 
 {
+	#if UNITY_STANDALONE
 	public bool MoveVertically = false;
 	public bool MirroredMovement = false;
 	public bool Player2 = false;
@@ -119,5 +119,5 @@ public class PointManController : MonoBehaviour
 			}	
 		}
 	}
+	#endif
 }
-#endif

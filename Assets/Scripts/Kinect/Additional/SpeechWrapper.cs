@@ -10,10 +10,10 @@ using System.Collections;
 using System.Runtime.InteropServices;
 
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class SpeechWrapper 
 	{
+		#if UNITY_STANDALONE
 	    [Flags]
 	    public enum NuiInitializeFlags : uint
 	    {
@@ -194,6 +194,6 @@ namespace Kinect {
 			
 			return bOneCopied && bAllCopied;
 		}
+		#endif
 	}
 }
-#endif

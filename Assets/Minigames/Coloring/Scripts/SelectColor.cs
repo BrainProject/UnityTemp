@@ -9,6 +9,15 @@ namespace Coloring
 		public Texture cursorTexture;
 		public LevelManagerColoring thisLevelManager;
 
+#if UNITY_ANDROID
+		private Material neuronMaterial;
+
+		void Start()
+		{
+			neuronMaterial = GameObject.Find("Neuron_body").renderer.material;
+		}
+#endif
+
 		void OnMouseDown () {
 			if(thisLevelManager.painting)
 			{
@@ -44,6 +53,11 @@ namespace Coloring
 						Brush.renderer.material.color = orange;
 						break;
 				}
+
+				
+#if UNITY_ANDROID
+				neuronMaterial.color = Brush.renderer.material.color;
+#endif
 				thisLevelManager.brush = cursorTexture;
 			}
 		}

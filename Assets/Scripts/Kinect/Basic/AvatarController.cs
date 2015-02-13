@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Text; 
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class AvatarController : MonoBehaviour
 	{	
+		#if UNITY_STANDALONE
 		//private float timestamp;
 		// Bool that determines whether the avatar is active.
 		//public bool Active = true;
@@ -642,7 +642,7 @@ namespace Kinect {
 	//		}
 			
 			return jointPosition;
-		}		
+		}	
+		#endif	
 	}
 }
-#endif

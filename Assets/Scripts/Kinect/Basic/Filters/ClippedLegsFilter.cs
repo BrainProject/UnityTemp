@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// FilterClippedLegs smooths out leg joint positions when the skeleton is clipped
@@ -22,6 +21,7 @@ namespace Kinect {
 	/// </summary>
 	public class ClippedLegsFilter
 	{
+		#if UNITY_STANDALONE
 	    // The blend weights when all leg joints are tracked.
 	    private readonly Vector3 allTracked;
 
@@ -230,7 +230,7 @@ namespace Kinect {
 	        }
 
 	        return skeletonUpdated;
-	    }
+		}
+		#endif
 	}
 }
-#endif

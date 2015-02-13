@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class FigureCreate : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public Material mat;
 		public GameObject mesh;
 		public GameObject checke;

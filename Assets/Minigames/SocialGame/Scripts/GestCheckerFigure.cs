@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class GestCheckerFigure : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public float distance;
 		public GameObject next;
 		public string clipBone;

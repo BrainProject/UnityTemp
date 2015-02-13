@@ -3,7 +3,7 @@ using System.Collections;
 
 
 public class OnStartAddAsChild : MonoBehaviour {
-
+#if UNITY_STANDALONE
 	public bool player1;
 	public Vector3 position;
 	public Vector3 rotation;
@@ -49,4 +49,5 @@ public class OnStartAddAsChild : MonoBehaviour {
 			Debug.LogWarning("Not Found player");
 
 	}
+#endif
 }
