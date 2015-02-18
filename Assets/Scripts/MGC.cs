@@ -148,8 +148,10 @@ public class MGC : Singleton<MGC>
 
         
 		//initiate kinect manager
+		Debug.Log ("Trying to create KinectManager.");
 		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManager.transform.parent = this.transform;
+		print (kinectManager);
 	}
 
 	void Start()
