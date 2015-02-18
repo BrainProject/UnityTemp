@@ -7,6 +7,7 @@ namespace Kinect
 {
 	public class SimpleGestureListener : MonoBehaviour, KinectGestures.GestureListenerInterface
 	{
+#if UNITY_STANDALONE
 		// GUI Text to display the gesture messages.
 		public GUIText GestureInfo;
 		
@@ -100,5 +101,6 @@ namespace Kinect
 			
 			return true;
 		}
+#endif
 	}	
 }

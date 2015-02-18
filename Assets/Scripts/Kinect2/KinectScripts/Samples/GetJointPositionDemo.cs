@@ -6,6 +6,7 @@ namespace Kinect
 {
 	public class GetJointPositionDemo : MonoBehaviour 
 	{
+#if UNITY_STANDALONE
 		// the joint we want to track
 		public KinectInterop.JointType joint = KinectInterop.JointType.HandRight;
 
@@ -30,5 +31,6 @@ namespace Kinect
 				}
 			}
 		}
+#endif
 	}
 }

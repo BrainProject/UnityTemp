@@ -9,6 +9,7 @@ namespace Kinect
 {
 	public class KinectManager : MonoBehaviour 
 	{
+#if UNITY_STANDALONE
 		// How high off the ground is the sensor (in meters).
 		public float sensorHeight = 1.0f;
 
@@ -2312,5 +2313,6 @@ namespace Kinect
 
 			return false;
 		}
+#endif
 	}
 }

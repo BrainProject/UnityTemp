@@ -5,6 +5,7 @@ namespace Kinect
 {
 	public class LoadMainLevel : MonoBehaviour 
 	{
+#if UNITY_STANDALONE
 		private bool levelLoaded = false;
 		
 		
@@ -18,5 +19,6 @@ namespace Kinect
 				Application.LoadLevel(1);
 			}
 		}
+#endif
 	}	
 }

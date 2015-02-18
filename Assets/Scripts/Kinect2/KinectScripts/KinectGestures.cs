@@ -8,9 +8,9 @@ namespace Kinect
 {
 	public class KinectGestures
 	{
-
 		public interface GestureListenerInterface
 		{
+			#if UNITY_STANDALONE
 			// Invoked when a new user is detected and tracking starts
 			// Here you can start gesture detection with KinectManager.DetectGesture()
 			void UserDetected(long userId, int userIndex);
@@ -1512,6 +1512,7 @@ namespace Kinect
 				break;
 				// here come more gesture-cases
 			}
+			#endif
 		}
 	}
 }

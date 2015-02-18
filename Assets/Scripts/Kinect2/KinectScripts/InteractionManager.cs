@@ -10,6 +10,7 @@ namespace Kinect
 {
 	public class InteractionManager : MonoBehaviour 
 	{
+#if UNITY_STANDALONE
 	    public enum HandEventType : int
 	    {
 	        None = 0,
@@ -676,5 +677,6 @@ namespace Kinect
 				}
 			}
 		}
+#endif
 	}
 }

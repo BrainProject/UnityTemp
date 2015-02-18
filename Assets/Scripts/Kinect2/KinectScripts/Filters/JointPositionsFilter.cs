@@ -15,6 +15,7 @@ namespace Kinect
 	/// </summary>
 	public class JointPositionsFilter
 	{
+#if UNITY_STANDALONE
 	    // The history data.
 	    private FilterDoubleExponentialData[,] history;
 
@@ -243,5 +244,6 @@ namespace Kinect
 	        // Gets or sets Historical FrameCount.  
 	        public uint frameCount;
 	    }
+#endif
 	}
 }

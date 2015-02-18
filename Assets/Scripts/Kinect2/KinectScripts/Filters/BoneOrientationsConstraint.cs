@@ -14,6 +14,7 @@ namespace Kinect
 	//using Windows.Kinect;
 	public class BoneOrientationsConstraint
 	{
+#if UNITY_STANDALONE
 		public enum ConstraintAxis { X = 0, Y = 1, Z = 2 }
 		
 	    // The Joint Constraints.  
@@ -290,5 +291,6 @@ namespace Kinect
 				this.angleRange = angleMax - angleMin;
 			}
 		}
+#endif
 	}
 }

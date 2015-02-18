@@ -5,7 +5,7 @@ namespace Kinect
 {
 	public class SetSceneAvatars : MonoBehaviour 
 	{
-
+#if UNITY_STANDALONE
 		void Start () 
 		{
 			KinectManager manager = KinectManager.Instance;
@@ -23,5 +23,6 @@ namespace Kinect
 				
 			}
 		}
+#endif
 	}	
 }

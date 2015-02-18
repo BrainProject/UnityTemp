@@ -13,6 +13,7 @@ namespace Kinect
 	[RequireComponent(typeof(Animator))]
 	public class AvatarController : MonoBehaviour
 	{	
+#if UNITY_STANDALONE
 		// The index of the player, whose movements the model represents. Default 0 (first player)
 		public int playerIndex = 0;
 		
@@ -626,5 +627,6 @@ namespace Kinect
 			{25, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderRight, KinectInterop.JointType.SpineShoulder} },
 			{26, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderLeft, KinectInterop.JointType.SpineShoulder} },
 		};
+#endif
 	}
 }
