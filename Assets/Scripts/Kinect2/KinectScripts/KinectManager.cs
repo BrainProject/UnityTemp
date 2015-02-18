@@ -861,7 +861,7 @@ public class KinectManager : MonoBehaviour
 
 		gesturesData[index] = gestureData;
 		playerGesturesData[UserId] = gesturesData;
-
+		print ("RESETEDED");
 		return true;
 	}
 	
@@ -1319,6 +1319,7 @@ public class KinectManager : MonoBehaviour
 				{
 					if(gestureData.complete)
 					{
+						ResetPlayerGestures(userId);
 //						if(gestureData.gesture == KinectGestures.Gestures.Click)
 //						{
 //							if(controlMouseCursor)
@@ -1327,13 +1328,13 @@ public class KinectManager : MonoBehaviour
 //							}
 //						}
 				
-						foreach(KinectGestures.GestureListenerInterface listener in gestureListeners)
+						/*foreach(KinectGestures.GestureListenerInterface listener in gestureListeners)
 						{
 							if(listener.GestureCompleted(userId, 0, gestureData.gesture, (KinectInterop.JointType)gestureData.joint, gestureData.screenPos))
 							{
 								ResetPlayerGestures(userId);
 							}
-						}
+						}*/
 					}
 					else if(gestureData.cancelled)
 					{
