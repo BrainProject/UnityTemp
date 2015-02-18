@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Text; 
 
-//namespace Kinect
-//{
+namespace Kinect
+{
 	[RequireComponent(typeof(Animator))]
 	public class AvatarController : MonoBehaviour
 	{	
@@ -627,4 +627,4 @@ using System.Text;
 			{26, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderLeft, KinectInterop.JointType.SpineShoulder} },
 		};
 	}
-//}
+}

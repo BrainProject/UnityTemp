@@ -1,25 +1,27 @@
 using UnityEngine;
 using System.Collections;
 
-public class SetSceneAvatars : MonoBehaviour 
+namespace Kinect
 {
-
-	void Start () 
+	public class SetSceneAvatars : MonoBehaviour 
 	{
-		KinectManager manager = KinectManager.Instance;
-		
-		if(manager)
+
+		void Start () 
 		{
-			manager.ClearKinectUsers();
+			KinectManager manager = KinectManager.Instance;
 			
-			AvatarController[] avatars = FindObjectsOfType(typeof(AvatarController)) as AvatarController[];
-			
-			foreach(AvatarController avatar in avatars)
+			if(manager)
 			{
-				manager.avatarControllers.Add(avatar);
+				manager.ClearKinectUsers();
+				
+				AvatarController[] avatars = FindObjectsOfType(typeof(AvatarController)) as AvatarController[];
+				
+				foreach(AvatarController avatar in avatars)
+				{
+					manager.avatarControllers.Add(avatar);
+				}
+				
 			}
-			
 		}
-	}
-	
+	}	
 }

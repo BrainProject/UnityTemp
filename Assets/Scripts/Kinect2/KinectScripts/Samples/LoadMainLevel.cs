@@ -1,20 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class LoadMainLevel : MonoBehaviour 
+namespace Kinect
 {
-	private bool levelLoaded = false;
-	
-	
-	void Update() 
+	public class LoadMainLevel : MonoBehaviour 
 	{
-		KinectManager manager = KinectManager.Instance;
+		private bool levelLoaded = false;
 		
-		if(!levelLoaded && manager && KinectManager.IsKinectInitialized())
+		
+		void Update() 
 		{
-			levelLoaded = true;
-			Application.LoadLevel(1);
+			KinectManager manager = KinectManager.Instance;
+			
+			if(!levelLoaded && manager && KinectManager.IsKinectInitialized())
+			{
+				levelLoaded = true;
+				Application.LoadLevel(1);
+			}
 		}
-	}
-	
+	}	
 }

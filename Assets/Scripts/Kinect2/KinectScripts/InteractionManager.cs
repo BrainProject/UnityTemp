@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 using System;
 using System.IO;
 
-//namespace Kinect
-//{
+namespace Kinect
+{
 	public class InteractionManager : MonoBehaviour 
 	{
 	    public enum HandEventType : int
@@ -677,4 +677,4 @@ using System.IO;
 			}
 		}
 	}
-//}
+}
