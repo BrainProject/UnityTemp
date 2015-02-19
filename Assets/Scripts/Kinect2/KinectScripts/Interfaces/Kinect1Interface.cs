@@ -57,7 +57,7 @@ namespace Kinect
 		{
 			HipCenter = 0,
 			Spine,
-			ShoulderCenter,
+			Neck,
 			Head,
 			ShoulderLeft,
 			ElbowLeft,
@@ -851,7 +851,7 @@ namespace Kinect
 				case KinectInterop.JointType.SpineMid:
 					return (int)NuiSkeletonPositionIndex.Spine;
 				case KinectInterop.JointType.Neck:
-					return (int)NuiSkeletonPositionIndex.ShoulderCenter;
+					return (int)NuiSkeletonPositionIndex.Neck;
 				case KinectInterop.JointType.Head:
 					return (int)NuiSkeletonPositionIndex.Head;
 					
@@ -904,7 +904,7 @@ namespace Kinect
 				return KinectInterop.JointType.SpineBase;
 			case (int)NuiSkeletonPositionIndex.Spine:
 				return KinectInterop.JointType.SpineMid;
-			case (int)NuiSkeletonPositionIndex.ShoulderCenter:
+			case (int)NuiSkeletonPositionIndex.Neck:
 				return KinectInterop.JointType.Neck;
 			case (int)NuiSkeletonPositionIndex.Head:
 				return KinectInterop.JointType.Head;

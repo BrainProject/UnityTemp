@@ -96,20 +96,19 @@ namespace Kinect
 		private const int rightShoulderIndex = (int)KinectInterop.JointType.ShoulderRight;
 		
 		private const int hipCenterIndex = (int)KinectInterop.JointType.SpineBase;
-		private const int shoulderCenterIndex = (int)KinectInterop.JointType.SpineShoulder;
 		private const int leftHipIndex = (int)KinectInterop.JointType.HipLeft;
 		private const int rightHipIndex = (int)KinectInterop.JointType.HipRight;
 		
 		private const int leftKneeIndex = (int)KinectInterop.JointType.KneeLeft;
 		private const int rightKneeIndex = (int)KinectInterop.JointType.KneeRight;
-		
-		private const int spineShoulder = (int)KinectInterop.JointType.SpineShoulder;
+
+		private const int neck = (int)KinectInterop.JointType.Neck;
 		private const int hipsIndex = (int)KinectInterop.JointType.SpineBase;
 		
 		
 		private static int[] neededJointIndexes = {
 			leftHandIndex, rightHandIndex, leftElbowIndex, rightElbowIndex, leftShoulderIndex, rightShoulderIndex,
-			hipCenterIndex, shoulderCenterIndex, leftHipIndex, rightHipIndex
+			hipCenterIndex, neck, leftHipIndex, rightHipIndex
 		};
 		
 		
@@ -193,10 +192,10 @@ namespace Kinect
 	//				gestureData.tagFloat = (shoulderToElbow.magnitude + elbowToHand.magnitude);
 	//			}
 				
-				if(jointsTracked[hipCenterIndex] && jointsTracked[shoulderCenterIndex] && 
+				if(jointsTracked[hipCenterIndex] && jointsTracked[neck] && 
 					jointsTracked[leftShoulderIndex] && jointsTracked[rightShoulderIndex])
 				{
-					Vector3 shoulderToHips = jointsPos[shoulderCenterIndex] - jointsPos[hipCenterIndex];
+					Vector3 shoulderToHips = jointsPos[neck] - jointsPos[hipCenterIndex];
 					Vector3 rightToLeft = jointsPos[rightShoulderIndex] - jointsPos[leftShoulderIndex];
 					
 					gestureData.tagVector2.x = rightToLeft.x; // * 1.2f;
@@ -811,8 +810,8 @@ namespace Kinect
 					break;
 	*/
 					
-					// check for SwipeRight
-					// EDITED SwipeRight
+//					// check for SwipeRight
+//					// EDITED SwipeRight
 					case Gestures.SwipeRight:
 						switch(gestureData.state)
 						{
@@ -866,6 +865,73 @@ namespace Kinect
 						break;
 					}
 				break;
+
+//				// EDITED SWIPE LEFT v2 (scratched)
+//			case Gestures.SwipeRight:
+//				switch(gestureData.state)
+//				{
+//				case 0:  // gesture detection - phase 1
+//					//				Debug.Log("0 start");
+//					//				Debug.Log("leftHand tracked: " + jointsTracked[leftHandIndex]);
+//					//				Debug.Log("Head tracked: " + jointsTracked[spineShoulder] + ", " + spineShoulder);
+//					//				Debug.Log("Hips tracked: " + jointsTracked[hipsIndex]);
+//					Debug.Log("Detected: " + jointsTracked[leftHandIndex] + ", " + jointsTracked[neck]);
+//					if(jointsTracked[leftHandIndex] && jointsTracked[neck])// &&
+//						//(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < -0.05f)// &&
+//						//(jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0f)
+//					{
+//						//					Debug.Log("hand tracked.");
+//						SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
+//						gestureData.progress = 0.5f;
+//						Debug.Log("SWIPE R START");
+//					}
+//					//						else if(jointsTracked[leftHandIndex] && jointsTracked[leftElbowIndex] &&
+//					//					            (jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) > -0.05f &&
+//					//					            (jointsPos[leftHandIndex].x - jointsPos[leftElbowIndex].x) > 0f)
+//					//						{
+//					//							SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
+//					//							//gestureData.jointPos = jointsPos[leftHandIndex];
+//					//							gestureData.progress = 0.5f;
+//					//						}
+//					//				Debug.Log("0 end");
+//					break;
+//					
+//				case 1:  // gesture phase 2 = complete
+//					//				Debug.Log("1 start");
+//					if((timestamp - gestureData.timestamp) < 0.5f)
+//					{
+//						Debug.Log("SWIPE R IN PROGRESS " + jointsTracked[leftHandIndex] + ", " + jointsTracked[neck]);
+//						bool isInPose = gestureData.joint == leftHandIndex ?
+//							jointsTracked[leftHandIndex] && jointsTracked[neck] &&
+//								//Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
+//								Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.1f && 
+//								(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < 0.25f :
+//								jointsTracked[rightHandIndex] && jointsTracked[neck] &&
+//								//Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
+//								Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.1f && 
+//								(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < 0.25f;
+//						
+//						if(isInPose)
+//						{
+//							Debug.Log("SWIPE R DONE.");
+//							Vector3 jointPos = jointsPos[gestureData.joint];
+//							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+//							if(gestureData.complete)
+//							{
+//								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_L);
+//							}
+//						}
+//					}
+//					else
+//					{
+//						// cancel the gesture
+//						SetGestureCancelled(ref gestureData);
+//					}
+//					//				Debug.Log("1 end");
+//					break;
+//				}
+//				break;
+
 				
 			case Gestures.SwipeLeftLHand:
 				switch(gestureData.state)
@@ -875,7 +941,7 @@ namespace Kinect
 	//				Debug.Log("leftHand tracked: " + jointsTracked[leftHandIndex]);
 	//				Debug.Log("Head tracked: " + jointsTracked[spineShoulder] + ", " + spineShoulder);
 	//				Debug.Log("Hips tracked: " + jointsTracked[hipsIndex]);
-					if(jointsTracked[leftHandIndex] && jointsTracked[spineShoulder])// &&
+					if(jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex])// &&
 						//(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < -0.05f)// &&
 						//(jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0f)
 					{
@@ -899,11 +965,11 @@ namespace Kinect
 					if((timestamp - gestureData.timestamp) < 0.5f)
 					{
 						bool isInPose = gestureData.joint == leftHandIndex ?
-							jointsTracked[leftHandIndex] && jointsTracked[spineShoulder] &&
+							jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
 								//Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
 								Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.1f && 
 								(jointsPos[leftHandIndex].x - gestureData.jointPos.x) < -0.25f :
-								jointsTracked[rightHandIndex] && jointsTracked[spineShoulder] &&
+								jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
 								//Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
 								Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.1f && 
 								(jointsPos[rightHandIndex].x - gestureData.jointPos.x) < -0.25f;
@@ -932,7 +998,7 @@ namespace Kinect
 				switch(gestureData.state)
 				{
 				case 0:  // gesture detection - phase 1
-					if(jointsTracked[rightHandIndex] && jointsTracked[spineShoulder])// &&
+					if(jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex])// &&
 						//(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < -0.05f)// &&
 						//(jointsPos[rightHandIndex].x - jointsPos[rightElbowIndex].x) > 0f)
 					{
@@ -953,11 +1019,11 @@ namespace Kinect
 					if((timestamp - gestureData.timestamp) < 0.5f)
 					{
 						bool isInPose = gestureData.joint == rightHandIndex ?
-							jointsTracked[rightHandIndex] && jointsTracked[spineShoulder] &&
+							jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
 								//Mathf.Abs(jointsPos[rightHandIndex].y - jointsPos[rightElbowIndex].y) < 0.1f && 
 								Mathf.Abs(jointsPos[rightHandIndex].y - gestureData.jointPos.y) < 0.1f && 
 								(jointsPos[rightHandIndex].x - gestureData.jointPos.x) > 0.25f :
-								jointsTracked[leftHandIndex] && jointsTracked[spineShoulder] &&
+								jointsTracked[leftHandIndex] && jointsTracked[leftShoulderIndex] &&
 								//Mathf.Abs(jointsPos[leftHandIndex].y - jointsPos[leftElbowIndex].y) < 0.1f &&
 								Mathf.Abs(jointsPos[leftHandIndex].y - gestureData.jointPos.y) < 0.1f && 
 								(jointsPos[leftHandIndex].x - gestureData.jointPos.x) > 0.25f;
@@ -969,7 +1035,7 @@ namespace Kinect
 							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
 							if(gestureData.complete)
 							{
-								Debug.Log("SWIPE RIGHT R HAND");
+								//Debug.Log("SWIPE RIGHT R HAND");
 								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_L);
 							}
 						}
@@ -1494,7 +1560,7 @@ namespace Kinect
 					case 2:  // gesture complete
 						if((timestamp - gestureData.timestamp) > 3)					
 						{
-							bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[spineShoulder] &&
+							bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[neck] &&
 								(jointsPos[hipsIndex].y - jointsPos[rightHandIndex].y) > 0f &&
 									(jointsPos[rightHandIndex].x - jointsPos[hipsIndex].x) > 0.5f;
 							

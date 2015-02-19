@@ -864,7 +864,7 @@ namespace Kinect
 
 			gesturesData[index] = gestureData;
 			playerGesturesData[UserId] = gesturesData;
-			print ("RESETEDED");
+			//print ("RESETEDED :)");
 			return true;
 		}
 		
@@ -1058,14 +1058,17 @@ namespace Kinect
 				sensorData = KinectInterop.OpenDefaultSensor(sensorInterfaces, dwFlags, sensorAngle, useMultiSourceReader);
 				if (sensorData == null)
 				{
+					print ("fuck");
+					this.transform.parent.gameObject.SetActive(false);
+					this.gameObject.SetActive(false);
 					throw new Exception("OpenDefaultSensor failed");
 				}
-
-				//create the transform matrix - kinect to world
+					//create the transform matrix - kinect to world
 				Quaternion quatTiltAngle = new Quaternion();
 				quatTiltAngle.eulerAngles = new Vector3(-sensorAngle, 0.0f, 0.0f);
 				
 				kinectToWorld.SetTRS(new Vector3(0.0f, sensorHeight, 0.0f), quatTiltAngle, Vector3.one);
+				kinectInitialized = true;
 			}
 			catch(DllNotFoundException ex)
 			{
@@ -1202,7 +1205,6 @@ namespace Kinect
 	        alUserIds = new List<Int64>();
 	        dictUserIdToIndex = new Dictionary<Int64, int>();
 		
-			kinectInitialized = true;
 			DontDestroyOnLoad(gameObject);
 			
 			// GUI Text.
@@ -1210,7 +1212,7 @@ namespace Kinect
 			{
 				calibrationText.guiText.text = "WAITING FOR USERS";
 			}
-			
+
 			Debug.Log("Waiting for users.");
 		}
 		

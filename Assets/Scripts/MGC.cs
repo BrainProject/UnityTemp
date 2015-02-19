@@ -151,7 +151,6 @@ public class MGC : Singleton<MGC>
 		Debug.Log ("Trying to create KinectManager.");
 		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManager.transform.parent = this.transform;
-		print (kinectManager);
 	}
 
 	void Start()
@@ -166,6 +165,24 @@ public class MGC : Singleton<MGC>
 		#if !UNITY_STANDALONE
 		inactivityScene = "HanoiTowers";
 		#endif
+
+
+
+		
+		#if UNITY_STANDALONE
+		//should the KinectManager be active?
+		Debug.Log ("Major Windows version: " + Environment.OSVersion.Version.Major);
+		Debug.Log ("Minor Windows version: " + Environment.OSVersion.Version.Minor);
+
+		if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
+		{
+			if(!Kinect.KinectManager.Instance.IsInitialized())
+				kinectManager.SetActive(false);
+		}
+		#else
+		kinectManager.SetActive(false);
+		#endif
+
 	}
 
 	void Update()
