@@ -12,6 +12,8 @@ namespace Kinect
 {
 	public class KinectInterop
 	{
+		private static string kinectSensor;
+
 		// constants
 		public static class Constants
 		{
@@ -331,6 +333,8 @@ namespace Kinect
 							sensorData.sensorInterface = sensorInt;
 							Debug.Log("Interface used: " + sensorInt.GetType().Name);
 						}
+
+						kinectSensor = sensorInt.GetType().Name;
 					}
 					else
 					{
@@ -626,6 +630,11 @@ namespace Kinect
 			}
 			
 			return false;
+		}
+
+		public static string GetSensorType()
+		{
+			return kinectSensor;
 		}
 	}
 }

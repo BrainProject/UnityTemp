@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System;
@@ -545,7 +545,7 @@ namespace Kinect
 			{
 				//Debug.LogError("InitKinectSensor failed: " + GetNuiErrorString(hr));
 
-				MGC.Instance.kinectManager.SetActive(false);
+				MGC.Instance.kinectManagerObject.SetActive(false);
 			}
 
 			return null;

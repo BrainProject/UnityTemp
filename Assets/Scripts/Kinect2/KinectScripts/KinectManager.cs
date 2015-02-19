@@ -1096,7 +1096,7 @@ namespace Kinect
 					calibrationText.guiText.text = message;
 				}
 
-				MGC.Instance.kinectManager.SetActive(false);
+				MGC.Instance.kinectManagerObject.SetActive(false);
 				
 				return;
 			}
@@ -1214,6 +1214,13 @@ namespace Kinect
 			{
 				calibrationText.guiText.text = "WAITING FOR USERS";
 			}
+
+
+			//set angle of the sensor
+			if(KinectInterop.GetSensorType () == "Kinect2Interface")
+				sensorAngle = 5;
+			else if(KinectInterop.GetSensorType () == "Kinect1Interface")
+			    sensorAngle = 15;
 
 			Debug.Log("Waiting for users.");
 		}

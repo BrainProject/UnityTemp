@@ -78,7 +78,8 @@ public class MGC : Singleton<MGC>
 	internal Logger logger;
 	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
-	internal GameObject kinectManager;
+	internal GameObject kinectManagerObject;
+	internal Kinect.KinectManager kinectManagerInstance; 
 	internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
 
@@ -149,8 +150,10 @@ public class MGC : Singleton<MGC>
         
 		//initiate kinect manager
 		Debug.Log ("Trying to create KinectManager.");
-		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
-		kinectManager.transform.parent = this.transform;
+		kinectManagerObject = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
+		kinectManagerObject.transform.parent = this.transform;
+
+		kinectManagerInstance = Kinect.KinectManager.Instance;
 	}
 
 	void Start()
@@ -174,6 +177,7 @@ public class MGC : Singleton<MGC>
 		Debug.Log ("Major Windows version: " + Environment.OSVersion.Version.Major);
 		Debug.Log ("Minor Windows version: " + Environment.OSVersion.Version.Minor);
 
+
 		/*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
 		{
 			if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
@@ -186,12 +190,11 @@ public class MGC : Singleton<MGC>
 		#else
 		kinectManager.SetActive(false);
 		#endif
-
 	}
 
 	void Update()
 	{
-        if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
