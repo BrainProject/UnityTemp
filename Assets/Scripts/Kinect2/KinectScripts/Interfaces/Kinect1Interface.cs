@@ -543,7 +543,9 @@ namespace Kinect
 			}
 			else
 			{
-				Debug.LogError("InitKinectSensor failed: " + GetNuiErrorString(hr));
+				//Debug.LogError("InitKinectSensor failed: " + GetNuiErrorString(hr));
+
+				MGC.Instance.kinectManager.SetActive(false);
 			}
 
 			return null;
@@ -636,10 +638,10 @@ namespace Kinect
 			if(newSkeleton)
 			{
 				hr = NuiTransformSmooth(ref skeletonFrame, ref smoothParameters);
-				if(hr != 0)
+				/*if(hr != 0)
 				{
-					Debug.LogError("Skeleton Data Smoothing failed");
-				}
+					//Debug.LogError("Skeleton Data Smoothing failed");
+				}*/
 
 				for(uint i = 0; i < sensorData.bodyCount; i++)
 				{

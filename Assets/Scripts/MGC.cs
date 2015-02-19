@@ -174,11 +174,15 @@ public class MGC : Singleton<MGC>
 		Debug.Log ("Major Windows version: " + Environment.OSVersion.Version.Major);
 		Debug.Log ("Minor Windows version: " + Environment.OSVersion.Version.Minor);
 
-		if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
+		/*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
 		{
-			if(!Kinect.KinectManager.Instance.IsInitialized())
+			if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
+			{
+
+				print(kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized());
 				kinectManager.SetActive(false);
-		}
+			}
+		}*/
 		#else
 		kinectManager.SetActive(false);
 		#endif

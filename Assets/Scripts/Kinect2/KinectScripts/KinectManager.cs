@@ -1088,13 +1088,15 @@ namespace Kinect
 			{
 				string message = ex.Message;
 
-				Debug.LogError(message);
-				Debug.LogException(ex);
+				//Debug.LogError(message);
+				//Debug.LogException(ex);
 				
 				if(calibrationText != null)
 				{
 					calibrationText.guiText.text = message;
 				}
+
+				MGC.Instance.kinectManager.SetActive(false);
 				
 				return;
 			}
