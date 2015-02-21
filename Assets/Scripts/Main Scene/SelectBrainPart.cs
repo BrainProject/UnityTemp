@@ -1,4 +1,5 @@
-﻿/*
+﻿#pragma warning disable 0414
+/*
  * Created by: Milan Doležal
  */ 
 
@@ -35,7 +36,7 @@ namespace MainScene {
 			initialMouseOver = true;
 		}
 
-
+#if UNITY_STANDALONE
 		void OnMouseEnter()
 		{
 			if(CanSelect)
@@ -74,7 +75,7 @@ namespace MainScene {
 			}
 			this.renderer.material.color = originalColor;
 		}
-
+#endif
 		void OnMouseOver()
 		{
 			if(CanSelect)
@@ -110,10 +111,20 @@ namespace MainScene {
 			}
 			if(CanSelect && initialMouseOver)
 			{
+#if UNITY_STANDALONE
 				OnMouseEnter();
+#endif
 				print ("Mouse over from initial animation.");
 			}
 		}
+
+#if UNITY_ANDROID
+		public void ShowIcon()
+		{
+			StartCoroutine("FadeIn");
+			initialMouseOver = false;
+		}
+#endif
 
 		IEnumerator FadeIn()
 		{

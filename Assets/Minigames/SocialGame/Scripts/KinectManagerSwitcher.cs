@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 
 public class KinectManagerSwitcher : MonoBehaviour {
+	#if UNITY_STANDALONE
 	public static GameObject thisLevelKManager;
 	public static GameObject defaultKManager;
 	// Use this for initialization
@@ -76,5 +76,5 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	{
 		deactivateThisLevelKManager();
 	}*/
+	#endif
 }
-#endif

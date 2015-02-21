@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class ModelFaceController : MonoBehaviour 
 	{
+		#if UNITY_STANDALONE
 		public enum AxisEnum { X, Y, Z };
 		
 		// Head
@@ -279,6 +279,6 @@ namespace Kinect {
 			
 			joint.localRotation = Quaternion.Euler(jointRot);
 		}
+		#endif
 	}
 }
-	#endif

@@ -10,10 +10,10 @@ using System.Runtime.CompilerServices;
 using System;
 using System.IO;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class InteractionWrapper
 	{
+		#if UNITY_STANDALONE
 	    public enum InteractionHandType : int
 	    {
 	        None = 0,
@@ -363,7 +363,7 @@ namespace Kinect {
 			CopyResourceFile("msvcr100d.dll", "msvcr100d.dll", ref bOneCopied, ref bAllCopied);
 			
 			return bOneCopied && bAllCopied;
-		}	
+		}
+		#endif	
 	}
 }
-#endif

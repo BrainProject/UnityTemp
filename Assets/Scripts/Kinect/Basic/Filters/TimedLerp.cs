@@ -7,7 +7,6 @@
 using UnityEngine;
 using System;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// TimedLerp - Maintains a time-based lerp between 0 and a upper limit between 0 and 1.
@@ -16,6 +15,7 @@ namespace Kinect {
 	/// </summary>
 	public class TimedLerp
 	{
+		#if UNITY_STANDALONE
 	    // Enabled value.
 	    protected float Enabled;
 
@@ -128,7 +128,7 @@ namespace Kinect {
 	        {
 	            this.Value = Math.Max(0.0f, this.Value - delta);
 	        }
-	    }
+		}
+		#endif
 	}
 }
-#endif

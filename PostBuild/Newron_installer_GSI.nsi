@@ -15,9 +15,29 @@
   ;Properly display all languages
   Unicode true
 
+  # pøidání informací
+  VIProductVersion                 "0.9.5.0"
+  VIAddVersionKey ProductName      "Newron - modul øízených sociálních dovedností"
+  VIAddVersionKey Comments         "Terapeutický software Newron"
+  VIAddVersionKey CompanyName      "Masaryk University"
+  VIAddVersionKey LegalCopyright   "Masaryk University"
+  VIAddVersionKey FileDescription  "Instálotor pro Newron"
+  VIAddVersionKey FileVersion      1
+  VIAddVersionKey ProductVersion   1
+  VIAddVersionKey InternalName     "Newron"
+  VIAddVersionKey LegalTrademarks  "CC"
+  VIAddVersionKey OriginalFilename "Newron_instalator_gsi.exe"
+
+  # nastavení ikon a loga
+  !define MUI_ICON "Newron.ico"
+  !define MUI_HEADERIMAGE
+  !define MUI_HEADERIMAGE_BITMAP "Logo-Newron.png"
+  !define MUI_HEADERIMAGE_RIGHT
+
+
   ;Name and file
   Name "Newron"
-  OutFile "Newron_instalator.exe"
+  OutFile "Newron_instalator_gsi.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Newron"
@@ -49,7 +69,7 @@
 
 	!include "kinect.nsdinc"
 
-  !insertmacro MUI_PAGE_LICENSE "Licence.txt"
+  !insertmacro MUI_PAGE_LICENSE "Licence.rtf"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   Page custom fnc_kinect_Show
@@ -101,14 +121,13 @@ Section "Newron" SecNewron
 
   SetOutPath "$INSTDIR"
     
-  ;odstranìní instalaèky Kinect SDK - zatím nefunguje
-  RMDir /r $INSTDIR/SDK
-  
+    
   ;ADD YOUR OWN FILES HERE...
-  File /r Newron_Data
-  File Newron.exe
+  File /r Newron-gsi_Data
+  File Newron-gsi.exe
   File README.txt
-  File Version.txt
+  File Changelog.txt
+  File *.dll
   
   ;Store installation folder
   #WriteRegStr HKCU "Software\Newron" "" $INSTDIR
@@ -122,7 +141,7 @@ Section "Zástupce na ploše" SecShortcut
 
   # create a shortcut named "new shortcut" in the start menu programs directory
   # presently, the new shortcut doesn't call anything (the second field is blank)
-  createShortCut "$DESKTOP\Newron.lnk" "$INSTDIR\Newron.exe"
+  createShortCut "$DESKTOP\Newron - Modul øízené sociální interakce.lnk" "$INSTDIR\Newron-gsi.exe"
 
 SectionEnd
 
@@ -150,7 +169,10 @@ FunctionEnd
 
 
 
-
+;--- After successful install, remove Kinect SDK ---
+Function .onInstSuccess
+    RMDir /r "$INSTDIR\SDK"
+FunctionEnd
 
  
 #;--------------------------------

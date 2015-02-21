@@ -20,6 +20,9 @@ namespace MainScene
 
 		void Start () 
         {
+#if UNITY_ANDROID
+			this.renderer.material.shader = Shader.Find("Transparent/Diffuse");
+#endif
 			clicked = false;
 			fading = false;
 			originalColor = this.renderer.material.color;

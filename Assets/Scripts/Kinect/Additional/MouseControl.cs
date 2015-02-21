@@ -7,10 +7,10 @@ using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class MouseControl
 	{
+		#if UNITY_STANDALONE
 	    // Import function mouse_event() from WinApi
 	    [DllImport("User32.dll")] 
 	    private static extern void mouse_event(MouseFlags dwFlags, int dx, int dy, int dwData, System.UIntPtr dwExtraInfo);
@@ -57,7 +57,7 @@ namespace Kinect {
 	    public static void MouseRelease()
 	    {
 	        mouse_event(MouseFlags.LeftUp, 0, 0, 0, System.UIntPtr.Zero);
-	    }
+		}
+		#endif
 	}
 }
-#endif

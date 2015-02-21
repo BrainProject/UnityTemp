@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	/// <summary>
 	/// Implementation of a Holt Double Exponential Smoothing filter. The double exponential
@@ -18,6 +17,7 @@ namespace Kinect {
 	/// </summary>
 	public class JointPositionsFilter
 	{
+		#if UNITY_STANDALONE
 	    // The history data.
 	    private FilterDoubleExponentialData[] history;
 
@@ -231,7 +231,7 @@ namespace Kinect {
 
 	        // Gets or sets Historical FrameCount.  
 	        public uint FrameCount;
-	    }
+		}
+		#endif
 	}
 }
-#endif

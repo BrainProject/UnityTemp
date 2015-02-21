@@ -100,6 +100,9 @@ public class MGC : Singleton<MGC>
 	private float inactivityLenght = 60f;
 	private int inactivityCounter = 1;
 	private GameObject controlsGUI;
+#if UNITY_ANDROID
+	private float touchBlockTimestamp;
+#endif
 
 	void Awake ()
 	{
@@ -117,7 +120,9 @@ public class MGC : Singleton<MGC>
 
 		//Initiate Logger
 		logger = this.gameObject.AddComponent<Logger> ();
-		logger.Initialize ("Logs", "PlayerActions.txt");
+        string pathString = Application.persistentDataPath + "/Logs";
+		logger.Initialize ( pathString, "PlayerActions.txt");
+        
 
 		//initiate level loader
 		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
@@ -156,7 +161,7 @@ public class MGC : Singleton<MGC>
 		minigameStates.Start ();
 
 		inactivityTimestamp = Time.time;
-		#if UNITY_WEBPLAYER
+		#if !UNITY_STANDALONE
 		inactivityScene = "HanoiTowers";
 		#endif
 	}
@@ -169,8 +174,14 @@ public class MGC : Singleton<MGC>
         }
 
 		//Hidden menu possible to show with secret gesture
+#if UNITY_ANDROID
+		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2))
+		{
+			touchBlockTimestamp = Time.time;
+#else
         if (Input.GetKeyDown(KeyCode.I))
         {
+#endif
             print("Show hidden menu.");
             if (!minigamesGUI.visible)
             {
@@ -206,6 +217,7 @@ public class MGC : Singleton<MGC>
 		{
 			Application.LoadLevel ("GameSelection");
 		}
+			/*
 		if (Input.GetKeyDown(KeyCode.F5)) {
 			SaveGame ();
 		}
@@ -213,8 +225,15 @@ public class MGC : Singleton<MGC>
 		{
 			LoadGame ();
 		}
+			*/
+#if UNITY_ANDROID
+		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+		{
+			touchBlockTimestamp = Time.time;
+#else
 		if (Input.GetKeyDown (KeyCode.F3))
 		{
+#endif
 			ResetGameStatus ();
 		}
 	}
@@ -339,6 +358,9 @@ public class MGC : Singleton<MGC>
 
 	public void ShowCustomCursor(bool isShown)
 	{
+#if UNITY_ANDROID
+		Debug.Log("No cursor on Android is needed.");
+#else
 		if(isShown)
 		{
 			if(!mouseCursor)
@@ -365,11 +387,16 @@ public class MGC : Singleton<MGC>
 				mouseCursor.SetActive(false);
 			}
 		}
+#endif
 	}
 
 	public void HideCustomCursor()
 	{
+#if UNITY_ANDROID
+		Debug.Log("No cursor...");
+#else
 		Destroy(mouseCursor);
+#endif
 	}
 
 	void ResetGameStatus()

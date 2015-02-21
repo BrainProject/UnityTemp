@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class GrabDropScript : MonoBehaviour 
 	{
+		#if UNITY_STANDALONE
 		public GameObject[] draggableObjects;
 		public float dragSpeed = 3.0f;
 		public Material selectedObjectMaterial;
@@ -145,6 +145,6 @@ namespace Kinect {
 				infoGUI.guiText.text = sInfo;
 			}
 		}
+		#endif
 	}
 }
-#endif

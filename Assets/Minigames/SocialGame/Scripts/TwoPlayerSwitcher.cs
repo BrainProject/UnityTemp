@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 
 namespace SocialGame{
 	public class TwoPlayerSwitcher : MonoBehaviour {
+		#if UNITY_STANDALONE
 		KinectManager KManager;
 		public bool TwoPlayer;
 		public SkinnedMeshRenderer player2;
@@ -93,6 +93,6 @@ namespace SocialGame{
 				LevelManager.finish();
 			}
 		}
+		#endif
 	}
 }
-#endif

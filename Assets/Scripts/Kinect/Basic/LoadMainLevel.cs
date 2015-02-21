@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 namespace Kinect {
 	public class LoadMainLevel : MonoBehaviour 
 	{
+		#if UNITY_STANDALONE
 		private bool levelLoaded = false;
 		
 		
@@ -17,7 +17,7 @@ namespace Kinect {
 				levelLoaded = true;
 				Application.LoadLevel(2);
 			}
-		}		
+		}	
+		#endif	
 	}
 }
-#endif
