@@ -3,7 +3,7 @@
  *
  * @section About
  * 
- * The Newron is therapeutic software for children with autism spectrum disorder. The softwrae is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
+ * The Newron is therapeutic software for children with autism spectrum disorder. The software is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
  * 
  * It is based on Unity game engine.
   * 
@@ -64,15 +64,12 @@ public class MGC : Singleton<MGC>
 	protected MGC ()
 	{
 	}
-	// guarantee this will be always a singleton only - can't use the constructor!
-
 	
-	//public Game.LoadLevelWithFade loadLevelWithFade;
 	public BrainPartName currentBrainPart;
 	public Vector3 currentCameraDefaultPosition;
-	//public GameObject selectedMinigame;
 	public string gameSelectionSceneName = "GameSelection";
-	/// <summary>
+
+    /// <summary>
 	/// Logs players actions
 	/// </summary>
 	internal Logger logger;
@@ -87,14 +84,17 @@ public class MGC : Singleton<MGC>
 	internal bool fromMain;
 	internal bool fromSelection;
 	internal bool fromMinigame;
-	internal Vector3 selectedMinigame;
+
+    internal Vector3 selectedMinigame;
+
+    // name of MiniGame scene to be loaded
+    internal string selectedMiniGameName;
+
+    // minigame will be started with this difficulty
+    internal int selectedMiniGameDiff { get; set; }
+
 	internal string inactivityScene = "Figure";
 	internal bool checkInactivity = true;
-
-    /// <summary>
-    /// TODO just a temporary solution, before mini-games statistics will be properly saved
-    /// </summary>
-    internal int hanoiTowersNumberOfDisks = 3;
 	
 	private float inactivityTimestamp;
 	private float inactivityLenght = 60f;
@@ -217,15 +217,7 @@ public class MGC : Singleton<MGC>
 		{
 			Application.LoadLevel ("GameSelection");
 		}
-			/*
-		if (Input.GetKeyDown(KeyCode.F5)) {
-			SaveGame ();
-		}
-		if (Input.GetKeyDown(KeyCode.F8))
-		{
-			LoadGame ();
-		}
-			*/
+
 #if UNITY_ANDROID
 		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
 		{
@@ -298,16 +290,16 @@ public class MGC : Singleton<MGC>
 //			Application.Quit ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-//			SaveGame ();
+//			SaveMinigameStatesToFile ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-//			LoadGame ();
+//			LoadMinigameStatesFromFile ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
 //			ResetGameStatus ();
 //		}
 //	}
-	public void SaveGame()
+	public void SaveMinigameStatesToFile()
 	{
 		#if !UNITY_WEBPLAYER
 		//remove delete of the save file feature when finished, it will no longer be necessary
@@ -318,7 +310,7 @@ public class MGC : Singleton<MGC>
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
-		foreach(Game.Minigame minigameData in minigameStates.minigames)
+		foreach(Game.MinigameProperties minigameData in minigameStates.minigames)
 		{
 			bf.Serialize(file, minigameData);
 		}
@@ -327,7 +319,7 @@ public class MGC : Singleton<MGC>
 		#endif
 	}
 
-	public void LoadGame()
+	public void LoadMinigameStatesFromFile()
 	{
 		#if !UNITY_WEBPLAYER
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
@@ -339,7 +331,7 @@ public class MGC : Singleton<MGC>
 			{
 				for(int i=0; i<minigameStates.minigames.Count; ++i)
 				{
-					minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
+					minigameStates.minigames[i] = (Game.MinigameProperties)bf.Deserialize(file);
 				}
 
 				print ("Saved game-data loaded.");
@@ -351,8 +343,10 @@ public class MGC : Singleton<MGC>
 			file.Close();
 		}
 
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
+        if (Application.loadedLevelName == "GameSelection")
+        {
+            sceneLoader.LoadScene("GameSelection");
+        }
 		#endif
 	}
 
@@ -401,17 +395,19 @@ public class MGC : Singleton<MGC>
 
 	void ResetGameStatus()
 	{		
-		foreach(Minigame minigameData in this.GetComponent<MinigameStates>().minigames)
+		foreach(MinigameProperties minigameData in this.GetComponent<MinigameStates>().minigames)
 		{
 			minigameData.played = false;
 			minigameData.initialShowHelpCounter = 0;
 		}
 
-		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
+		print ("Game statuses were reset to 'not yet played' (MinigameProperties.played == false)");
 
-		SaveGame ();
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
+		SaveMinigameStatesToFile ();
+        if (Application.loadedLevelName == "GameSelection")
+        {
+            sceneLoader.LoadScene("GameSelection");
+        }
 	}
 
 	public void ShowHelpBubble()
@@ -453,13 +449,40 @@ public class MGC : Singleton<MGC>
 		inactivityTimestamp = Time.time;
 	}
 
+    public string getSelectedMinigameName()
+    {
+        return selectedMiniGameName;
+    }
+
+    //returns properties of currently selected mini-game, if there is such
+    public MinigameProperties getSelectedMinigameProps()
+    {
+        return minigameStates.GetMinigame(selectedMiniGameName);
+    }
+
+    public void startMiniGame(string name)
+    {
+        selectedMiniGameName = name;
+
+        //find properties of selected mini-game
+        MinigameProperties minigameProps = getSelectedMinigameProps();
+
+        // choosing of difficulty is not applicable for this mini-game
+        // run it directly
+        if(minigameProps.DifficultyMin == minigameProps.DifficultyMax)
+        {
+            sceneLoader.LoadScene(selectedMiniGameName);
+        }
+
+        // first, load difficulty chooser scene, mini-game will be loaded from that scene
+        else 
+        {
+            sceneLoader.LoadScene("DifficultyChooser");
+        }
+        
+
+    }
 
 
 
-
-		////// (optional) allow runtime registration of global objects
-		//static public T RegisterComponent<T>()
-		//{
-		//    return Instance.GetOrAddComponent<T>();
-		//}
 }

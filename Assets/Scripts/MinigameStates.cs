@@ -9,28 +9,29 @@ using System.Collections.Generic;
 namespace Game 
 {
 	[System.Serializable]
-	public class Minigame
+	public class MinigameProperties
 	{
 		public string initialScene;
 		public string sceneWithHelp;
-		internal bool played;
+
+        //minimim difficulty
+        internal int DifficultyMin;
+
+        //maximum difficulty
+        internal int DifficultyMax;
+
+        internal bool played;
 		internal int initialShowHelpCounter;
-		//internal List<string> scenes = new List<string>();
 
-		public Minigame(string minigameName)
-		{
-			this.initialScene = minigameName;
-			this.sceneWithHelp = minigameName;
-			played = false;
-			initialShowHelpCounter = 0;
-		}
-
-		public Minigame(string minigameName, string sceneWithHelp)
+		public MinigameProperties(string minigameName, int DiffMin = 1, int DiffMax = 1, string sceneWithHelp = "")
 		{
 			this.initialScene = minigameName;
 			this.sceneWithHelp = sceneWithHelp;
 			played = false;
 			initialShowHelpCounter = 0;
+
+            DifficultyMin = DiffMin;
+            DifficultyMax = DiffMax;
 		}
 	}
 
@@ -40,55 +41,57 @@ namespace Game
         /// Status of each minigame. True if minigame was played.
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
-		internal List<Minigame> minigames = new List<Minigame>();
+		internal List<MinigameProperties> minigames = new List<MinigameProperties>();
 
 		public void Start ()
 		{
-			Minigame main = new Minigame ("Main");
+			MinigameProperties main = new MinigameProperties ("Main");
 			minigames.Add (main);
-			Minigame selection = new Minigame ("GameSelection");
+			MinigameProperties selection = new MinigameProperties ("GameSelection");
 			selection.initialShowHelpCounter = 2;
 			minigames.Add (selection);
-			//Set your minigame here (don't forget to add it into collection too):
-			Minigame hanoi = new Minigame ("HanoiTowers");
+			
+            //Set your minigame here (don't forget to add it into collection too):
+			
+            MinigameProperties hanoi = new MinigameProperties ("HanoiTowers", 2, 8);
 			minigames.Add (hanoi);
-			Minigame london = new Minigame ("LondonTowerGUIMenu", "LondonTowerGame");
+			MinigameProperties london = new MinigameProperties ("LondonTowerGUIMenu", 1, 5, "LondonTowerGame");
 			minigames.Add (london);
-			Minigame pexeso = new Minigame ("Pexeso");
+			MinigameProperties pexeso = new MinigameProperties ("Pexeso", 1, 4);
 			minigames.Add (pexeso);
-			Minigame similarities = new Minigame ("Similarities");
+			MinigameProperties similarities = new MinigameProperties ("Similarities");
 			minigames.Add (similarities);
-			Minigame silhouette = new Minigame ("Silhouettes");
+			MinigameProperties silhouette = new MinigameProperties ("Silhouettes");
 			minigames.Add (silhouette);
-			Minigame puzzle = new Minigame ("PuzzleChoosePicture", "PuzzleGame");
+			MinigameProperties puzzle = new MinigameProperties ("PuzzleChoosePicture", 1, 3, "PuzzleGame");
 			minigames.Add (puzzle);
-			Minigame coloring = new Minigame ("Coloring");
+			MinigameProperties coloring = new MinigameProperties ("Coloring");
 			minigames.Add (coloring);
-			Minigame findIt = new Minigame ("FindIt", "FindItGame");
+			MinigameProperties findIt = new MinigameProperties ("FindIt", 1, 2, "FindItGame");
 			minigames.Add (findIt);
-			Minigame socialGame = new Minigame ("_XSocialGame");
+			MinigameProperties socialGame = new MinigameProperties ("_XSocialGame");
 			minigames.Add (socialGame);
-			Minigame dodge = new Minigame("Dodge");
+			MinigameProperties dodge = new MinigameProperties("Dodge");
 			minigames.Add (dodge);
-			Minigame figure = new Minigame ("Figure");
+			MinigameProperties figure = new MinigameProperties ("Figure");
 			minigames.Add (figure);
-			Minigame interaction = new Minigame ("Interaction");
+			MinigameProperties interaction = new MinigameProperties ("Interaction");
 			minigames.Add (interaction);
-			Minigame repeat = new Minigame ("Repeat");
+			MinigameProperties repeat = new MinigameProperties ("Repeat");
 			minigames.Add (repeat);
-			Minigame cooperative = new Minigame ("Cooperative");
+			MinigameProperties cooperative = new MinigameProperties ("Cooperative");
 			minigames.Add (cooperative);
 
-			MGC.Instance.LoadGame ();
+			MGC.Instance.LoadMinigameStatesFromFile ();
 		}
 
 		/// <summary>
 		/// Sets the minigame status to "played".
 		/// </summary>
-		/// <param name="minigameName">Minigame scene name.</param>
+		/// <param name="minigameName">MinigameProperties scene name.</param>
 		public void SetPlayed(string minigameName)
 		{
-			foreach(Minigame game in minigames)
+			foreach(MinigameProperties game in minigames)
 			{
 				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
 				{
@@ -97,36 +100,40 @@ namespace Game
 				}
 			}
 
-			MGC.Instance.SaveGame ();
+			MGC.Instance.SaveMinigameStatesToFile ();
 		}
 
 		public bool GetPlayed(string minigameName)
 		{
-			foreach(Minigame game in minigames)
+			foreach(MinigameProperties game in minigames)
 				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
 					return game.played;
 			return false;
 		}
 
-		public Minigame GetMinigame(string minigameName)
+		public MinigameProperties GetMinigame(string minigameName)
 		{
-			foreach(Minigame game in minigames)
-				if(game.sceneWithHelp == minigameName || game.initialScene == minigameName)
-					return game;
+            foreach (MinigameProperties game in minigames)
+            {
+                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                {
+                    return game;
+                }
+            }
 			return null;
 		}
 
 		public List<string> GetMinigamesWithHelp()
 		{
 			List <string> minigamesWithHelp = new List<string> ();
-			foreach(Minigame game in minigames)
+			foreach(MinigameProperties game in minigames)
 				minigamesWithHelp.Add(game.sceneWithHelp);
 			return minigamesWithHelp;
 		}
 
 //		public void IncreaseHelpShowCounter(string minigameName)
 //		{
-//			foreach(Minigame game in minigames)
+//			foreach(MinigameProperties game in minigames)
 //			{
 //				if(game.sceneWithHelp == minigameName)
 //				{

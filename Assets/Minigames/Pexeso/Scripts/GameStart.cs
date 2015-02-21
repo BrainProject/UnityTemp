@@ -147,7 +147,7 @@ namespace MinigamePexeso
 	    {
             Debug.Log("Selected board size: " + chosenButton.name);
 			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveGame ();
+			//MGC.Instance.SaveMinigameStatesToFile ();
             string[] dimensions = chosenButton.name.Split('x');
 	        int rows = Int32.Parse(dimensions [0]);
 	        int columns = Int32.Parse(dimensions [1]);

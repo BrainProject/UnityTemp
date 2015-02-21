@@ -105,7 +105,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 148, y: -118}
+  m_AnchoredPosition: {x: 176, y: -118}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &432444981
@@ -443,7 +443,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -251, y: -118}
+  m_AnchoredPosition: {x: -266, y: -118}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1017645294
@@ -537,7 +537,7 @@ RectTransform:
   m_RootOrder: 6
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -133.999969, y: 90}
+  m_AnchoredPosition: {x: -172.699997, y: 90}
   m_SizeDelta: {x: 77.0329971, y: 77}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1109258633
@@ -638,7 +638,7 @@ GameObject:
   - 224: {fileID: 1235766541}
   - 114: {fileID: 1235766542}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Difficulty Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -704,10 +704,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 838804692}
   m_HandleRect: {fileID: 437868284}
   m_Direction: 0
-  m_MinValue: 2
-  m_MaxValue: 6
+  m_MinValue: 1
+  m_MaxValue: 7
   m_WholeNumbers: 1
-  m_Value: 2
+  m_Value: 7
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -742,7 +742,6 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -888,12 +887,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1764619238}
-        m_MethodName: 
+      - m_Target: {fileID: 1764619243}
+        m_MethodName: StartMinigame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1000,6 +1000,7 @@ GameObject:
   - 114: {fileID: 1764619241}
   - 114: {fileID: 1764619240}
   - 114: {fileID: 1764619239}
+  - 114: {fileID: 1764619243}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1062,6 +1063,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1764619243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1764619238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eeb8bc682348645b1eec1675cc91af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffSlider: {fileID: 1235766542}
 --- !u!1 &1864719173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1256,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -23, y: 90}
+  m_AnchoredPosition: {x: -98.4000015, y: 90}
   m_SizeDelta: {x: 77.0329971, y: 77}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &2002478903

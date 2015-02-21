@@ -78,9 +78,8 @@ namespace HanoiTowers
 
         public void ResetGame()
         {
-            //TODO temporary hack
-            // fix it with unified difficulty settings
-            numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
+            //load difficulty from ...
+            numberOfDisks = MGC.Instance.selectedMiniGameDiff;
 
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 
@@ -112,15 +111,15 @@ namespace HanoiTowers
             gameStartTime = Time.time;
         }
 
-        // parameter has to be float to be usable with Unity UI
-        public void setDifficulty(float newNumberofDisks)
-        {
-            print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
-            numberOfDisks = (int)newNumberofDisks;
+        //// parameter has to be float to be usable with Unity UI
+        //public void setDifficulty(float newNumberofDisks)
+        //{
+        //    print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
+        //    numberOfDisks = (int)newNumberofDisks;
 
-            //TODO temporary hack - solve by implementing mini-game statistics saving
-            MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-        }
+        //    //TODO temporary hack - solve by implementing mini-game statistics saving
+        //    MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
+        //}
 
         public void increaseNumberofMoves()
         {

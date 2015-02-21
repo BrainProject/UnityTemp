@@ -29,10 +29,7 @@ namespace MinigameSelection
 
 		void Start()
 		{
-			//levelManager = GameObject.Find ("_LevelManager").GetComponent<LevelManagerSelection>();
 			OnSelection = false;
-			//CameraDefaultPosition = MGC.Instance.currentCameraDefaultPosition;
-			//CameraZoom = this.transform.position - this.transform.forward;
 			MouseHover = false;
 
 			if(minigameName == "")
@@ -40,7 +37,6 @@ namespace MinigameSelection
 				this.renderer.material.color = Color.gray;
 				this.GetComponent<SelectMinigame>().enabled = false;
 				this.collider.enabled = false;
-				//this.gameObject.SetActive(false);
 			}
 
 #if !UNITY_STANDALONE
@@ -54,15 +50,8 @@ namespace MinigameSelection
 
 			if(Icon)
 			{
-				//if(transform.childCount > 0)
-				//{
-					//Icon = transform.GetChild(0).gameObject;
-					//Icon.renderer.material.mainTexture = minigameIcon;
 				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-					//Icon.transform.parent = this.transform;
 				OriginalIconScale = Icon.transform.localScale;
-				//}
-				//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			}
 
             if(MGC.Instance.minigameStates.GetPlayed(minigameName))
@@ -70,17 +59,7 @@ namespace MinigameSelection
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);
             }
-
-
-/*			if(MGC.Instance.selectedMinigame == this.gameObject.transform.position)
-			{
-				OnSelection = true;
-				LevelManager.minigameOnSelection = this.gameObject;
-				CameraZoom = MGC.Instance.currentCameraDefaultPosition;
-				MGC.Instance.selectedMinigame = Vector3.zero;
-				//Camera.main.GetComponent<CameraDefaultPosition
-			}
-*/		}
+		}
 
 		void Update()
 		{
@@ -92,22 +71,12 @@ namespace MinigameSelection
 				dir = dir * this.transform.lossyScale.x*0.75f;
 				Icon.transform.position += dir;
 			}
-//            if (Input.GetButtonDown("Fire1") && !MouseHover)
-//            {
-//                OnSelection = false;
-//            }
 
 			//Set target position of camera back to its original point
 			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
 				OnSelection = false;
 				levelManager.minigameOnSelection = null;
-//				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-//				mainCamera.GetComponent<SmoothCameraMove>().Move = true;
-//				mainCamera.GetComponent<SmoothCameraMove>().Speed = mainCamera.GetComponent<SmoothCameraMove>().defaultSpeed;
-//				mainCamera.GetComponent<SmoothCameraMove>().From = mainCamera.transform.position;
-//				mainCamera.GetComponent<SmoothCameraMove>().To = mainCamera.GetComponent<SweepCamera>().currentWaypoint.transform.position;
-//				//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
 			}
 		}
 
@@ -116,32 +85,27 @@ namespace MinigameSelection
 		{
 			OriginalColor = this.renderer.material.color;
 			this.renderer.material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
-//			Texture tmp = (Texture)Resources.Load ("Selection/" + iconName, typeof(Texture));
-//			if(tmp)
-//			{
-//				Icon.renderer.material.mainTexture = tmp;
-//				Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
-//				Icon.transform.position = this.transform.position;
-//			}
-			if(Icon)
-				StartCoroutine("SmoothScaleUp");
-				//Icon.transform.localScale = new Vector3 (0.8f, 0.8f, 1);
-			//this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-			MouseHover = true;
 
+            if (Icon)
+            {
+                StartCoroutine("SmoothScaleUp");
+            }
+
+            MouseHover = true;
 	        MGC.Instance.logger.addEntry("Mouse enter the object: '" + this.name + "'");
 		}
 
 		void OnMouseExit()
 		{
 			this.renderer.material.color = OriginalColor;
-			//Icon.renderer.material.mainTexture = null;
-			//Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 0);
 			MouseHover = false;
-			if(Icon)
-				StartCoroutine("SmoothScaleDown");
-				//Icon.transform.localScale = OriginalIconScale;
-	        MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
+
+            if (Icon)
+            {
+                StartCoroutine("SmoothScaleDown");
+            }
+
+            MGC.Instance.logger.addEntry("Mouse exit the object: '" + this.name + "'");
 		}
 
 		void OnMouseUp()
@@ -161,15 +125,17 @@ namespace MinigameSelection
 							return;
 						}
 					}
-					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
-					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;
-					//if(minigameHelp && MGC.Instance.neuronHelp)
-					if(MGC.Instance.neuronHelp)
-						MGC.Instance.neuronHelp.GetComponent<BrainHelp>().helpTexture = minigameHelp;
-					//MGC.Instance.currentCameraDefaultPosition = CameraZoom;
-	                MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
+
+                    if (MGC.Instance.neuronHelp)
+                    {
+                        MGC.Instance.neuronHelp.GetComponent<BrainHelp>().helpTexture = minigameHelp;
+                    }
+
+                    MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 					MGC.Instance.selectedMinigame = this.gameObject.transform.position;
-	                MGC.Instance.sceneLoader.LoadScene(minigameName);
+	                
+                    //start the mini-game - choose difficulty (if applicable) and then load first scene of mini-game
+                    MGC.Instance.startMiniGame(minigameName);
 				}
 
 				//set target position of camera near to mini-game bubble

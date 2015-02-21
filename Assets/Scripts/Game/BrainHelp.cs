@@ -45,7 +45,7 @@ namespace Game
 			{
 				if(MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 				{
-					Minigame thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
+					MinigameProperties thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
 					Debug.Log ("Help shown in this minigame " + thisMinigame.initialShowHelpCounter + " times.");
 					++thisMinigame.initialShowHelpCounter;
 					if(thisMinigame.initialShowHelpCounter < 3)
