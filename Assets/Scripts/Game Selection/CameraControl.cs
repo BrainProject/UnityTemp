@@ -52,7 +52,7 @@ namespace MinigameSelection
 
 			if(Input.GetMouseButtonUp(0) && (initialTouchPosition != 0))
 			{
-				if(((initialTouchPosition - Input.mousePosition.x) > swipeDistance) && !movingLeft)
+				if(((initialTouchPosition - Input.mousePosition.x) < -swipeDistance) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
@@ -64,7 +64,7 @@ namespace MinigameSelection
 					movingRight = false;
 					SetNewTarget();
 				}
-				else if(((initialTouchPosition - Input.mousePosition.x) < -swipeDistance) && !movingRight)
+				else if(((initialTouchPosition - Input.mousePosition.x) > swipeDistance) && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
