@@ -86,23 +86,6 @@ namespace Puzzle
             Sprite testSprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
             targetImage.sprite = testSprite;
 
-			//GameObject targetImageGUITexture = new GameObject("TargetImage");
-
-            //targetImageGUITexture.AddComponent<GUITexture>();
-            //targetImageGUITexture.guiTexture.texture = puzzleImage;
-            //targetImageGUITexture.transform.localScale = 
-            //    new Vector3(0.3f,
-            //                0.3f * Screen.width/Screen.height,
-            //                1.0f);
-
-            //targetImageGUITexture.transform.position = 
-            //    new Vector3(0.15F,
-            //                1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
-            //                1.0f);
-
-            //targetImageGUITexture.layer = 13;
-
-
             //  loading number of pieces
             try
             {
@@ -123,9 +106,6 @@ namespace Puzzle
             int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
             numberPieces = dim * dim;
 
-            int pixels_per_cell_x = (int)Math.Floor((double)puzzleImage.width / dim);
-            int pixels_per_cell_y = (int)Math.Floor((double)puzzleImage.height / dim);
-
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
             for (int i = 0; i < dim; i++)
@@ -133,53 +113,20 @@ namespace Puzzle
                 x[i] = false; y[i] = false;
             }
             
-            for (int i = 1; i <= dim; i++)
+            for (int i = 0; i < numberPieces; i++)
             {
-                for (int j = 1; j <= dim; j++)
-                {
-                    // Create texture
-                    Texture2D texture = new Texture2D(pixels_per_cell_x, pixels_per_cell_y);
+            
+                PuzzlePiece piece = new PuzzlePiece(puzzleImage,i,dim,dim);
+                pieces.Add(piece.gameObject.name, piece);
 
-                    Color[] pixels = puzzleImage.GetPixels(
-                        (j - 1) * pixels_per_cell_x,
-                        puzzleImage.height - i * pixels_per_cell_y,
-                        pixels_per_cell_x,
-                        pixels_per_cell_y);
-
-                    texture.SetPixels(pixels);
-                    texture.Apply();
-
-                    int dim_x = dim;
-                    int dim_y = dim;
-
-					// in case every connection had a number
-                    /*PuzzlePiece piece = new PuzzlePiece(texture,
-                                                        i == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 2) + j,
-					                                    j == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j - 1,
-                                                        i == dim_y ? -1 : (dim_x - 1) * i + dim_y * (i - 1) + j,
-					                                    j == dim_x ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j,
-					                                    Vector3.zero);*/
-
-					// in case of remembering IDs of neighbouring pieces
-					PuzzlePiece piece = new PuzzlePiece(texture,
-					                                    i == 1 ? -1 : ((i - 2) * dim + j),
-					                                    j == dim_x ? -1 : ((i - 1) * dim + j + 1),
-					                                    i == dim_y ? -1 : ((i) * dim + j),
-					                                    j == 1 ? -1 : ((i - 1) * dim + j - 1),
-
-					                                    Vector3.zero);
-					piece.id = ((i - 1) * dim + j);
-                    pieces.Add(piece.gameObject.name, piece);
-
-                    // add a connected component
-                    HashSet<GameObject> pieceSet = new HashSet<GameObject>();
-                    pieceSet.Add(piece.gameObject);
-                    connectedComponents.Add(pieceSet);
-
-                }
-                // placement in grid
-                placePuzzlePieces();
+                // add a connected component
+                HashSet<GameObject> pieceSet = new HashSet<GameObject>();
+                pieceSet.Add(piece.gameObject);
+                connectedComponents.Add(pieceSet);
             }
+
+            placePuzzlePieces();
+
             setOrthographicCamera();
 
             PuzzleStatistics.Clear();
