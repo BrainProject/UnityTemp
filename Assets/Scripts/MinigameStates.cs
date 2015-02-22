@@ -128,7 +128,7 @@ namespace Game
         /// <param name="minigameName">Minigame scene-name.</param>
         public void SetPlayed(string minigameName, int diff = 0)
         {
-            print("Playing minigame: " + minigameName + ", with diff: " + diff);
+            print("Now playing minigame: '" + minigameName + "', with diff: " + diff);
 
             foreach (MinigameProperties game in minigames)
             {
@@ -136,6 +136,7 @@ namespace Game
                 {
                     game.played = true;
                     game.playedCount[diff] += 1;
+                    game.DifficutlyLastPlayed = diff;
                     break;
                 }
             }
@@ -194,7 +195,7 @@ namespace Game
             foreach (MinigameProperties game in minigames)
             {
                 print("Minigame: " + game.readableName);
-                for( int i = 0; i < game.MaxDifficulty+1; i++)
+                for( int i = 0; i <= game.MaxDifficulty; i++)
                 {
                     print("   Diff: " + i + ":: played: " + game.playedCount[i] + "; finished: " + game.finishedCount[i]);
                 }

@@ -6,11 +6,14 @@ using System.Collections;
 
 public class MinigameDifficultyChooser : MonoBehaviour
 {
-    public Slider diffSlider;
+    internal Slider diffSlider;
+    public GameObject diffSliderGO;
 
     // Set up scene according to minigameProps
     void Start()
     {
+        diffSlider = diffSliderGO.GetComponent<Slider>();
+
         Game.MinigameProperties props = MGC.Instance.getSelectedMinigameProps();
         if(props == null)
         {
@@ -23,11 +26,35 @@ public class MinigameDifficultyChooser : MonoBehaviour
         {
             diffSlider.minValue = 0;
             diffSlider.maxValue = props.MaxDifficulty;
-            diffSlider.value = diffSlider.minValue;
+            diffSlider.value = props.DifficutlyLastPlayed;
+            //print("Max diff value: " + props.MaxDifficulty);
 
-            print("Max diff value: " + props.MaxDifficulty);
+            int x;
+            int shiftX = 2160 / props.MaxDifficulty;
 
-            //TODO set proper icons and other stuff of scene here
+            //create "checked" icons for difficulties already finished
+            for (int i = 0; i <= props.MaxDifficulty; i++)
+            {
+                if (props.finishedCount[i] > 0)
+                {
+                    x = i * shiftX - 960;
+
+                    //instantiate
+                    GameObject icon = (GameObject)Instantiate(Resources.Load("CheckedIcon") as GameObject);
+
+                    //set parent
+                    icon.transform.SetParent(diffSliderGO.transform);
+
+                    //set position and scale
+                    icon.transform.localPosition = new Vector3(x, 370, 0);
+                    //icon.transform.localScale = new Vector3(1, 1, 1);
+
+                    //TODO fine tune position and scale based on resolution...
+                }
+            }
+
+            //TODO set correct difficulties icons for different minigames
+
 
         }
     }
