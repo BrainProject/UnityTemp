@@ -20,6 +20,8 @@ namespace Game
         //maximum difficulty
         internal int DifficultyMax;
 
+        internal int DifficutlyLastPlayed = 0;
+
         internal bool played;
 		internal int initialShowHelpCounter;
 
@@ -35,10 +37,10 @@ namespace Game
 		}
 	}
 
-	public class MinigameStates : MonoBehaviour 
+	public class Minigames : MonoBehaviour 
     {
 		/// <summary>
-        /// Status of each minigame. True if minigame was played.
+        /// List of properties of all minigames. 
         /// Minigames needs to be set in Start() function manualy in this script.
 		/// </summary>
 		internal List<MinigameProperties> minigames = new List<MinigameProperties>();
@@ -51,17 +53,18 @@ namespace Game
 			selection.initialShowHelpCounter = 2;
 			minigames.Add (selection);
 			
-            //Set your minigame here (don't forget to add it into collection too):
+            // Set your minigame here (don't forget to add it into collection too):
+            // If You change anything in following collection, be sure to delete 'newron.sav' file in '...\AppData\LocalLow\HCI\Newron'
 			
-            MinigameProperties hanoi = new MinigameProperties ("HanoiTowers", 2, 8);
+            MinigameProperties hanoi = new MinigameProperties ("HanoiTowers", 2, 6);
 			minigames.Add (hanoi);
 			MinigameProperties london = new MinigameProperties ("LondonTowerGUIMenu", 1, 5, "LondonTowerGame");
 			minigames.Add (london);
 			MinigameProperties pexeso = new MinigameProperties ("Pexeso", 1, 4);
 			minigames.Add (pexeso);
-			MinigameProperties similarities = new MinigameProperties ("Similarities");
+            MinigameProperties similarities = new MinigameProperties("Similarities", 1, 4);
 			minigames.Add (similarities);
-			MinigameProperties silhouette = new MinigameProperties ("Silhouettes");
+            MinigameProperties silhouette = new MinigameProperties("Silhouettes", 1, 4);
 			minigames.Add (silhouette);
 			MinigameProperties puzzle = new MinigameProperties ("PuzzleChoosePicture", 1, 3, "PuzzleGame");
 			minigames.Add (puzzle);

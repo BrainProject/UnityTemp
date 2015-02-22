@@ -40,7 +40,7 @@ namespace Game
             }
             else
             {
-                print("Fade Canvas instantiated");
+                //print("Fade Canvas instantiated");
                 fadeCanvas.name = "Fade Canvas";
 
                 //set proper parent to canvas
@@ -55,7 +55,7 @@ namespace Game
                 }
                 else
                 {
-                    print("fadePanel founded.");
+                    //print("fadePanel founded.");
                     fadePanel.enabled = false;
                 }
             }

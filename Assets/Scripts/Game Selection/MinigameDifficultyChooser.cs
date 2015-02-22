@@ -25,6 +25,8 @@ public class MinigameDifficultyChooser : MonoBehaviour
             diffSlider.maxValue = props.DifficultyMax;
             diffSlider.value = diffSlider.minValue;
 
+            print("Min diff value: " + props.DifficultyMin);
+            print("Min diff value: " + props.DifficultyMax);
             //TODO set proper icons and other stuff of scene here
 
         }
@@ -34,6 +36,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
     {
         //store difficulty into MGC property
         MGC.Instance.selectedMiniGameDiff = (int)diffSlider.value;
+        MGC.Instance.getSelectedMinigameProps().DifficutlyLastPlayed = (int)diffSlider.value;
 
         MGC.Instance.sceneLoader.LoadScene(MGC.Instance.getSelectedMinigameName());
     }

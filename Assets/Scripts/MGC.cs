@@ -74,7 +74,7 @@ public class MGC : Singleton<MGC>
 	/// </summary>
 	internal Logger logger;
 	internal SceneLoader sceneLoader;
-	internal MinigameStates minigameStates;
+	internal Minigames minigameStates;
 	internal GameObject kinectManager;
 	internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
@@ -128,7 +128,7 @@ public class MGC : Singleton<MGC>
 		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
 			
 		//initiate minigame states
-		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
+		minigameStates = this.gameObject.AddComponent<Minigames> ();
 
         //initiate minigames GUI
         minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
@@ -157,7 +157,7 @@ public class MGC : Singleton<MGC>
 		print("Master Game Controller Start()...");
 
 		//due to unknown reason, I doesn't set the list
-		//in the MinigameStates script correctly without this command.
+		//in the Minigames script correctly without this command.
 		minigameStates.Start ();
 
 		inactivityTimestamp = Time.time;
@@ -273,7 +273,7 @@ public class MGC : Singleton<MGC>
 
 		//if (level > 2)
 		//{
-		//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
+		//    this.GetComponent<Game.Minigames>().SetPlayed(Application.loadedLevelName);
 		//}
 	}
 
@@ -395,7 +395,7 @@ public class MGC : Singleton<MGC>
 
 	void ResetGameStatus()
 	{		
-		foreach(MinigameProperties minigameData in this.GetComponent<MinigameStates>().minigames)
+		foreach(MinigameProperties minigameData in this.GetComponent<Minigames>().minigames)
 		{
 			minigameData.played = false;
 			minigameData.initialShowHelpCounter = 0;
