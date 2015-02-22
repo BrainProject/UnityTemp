@@ -21,17 +21,18 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
         else
         {
-            diffSlider.minValue = props.DifficultyMin;
-            diffSlider.maxValue = props.DifficultyMax;
+            diffSlider.minValue = 0;
+            diffSlider.maxValue = props.MaxDifficulty;
             diffSlider.value = diffSlider.minValue;
 
-            print("Min diff value: " + props.DifficultyMin);
-            print("Min diff value: " + props.DifficultyMax);
+            print("Max diff value: " + props.MaxDifficulty);
+
             //TODO set proper icons and other stuff of scene here
 
         }
     }
 
+    // evoked when "play" button is hitted
     public void StartMinigame()
     {
         //store difficulty into MGC property

@@ -173,7 +173,7 @@ public class MGC : Singleton<MGC>
             Application.Quit();
         }
 
-		//Hidden menu possible to show with secret gesture
+		//Hidden menu possible to show with secret gesture or with keyboard shortcut
 #if UNITY_ANDROID
 		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2))
 		{
@@ -216,8 +216,12 @@ public class MGC : Singleton<MGC>
 		if (Input.GetKeyDown(KeyCode.F12))
 		{
 			Application.LoadLevel ("GameSelection");
+
+            //TODO test only...
+            minigameStates.printStatisticsToFile();
 		}
 
+        // reset 'game satuts' - clear data saved in mini-games properties
 #if UNITY_ANDROID
 		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
 		{
@@ -290,23 +294,25 @@ public class MGC : Singleton<MGC>
 //			Application.Quit ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-//			SaveMinigameStatesToFile ();
+//			SaveMinigamesPropertiesToFile ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-//			LoadMinigameStatesFromFile ();
+//			LoadMinigamesPropertiesFromFile ();
 //		}
 //		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
 //			ResetGameStatus ();
 //		}
 //	}
-	public void SaveMinigameStatesToFile()
+	public void SaveMinigamesPropertiesToFile()
 	{
 		#if !UNITY_WEBPLAYER
+
 		//remove delete of the save file feature when finished, it will no longer be necessary
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
 		{
 			File.Delete(Application.persistentDataPath + "/newron.sav");
 		}
+
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
 
@@ -314,12 +320,12 @@ public class MGC : Singleton<MGC>
 		{
 			bf.Serialize(file, minigameData);
 		}
-		print ("Game saved.");
+		print ("Game statistics saved.");
 		file.Close();
 		#endif
 	}
 
-	public void LoadMinigameStatesFromFile()
+	public void LoadMinigamesPropertiesFromFile()
 	{
 		#if !UNITY_WEBPLAYER
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
@@ -334,7 +340,7 @@ public class MGC : Singleton<MGC>
 					minigameStates.minigames[i] = (Game.MinigameProperties)bf.Deserialize(file);
 				}
 
-				print ("Saved game-data loaded.");
+				print ("Saved game statistics loaded.");
 			}
 			else
 			{
@@ -403,7 +409,7 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (MinigameProperties.played == false)");
 
-		SaveMinigameStatesToFile ();
+		SaveMinigamesPropertiesToFile ();
         if (Application.loadedLevelName == "GameSelection")
         {
             sceneLoader.LoadScene("GameSelection");
@@ -460,16 +466,15 @@ public class MGC : Singleton<MGC>
         return minigameStates.GetMinigame(selectedMiniGameName);
     }
 
+    // evoked by clicking on some mini-game "sphere", or by clicking "replay" button...
     public void startMiniGame(string name)
     {
+        //store the name of selected minigame
         selectedMiniGameName = name;
 
-        //find properties of selected mini-game
-        MinigameProperties minigameProps = getSelectedMinigameProps();
-
-        // choosing of difficulty is not applicable for this mini-game
-        // run it directly
-        if(minigameProps.DifficultyMin == minigameProps.DifficultyMax)
+        // check, if difficulty is applicable for this mini-game
+        // if not, run it directly
+        if (getSelectedMinigameProps().MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);
         }
@@ -479,10 +484,18 @@ public class MGC : Singleton<MGC>
         {
             sceneLoader.LoadScene("DifficultyChooser");
         }
-        
-
     }
 
 
 
+    // evoked when player successfuully finish minigame
+    internal void FinishMinigame()
+    {
+        print("Minigame successffully finished");
+
+        //TODO Add "Celebration phase" stuff here
+
+        minigameStates.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
+        SaveMinigamesPropertiesToFile();
+    }
 }

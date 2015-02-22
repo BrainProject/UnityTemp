@@ -42,7 +42,7 @@ namespace MainScene
 				{
 					cameraAnimation.SetBool("start", true);
 					cameraAnimation.speed = 1;
-					//MGC.Instance.LoadMinigameStatesFromFile();
+					//MGC.Instance.LoadMinigamesPropertiesFromFile();
 				}
 			}
     

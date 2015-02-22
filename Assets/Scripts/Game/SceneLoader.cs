@@ -26,7 +26,7 @@ namespace Game
         /// </summary>
 		void Start()
 		{
-            print("SceneLoader::Start()...");
+            //print("SceneLoader::Start()...");
 
             transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -100,7 +100,7 @@ namespace Game
 
         private IEnumerator FadeInCoroutine()
         {
-			print("fading in...");
+			//print("fading in...");
 			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
 			
             float startTime = Time.time;
@@ -125,7 +125,7 @@ namespace Game
 		{
 			Instantiate (Resources.Load ("BlockBorder"));
 
-			print("fading out coroutine...");
+			//print("fading out coroutine...");
 			if (levelName == "")
 			{
 				Debug.LogError("Level name not defined.");

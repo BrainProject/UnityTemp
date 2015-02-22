@@ -72,14 +72,16 @@ namespace HanoiTowers
                 Debug.LogError("Wrong pointers to columns...");
             }
 
+            MGC.Instance.minigameStates.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+
             ResetGame();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			
         }
 
         public void ResetGame()
         {
             //load difficulty from ...
-            numberOfDisks = MGC.Instance.selectedMiniGameDiff;
+            numberOfDisks = MGC.Instance.selectedMiniGameDiff + 2;
 
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 

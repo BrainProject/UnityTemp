@@ -121,7 +121,7 @@ namespace FindIt
             FindItStatistics.Clear();
 			FindItStatistics.StartMeasuringTime();
 			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveMinigameStatesToFile ();
+			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 
         void CheckEndGame()
