@@ -7,7 +7,7 @@ namespace SocialGame{
 		public Vector2 range;
 		public float power;
 		public Vector2 delay;
-		public int maxNumOfcheck;
+		public int maxNumOfCheck;
 
 		private GestChecker checker;
 		private float nextTime;
@@ -28,7 +28,7 @@ namespace SocialGame{
 
 			if(time > nextTime && run)
 			{
-				if(transform.childCount < maxNumOfcheck)
+				if(transform.childCount < maxNumOfCheck)
 					shoot();
 				time = 0;
 				nextTime = Random.Range(delay.x,delay.y);

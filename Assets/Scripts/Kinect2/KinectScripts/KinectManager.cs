@@ -1058,7 +1058,6 @@ namespace Kinect
 				sensorData = KinectInterop.OpenDefaultSensor(sensorInterfaces, dwFlags, sensorAngle, useMultiSourceReader);
 				if (sensorData == null)
 				{
-					print ("fuck");
 					this.transform.parent.gameObject.SetActive(false);
 					this.gameObject.SetActive(false);
 					throw new Exception("OpenDefaultSensor failed");

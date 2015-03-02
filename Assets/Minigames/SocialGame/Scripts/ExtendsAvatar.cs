@@ -4,17 +4,11 @@ using System.Collections;
 using Kinect;
 
 public class ExtendsAvatar : AvatarController {
-	private Vector3 newPos;
+	public Transform handLeft;
+	public Transform handRight;
 
-	// Use this for initialization
-	/*void Start () {
+	private Vector3 newPos;
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}*/
 
 	void Update()
 	{

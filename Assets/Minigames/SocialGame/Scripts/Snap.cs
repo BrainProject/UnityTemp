@@ -13,40 +13,32 @@ namespace SocialGame{
 		public Vector3 positionRight;
 
 		private GameObject targetPlayer;
+		private KinectManager kinect;
+
+		void Start()
+		{
+			kinect = Kinect.KinectManager.Instance;
+		}
 
 		public void snap()
 		{
 			GameObject playerObj = null;
 			string tag= "Error";
 			KinectManager kinect = Kinect.KinectManager.Instance;
-			if(player <1 || player > 2)
+			if(player <0 || player > 1)
 				return;
-			if(player == 1)
+			if(player == 0)
 			{
 
-//				tag="Player2";
-//				if(kinect)
-//				{
-//					playerObj = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,"Player1");
-//					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,tag);
-//				}
-//				else
-//				{
-//					playerObj = GameObject.Find("P1");
-//				}
+				tag="Player2";
+				playerObj = GetAvatarObj(0);
+				targetPlayer = GetAvatarObj(1);
 			}
 			else
 			{
-//				tag="Player1";
-//				if(kinect)
-//				{
-//					playerObj = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,"Player2");
-//					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,tag);
-//				}
-//				else
-//				{
-//					playerObj = GameObject.Find("P2");
-//				}
+				tag="Player1";
+				playerObj = GetAvatarObj(1);
+				targetPlayer = GetAvatarObj(0);
 			}
 			if(playerObj)
 			{
@@ -89,7 +81,7 @@ namespace SocialGame{
 			script.distance = 0.2f;
 			script.next = after;
 			script.clipBone = "root";
-			if(player == 1 )
+			if(player == 0 )
 			{
 				script.player1 = false;
 				script.player2 = true;
@@ -99,6 +91,22 @@ namespace SocialGame{
 				script.player1 = true;
 				script.player2 = false;
 			}
+		}
+
+		private GameObject GetAvatarObj(int player)
+		{
+			if(kinect)
+			{
+				foreach(Kinect.AvatarController avatar in kinect.avatarControllers)
+				{
+					if(avatar.playerIndex == player)
+					{
+						return avatar.gameObject;
+					}
+				}
+			}
+			Debug.Log ("chyba");
+			return null;
 		}
 
 #endif
