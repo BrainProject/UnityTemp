@@ -31,30 +31,36 @@ namespace SocialGame
 			{
 				if(handMode)
 				{
-					if(player1)
+					foreach(Kinect.AvatarController avatar in KManager.avatarControllers)
 					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
+						if((player1 && avatar.playerIndex == 0)||(player2 && avatar.playerIndex == 1))//jeste zkontrolovat jestli je hra 2hrace
 						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+							//najit ruce
+						}
+						
+						/*Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
 							if(avatarControler)
 							{
 								Targets.Add(avatarControler.LeftHand);
 								Targets.Add(avatarControler.RightHand);
-							}
-						}
+							}*/
 					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
+//					if(player1)
+//					{
+//
+//					}
+//					if(player2 && KManager.TwoUsers)
+//					{
+//						foreach(GameObject avatar in KManager.Player2Avatars)
+//						{
+//							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+//							if(avatarControler)
+//							{
+//								Targets.Add(avatarControler.LeftHand);
+//								Targets.Add(avatarControler.RightHand);
+//							}
+//						}
+//					}
 					for(int i =0; i <transform.childCount; i++)
 					{
 						Transform child = transform.GetChild(i);
@@ -67,11 +73,11 @@ namespace SocialGame
 					}
 
 					}
-					else
-					{
-						findTartgetByCheckName();
-					}
-				StartCoroutine("Check");
+				else
+				{
+					findTartgetByCheckName();
+				}
+				StartCoroutine(Check());
 			}
 			else
 			{

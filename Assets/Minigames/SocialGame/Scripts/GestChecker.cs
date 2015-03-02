@@ -31,30 +31,30 @@ namespace SocialGame
 			{
 				if(handMode)
 				{
-					if(player1)
-					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
+//					if(player1)
+//					{
+//						foreach(GameObject avatar in KManager.Player1Avatars)
+//						{
+//							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+//							if(avatarControler)
+//							{
+//								Targets.Add(avatarControler.LeftHand);
+//								Targets.Add(avatarControler.RightHand);
+//							}
+//						}
+//					}
+//					if(player2 && KManager.TwoUsers)
+//					{
+//						foreach(GameObject avatar in KManager.Player2Avatars)
+//						{
+//							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
+//							if(avatarControler)
+//							{
+//								Targets.Add(avatarControler.LeftHand);
+//								Targets.Add(avatarControler.RightHand);
+//							}
+//						}
+//					}
 					for(int i =0; i <transform.childCount; i++)
 					{
 						Transform child = transform.GetChild(i);

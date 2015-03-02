@@ -16,37 +16,37 @@ namespace SocialGame{
 
 		public void snap()
 		{
-			GameObject playerObj;
-			string tag;
+			GameObject playerObj = null;
+			string tag= "Error";
 			KinectManager kinect = Kinect.KinectManager.Instance;
 			if(player <1 || player > 2)
 				return;
 			if(player == 1)
 			{
 
-				tag="Player2";
-				if(kinect)
-				{
-					playerObj = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,"Player1");
-					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,tag);
-				}
-				else
-				{
-					playerObj = GameObject.Find("P1");
-				}
+//				tag="Player2";
+//				if(kinect)
+//				{
+//					playerObj = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,"Player1");
+//					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,tag);
+//				}
+//				else
+//				{
+//					playerObj = GameObject.Find("P1");
+//				}
 			}
 			else
 			{
-				tag="Player1";
-				if(kinect)
-				{
-					playerObj = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,"Player2");
-					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,tag);
-				}
-				else
-				{
-					playerObj = GameObject.Find("P2");
-				}
+//				tag="Player1";
+//				if(kinect)
+//				{
+//					playerObj = GameObjectEx.FindByTagFromList(kinect.Player2Avatars,"Player2");
+//					targetPlayer = GameObjectEx.FindByTagFromList(kinect.Player1Avatars,tag);
+//				}
+//				else
+//				{
+//					playerObj = GameObject.Find("P2");
+//				}
 			}
 			if(playerObj)
 			{
