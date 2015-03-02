@@ -294,10 +294,10 @@ public class MGC : Singleton<MGC>
 		{
 			MGC.Instance.sceneLoader.FadeIn ();
 		}
-		else
-		{
-			gameObject.guiTexture.enabled = false;
-		}
+		//else
+		//{
+			//gameObject.guiTexture.enabled = false;
+		//}
             
 
 		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()

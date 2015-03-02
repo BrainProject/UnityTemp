@@ -5,7 +5,7 @@ using System.Collections;
  * \brief namespace for Hanoi Towers mini-game 
  * Hanoi Towers mini-game
  * 
- * The of the game is to move all disks from one column to another. Only top disk can be moved
+ * The goal of the game is to move all disks from one column to another. Only top disk can be moved
  * 
  * Functionality is divided into GameController class,
  * Column class and Disk class.
@@ -48,17 +48,15 @@ namespace HanoiTowers
         public GameObject[] disks;
         public GameObject ceilingObject;
 
-        //public GameObject endGameGUI;
 
         private Column startingColumn;
         private Column endingColumn;
-        private int score = 0;
+        private int numberofMoves = 0;
         private float diskHeight = 0.41f;
         private Disk waitingForTarget;
 
         private float gameStartTime;
 
-        //private bool showEndGameGUI = false;
         void Start()
         {
             //set up columns
@@ -76,12 +74,12 @@ namespace HanoiTowers
 
             ResetGame();
 			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-            //QualitySettings.antiAliasing = 4;
         }
 
         public void ResetGame()
         {
             //TODO temporary hack
+            // fix it with unified difficulty settings
             numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
 
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
@@ -98,24 +96,19 @@ namespace HanoiTowers
                 disks[i].SetActive(false);
 
                 disks[i].GetComponent<Disk>().setColumn(null);
-                //disks[i].gameObject.rigidbody.isKinematic = true;
-
-                //disks[i].transform.position = new Vector3(100, 0, 0);
             }
 
-            //enable disks and move them to correct column
+            //enable chosen number of disks and move them to correct column
             Disk disk;
             for (int i = numberOfDisks - 1; i >= 0; i--)
             {
                 disk = disks[i].GetComponent<Disk>();
 
                 disk.moveToColumn(startingColumn, false);
-
-                //disks[i].rigidbody.isKinematic = false;
                 disks[i].SetActive(true);
             }
 
-            score = 0;
+            numberofMoves = 0;
             gameStartTime = Time.time;
         }
 
@@ -129,10 +122,10 @@ namespace HanoiTowers
             MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
         }
 
-        public void increaseScore()
+        public void increaseNumberofMoves()
         {
-            score++;
-            //Debug.Log("Number of moves: " + score);
+            numberofMoves++;
+            //Debug.Log("Number of moves: " + numberofMoves);
         }
 
         public float getCeilingPosition()
@@ -140,9 +133,9 @@ namespace HanoiTowers
             return ceilingObject.transform.position.y + ceilingObject.transform.localScale.y;
         }
 
-        public int getScore()
+        public int getNumberofMoves()
         {
-            return score;
+            return numberofMoves;
         }
 
         public float getGameStartTime()
@@ -184,29 +177,6 @@ namespace HanoiTowers
 
             //global GUI
             MGC.Instance.minigamesGUI.show(true);
-
-            //mini-game specific gui
-            //endGameGUI.SetActive(true);
-            //showEndGameGUI = true;
-
-
         }
-
-
-        
-        //void OnGUI()
-        //{
-        //    if (showEndGameGUI)
-        //    {
-        //        //float w = Screen.width;
-        //        //float h = Screen.height;
-
-        //        //numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
-                
-        //        ////TODO temporary hack - solve by implementing mini-game statistics saving
-        //        //MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-        //    }
-        //}
     }
-
 }
