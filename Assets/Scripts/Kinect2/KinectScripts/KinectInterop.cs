@@ -326,12 +326,20 @@ namespace Kinect
 				{
 					if(sensorData == null)
 					{
+						// Change angle for Kinect 1.
+						if (sensorInt.GetType().Name == "Kinect1Interface")
+						{
+							sensorAngle = 10;
+						}
+
 						sensorData = sensorInt.OpenDefaultSensor(dwFlags, sensorAngle, bUseMultiSource);
 
 						if(sensorData != null)
 						{
 							sensorData.sensorInterface = sensorInt;
+
 							Debug.Log("Interface used: " + sensorInt.GetType().Name);
+
 						}
 
 						kinectSensor = sensorInt.GetType().Name;

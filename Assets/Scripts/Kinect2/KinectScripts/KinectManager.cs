@@ -1215,11 +1215,11 @@ namespace Kinect
 			}
 
 
-			//set angle of the sensor
-			if(KinectInterop.GetSensorType () == "Kinect2Interface")
-				sensorAngle = 5;
-			else if(KinectInterop.GetSensorType () == "Kinect1Interface")
-			    sensorAngle = 15;
+//			//set angle of the sensor
+//			if(KinectInterop.GetSensorType () == "Kinect2Interface")
+//				sensorAngle = 5;
+//			else if(KinectInterop.GetSensorType () == "Kinect1Interface")
+//			    sensorAngle = 15;
 
 			Debug.Log("Waiting for users.");
 		}

@@ -36,7 +36,7 @@ public enum BrainPartName
 	Cerebellum,
 	BrainStem
 }
-;
+
 
 /// <summary>
 /// Master Game Controller.
@@ -79,7 +79,7 @@ public class MGC : Singleton<MGC>
 	internal SceneLoader sceneLoader;
 	internal MinigameStates minigameStates;
 	internal GameObject kinectManagerObject;
-	internal Kinect.KinectManager kinectManagerInstance; 
+	internal Kinect.KinectManager kinectManagerInstance;
 	internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
 
@@ -169,7 +169,7 @@ public class MGC : Singleton<MGC>
 		inactivityScene = "HanoiTowers";
 		#endif
 
-
+		StartCoroutine (CheckKinect ());
 
 		
 		#if UNITY_STANDALONE
@@ -488,4 +488,22 @@ public class MGC : Singleton<MGC>
 		//{
 		//    return Instance.GetOrAddComponent<T>();
 		//}
+
+	/// <summary>
+	/// Checks the kinect connection.
+	/// </summary>
+	private IEnumerator CheckKinect ()
+	{
+		// Wait until all is initialized.
+		yield return new WaitForSeconds(1);
+		kinectManagerInstance = Kinect.KinectManager.Instance;
+
+
+		if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
+		{
+			kinectManagerInstance.sensorAngle = 10;
+			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
+			im.smoothFactor = 5;
+		}
+	}
 }
