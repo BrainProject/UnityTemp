@@ -13,6 +13,7 @@ namespace Kinect
 	public class KinectInterop
 	{
 		private static string kinectSensor;
+		internal static bool changeAngle = false;
 
 		// constants
 		public static class Constants
@@ -327,7 +328,7 @@ namespace Kinect
 					if(sensorData == null)
 					{
 						// Change angle for Kinect 1.
-						if (sensorInt.GetType().Name == "Kinect1Interface")
+						if (sensorInt.GetType().Name == "Kinect1Interface" && changeAngle)
 						{
 							sensorAngle = 10;
 						}

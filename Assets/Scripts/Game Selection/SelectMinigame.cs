@@ -160,6 +160,7 @@ namespace MinigameSelection
 							levelManager.FadeInOutKinectIcon();
 							return;
 						}
+						Kinect.KinectInterop.changeAngle = false;
 					}
 					//GameObject.Find ("LoadLevelWithFade").guiTexture.enabled = true;
 					//GameObject.Find ("_GameManager").GetComponent<GameManager>().selectedMinigame = this.gameObject;

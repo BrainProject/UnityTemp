@@ -154,6 +154,8 @@ public class MGC : Singleton<MGC>
 		kinectManagerObject.transform.parent = this.transform;
 
 		kinectManagerInstance = Kinect.KinectManager.Instance;
+		
+		Kinect.KinectInterop.changeAngle = true;
 	}
 
 	void Start()
@@ -501,7 +503,6 @@ public class MGC : Singleton<MGC>
 
 		if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
 		{
-			kinectManagerInstance.sensorAngle = 10;
 			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
 			im.smoothFactor = 5;
 		}
