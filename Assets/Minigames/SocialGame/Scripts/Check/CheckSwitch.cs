@@ -6,7 +6,7 @@ namespace SocialGame{
 		#if UNITY_STANDALONE
 
 		public FinalCount count;
-
+		
 		public override void thisActivate()
 		{
 			activated = false;
@@ -18,7 +18,6 @@ namespace SocialGame{
 			if(count)
 				count.next();
 		}
-
 
 
 		/*protected void removeFromTarget()
