@@ -25,6 +25,7 @@ using System.IO;
 using MainScene;
 using MinigameSelection;
 using Game;
+using Kinect;
 
 public enum BrainPartName
 {
@@ -178,6 +179,8 @@ public class MGC : Singleton<MGC>
 		//should the KinectManager be active?
 		Debug.Log ("Major Windows version: " + Environment.OSVersion.Version.Major);
 		Debug.Log ("Minor Windows version: " + Environment.OSVersion.Version.Minor);
+
+
 
 
 		/*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
@@ -492,7 +495,7 @@ public class MGC : Singleton<MGC>
 		//}
 
 	/// <summary>
-	/// Checks the kinect connection.
+	/// Checks the Kinect connection.
 	/// </summary>
 	private IEnumerator CheckKinect ()
 	{
@@ -506,5 +509,18 @@ public class MGC : Singleton<MGC>
 			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
 			im.smoothFactor = 5;
 		}
+
+		KinectManager manager = KinectManager.Instance;
+		if(manager && manager.IsInitialized())
+		{
+			KinectInterop.SensorData sensorData = manager.GetSensorData();
+			int sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
+			
+			// sensorsCount == 0 means no sensor is currently connected
+			print (sensorsCount);
+		
+		}
+		else
+			print ("Something with Kinect initialization went terribly wrong!");
 	}
 }

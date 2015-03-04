@@ -1041,8 +1041,14 @@ namespace Kinect
 			}
 		}
 
+		public KinectInterop.SensorData GetSensorData()
+		{
+			return sensorData;
+		}
+
 		void Start() 
 		{
+
 			try
 			{
 				// try to initialize the default Kinect2 sensor
