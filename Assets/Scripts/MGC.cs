@@ -172,17 +172,13 @@ public class MGC : Singleton<MGC>
 		inactivityScene = "HanoiTowers";
 		#endif
 
-		StartCoroutine (CheckKinect ());
 
 		
 		#if UNITY_STANDALONE
 		//should the KinectManager be active?
-		Debug.Log ("Major Windows version: " + Environment.OSVersion.Version.Major);
-		Debug.Log ("Minor Windows version: " + Environment.OSVersion.Version.Minor);
+		//Debug.Log ("Windows version: " + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor);
 
-
-
-
+		StartCoroutine (CheckKinect ());
 		/*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
 		{
 			if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
@@ -484,16 +480,6 @@ public class MGC : Singleton<MGC>
 		inactivityTimestamp = Time.time;
 	}
 
-
-
-
-
-		////// (optional) allow runtime registration of global objects
-		//static public T RegisterComponent<T>()
-		//{
-		//    return Instance.GetOrAddComponent<T>();
-		//}
-
 	/// <summary>
 	/// Checks the Kinect connection.
 	/// </summary>
@@ -503,13 +489,14 @@ public class MGC : Singleton<MGC>
 		yield return new WaitForSeconds(1);
 		kinectManagerInstance = Kinect.KinectManager.Instance;
 
-
+		// Set more aggressive smoothing for cursor if Kinect1 is connected.
 		if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
 		{
 			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
 			im.smoothFactor = 5;
 		}
-
+		
+		// TODO: Deactivate KinectManager object if no device is connected.
 		KinectManager manager = KinectManager.Instance;
 		if(manager && manager.IsInitialized())
 		{
@@ -517,10 +504,9 @@ public class MGC : Singleton<MGC>
 			int sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
 			
 			// sensorsCount == 0 means no sensor is currently connected
-			print (sensorsCount);
-		
+			Debug.Log ("Sensor count: " + sensorsCount);
 		}
 		else
-			print ("Something with Kinect initialization went terribly wrong!");
+			Debug.Log ("Something with Kinect initialization went terribly wrong!");
 	}
 }
