@@ -94,11 +94,11 @@ namespace Game
             minigames.Add(hanoi);
             MinigameProperties london = new MinigameProperties("LondonTowerGUIMenu", 3, "LondonTowerGame");
             minigames.Add(london);
-            MinigameProperties pexeso = new MinigameProperties("Pexeso", 4);
+            MinigameProperties pexeso = new MinigameProperties("Pexeso", 3);
             minigames.Add(pexeso);
-            MinigameProperties similarities = new MinigameProperties("Similarities", 4);
+            MinigameProperties similarities = new MinigameProperties("Similarities", 3);
             minigames.Add(similarities);
-            MinigameProperties silhouette = new MinigameProperties("Silhouettes", 4);
+            MinigameProperties silhouette = new MinigameProperties("Silhouettes", 3);
             minigames.Add(silhouette);
             MinigameProperties puzzle = new MinigameProperties("PuzzleChoosePicture", 2, "PuzzleGame");
             minigames.Add(puzzle);

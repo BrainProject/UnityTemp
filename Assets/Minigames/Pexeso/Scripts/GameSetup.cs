@@ -250,10 +250,10 @@ namespace MinigamePexeso
 
 			//print ("ResourcePack::DropOther coroutine...2.1");
 	        
-			yield return new WaitForSeconds(2.0F);
+			yield return new WaitForSeconds(1.0F);
 
 			//print ("ResourcePack::DropOther coroutine...3.1");
-			SetUpGame(chosenButton);
+			startGame(chosenButton);
 			//print ("ResourcePack::DropOther coroutine...3.2");
 	    }
 	    
@@ -301,7 +301,7 @@ namespace MinigamePexeso
 		/// and pass some parameters.
 		/// </summary>
 		/// <param name="chosenButton">Chosen button.</param>
-	    private void SetUpGame(GameObject chosenButton)
+	    private void startGame(GameObject chosenButton)
 	    {
             //destroy used tiles 
             //TODO minor memory waste - tiles objects can be reused...
@@ -340,31 +340,40 @@ namespace MinigamePexeso
 					break;
 				}
 
-				case 2:
-				{
-					rows = 3;
-					columns = 3;
-					break;
-				}
+                // the number of tiles have to be even...
+                //case 2:
+                //{
+                //    rows = 3;
+                //    columns = 3;
+                //    break;
+                //}
 
-				case 3:
+				case 2:
 				{
 					rows = 3;
 					columns = 4;
 					break;
 				}
 
-				case 4:
+				case 3:
 				{
 					rows = 4;
 					columns = 4;
 					break;
 				}
 
+                // not enought pictures in resource packs...
+                //case 4:
+                //{
+                //    rows = 4;
+                //    columns = 5;
+                //    break;
+                //}
+
                 default:
                 {
                     rows = 3;
-                    columns = 3;
+                    columns = 4;
                     break;
                 }
 			}
@@ -389,24 +398,19 @@ namespace MinigamePexeso
 					musicPlayer.Play();
 				}
 
+                // start it, finally
 				mainGameScript.CreateGameBoard();
+
+                // update statistics
+                MGC.Instance.minigameStates.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                
+                // log it...
+                MGC.Instance.logger.addEntry("New game starts with: " + rows*columns + " tiles");
 			}
 			else
 			{
 				Debug.LogError("Main game script not assigned");
 			}
-
-//
-//
-//
-//
-//			//gameStart.enabled = true;
-//            this.gameObject.SetActive(false);
-////	        
-////			//old solution - choose difficulty...
-////			//gameStart.CreateMenu();
-//
-
 	    }
 	}
 }

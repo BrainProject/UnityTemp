@@ -497,5 +497,8 @@ public class MGC : Singleton<MGC>
 
         minigameStates.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
         SaveMinigamesPropertiesToFile();
+
+        //global GUI
+        MGC.Instance.minigamesGUI.show(true);
     }
 }

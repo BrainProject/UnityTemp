@@ -57,9 +57,6 @@ namespace HanoiTowers
             {
                 if (disks.Count == gameController.numberOfDisks)
                 {
-                    //global stuff, happening for each minigame
-                    MGC.Instance.FinishMinigame();
-
                     //local stuff, specific for this minigame
                     MGC.Instance.logger.addEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getNumberofMoves());
                     gameController.endGame();

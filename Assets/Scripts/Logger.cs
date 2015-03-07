@@ -92,9 +92,15 @@ public class Logger : MonoBehaviour
 
         public void OnApplicationQuit()
         {
-            print("Closing log file");
-            addEntry("Session ended\r\n\r\n\r\n");
-            logfile.Close();
+           
+            
+            if (logfile != null)
+            {
+                print("Closing log file");
+                addEntry("Session ended\r\n\r\n\r\n");
+
+                logfile.Close();
+            }
         }
     #endif 
 }

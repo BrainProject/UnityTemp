@@ -11,6 +11,7 @@ using System.Collections;
  * Column class and Disk class.
  * There is also simple end-game GUI
  *
+ * @author Jiří Chmelík
  */
 namespace HanoiTowers
 {
@@ -113,16 +114,6 @@ namespace HanoiTowers
             gameStartTime = Time.time;
         }
 
-        //// parameter has to be float to be usable with Unity UI
-        //public void setDifficulty(float newNumberofDisks)
-        //{
-        //    print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
-        //    numberOfDisks = (int)newNumberofDisks;
-
-        //    //TODO temporary hack - solve by implementing mini-game statistics saving
-        //    MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-        //}
-
         public void increaseNumberofMoves()
         {
             numberofMoves++;
@@ -169,15 +160,14 @@ namespace HanoiTowers
         public void endGame()
         {
             //animate Neuron
-            
             GameObject Neuronek = MGC.Instance.neuronHelp;
             if (Neuronek)
             {
                 Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
             }
 
-            //global GUI
-            MGC.Instance.minigamesGUI.show(true);
+            //global stuff, happening for each minigame
+            MGC.Instance.FinishMinigame();
         }
     }
 }

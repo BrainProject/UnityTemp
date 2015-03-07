@@ -6,8 +6,12 @@ using System.Collections;
 
 public class MinigameDifficultyChooser : MonoBehaviour
 {
-    internal Slider diffSlider;
+    
     public GameObject diffSliderGO;
+    public Image diffLowImage;
+    public Image diffHighImage;
+
+    internal Slider diffSlider;
 
     // Set up scene according to minigameProps
     void Start()
@@ -27,7 +31,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
             diffSlider.minValue = 0;
             diffSlider.maxValue = props.MaxDifficulty;
             diffSlider.value = props.DifficutlyLastPlayed;
-            //print("Max diff value: " + props.MaxDifficulty);
+            print("Max diff value: " + props.MaxDifficulty);
 
             int x;
             int shiftX = 2160 / props.MaxDifficulty;
@@ -37,7 +41,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
             {
                 if (props.finishedCount[i] > 0)
                 {
-                    x = i * shiftX - 960;
+                    x = i * shiftX - 1050;
 
                     //instantiate
                     GameObject icon = (GameObject)Instantiate(Resources.Load("CheckedIcon") as GameObject);
@@ -49,7 +53,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
                     icon.transform.localPosition = new Vector3(x, 370, 0);
                     //icon.transform.localScale = new Vector3(1, 1, 1);
 
-                    //TODO fine tune position and scale based on resolution...
+                    //TODO better solution, independent on resolution
                 }
             }
 

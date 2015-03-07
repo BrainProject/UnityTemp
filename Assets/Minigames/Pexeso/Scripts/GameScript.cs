@@ -358,7 +358,8 @@ namespace MinigamePexeso
             //game ends here, show scoreboard...
             //gameEndTime = Time.time;
 
-            MGC.Instance.minigamesGUI.show(true);
+            //global stuff, happening for each minigame
+            MGC.Instance.FinishMinigame();
         }
 
 	    /// <summary>
@@ -681,30 +682,41 @@ namespace MinigamePexeso
 					//Load all pictures
 					images = Resources.LoadAll ("Textures/Pictures/Pexeso/" + resourcePack);
 
-					//images = Resources.LoadAll ("Textures/Pictures/Pexeso/" + resourcePack);
-	
+                    print("Resource pack: " + resourcePack + "; images loaded: " + images.Length);
+
 					if (images == null)
 					{
-							throw new UnityException ("Some images failed to load");
+							throw new UnityException ("Images was not loaded at all.");
 					}
 	
+                    // create Texture2D from each image
 					for (int i = 0; i < images.Length; i++)
 					{
 							if (images [i] != null)
 							{
 									classicPic.Add (images [i] as Texture2D);
 							}
+                            else
+                            {
+                                throw new UnityException("image[" + i + "] == null");
+                            }
 					}
+
+                    print("Textures created: " + classicPic.Count);
+                    print("Rows: " + rows + "; columns: " + columns);
+                    int picturesNeeded = (rows * columns) / 2;
 	
 					//Choose randomly appropriate number of pictures
 					List<Texture2D> chosen = new List<Texture2D> ();
-					for (int i = 0; i < (rows * columns)/2; i++)
+					for (int i = 0; i < picturesNeeded; i++)
 					{
 							num = random.Next (0, classicPic.Count);
 							chosen.Add (classicPic [num]);
 							chosen.Add (classicPic [num]);
 							classicPic.RemoveAt (num);
 					}
+
+                    print("Pictures chosen: " + chosen.Count);
 	
 					//Check if appropriate number of pics have been chosen.
 					if (chosen.Count != (rows * columns))
