@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,14 +77,17 @@ namespace MinigamePexeso
         /// Number of correct pairs. Used as score.
         /// </summary>
 	    private int correctPairs;
+
 		/// <summary>
 		/// GUI Number of correct pairs. Used as score.
 		/// </summary>
 	    public GUIText correctPairsDisplay;
+
 		/// <summary>
 		/// Number of wrong pairs. Used as score.
 		/// </summary>
 	    private int wrongPairs;
+		
 		/// <summary>
 		/// GUI Number of wrong pairs. Used as score.
 		/// </summary>
@@ -99,6 +102,7 @@ namespace MinigamePexeso
 		/// Used for mouse click detection
 		/// </summary>
         private Ray ray;
+
         private RaycastHit hit;
 
 		/// <summary>
@@ -115,22 +119,21 @@ namespace MinigamePexeso
 		/// The game start time.
 		/// </summary>
         private float gameStartTime;
+
 		/// <summary>
 		/// The game end time.
 		/// </summary>
         private float gameEndTime;
+
 		/// <summary>
 		/// The last display time.
 		/// </summary>
         private int   lastDisplayTime = 0;
 
 		/// <summary>
-	    /// Do nothing here.
-	    /// </summary>
-		void Start ()
-		{
-	        //CreateGameBoard();
-		}
+		/// The images loaded as objects.
+		/// </summary>
+		UnityEngine.Object[] images;
 
 		/// <summary>
 		/// Initialization. Creates all cubes and planes, sets their position etc.
@@ -301,7 +304,7 @@ namespace MinigamePexeso
 		void Update()
 		{
 	        //update GUI text once per second
-            //TODO event better solution would be to use coroutine with 
+            //TODO better solution would be to use coroutine with 
             //     yield return new WaitForSeconds(1f);
             float elapsedTime = Time.time - gameStartTime;
             int displayTime = (int)Math.Floor(elapsedTime);
@@ -356,14 +359,6 @@ namespace MinigamePexeso
             //gameEndTime = Time.time;
 
             MGC.Instance.minigamesGUI.show(true);
-
-			/*scoreb.SetActive (true);
-            Scoreboard scoreboard = scoreb.GetComponent<Scoreboard>() as Scoreboard;
-			scoreboard.correct.text = correctPairsDisplay.text;
-			scoreboard.wrong.text = wrongPairsDisplay.text;
-            scoreboard.time.text = (gameEndTime - gameStartTime).ToString();*/
-
-            //StartCoroutine(RestartGame());
         }
 
 	    /// <summary>
@@ -670,11 +665,6 @@ namespace MinigamePexeso
 			}
 			Debug.Log("Game initialized");
 		}
-
-		/// <summary>
-		/// The images loaded as objects.
-		/// </summary>
-		UnityEngine.Object[] images;
 		
 	    /// <summary>
 	    /// Randomly assigns pictures to game tiles.
@@ -828,9 +818,9 @@ namespace MinigamePexeso
 
             menu.SetActive(true);
             resourcePackMenu.SetActive(true);
-            ResourcePack resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as ResourcePack;
+            GameSetup resourceMenuScript = resourcePackMenu.GetComponent("MinigamePexeso.ResourcePack") as GameSetup;
             this.enabled = false;
-            resourceMenuScript.CreateMenu();
+            resourceMenuScript.CreateResourcePacksIcons();
         }
 	}
 }

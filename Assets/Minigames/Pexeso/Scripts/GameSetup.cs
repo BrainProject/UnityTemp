@@ -9,19 +9,21 @@ namespace MinigamePexeso
 
     /// <summary>
     /// Creates a tile for each image-set (resourcePack) and lets player choose which set will be used for game
+    /// Set up difficulty and start main game script
     /// </summary>
     /// @author Michal Hroš
-	public class ResourcePack : MonoBehaviour 
+    /// @author Jiří Chmelík
+	public class GameSetup : MonoBehaviour 
     {
         /// <summary>
         /// The current game type.
         /// </summary>
 		public GameType currentGame = GameType.Similarity;
 
-		/// <summary>
-		/// GameStart script
-		/// </summary>
-        public GameStart gameStart;
+        ///// <summary>
+        ///// GameStart script
+        ///// </summary>
+        //public GameStart gameStart;
 
 		/// <summary>
 		/// Main game script (GameScript)
@@ -47,12 +49,12 @@ namespace MinigamePexeso
 	    /// <summary>
 	    /// Number of rows of menu items.
 	    /// </summary>
-		private int menuRows;// = 2;
+		private int menuRows;
 
 	    /// <summary>
 	    /// Number of columns of menu items.
 	    /// </summary>
-		private int menuColumns;// = 2;
+		private int menuColumns;
 
 		/// <summary>
 		/// Used for mouse click detection
@@ -166,13 +168,13 @@ namespace MinigamePexeso
 			menuColumns = menu [1];
 
 			//Create menu
-	        CreateMenu();
+	        CreateResourcePacksIcons();
 		}
 
 		/// <summary>
 		/// Creates the menu and loads resource packs.
 		/// </summary>
-	    public void CreateMenu()
+	    public void CreateResourcePacksIcons()
 	    {
             gameTiles = GameTiles.createTiles(menuRows, menuColumns, gameTilePrefab, "PicMenuItem");
 
@@ -181,8 +183,6 @@ namespace MinigamePexeso
 	            mainGameScript.enabled = false;
 	        }
 
-            //string[] resourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame + "\\");
-            //int resPackCount = resourcePacks.Length;
             int resPackCount = resPacksNames.Length;
             print("Number of standard res. packs: " + resPackCount);
             print("Number of game tiles: " + gameTiles.Length);
@@ -201,11 +201,6 @@ namespace MinigamePexeso
                     //use first image in pack as tile texture
                     gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
                 }
-                //tiles without resource packs 
-                /*else
-                {
-                    Destroy(gameTiles[i]);
-                }*/
             }
 
             //Add custom resoruce packs
@@ -236,6 +231,8 @@ namespace MinigamePexeso
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator DropOther(GameObject chosenButton, GameObject[] buttons)
 	    {
+
+			//print ("ResourcePack::DropOther coroutine...1");
 	        float t = 0;
 	        
 	        for (int i = 0; i < buttons.Length; i++)
@@ -250,13 +247,14 @@ namespace MinigamePexeso
 					}
 	            }
 	        }
+
+			//print ("ResourcePack::DropOther coroutine...2.1");
 	        
-	        while (t < 1)
-	        {
-	            t += Time.deltaTime;
-	            yield return null;
-	        }
-			CreateMainGameObject(chosenButton);
+			yield return new WaitForSeconds(2.0F);
+
+			//print ("ResourcePack::DropOther coroutine...3.1");
+			SetUpGame(chosenButton);
+			//print ("ResourcePack::DropOther coroutine...3.2");
 	    }
 	    
 	    /// <summary>
@@ -303,7 +301,7 @@ namespace MinigamePexeso
 		/// and pass some parameters.
 		/// </summary>
 		/// <param name="chosenButton">Chosen button.</param>
-	    private void CreateMainGameObject(GameObject chosenButton)
+	    private void SetUpGame(GameObject chosenButton)
 	    {
             //destroy used tiles 
             //TODO minor memory waste - tiles objects can be reused...
@@ -321,13 +319,94 @@ namespace MinigamePexeso
 
             Debug.Log("Chosen resource pack: " + chosenButton.name);
 
-	        mainGameScript.resourcePack = chosenButton.name;
-			mainGameScript.currentGame = currentGame;
+			//Difficulty
+			int diff = MGC.Instance.selectedMiniGameDiff;
+			int rows;
+			int columns;
 
+			switch (diff)
+			{
+				case 0:
+				{
+					rows = 2;
+					columns = 2;
+					break;
+				}
 
-	        gameStart.enabled = true;
-            this.gameObject.SetActive(false);
-	        gameStart.CreateMenu();
+				case 1:
+				{
+					rows = 2;
+					columns = 3;
+					break;
+				}
+
+				case 2:
+				{
+					rows = 3;
+					columns = 3;
+					break;
+				}
+
+				case 3:
+				{
+					rows = 3;
+					columns = 4;
+					break;
+				}
+
+				case 4:
+				{
+					rows = 4;
+					columns = 4;
+					break;
+				}
+
+                default:
+                {
+                    rows = 3;
+                    columns = 3;
+                    break;
+                }
+			}
+			
+			if (mainGameScript != null)
+			{
+				//pass parameters to main game script
+				mainGameScript.resourcePack = chosenButton.name;
+				mainGameScript.currentGame = currentGame;
+				mainGameScript.rows = rows;
+				mainGameScript.columns = columns;
+				mainGameScript.enabled = true;
+
+				
+				if(mainGameScript.enableSound)
+				{
+					AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
+					if (musicPlayer == null)
+					{
+						Debug.Log("ERROR");
+					}
+					musicPlayer.Play();
+				}
+
+				mainGameScript.CreateGameBoard();
+			}
+			else
+			{
+				Debug.LogError("Main game script not assigned");
+			}
+
+//
+//
+//
+//
+//			//gameStart.enabled = true;
+//            this.gameObject.SetActive(false);
+////	        
+////			//old solution - choose difficulty...
+////			//gameStart.CreateMenu();
+//
+
 	    }
 	}
 }
