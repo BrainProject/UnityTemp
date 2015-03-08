@@ -76,7 +76,7 @@ namespace HanoiTowers
                 Debug.LogError("Wrong pointers to columns...");
             }
 
-            MGC.Instance.minigameStates.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+            MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
 
             ResetGame();
 			

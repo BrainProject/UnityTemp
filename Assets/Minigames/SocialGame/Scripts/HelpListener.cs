@@ -12,7 +12,7 @@ public class HelpListener : MonoBehaviour {
 
 	void Start()
 	{
-		MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+        MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
 		//KinectManagerSwitcher.deactivateThisLevelKManager();
 //		if(MGC.Instance.neuronHelp)
 //			neuronHelp = MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>();

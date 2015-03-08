@@ -5,7 +5,7 @@
  * 
  * The Newron is therapeutic software for children with autism spectrum disorder. The software is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
  * 
- * It is based on Unity game engine.
+ * It is based on Unity gameProps engine.
   * 
  * 
  * @section Manual
@@ -42,7 +42,7 @@ public enum BrainPartName
 /// Master Game Controller.
 /// </summary>
 /// <remarks>
-/// Singleton class for storing global variables and controlling main game features. 
+/// Singleton class for storing global variables and controlling main gameProps features. 
 /// Accessible from any scene, any time, simply via call:
 /// <example>
 /// <c>
@@ -74,7 +74,7 @@ public class MGC : Singleton<MGC>
 	/// </summary>
 	internal Logger logger;
 	internal SceneLoader sceneLoader;
-	internal Minigames minigameStates;
+	internal Minigames minigamesProperties;
 	internal GameObject kinectManager;
 	internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
@@ -126,8 +126,9 @@ public class MGC : Singleton<MGC>
 		//initiate level loader
 		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
 			
-		//initiate minigame states
-		minigameStates = this.gameObject.AddComponent<Minigames> ();
+		//initiate minigame properties
+		minigamesProperties = this.gameObject.AddComponent<Minigames> ();
+        minigamesProperties.loadConfigurationsfromFile();
 
         //initiate minigames GUI
         minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
@@ -158,7 +159,7 @@ public class MGC : Singleton<MGC>
         //TODO ...
 		//due to unknown reason, I doesn't set the list
 		//in the Minigames script correctly without this command.
-		minigameStates.Start ();
+		minigamesProperties.Start ();
 
 		inactivityTimestamp = Time.time;
 		#if !UNITY_STANDALONE
@@ -218,10 +219,10 @@ public class MGC : Singleton<MGC>
 			Application.LoadLevel ("GameSelection");
 
             //TODO test only...
-            minigameStates.printStatisticsToFile();
+            minigamesProperties.printStatisticsToFile();
 		}
 
-        // reset 'game satuts' - clear data saved in mini-games properties
+        // reset 'gameProps satuts' - clear data saved in mini-games properties
 #if UNITY_ANDROID
 		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
 		{
@@ -268,9 +269,9 @@ public class MGC : Singleton<MGC>
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/mini-games.stats");
 
-            foreach (Game.MinigameProperties minigameData in minigameStates.minigames)
+            foreach (Game.MinigameProperties minigameData in minigamesProperties.minigames)
             {
-                bf.Serialize(file, minigameData);
+                bf.Serialize(file, minigameData.stats);
             }
             print("Mini-games statistics saved to 'mini-games.stats' file.");
             file.Close();
@@ -288,9 +289,9 @@ public class MGC : Singleton<MGC>
 			FileInfo info = new FileInfo(file.Name);
 			if(info.Length > 0)
 			{
-				for(int i=0; i<minigameStates.minigames.Count; ++i)
+				for(int i=0; i<minigamesProperties.minigames.Count; ++i)
 				{
-					minigameStates.minigames[i] = (Game.MinigameProperties)bf.Deserialize(file);
+					minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
 				}
 
 				print ("Saved mini-games statistics was loaded.");
@@ -354,10 +355,10 @@ public class MGC : Singleton<MGC>
 
 	void ResetGameStatus()
 	{		
-		foreach(MinigameProperties minigameData in this.GetComponent<Minigames>().minigames)
+		foreach(MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
 		{
-			minigameData.played = false;
-			minigameData.initialShowHelpCounter = 0;
+			minigameProperties.stats.played = false;
+			minigameProperties.stats.initialShowHelpCounter = 0;
 		}
 
 		print ("Game statuses were reset to 'not yet played' (MinigameProperties.played == false)");
@@ -413,26 +414,26 @@ public class MGC : Singleton<MGC>
         return selectedMiniGameName;
     }
 
-    //returns properties of currently selected mini-game, if there is such
-    public MinigameProperties getSelectedMinigameProps()
+    //returns properties of currently selected mini-gameProps, if there is such
+    public MinigameProperties getSelectedMinigameProperties()
     {
-        return minigameStates.GetMinigame(selectedMiniGameName);
+        return minigamesProperties.GetMinigame(selectedMiniGameName);
     }
 
-    // evoked by clicking on some mini-game "sphere", or by clicking "replay" button...
+    // evoked by clicking on some mini-gameProps "sphere", or by clicking "replay" button...
     public void startMiniGame(string name)
     {
         //store the name of selected minigame
         selectedMiniGameName = name;
 
-        // check, if difficulty is applicable for this mini-game
+        // check, if difficulty is applicable for this mini-gameProps
         // if not, run it directly
-        if (getSelectedMinigameProps().MaxDifficulty == 0)
+        if (getSelectedMinigameProperties().conf.MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);
         }
 
-        // first, load difficulty chooser scene, mini-game will be loaded from that scene
+        // first, load difficulty chooser scene, mini-gameProps will be loaded from that scene
         else 
         {
             sceneLoader.LoadScene("DifficultyChooser");
@@ -455,7 +456,7 @@ public class MGC : Singleton<MGC>
             Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
         }
 
-        minigameStates.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
+        minigamesProperties.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
         SaveMinigamesStatisticsToFile();
 
         //global GUI
@@ -464,6 +465,6 @@ public class MGC : Singleton<MGC>
 
     public Minigames getMinigameStates()
     {
-        return minigameStates;
+        return minigamesProperties;
     }
 }

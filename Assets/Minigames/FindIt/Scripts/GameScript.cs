@@ -120,7 +120,7 @@ namespace FindIt
             newTargetImage();
             FindItStatistics.Clear();
 			FindItStatistics.StartMeasuringTime();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
 			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 

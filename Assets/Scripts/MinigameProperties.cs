@@ -6,29 +6,23 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    /// <summary>
-    /// Stores properties and statistics of one minigame
-    /// </summary>
-    /// 
-    /// \author Milan Doležal
-    /// \author Jiri Chmelik
-    [System.Serializable]
-    public class MinigameProperties : MonoBehaviour
+
+    public struct  MinigameConfiguration
     {
         /// <summary>
-        /// human-friendly name of mini-game
+        /// human-friendly name of mini-gameProps
         /// </summary>
         /// May contains spaces, apostrofs and other weird characters
         /// used only in debug prints and for logging
         public string readableName;
 
         /// <summary>
-        /// if mini-game has more than one scene, this one will be loaded first
+        /// if mini-gameProps has more than one scene, this one will be loaded first
         /// </summary>
         public string initialScene;
 
         /// <summary>
-        /// When this scene is loaded, help for mini-game will be shown
+        /// When this scene is loaded, help for mini-gameProps will be shown
         /// </summary>
         public string sceneWithHelp;
 
@@ -44,15 +38,16 @@ namespace Game
         /// Image symbolizing high difficulty
         /// </summary>
         public Sprite difficultyHighIcon;
+    }
 
-
-
+    public struct MinigameStatistics
+    {
         // on what difficulty was this minigame last played?
         // used as initial value for difficulty chooser slider value
-        internal int DifficutlyLastPlayed = 0;
+        internal int DifficutlyLastPlayed;
 
-        
-        // how many times the game was played on each difficulty
+
+        // how many times the gameProps was played on each difficulty
         internal int[] playedCount;
 
         // which difficulties has been succesfully played
@@ -60,34 +55,27 @@ namespace Game
 
 
 
-        //has been game ever played - TODO remove completely?
+        //has been gameProps ever played - TODO remove completely?
         internal bool played;
 
         internal int initialShowHelpCounter;
-
-        //public MinigameProperties(string minigameName, int MaxDiff = 0, string sceneWithHelp = "")
-        //{
-        //    this.initialScene = minigameName;
-        //    this.sceneWithHelp = sceneWithHelp;
-        //    played = false;
-        //    initialShowHelpCounter = 0;
-
-        //    MaxDifficulty = MaxDiff;
-
-        //    playedCount = new int[MaxDiff+1];
-        //    finishedCount = new int[MaxDiff+1];
-
-        //    //set readable name
-        //    if(sceneWithHelp == "")
-        //    {
-        //        readableName = minigameName;
-        //    }
-        //    else 
-        //    {
-        //        readableName = sceneWithHelp;
-        //    }
-        //}
     }
+
+    /// <summary>
+    /// Stores properties and statistics of one minigame
+    /// </summary>
+    /// 
+    /// \author Milan Doležal
+    /// \author Jiri Chmelik
+    [System.Serializable]
+    public class MinigameProperties : MonoBehaviour
+    {
+
+        public MinigameConfiguration conf;
+        public MinigameStatistics stats;
+    }
+
+
 
     /// <summary>
     /// List of properties of all minigames. 
@@ -96,7 +84,6 @@ namespace Game
     {
         /// <summary>
         /// List of properties of all minigames. 
-        /// Minigames needs to be set in Start() function manualy in this script.
         /// </summary>
         internal List<MinigameProperties> minigames = new List<MinigameProperties>();
 
@@ -107,9 +94,6 @@ namespace Game
 
         public void Start()
         {
-
-            
-
             //MinigameProperties main = new MinigameProperties("Main");
             //minigames.Add(main);
             //MinigameProperties selection = new MinigameProperties("GameSelection");
@@ -147,15 +131,11 @@ namespace Game
             //minigames.Add(repeat);
             //MinigameProperties cooperative = new MinigameProperties("Cooperative");
             //minigames.Add(cooperative);
-
-
-
-            //MGC.Instance.LoadMinigamesStatisticsFromFile();
         }
 
         /// <summary>
         /// Sets the minigame status to "played".
-        /// Should be called from individual mini-games when game itself starts...
+        /// Should be called from individual mini-games when gameProps itself starts...
         /// </summary>
         /// <param name="minigameName"> name of minigame</param>
         /// <param name="diff"> difficulty</param>
@@ -163,13 +143,13 @@ namespace Game
         {
             print("Now playing minigame: '" + minigameName + "', with diff: " + diff);
 
-            foreach (MinigameProperties game in minigames)
+            foreach (MinigameProperties gameProps in minigames)
             {
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (gameProps.conf.sceneWithHelp == minigameName || gameProps.conf.initialScene == minigameName)
                 {
-                    game.played = true;
-                    game.playedCount[diff] += 1;
-                    game.DifficutlyLastPlayed = diff;
+                    gameProps.stats.played = true;
+                    gameProps.stats.playedCount[diff] += 1;
+                    gameProps.stats.DifficutlyLastPlayed = diff;
                     break;
                 }
             }
@@ -181,9 +161,9 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
                 {
-                    game.finishedCount[diff] += 1;
+                    game.stats.finishedCount[diff] += 1;
                 }
             }
         }
@@ -191,8 +171,8 @@ namespace Game
         public bool GetPlayed(string minigameName)
         {
             foreach (MinigameProperties game in minigames)
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
-                    return game.played;
+                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
+                    return game.stats.played;
             return false;
         }
 
@@ -200,7 +180,7 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
                 {
                     return game;
                 }
@@ -213,7 +193,7 @@ namespace Game
             List<string> minigamesWithHelp = new List<string>();
             foreach (MinigameProperties game in minigames)
             {
-                minigamesWithHelp.Add(game.sceneWithHelp);
+                minigamesWithHelp.Add(game.conf.sceneWithHelp);
             }
 
             return minigamesWithHelp;
@@ -221,20 +201,46 @@ namespace Game
 
         public void printStatisticsToFile()
         {
-            //TODO
-            Debug.LogError("Not implemented, yet");
+            //TODO proper implementation
 
-            //debug only
+            //debug print to console
+            #if UNITY_EDITOR
+            
             foreach (MinigameProperties game in minigames)
             {
-                print("Minigame: " + game.readableName);
-                for( int i = 0; i <= game.MaxDifficulty; i++)
+                print("Minigame: " + game.conf.readableName);
+                for (int i = 0; i <= game.conf.MaxDifficulty; i++)
                 {
-                    print("   Diff: " + i + ":: played: " + game.playedCount[i] + "; finished: " + game.finishedCount[i]);
+                    print("   Diff: " + i + ":: played: " + game.stats.playedCount[i] + "; finished: " + game.stats.finishedCount[i]);
                 }
             }
+
+            #else
+                Debug.LogError("Not implemented, yet");
+            #endif
         }
 
 
+
+        internal void loadConfigurationsfromFile()
+        {
+            //get instance of prefab
+            GameObject mgParent = Instantiate(Resources.Load("mini-games-configuration")) as GameObject;
+
+            //for each mini-game
+            foreach (Transform child in mgParent.transform)
+            {
+                //TODO checks...
+                    // if there is scene with such name
+                MinigameProperties props = child.GetComponent<MinigameProperties>();
+                minigames.Add(props);
+            }
+
+            print("Mini-games configurations loaded: " + minigames.Count);
+
+            //get rid of prefab instance
+            Destroy(mgParent);
+
+        }
     }
 }

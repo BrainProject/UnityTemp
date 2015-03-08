@@ -54,7 +54,7 @@ namespace MinigameSelection
 				OriginalIconScale = Icon.transform.localScale;
 			}
 
-            if(MGC.Instance.minigameStates.GetPlayed(minigameName))
+            if(MGC.Instance.minigamesProperties.GetPlayed(minigameName))
             {
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
 				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);

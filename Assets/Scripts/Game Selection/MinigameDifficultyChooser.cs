@@ -18,7 +18,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
     {
         diffSlider = diffSliderGO.GetComponent<Slider>();
 
-        Game.MinigameProperties props = MGC.Instance.getSelectedMinigameProps();
+        Game.MinigameProperties props = MGC.Instance.getSelectedMinigameProperties();
         if(props == null)
         {
             Debug.LogError("Error during loading mini-game properties");
@@ -28,18 +28,19 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
         else
         {
+            int maxDiff = props.conf.MaxDifficulty;
             diffSlider.minValue = 0;
-            diffSlider.maxValue = props.MaxDifficulty;
-            diffSlider.value = props.DifficutlyLastPlayed;
-            print("Max diff value: " + props.MaxDifficulty);
+            diffSlider.maxValue = maxDiff;
+            diffSlider.value = props.stats.DifficutlyLastPlayed;
+            print("Max diff value: " + maxDiff);
 
             int x;
-            int shiftX = 2160 / props.MaxDifficulty;
+            int shiftX = 2160 / maxDiff;
 
             //create "checked" icons for difficulties already finished
-            for (int i = 0; i <= props.MaxDifficulty; i++)
+            for (int i = 0; i <= maxDiff; i++)
             {
-                if (props.finishedCount[i] > 0)
+                if (props.stats.finishedCount[i] > 0)
                 {
                     x = i * shiftX - 1050;
 
@@ -68,7 +69,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
     {
         //store difficulty into MGC property
         MGC.Instance.selectedMiniGameDiff = (int)diffSlider.value;
-        MGC.Instance.getSelectedMinigameProps().DifficutlyLastPlayed = (int)diffSlider.value;
+        MGC.Instance.getSelectedMinigameProperties().stats.DifficutlyLastPlayed = (int)diffSlider.value;
 
         MGC.Instance.sceneLoader.LoadScene(MGC.Instance.getSelectedMinigameName());
     }

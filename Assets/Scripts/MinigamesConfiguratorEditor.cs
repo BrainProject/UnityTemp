@@ -18,14 +18,14 @@ public class MinigamesConfiguratorEditor : Editor
 
         MinigamesConfigurator minigameConfigurator = (MinigamesConfigurator)target;
 
-        if (GUILayout.Button("Add Mini-game"))
+        if (GUILayout.Button("Add Mini-gameProps"))
         {
             minigameConfigurator.AddMinigame();
         }
 
         if (GUILayout.Button("Save all changes"))
         {
-            minigameConfigurator.SaveChanges();
+            minigameConfigurator.SaveConfigurationstoFile();
         }
     }
 

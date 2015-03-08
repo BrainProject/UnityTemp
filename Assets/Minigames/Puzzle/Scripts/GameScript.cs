@@ -184,8 +184,9 @@ namespace Puzzle
 
             PuzzleStatistics.Clear();
             PuzzleStatistics.StartMeasuringTime();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveMinigamesPropertiesToFile ();
+			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+			
+
         }
 
 		/**

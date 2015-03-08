@@ -43,14 +43,14 @@ namespace Game
 			
 			if(initialHelp)
 			{
-				if(MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+				if(MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 				{
-					MinigameProperties thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
-					Debug.Log ("Help shown in this minigame " + thisMinigame.initialShowHelpCounter + " times.");
-					++thisMinigame.initialShowHelpCounter;
-					if(thisMinigame.initialShowHelpCounter < 3)
+					MinigameProperties thisMinigame = MGC.Instance.minigamesProperties.GetMinigame(Application.loadedLevelName);
+					Debug.Log ("Help shown in this minigame " + thisMinigame.stats.initialShowHelpCounter + " times.");
+					++thisMinigame.stats.initialShowHelpCounter;
+					if(thisMinigame.stats.initialShowHelpCounter < 3)
 					{
-						if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+						if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 						{
 							helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
 							helpObject.guiTexture.texture = helpTexture;
@@ -67,18 +67,18 @@ namespace Game
 			}
 			else
 			{
-				if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+				if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 				{
 					helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 					helpObject.guiTexture.texture = helpTexture;
 					//helpObject.transform.parent = this.transform;
 					//helpObject.layer = this.gameObject.layer;
 					helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
-					MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+					MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
 				}
 				else
 				{
-				//print ("here " + helpExists + ", '" + MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
+				//print ("here " + helpExists + ", '" + MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
 					//       + Application.loadedLevelName + ", ");
 					this.GetComponent<Animator>().SetBool("wave", true);
 				}
@@ -105,7 +105,7 @@ namespace Game
 			}
 			else if(level > 2)
 			{
-				//if(!MGC.Instance.minigameStates.GetPlayed(Application.loadedLevelName))
+				//if(!MGC.Instance.minigamesProperties.GetPlayed(Application.loadedLevelName))
 				//{
 					ShowHelpBubble(true);
 				//}

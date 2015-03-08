@@ -73,13 +73,12 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &95137100
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 174004, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 95137101}
@@ -94,8 +93,8 @@ GameObject:
 --- !u!4 &95137101
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 474004, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   m_GameObject: {fileID: 95137100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -106,20 +105,15 @@ Transform:
 --- !u!114 &95137102
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11474004, guid: 5b786390f31d34d4e8e07844eccd460a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   m_GameObject: {fileID: 95137100}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readableName: Hanoi Towers
-  initialScene: HanoiTowers
-  sceneWithHelp: HanoiTowers
-  MaxDifficulty: 4
-  difficultyLow: {fileID: 21300000, guid: 48cd924ea8fd3694ba8c041bd4663327, type: 3}
-  difficultyHigh: {fileID: 21300000, guid: 6ab08a83c2ec351408923849c56d4eba, type: 3}
 --- !u!1 &813977557
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,12 +153,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da853bcb907be248a21f590bef24294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 
+  readableName: 
+  initialScene: 
+  sceneWithHelp: 
+  MaxDifficulty: 0
+  difficultyLowIcon: {fileID: 0}
+  difficultyHighIcon: {fileID: 0}
+--- !u!1001 &1670749804
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 220.113007
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 248.606506
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 174008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_Name
+      value: Mini-games
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_RootGameObject: {fileID: 1988512469}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1985710423
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 174006, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1985710424}
@@ -179,8 +226,8 @@ GameObject:
 --- !u!4 &1985710424
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 474006, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   m_GameObject: {fileID: 1985710423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -191,25 +238,20 @@ Transform:
 --- !u!114 &1985710425
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11474006, guid: 5b786390f31d34d4e8e07844eccd460a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   m_GameObject: {fileID: 1985710423}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readableName: Pexeso
-  initialScene: Pexeso
-  sceneWithHelp: Pexeso
-  MaxDifficulty: 3
-  difficultyLow: {fileID: 0}
-  difficultyHigh: {fileID: 0}
 --- !u!1 &1988512469
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 174008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1988512470}
@@ -223,8 +265,8 @@ GameObject:
 --- !u!4 &1988512470
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 474008, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 1670749804}
   m_GameObject: {fileID: 1988512469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 220.113007, y: 248.606506, z: 0}

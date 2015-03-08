@@ -231,10 +231,6 @@ namespace MinigamePexeso
 	    /// <param name="buttons">Buttons.</param>
 	    private IEnumerator DropOther(GameObject chosenButton, GameObject[] buttons)
 	    {
-
-			//print ("ResourcePack::DropOther coroutine...1");
-	        float t = 0;
-	        
 	        for (int i = 0; i < buttons.Length; i++)
 	        {
 	            if(chosenButton != buttons[i])
@@ -247,54 +243,12 @@ namespace MinigamePexeso
 					}
 	            }
 	        }
-
-			//print ("ResourcePack::DropOther coroutine...2.1");
 	        
 			yield return new WaitForSeconds(1.0F);
 
-			//print ("ResourcePack::DropOther coroutine...3.1");
 			startGame(chosenButton);
-			//print ("ResourcePack::DropOther coroutine...3.2");
 	    }
 	    
-	    /// <summary>
-	    /// COROUTINE. Selected button flies towards camera. Also starts new game.
-	    /// </summary>
-	    /// <param name="chosenButton">Chosen button.</param>
-	    /// <param name="buttons">Buttons.</param>
-//	    private IEnumerator SelectButton(GameObject chosenButton)
-//	    {
-	        //Vector3 startPosition = chosenButton.transform.position;
-	  //      float t = 0;
-	        
-	        /*Vector3 endPosition = new Vector3(Camera.main.ViewportToWorldPoint(Vector3.zero).x,
-	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).y,
-	                                          Camera.main.ViewportToWorldPoint(Vector3.zero).z);*/
-
-//			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-//			backTextureColor.a = 0;
-//			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
-/*
-	        while (t - 1f < 0)
-	        {
-	            t += Time.deltaTime * 2;
-
-//				Color frontTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-//				Color backColor = chosenButton.renderer.material.color;
-
-//				frontTextureColor.a = 1f - t;
-				backColor.a = 1f - t;
-
-				chosenButton.transform.GetChild(0).renderer.material.color = frontTextureColor;
-				chosenButton.renderer.material.color = backColor;
-*/
-	            //chosenButton.transform.position = Vector3.Lerp(startPosition, endPosition, t);
-	//            yield return null;
-	  //      }
-
-//	        CreateMainGameObject(chosenButton);
-	        //chosenButton.transform.position = endPosition;
-//	    }
 
 		/// <summary>
 		/// Player selected resource pack. Enable gameScript menu (size selection)
@@ -402,7 +356,7 @@ namespace MinigamePexeso
 				mainGameScript.CreateGameBoard();
 
                 // update statistics
-                MGC.Instance.minigameStates.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
                 
                 // log it...
                 MGC.Instance.logger.addEntry("New game starts with: " + rows*columns + " tiles");

@@ -36,7 +36,7 @@ namespace Game
 
             if (fadeCanvas == null)
             {
-                print("Missing 'FadeCanvas' prefab");
+                Debug.LogError("Missing 'FadeCanvas' prefab");
             }
             else
             {
@@ -51,7 +51,7 @@ namespace Game
 
                 if (fadePanel == null)
                 {
-                    print("There should be <Image> component in 'FadeCanvas' prefab");
+                    Debug.LogError("There should be <Image> component in 'FadeCanvas' prefab");
                 }
                 else
                 {
