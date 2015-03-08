@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 
+// handles interaction of save picture button
 namespace Coloring
 {
 	public class SavePictureGUI : MonoBehaviour {

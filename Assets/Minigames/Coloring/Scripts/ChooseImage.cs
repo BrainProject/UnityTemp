@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// pick image for coloring and prepare painting
 namespace Coloring
 {
 	public class ChooseImage : MonoBehaviour

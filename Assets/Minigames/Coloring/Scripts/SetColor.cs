@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// used to set color for the part of the image
 namespace Coloring
 {
 	public class SetColor : MonoBehaviour

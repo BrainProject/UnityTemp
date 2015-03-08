@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// picks colour.
+// TODO: add more colours to pick.. probably pink, bright green, bright blue, brown, ... 
+
 namespace Coloring
 {
 	public class SelectColor : MonoBehaviour {
