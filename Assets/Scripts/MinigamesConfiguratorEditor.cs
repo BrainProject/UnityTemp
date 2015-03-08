@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEditor;
 
 
+namespace Game
+{
+
 /// <summary>
 /// Creates custom editor for defining new mini-games or changing properties of existing ones
 /// </summary>
@@ -25,5 +28,7 @@ public class MinigamesConfiguratorEditor : Editor
             myScript.SaveChanges();
         }
     }
+
+}
 
 }
