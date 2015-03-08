@@ -83,7 +83,6 @@ public class MGC : Singleton<MGC>
     internal MinigamesGUI minigamesGUI;
 	internal bool fromMain;
 	internal bool fromSelection;
-	internal bool fromMinigame;
 
     internal Vector3 selectedMinigame;
 
@@ -156,6 +155,7 @@ public class MGC : Singleton<MGC>
 	{
 		print("Master Game Controller Start()...");
 
+        //TODO ...
 		//due to unknown reason, I doesn't set the list
 		//in the Minigames script correctly without this command.
 		minigameStates.Start ();
@@ -240,24 +240,6 @@ public class MGC : Singleton<MGC>
 		inactivityCounter = 0;
 		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
 		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
-		//Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
-
-		//DEV NOTE: Only temporary until we unify cursor styles.
-//		if (Application.loadedLevelName == "Coloring")
-//		{
-//			mouseCursor.SetActive (false);
-//			Screen.showCursor = true;
-//		}
-//		else if(mouseCursor)
-//		{
-//			mouseCursor.SetActive(true);
-//			Screen.showCursor = false;
-//		}
-//
-//		if (!mouseCursor && Application.loadedLevel > 0)
-//		{
-//			ShowCustomCursor ();
-//		}
 
 		//perform fade in?
 		if (MGC.Instance.sceneLoader.doFade)
@@ -268,70 +250,41 @@ public class MGC : Singleton<MGC>
 		{
 			gameObject.guiTexture.enabled = false;
 		}
-            
-
-		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
-		//print("calling object ID: " + this.GetInstanceID());
-
-
-
-		//if (level > 2)
-		//{
-		//    this.GetComponent<Game.Minigames>().SetPlayed(Application.loadedLevelName);
-		//}
 	}
 
-	//Only for debugging and testing purposes
-//	void OnGUI ()
-//	{
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 80, 110, 30), "Brain")) {
-//			Application.LoadLevel ("Main");
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
-//			Application.LoadLevel ("GameSelection");
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
-//			Application.Quit ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-//			SaveMinigamesPropertiesToFile ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-//			LoadMinigamesPropertiesFromFile ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
-//			ResetGameStatus ();
-//		}
-//	}
-	public void SaveMinigamesPropertiesToFile()
+    /// <summary>
+    /// Saves statistics of all mini-games to file
+    /// </summary>
+	public void SaveMinigamesStatisticsToFile()
+    {
+        #if !UNITY_WEBPLAYER
+        {
+            //delete old saved file 
+            if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
+            {
+                File.Delete(Application.persistentDataPath + "/mini-games.stats");
+            }
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/mini-games.stats");
+
+            foreach (Game.MinigameProperties minigameData in minigameStates.minigames)
+            {
+                bf.Serialize(file, minigameData);
+            }
+            print("Mini-games statistics saved to 'mini-games.stats' file.");
+            file.Close();
+        }
+        #endif
+    }
+
+	public void LoadMinigamesStatisticsFromFile()
 	{
 		#if !UNITY_WEBPLAYER
-
-		//delete old saved file 
-		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
-		{
-			File.Delete(Application.persistentDataPath + "/newron.sav");
-		}
-
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
-
-		foreach(Game.MinigameProperties minigameData in minigameStates.minigames)
-		{
-			bf.Serialize(file, minigameData);
-		}
-		print ("Game statistics saved.");
-		file.Close();
-		#endif
-	}
-
-	public void LoadMinigamesPropertiesFromFile()
-	{
-		#if !UNITY_WEBPLAYER
-		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
+        if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/newron.sav", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/mini-games.stats", FileMode.Open);
 			FileInfo info = new FileInfo(file.Name);
 			if(info.Length > 0)
 			{
@@ -340,11 +293,11 @@ public class MGC : Singleton<MGC>
 					minigameStates.minigames[i] = (Game.MinigameProperties)bf.Deserialize(file);
 				}
 
-				print ("Saved game statistics loaded.");
+				print ("Saved mini-games statistics was loaded.");
 			}
 			else
 			{
-				print ("Game NOT loaded.");
+                Debug.LogError("Saved mini-games statistics was NOT loaded.");
 			}
 			file.Close();
 		}
@@ -409,7 +362,7 @@ public class MGC : Singleton<MGC>
 
 		print ("Game statuses were reset to 'not yet played' (MinigameProperties.played == false)");
 
-		SaveMinigamesPropertiesToFile ();
+		SaveMinigamesStatisticsToFile ();
         if (Application.loadedLevelName == "GameSelection")
         {
             sceneLoader.LoadScene("GameSelection");
@@ -503,9 +456,14 @@ public class MGC : Singleton<MGC>
         }
 
         minigameStates.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
-        SaveMinigamesPropertiesToFile();
+        SaveMinigamesStatisticsToFile();
 
         //global GUI
         MGC.Instance.minigamesGUI.show(true);
+    }
+
+    public Minigames getMinigameStates()
+    {
+        return minigameStates;
     }
 }

@@ -65,28 +65,28 @@ namespace Game
 
         internal int initialShowHelpCounter;
 
-        public MinigameProperties(string minigameName, int MaxDiff = 0, string sceneWithHelp = "")
-        {
-            this.initialScene = minigameName;
-            this.sceneWithHelp = sceneWithHelp;
-            played = false;
-            initialShowHelpCounter = 0;
+        //public MinigameProperties(string minigameName, int MaxDiff = 0, string sceneWithHelp = "")
+        //{
+        //    this.initialScene = minigameName;
+        //    this.sceneWithHelp = sceneWithHelp;
+        //    played = false;
+        //    initialShowHelpCounter = 0;
 
-            MaxDifficulty = MaxDiff;
+        //    MaxDifficulty = MaxDiff;
 
-            playedCount = new int[MaxDiff+1];
-            finishedCount = new int[MaxDiff+1];
+        //    playedCount = new int[MaxDiff+1];
+        //    finishedCount = new int[MaxDiff+1];
 
-            //set readable name
-            if(sceneWithHelp == "")
-            {
-                readableName = minigameName;
-            }
-            else 
-            {
-                readableName = sceneWithHelp;
-            }
-        }
+        //    //set readable name
+        //    if(sceneWithHelp == "")
+        //    {
+        //        readableName = minigameName;
+        //    }
+        //    else 
+        //    {
+        //        readableName = sceneWithHelp;
+        //    }
+        //}
     }
 
     /// <summary>
@@ -100,8 +100,16 @@ namespace Game
         /// </summary>
         internal List<MinigameProperties> minigames = new List<MinigameProperties>();
 
+        public void add(MinigameProperties newgame)
+        {
+            minigames.Add(newgame);
+        }
+
         public void Start()
         {
+
+            
+
             //MinigameProperties main = new MinigameProperties("Main");
             //minigames.Add(main);
             //MinigameProperties selection = new MinigameProperties("GameSelection");
@@ -140,7 +148,9 @@ namespace Game
             //MinigameProperties cooperative = new MinigameProperties("Cooperative");
             //minigames.Add(cooperative);
 
-            MGC.Instance.LoadMinigamesPropertiesFromFile();
+
+
+            //MGC.Instance.LoadMinigamesStatisticsFromFile();
         }
 
         /// <summary>
@@ -164,7 +174,7 @@ namespace Game
                 }
             }
 
-            MGC.Instance.SaveMinigamesPropertiesToFile();
+            MGC.Instance.SaveMinigamesStatisticsToFile();
         }
 
         public void SetSuccessfullyPlayed(string minigameName, int diff = 0)
@@ -223,7 +233,6 @@ namespace Game
                     print("   Diff: " + i + ":: played: " + game.playedCount[i] + "; finished: " + game.finishedCount[i]);
                 }
             }
-
         }
 
 

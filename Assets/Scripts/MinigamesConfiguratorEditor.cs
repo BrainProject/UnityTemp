@@ -16,16 +16,16 @@ public class MinigamesConfiguratorEditor : Editor
     {
         DrawDefaultInspector();
 
-        MinigamesConfigurator myScript = (MinigamesConfigurator)target;
+        MinigamesConfigurator minigameConfigurator = (MinigamesConfigurator)target;
 
         if (GUILayout.Button("Add Mini-game"))
         {
-            myScript.AddMinigame();
+            minigameConfigurator.AddMinigame();
         }
 
         if (GUILayout.Button("Save all changes"))
         {
-            myScript.SaveChanges();
+            minigameConfigurator.SaveChanges();
         }
     }
 

@@ -51,12 +51,13 @@ public class Logger : MonoBehaviour
             filename = pfilename;
         
             Debug.Log("Initialization of Logger...");
-            string logPath = path + "/" + filename;
-            print("Newron Log will be saved to: '" + logPath + "PlayerActions.txt'");
 
             //create directory if it don't exists already
             Directory.CreateDirectory(path);
             //Debug.Log("directory: " + dInfo.FullName + " should exists now");
+
+            string logPath = path + "/" + filename;
+            print("Newron Log will be saved to: '" + logPath + "PlayerActions.txt'");
 
             bool addCreatedEntry = false;
             //check if log already exists
@@ -86,14 +87,15 @@ public class Logger : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Logger is not initialized - entry will not be added to log file. Do you have an active instance of 'Logger' prefab in your scene?");
+                Debug.LogWarning("Logger is not initialized - entry will not be added to log file.");
             }
         }
 
+        /// <summary>
+        /// Finish logging.
+        /// </summary>
         public void OnApplicationQuit()
-        {
-           
-            
+        {  
             if (logfile != null)
             {
                 print("Closing log file");
