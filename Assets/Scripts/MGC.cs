@@ -307,7 +307,7 @@ public class MGC : Singleton<MGC>
 	{
 		#if !UNITY_WEBPLAYER
 
-		//remove delete of the save file feature when finished, it will no longer be necessary
+		//delete old saved file 
 		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
 		{
 			File.Delete(Application.persistentDataPath + "/newron.sav");
@@ -494,6 +494,13 @@ public class MGC : Singleton<MGC>
         print("Minigame successffully finished");
 
         //TODO Add "Celebration phase" stuff here
+
+        //animate Neuron character
+        GameObject Neuron = MGC.Instance.neuronHelp;
+        if (Neuron)
+        {
+            Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+        }
 
         minigameStates.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
         SaveMinigamesPropertiesToFile();

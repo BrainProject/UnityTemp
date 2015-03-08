@@ -13,21 +13,45 @@ namespace Game
     /// \author Milan Doležal
     /// \author Jiri Chmelik
     [System.Serializable]
-    public class MinigameProperties
+    public class MinigameProperties : MonoBehaviour
     {
+        /// <summary>
+        /// human-friendly name of mini-game
+        /// </summary>
+        /// May contains spaces, apostrofs and other weird characters
+        /// used only in debug prints and for logging
+        public string readableName;
+
+        /// <summary>
+        /// if mini-game has more than one scene, this one will be loaded first
+        /// </summary>
         public string initialScene;
+
+        /// <summary>
+        /// When this scene is loaded, help for mini-game will be shown
+        /// </summary>
         public string sceneWithHelp;
 
-        //human readable name of mini-game
-        internal string readableName;
+        //maximum difficulty
+        public int MaxDifficulty;
+
+        /// <summary>
+        /// Image symbolizing low difficulty
+        /// </summary>
+        public Sprite difficultyLow;
+
+        /// <summary>
+        /// Image symbolizing high difficulty
+        /// </summary>
+        public Sprite difficultyHigh;
+
+
 
         // on what difficulty was this minigame last played?
         // used as initial value for difficulty chooser slider value
         internal int DifficutlyLastPlayed = 0;
 
-        //maximum difficulty
-        internal int MaxDifficulty;
-
+        
         // how many times the game was played on each difficulty
         internal int[] playedCount;
 
@@ -63,9 +87,6 @@ namespace Game
                 readableName = sceneWithHelp;
             }
         }
-
-        //public void played()
-
     }
 
     /// <summary>
@@ -81,51 +102,53 @@ namespace Game
 
         public void Start()
         {
-            MinigameProperties main = new MinigameProperties("Main");
-            minigames.Add(main);
-            MinigameProperties selection = new MinigameProperties("GameSelection");
-            selection.initialShowHelpCounter = 2;
-            minigames.Add(selection);
+            //MinigameProperties main = new MinigameProperties("Main");
+            //minigames.Add(main);
+            //MinigameProperties selection = new MinigameProperties("GameSelection");
+            //selection.initialShowHelpCounter = 2;
+            //minigames.Add(selection);
 
-            // Set your minigame here (don't forget to add it into collection too):
-            // If You change anything in following collection, be sure to delete 'newron.sav' file in '...\AppData\LocalLow\HCI\Newron'
+            //// Set your minigame here (don't forget to add it into collection too):
+            //// If You change anything in following collection, be sure to delete 'newron.sav' file in '...\AppData\LocalLow\HCI\Newron'
 
-            MinigameProperties hanoi = new MinigameProperties("HanoiTowers", 4);
-            minigames.Add(hanoi);
-            MinigameProperties london = new MinigameProperties("LondonTowerGUIMenu", 3, "LondonTowerGame");
-            minigames.Add(london);
-            MinigameProperties pexeso = new MinigameProperties("Pexeso", 3);
-            minigames.Add(pexeso);
-            MinigameProperties similarities = new MinigameProperties("Similarities", 3);
-            minigames.Add(similarities);
-            MinigameProperties silhouette = new MinigameProperties("Silhouettes", 3);
-            minigames.Add(silhouette);
-            MinigameProperties puzzle = new MinigameProperties("PuzzleChoosePicture", 2, "PuzzleGame");
-            minigames.Add(puzzle);
-            MinigameProperties coloring = new MinigameProperties("Coloring");
-            minigames.Add(coloring);
-            MinigameProperties findIt = new MinigameProperties("FindIt", 2, "FindItGame");
-            minigames.Add(findIt);
-            MinigameProperties socialGame = new MinigameProperties("_XSocialGame");
-            minigames.Add(socialGame);
-            MinigameProperties dodge = new MinigameProperties("Dodge");
-            minigames.Add(dodge);
-            MinigameProperties figure = new MinigameProperties("Figure");
-            minigames.Add(figure);
-            MinigameProperties interaction = new MinigameProperties("Interaction");
-            minigames.Add(interaction);
-            MinigameProperties repeat = new MinigameProperties("Repeat");
-            minigames.Add(repeat);
-            MinigameProperties cooperative = new MinigameProperties("Cooperative");
-            minigames.Add(cooperative);
+            //MinigameProperties hanoi = new MinigameProperties("HanoiTowers", 4);
+            //minigames.Add(hanoi);
+            //MinigameProperties london = new MinigameProperties("LondonTowerGUIMenu", 3, "LondonTowerGame");
+            //minigames.Add(london);
+            //MinigameProperties pexeso = new MinigameProperties("Pexeso", 3);
+            //minigames.Add(pexeso);
+            //MinigameProperties similarities = new MinigameProperties("Similarities", 3);
+            //minigames.Add(similarities);
+            //MinigameProperties silhouette = new MinigameProperties("Silhouettes", 3);
+            //minigames.Add(silhouette);
+            //MinigameProperties puzzle = new MinigameProperties("PuzzleChoosePicture", 2, "PuzzleGame");
+            //minigames.Add(puzzle);
+            //MinigameProperties coloring = new MinigameProperties("Coloring");
+            //minigames.Add(coloring);
+            //MinigameProperties findIt = new MinigameProperties("FindIt", 2, "FindItGame");
+            //minigames.Add(findIt);
+            //MinigameProperties socialGame = new MinigameProperties("_XSocialGame");
+            //minigames.Add(socialGame);
+            //MinigameProperties dodge = new MinigameProperties("Dodge");
+            //minigames.Add(dodge);
+            //MinigameProperties figure = new MinigameProperties("Figure");
+            //minigames.Add(figure);
+            //MinigameProperties interaction = new MinigameProperties("Interaction");
+            //minigames.Add(interaction);
+            //MinigameProperties repeat = new MinigameProperties("Repeat");
+            //minigames.Add(repeat);
+            //MinigameProperties cooperative = new MinigameProperties("Cooperative");
+            //minigames.Add(cooperative);
 
             MGC.Instance.LoadMinigamesPropertiesFromFile();
         }
 
         /// <summary>
         /// Sets the minigame status to "played".
+        /// Should be called from individual mini-games when game itself starts...
         /// </summary>
-        /// <param name="minigameName">Minigame scene-name.</param>
+        /// <param name="minigameName"> name of minigame</param>
+        /// <param name="diff"> difficulty</param>
         public void SetPlayed(string minigameName, int diff = 0)
         {
             print("Now playing minigame: '" + minigameName + "', with diff: " + diff);

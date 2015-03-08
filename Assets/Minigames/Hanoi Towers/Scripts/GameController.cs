@@ -58,6 +58,9 @@ namespace HanoiTowers
 
         private float gameStartTime;
 
+        /// <summary>
+        /// game starts...
+        /// </summary>
         void Start()
         {
             //set up columns
@@ -157,16 +160,12 @@ namespace HanoiTowers
         }
 
 
+        /// <summary>
+        /// No special stuff needed here, just call MGC...
+        /// </summary>
         public void endGame()
         {
-            //animate Neuron
-            GameObject Neuronek = MGC.Instance.neuronHelp;
-            if (Neuronek)
-            {
-                Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-            }
 
-            //global stuff, happening for each minigame
             MGC.Instance.FinishMinigame();
         }
     }
