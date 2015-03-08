@@ -109,11 +109,14 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
+                print("checking mini-game: '" + game.conf.readableName + "'");
                 if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
                 {
                     return game;
                 }
             }
+
+            Debug.LogWarning("properties of mini-game: '" + minigameName + "' not found!"); 
             return null;
         }
 
@@ -163,13 +166,15 @@ namespace Game
                 //TODO checks...
                     // if there is scene with such name
                 MinigameProperties props = child.GetComponent<MinigameProperties>();
+                print("   loading mini-game (GO name ): '" + child.name + "'");
+                print("   loading mini-game (readable): '" + props.conf.readableName + "'");
                 minigames.Add(props);
             }
 
-            print("Mini-games configurations loaded: " + minigames.Count);
+            print("   Mini-games configurations loaded: " + minigames.Count);
 
             //get rid of prefab instance
-            Destroy(mgParent);
+            //Destroy(mgParent);
 
         }
     }
