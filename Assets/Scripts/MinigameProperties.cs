@@ -10,19 +10,19 @@ namespace Game
     public struct  MinigameConfiguration
     {
         /// <summary>
-        /// human-friendly name of mini-gameProps
+        /// human-friendly name of mini-game
         /// </summary>
         /// May contains spaces, apostrofs and other weird characters
         /// used only in debug prints and for logging
         public string readableName;
 
         /// <summary>
-        /// if mini-gameProps has more than one scene, this one will be loaded first
+        /// if mini-game has more than one scene, this one will be loaded first
         /// </summary>
         public string initialScene;
 
         /// <summary>
-        /// When this scene is loaded, help for mini-gameProps will be shown
+        /// When this scene is loaded, help for mini-game will be shown
         /// </summary>
         public string sceneWithHelp;
 

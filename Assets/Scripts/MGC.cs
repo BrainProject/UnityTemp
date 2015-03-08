@@ -414,26 +414,26 @@ public class MGC : Singleton<MGC>
         return selectedMiniGameName;
     }
 
-    //returns properties of currently selected mini-gameProps, if there is such
+    //returns properties of currently selected mini-game, if there is such
     public MinigameProperties getSelectedMinigameProperties()
     {
         return minigamesProperties.GetMinigame(selectedMiniGameName);
     }
 
-    // evoked by clicking on some mini-gameProps "sphere", or by clicking "replay" button...
+    // evoked by clicking on some mini-game "sphere", or by clicking "replay" button...
     public void startMiniGame(string name)
     {
         //store the name of selected minigame
         selectedMiniGameName = name;
 
-        // check, if difficulty is applicable for this mini-gameProps
+        // check, if difficulty is applicable for this mini-game
         // if not, run it directly
         if (getSelectedMinigameProperties().conf.MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);
         }
 
-        // first, load difficulty chooser scene, mini-gameProps will be loaded from that scene
+        // first, load difficulty chooser scene, mini-game will be loaded from that scene
         else 
         {
             sceneLoader.LoadScene("DifficultyChooser");

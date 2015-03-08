@@ -17,19 +17,19 @@ namespace Game
         // how to re-use the code?
 
         /// <summary>
-        /// human-friendly name of mini-gameProps
+        /// human-friendly name of mini-game
         /// </summary>
         /// May contains spaces, apostrofs and other weird characters
         /// used only in debug prints and for logging
         public string readableName;
 
         /// <summary>
-        /// if mini-gameProps has more than one scene, this one will be loaded first
+        /// if mini-game has more than one scene, this one will be loaded first
         /// </summary>
         public string initialScene;
 
         /// <summary>
-        /// When this scene is loaded, help for mini-gameProps will be shown
+        /// When this scene is loaded, help for mini-game will be shown
         /// </summary>
         public string sceneWithHelp;
 
@@ -60,8 +60,9 @@ namespace Game
 
         public void AddMinigame()
         {
-            //create new object representing mini-gameProps
-            //TODO get rid of resources
+            print("Adding mini-game...");
+            //create new object representing mini-game
+            //TODO get rid of resources?
             GameObject newgameGO = (GameObject)Instantiate(Resources.Load("NewMiniGame") as GameObject);
             MinigameConfiguration minigameConfiguration = newgameGO.GetComponent<MinigameProperties>().conf;
 
@@ -71,11 +72,14 @@ namespace Game
                 // the same name already exists
                 // difficulty icons should be setted if difficulty is > 0
             
+            // find parent object
+            minigamesParent = GameObject.Find("Mini-games");
+
             //set parent and name of gameProps object
             newgameGO.transform.SetParent(minigamesParent.transform);
             newgameGO.name = readableName;
 
-            //set properties of mini-gameProps
+            //set properties of mini-game
             minigameConfiguration.readableName = readableName;
             minigameConfiguration.sceneWithHelp = sceneWithHelp;
             minigameConfiguration.initialScene = initialScene;
@@ -99,7 +103,7 @@ namespace Game
         public void SaveConfigurationstoFile()
         {
             #if UNITY_EDITOR
-            print("Another Suxses - there will be.");
+            print("Saving configuration of mini-games into prefab");
 
             minigamesParent = GameObject.Find("Mini-games");
 

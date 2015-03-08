@@ -18,7 +18,7 @@ public class MinigamesConfiguratorEditor : Editor
 
         MinigamesConfigurator minigameConfigurator = (MinigamesConfigurator)target;
 
-        if (GUILayout.Button("Add Mini-gameProps"))
+        if (GUILayout.Button("Add Mini-game"))
         {
             minigameConfigurator.AddMinigame();
         }
