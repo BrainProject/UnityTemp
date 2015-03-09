@@ -70,7 +70,7 @@ namespace Coloring
 		{
             if (painting && !hiddenGUIwhilePainting)
             {
-                //GUI.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brushBase);
+                GUI.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brushBase);
                 
                 brushMaterial.color = brushColor;
                 Graphics.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brushTop, brushMaterial);
