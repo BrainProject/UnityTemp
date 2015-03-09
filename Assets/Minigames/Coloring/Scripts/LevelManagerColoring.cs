@@ -6,7 +6,11 @@ namespace Coloring
 {
 	public class LevelManagerColoring : MonoBehaviour
 	{
-		public Texture brush;
+		public Texture brushTop;
+        public Texture brushBase;
+
+        public Color brushColor = Color.white;
+
 		public GameObject backGUI;
 		public GameObject savePictureGUI;
 
@@ -21,10 +25,14 @@ namespace Coloring
 		private int w = Screen.width / 16;
 		private int h = Screen.height / 9;
 
-//		void Awake()
-//		{
-//			MGC.Instance.ShowCustomCursor (true);
-//		}
+        private Material brushMaterial;
+
+        void Awake()
+        {
+            // MGC.Instance.ShowCustomCursor(true);  // this was originally commented 
+
+            brushMaterial = new Material(Shader.Find("AlphaSelfIllum"));
+        }
 
 		void Start()
 		{
@@ -60,8 +68,14 @@ namespace Coloring
 #if UNITY_STANDALONE
 		void OnGUI()
 		{
-			if(painting && !hiddenGUIwhilePainting)
-				GUI.DrawTexture (new Rect (Input.mousePosition.x - x*2, Screen.height - Input.mousePosition.y - y*2, w*2, h*2), brush);
+            if (painting && !hiddenGUIwhilePainting)
+            {
+                //GUI.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brushBase);
+                
+                brushMaterial.color = brushColor;
+                Graphics.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brushTop, brushMaterial);
+
+            }
 		}
 #endif
 	}
