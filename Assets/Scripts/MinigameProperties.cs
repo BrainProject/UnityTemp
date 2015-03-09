@@ -9,35 +9,7 @@ namespace Game
 
     public struct  MinigameConfiguration
     {
-        /// <summary>
-        /// human-friendly name of mini-game
-        /// </summary>
-        /// May contains spaces, apostrofs and other weird characters
-        /// used only in debug prints and for logging
-        public string readableName;
-
-        /// <summary>
-        /// if mini-game has more than one scene, this one will be loaded first
-        /// </summary>
-        public string initialScene;
-
-        /// <summary>
-        /// When this scene is loaded, help for mini-game will be shown
-        /// </summary>
-        public string sceneWithHelp;
-
-        //maximum difficulty
-        public int MaxDifficulty;
-
-        /// <summary>
-        /// Image symbolizing low difficulty
-        /// </summary>
-        public Sprite difficultyLowIcon;
-
-        /// <summary>
-        /// Image symbolizing high difficulty
-        /// </summary>
-        public Sprite difficultyHighIcon;
+        
     }
 
     public struct MinigameStatistics
@@ -71,7 +43,37 @@ namespace Game
     public class MinigameProperties : MonoBehaviour
     {
 
-        public MinigameConfiguration conf;
+        /// <summary>
+        /// human-friendly name of mini-game
+        /// </summary>
+        /// May contains spaces, apostrofs and other weird characters
+        /// used only in debug prints and for logging
+        public string readableName;
+
+        /// <summary>
+        /// if mini-game has more than one scene, this one will be loaded first
+        /// </summary>
+        public string initialScene;
+
+        /// <summary>
+        /// When this scene is loaded, help for mini-game will be shown
+        /// </summary>
+        public string sceneWithHelp;
+
+        //maximum difficulty
+        public int MaxDifficulty;
+
+        /// <summary>
+        /// Image symbolizing low difficulty
+        /// </summary>
+        public Sprite difficultyLowIcon;
+
+        /// <summary>
+        /// Image symbolizing high difficulty
+        /// </summary>
+        public Sprite difficultyHighIcon;
+
+
         public MinigameStatistics stats;
     }
 

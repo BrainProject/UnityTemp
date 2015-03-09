@@ -74,7 +74,7 @@ namespace Game
 
             foreach (MinigameProperties gameProps in minigames)
             {
-                if (gameProps.conf.sceneWithHelp == minigameName || gameProps.conf.initialScene == minigameName)
+                if (gameProps.sceneWithHelp == minigameName || gameProps.initialScene == minigameName)
                 {
                     gameProps.stats.played = true;
                     gameProps.stats.playedCount[diff] += 1;
@@ -90,7 +90,7 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
+                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
                 {
                     game.stats.finishedCount[diff] += 1;
                 }
@@ -100,7 +100,7 @@ namespace Game
         public bool GetPlayed(string minigameName)
         {
             foreach (MinigameProperties game in minigames)
-                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
+                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
                     return game.stats.played;
             return false;
         }
@@ -109,8 +109,8 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                print("checking mini-game: '" + game.conf.readableName + "'");
-                if (game.conf.sceneWithHelp == minigameName || game.conf.initialScene == minigameName)
+                print("checking mini-game: '" + game.readableName + "'");
+                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
                 {
                     return game;
                 }
@@ -125,7 +125,7 @@ namespace Game
             List<string> minigamesWithHelp = new List<string>();
             foreach (MinigameProperties game in minigames)
             {
-                minigamesWithHelp.Add(game.conf.sceneWithHelp);
+                minigamesWithHelp.Add(game.sceneWithHelp);
             }
 
             return minigamesWithHelp;
@@ -140,8 +140,8 @@ namespace Game
             
             foreach (MinigameProperties game in minigames)
             {
-                print("Minigame: " + game.conf.readableName);
-                for (int i = 0; i <= game.conf.MaxDifficulty; i++)
+                print("Minigame: " + game.readableName);
+                for (int i = 0; i <= game.MaxDifficulty; i++)
                 {
                     print("   Diff: " + i + ":: played: " + game.stats.playedCount[i] + "; finished: " + game.stats.finishedCount[i]);
                 }
@@ -166,8 +166,7 @@ namespace Game
                 //TODO checks...
                     // if there is scene with such name
                 MinigameProperties props = child.GetComponent<MinigameProperties>();
-                print("   loading mini-game (GO name ): '" + child.name + "'");
-                print("   loading mini-game (readable): '" + props.conf.readableName + "'");
+                print("   loading mini-game (readable): '" + props.readableName + "'");
                 minigames.Add(props);
             }
 

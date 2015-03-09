@@ -428,7 +428,7 @@ public class MGC : Singleton<MGC>
 
         // check, if difficulty is applicable for this mini-game
         // if not, run it directly
-        if (getSelectedMinigameProperties().conf.MaxDifficulty == 0)
+        if (getSelectedMinigameProperties().MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);
         }

@@ -28,7 +28,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
         else
         {
-            int maxDiff = props.conf.MaxDifficulty;
+            int maxDiff = props.MaxDifficulty;
             diffSlider.minValue = 0;
             diffSlider.maxValue = maxDiff;
             diffSlider.value = props.stats.DifficutlyLastPlayed;

@@ -64,7 +64,7 @@ namespace Game
             //create new object representing mini-game
             //TODO get rid of resources?
             GameObject newgameGO = (GameObject)Instantiate(Resources.Load("NewMiniGame") as GameObject);
-            MinigameConfiguration minigameConfiguration = newgameGO.GetComponent<MinigameProperties>().conf;
+            MinigameProperties minigameProperties = newgameGO.GetComponent<MinigameProperties>();
 
             //TODO add some tests here
                 // valid pointer
@@ -80,12 +80,12 @@ namespace Game
             newgameGO.name = readableName;
 
             //set properties of mini-game
-            minigameConfiguration.readableName = readableName;
-            minigameConfiguration.sceneWithHelp = sceneWithHelp;
-            minigameConfiguration.initialScene = initialScene;
-            minigameConfiguration.MaxDifficulty = MaxDifficulty;
-            minigameConfiguration.difficultyLowIcon = difficultyLowIcon;
-            minigameConfiguration.difficultyHighIcon = difficultyHighIcon;
+            minigameProperties.readableName = readableName;
+            minigameProperties.sceneWithHelp = sceneWithHelp;
+            minigameProperties.initialScene = initialScene;
+            minigameProperties.MaxDifficulty = MaxDifficulty;
+            minigameProperties.difficultyLowIcon = difficultyLowIcon;
+            minigameProperties.difficultyHighIcon = difficultyHighIcon;
 
             //clear values in editor
             readableName = "";
