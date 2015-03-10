@@ -41,7 +41,7 @@ namespace SocialGame{
 				yield return null;
 			}
 			targetAnim.activated = false;
-			LevelManager.finish();
+			LevelManager.win();
 			Destroy(transform.parent.gameObject);
 		}
 #endif

@@ -12,7 +12,7 @@ namespace SocialGame{
 		count--;
 		if(count <= 0)
 		{
-				LevelManager.finish();
+				LevelManager.win();
 		}
 		}
 		#endif

@@ -18,7 +18,7 @@ namespace SocialGame{
 		void Update () {
 			if(transform.position.y>3)
 			{
-				LevelManager.finish();
+				LevelManager.win();
 				Destroy(transform.parent.gameObject);
 			}
 			if(up)

@@ -11,6 +11,11 @@ namespace SocialGame{
 		{
 			activated = false;
 			show ();
+			CheckClip clip = finishTarget.GetComponent<CheckClip>();
+			if(clip)
+			{
+				clip.Unclip();
+			}
 			finishTarget.parent = null;
 			finishTarget.position = transform.position;
 			finishTarget.rotation = transform.rotation;
