@@ -148,15 +148,10 @@ public class MGC : Singleton<MGC>
             Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
         }
 
-        
 		//initiate kinect manager
 		Debug.Log ("Trying to create KinectManager.");
 		kinectManagerObject = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManagerObject.transform.parent = this.transform;
-
-		kinectManagerInstance = Kinect.KinectManager.Instance;
-		
-		Kinect.KinectInterop.changeAngle = true;
 	}
 
 	void Start()
@@ -175,6 +170,8 @@ public class MGC : Singleton<MGC>
 
 		
 		#if UNITY_STANDALONE
+		kinectManagerInstance = Kinect.KinectManager.Instance;
+
 		//should the KinectManager be active?
 		//Debug.Log ("Windows version: " + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor);
 
@@ -189,7 +186,7 @@ public class MGC : Singleton<MGC>
 			}
 		}*/
 		#else
-		kinectManager.SetActive(false);
+		kinectManagerObject.SetActive(false);
 		#endif
 	}
 
@@ -485,9 +482,10 @@ public class MGC : Singleton<MGC>
 	/// </summary>
 	private IEnumerator CheckKinect ()
 	{
+#if UNITY_STANDALONE
+		kinectManagerInstance = KinectManager.Instance;
 		// Wait until all is initialized.
 		yield return new WaitForSeconds(1);
-		kinectManagerInstance = Kinect.KinectManager.Instance;
 
 		// Set more aggressive smoothing for cursor if Kinect1 is connected.
 		if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
@@ -497,16 +495,19 @@ public class MGC : Singleton<MGC>
 		}
 		
 		// TODO: Deactivate KinectManager object if no device is connected.
-		KinectManager manager = KinectManager.Instance;
-		if(manager && manager.IsInitialized())
+		if(kinectManagerInstance && KinectManager.Instance.IsInitialized())
 		{
-			KinectInterop.SensorData sensorData = manager.GetSensorData();
+			KinectInterop.SensorData sensorData = kinectManagerInstance.GetSensorData();
 			int sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
-			
+			Debug.Log("Connected sensors: " + sensorsCount);
 			// sensorsCount == 0 means no sensor is currently connected
-			Debug.Log ("Sensor count: " + sensorsCount);
 		}
 		else
+		{
+			kinectManagerObject.SetActive(false);
 			Debug.Log ("Something with Kinect initialization went terribly wrong!");
+		}
+#endif
+		yield return null;
 	}
 }

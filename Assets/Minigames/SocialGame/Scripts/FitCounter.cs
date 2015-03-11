@@ -31,7 +31,7 @@ namespace SocialGame{
 			if(count >= max)
 			{
 				redraw();
-				LevelManager.finish();
+				LevelManager.win ();
 			}
 			else
 			{

@@ -779,7 +779,7 @@ namespace Kinect
 			int hipsIndex = (int)KinectInterop.JointType.SpineBase;
 
 			Quaternion quat = bodyData.joint[hipsIndex].normalRotation;
-			//quat *= Quaternion.Euler(40f, 0f, 0f);
+			quat *= Quaternion.Euler(40f, 0f, 0f);
 			bodyData.joint[hipsIndex].normalRotation = quat;
 
 			Vector3 mirroredAngles = quat.eulerAngles;
