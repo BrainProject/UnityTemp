@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 
-
 public class MinigameDifficultyChooser : MonoBehaviour
 {
     
@@ -19,7 +18,8 @@ public class MinigameDifficultyChooser : MonoBehaviour
         diffSlider = diffSliderGO.GetComponent<Slider>();
 
         Game.MinigameProperties props = MGC.Instance.getSelectedMinigameProperties();
-        if(props == null)
+
+        if (!props)
         {
             Debug.LogError("Error during loading mini-game properties");
 

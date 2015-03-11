@@ -160,6 +160,8 @@ namespace Game
             //get instance of prefab
             GameObject mgParent = Instantiate(Resources.Load("mini-games-configuration")) as GameObject;
 
+            mgParent.transform.parent = this.transform; 
+
             //for each mini-game
             foreach (Transform child in mgParent.transform)
             {
