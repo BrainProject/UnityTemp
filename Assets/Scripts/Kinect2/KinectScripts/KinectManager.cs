@@ -1046,7 +1046,7 @@ namespace Kinect
 			return sensorData;
 		}
 
-		void Start() 
+		public void Start() 
 		{
 
 			try

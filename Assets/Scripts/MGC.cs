@@ -477,6 +477,8 @@ public class MGC : Singleton<MGC>
 		inactivityTimestamp = Time.time;
 	}
 
+			
+	//Please don't look at this function. It's nasty, but it works...
 	/// <summary>
 	/// Checks the Kinect connection.
 	/// </summary>
@@ -493,21 +495,35 @@ public class MGC : Singleton<MGC>
 			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
 			im.smoothFactor = 5;
 		}
-		
-		// TODO: Deactivate KinectManager object if no device is connected.
-		if(kinectManagerInstance && KinectManager.Instance.IsInitialized())
+			
+		kinectManagerInstance = KinectManager.Instance;
+		int sensorsCount = 0;
+
+		if(KinectManager.Instance.IsInitialized())
 		{
 			KinectInterop.SensorData sensorData = kinectManagerInstance.GetSensorData();
-			int sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
-			Debug.Log("Connected sensors: " + sensorsCount);
+			sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
+			//Debug.Log("Connected sensors: " + sensorsCount);
+					
+			if (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount < 2)
+			{
+				Destroy(kinectManagerObject);
+				yield return new WaitForSeconds(1);
+				Debug.Log ("First Kinect 2 initialization failed. Trying to recreate KinectManager again.");
+				kinectManagerObject = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
+				kinectManagerObject.transform.parent = this.transform;
+			}
 			// sensorsCount == 0 means no sensor is currently connected
 		}
-		else
+		
+		if((Kinect.KinectInterop.GetSensorType() == "Kinect1Interface" && sensorsCount == 0) || (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount == 1))
 		{
 			kinectManagerObject.SetActive(false);
-			Debug.Log ("Something with Kinect initialization went terribly wrong!");
+			Debug.Log ("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
 		}
-#endif
+
+#else
 		yield return null;
+#endif
 	}
 }
