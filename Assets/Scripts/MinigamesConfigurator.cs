@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿
+#if UNITY_EDITOR
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEditor;
+
+
 namespace Game
 {
 
@@ -55,11 +60,12 @@ namespace Game
         /// </summary>
         void Start()
         {
-            
+
         }
 
         public void AddMinigame()
         {
+
             print("Adding mini-game...");
             //create new object representing mini-game
             //TODO get rid of resources?
@@ -67,11 +73,11 @@ namespace Game
             MinigameProperties minigameProperties = newgameGO.GetComponent<MinigameProperties>();
 
             //TODO add some tests here
-                // valid pointer
-                // empty name
-                // the same name already exists
-                // difficulty icons should be setted if difficulty is > 0
-            
+            // valid pointer
+            // empty name
+            // the same name already exists
+            // difficulty icons should be setted if difficulty is > 0
+
             // find parent object
             minigamesParent = GameObject.Find("Mini-games");
 
@@ -102,7 +108,7 @@ namespace Game
 
         public void SaveConfigurationstoFile()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             print("Saving configuration of mini-games into prefab");
 
             minigamesParent = GameObject.Find("Mini-games");
@@ -114,15 +120,15 @@ namespace Game
 
             string fileName = "mini-games-configuration";
             string fileLocation = "Assets/Prefabs/Resources/" + fileName + ".prefab";
-        
+
             //save mini-games configuration as prefab object
             Object prefab = PrefabUtility.CreateEmptyPrefab(fileLocation);
             PrefabUtility.ReplacePrefab(minigamesParent, prefab, ReplacePrefabOptions.ConnectToPrefab);
 
-            #endif
+#endif
 
         }
 
     }
-
 }
+#endif
