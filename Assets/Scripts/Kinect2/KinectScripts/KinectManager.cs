@@ -1046,7 +1046,7 @@ namespace Kinect
 			return sensorData;
 		}
 
-		void Start() 
+		public void Start() 
 		{
 
 			try
@@ -1064,8 +1064,8 @@ namespace Kinect
 				sensorData = KinectInterop.OpenDefaultSensor(sensorInterfaces, dwFlags, sensorAngle, useMultiSourceReader);
 				if (sensorData == null)
 				{
-					this.transform.parent.gameObject.SetActive(false);
-					this.gameObject.SetActive(false);
+					//this.transform.parent.gameObject.SetActive(false);
+					//this.gameObject.SetActive(false);
 					throw new Exception("OpenDefaultSensor failed");
 				}
 					//create the transform matrix - kinect to world
@@ -1101,7 +1101,7 @@ namespace Kinect
 					calibrationText.guiText.text = message;
 				}
 
-				MGC.Instance.kinectManagerObject.SetActive(false);
+				//MGC.Instance.kinectManagerObject.SetActive(false);
 				
 				return;
 			}
@@ -1219,13 +1219,6 @@ namespace Kinect
 			{
 				calibrationText.guiText.text = "WAITING FOR USERS";
 			}
-
-
-//			//set angle of the sensor
-//			if(KinectInterop.GetSensorType () == "Kinect2Interface")
-//				sensorAngle = 5;
-//			else if(KinectInterop.GetSensorType () == "Kinect1Interface")
-//			    sensorAngle = 15;
 
 			Debug.Log("Waiting for users.");
 		}

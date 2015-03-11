@@ -6,11 +6,16 @@ namespace SocialGame{
 		#if UNITY_STANDALONE
 
 		public FinalCount count;
-
+		
 		public override void thisActivate()
 		{
 			activated = false;
 			show ();
+			CheckClip clip = finishTarget.GetComponent<CheckClip>();
+			if(clip)
+			{
+				clip.Unclip();
+			}
 			finishTarget.parent = null;
 			finishTarget.position = transform.position;
 			finishTarget.rotation = transform.rotation;
@@ -18,7 +23,6 @@ namespace SocialGame{
 			if(count)
 				count.next();
 		}
-
 
 
 		/*protected void removeFromTarget()

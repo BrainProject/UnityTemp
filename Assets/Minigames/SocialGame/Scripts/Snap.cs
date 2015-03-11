@@ -1,30 +1,70 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 #if UNITY_STANDALONE
 using Kinect;
 #endif
 
 namespace SocialGame{
-	public class Snap : MonoBehaviour {
+	public class Snap : Check {
 #if UNITY_STANDALONE
 		public int player;
 		public GameObject after;
 		public Vector3 positionLeft;
 		public Vector3 positionRight;
+		public CheckCancleFigure cancle;
+		public Animator anim;
 
 		private GameObject targetPlayer;
-		private KinectManager kinect;
-
-		void Start()
+		//private KinectManager _kinect;
+		private KinectManager kinect
 		{
-			kinect = Kinect.KinectManager.Instance;
+			get{
+				return Kinect.KinectManager.Instance;
+			}
 		}
+		private Vector3 oldLocalPos;
+		private Transform oldParent;
+
+		protected override void Start()
+		{
+			base.Start();
+		}
+
+		public override bool Checked (Transform target)
+		{
+			return false;
+		}
+
+		public override void show ()
+		{
+			if (activated) 
+			{
+				if(transform.parent.parent)
+				{
+					oldLocalPos = transform.parent.localPosition;
+					oldParent = transform.parent.parent;
+					transform.parent.parent = null;
+				}
+			}
+			else
+			{
+				if(oldParent)
+				{
+					transform.parent.parent = oldParent;
+					transform.parent.localPosition = oldLocalPos;
+					oldParent = null;
+				}
+			}
+			anim.SetBool ("active", activated);
+			base.show ();
+		}
+
 
 		public void snap()
 		{
 			GameObject playerObj = null;
 			string tag= "Error";
-			KinectManager kinect = Kinect.KinectManager.Instance;
+			//KinectManager kinect = Kinect.KinectManager.Instance;
 			if(player <0 || player > 1)
 				return;
 			if(player == 0)
@@ -57,8 +97,15 @@ namespace SocialGame{
 				}
 				checkerScript.findTartgetByCheckName();
 				setCheckerScript(checkerScript);
+				if(cancle)
+				{
+					cancle.figure = checkerScript;
+					cancle.activate();
+
+				}
 			}
-			Destroy(gameObject);
+
+			deactivate ();
 		}
 
 		static public void setTags(GameObject obj, string tag)
@@ -74,13 +121,14 @@ namespace SocialGame{
 
 		public void setCheckerScript(GestCheckerFigure script)
 		{
-			script.handMode = false;
-			//script.finish = false;
 			script.allChecked = true;
 			script.destroy = true;
 			script.distance = 0.2f;
 			script.next = after;
 			script.clipBone = "root";
+			script.cancle = cancle;
+			script.nextCheck = cancle.next;
+			script.next = null;
 			if(player == 0 )
 			{
 				script.player1 = false;
@@ -105,7 +153,7 @@ namespace SocialGame{
 					}
 				}
 			}
-			Debug.Log ("chyba");
+			Debug.Log ("neni kinect");
 			return null;
 		}
 

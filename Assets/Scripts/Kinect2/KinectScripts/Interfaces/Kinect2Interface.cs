@@ -39,8 +39,20 @@ namespace Kinect
 
 		public int GetSensorsCount()
 		{
-			int numSensors = KinectSensor.GetDefault() != null ? 1 : 0;
-			return numSensors;
+//			int numSensors = KinectSensor.GetDefault() != null ? 1 : 0;
+//			return numSensors;
+
+			int numSensors = 0;
+			
+			KinectSensor sensor = KinectSensor.GetDefault();
+			//Debug.Log ("Is sensor available: " + (sensor!= null) + ", " + sensor.IsAvailable);
+			if((sensor != null) && sensor.IsAvailable)
+			{
+				numSensors = 1;
+			}
+
+			//Debug.Log ("Number of K2 sensors: " + numSensors);
+			return ++numSensors;
 		}
 
 		public KinectInterop.SensorData OpenDefaultSensor (KinectInterop.FrameSource dwFlags, float sensorAngle, bool bUseMultiSource)

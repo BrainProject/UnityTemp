@@ -146,7 +146,7 @@ namespace SocialGame
 					return;
 				}
 			}
-			LevelManager.finish();
+			LevelManager.win();
 
 		}
 	

@@ -148,15 +148,10 @@ public class MGC : Singleton<MGC>
             Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
         }
 
-        
 		//initiate kinect manager
 		Debug.Log ("Trying to create KinectManager.");
 		kinectManagerObject = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
 		kinectManagerObject.transform.parent = this.transform;
-
-		kinectManagerInstance = Kinect.KinectManager.Instance;
-		
-		Kinect.KinectInterop.changeAngle = true;
 	}
 
 	void Start()
@@ -175,6 +170,8 @@ public class MGC : Singleton<MGC>
 
 		
 		#if UNITY_STANDALONE
+		kinectManagerInstance = Kinect.KinectManager.Instance;
+
 		//should the KinectManager be active?
 		//Debug.Log ("Windows version: " + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor);
 
@@ -189,7 +186,7 @@ public class MGC : Singleton<MGC>
 			}
 		}*/
 		#else
-		kinectManager.SetActive(false);
+		kinectManagerObject.SetActive(false);
 		#endif
 	}
 
@@ -480,14 +477,17 @@ public class MGC : Singleton<MGC>
 		inactivityTimestamp = Time.time;
 	}
 
+			
+	//Please don't look at this function. It's nasty, but it works...
 	/// <summary>
 	/// Checks the Kinect connection.
 	/// </summary>
 	private IEnumerator CheckKinect ()
 	{
+#if UNITY_STANDALONE
+		kinectManagerInstance = KinectManager.Instance;
 		// Wait until all is initialized.
 		yield return new WaitForSeconds(1);
-		kinectManagerInstance = Kinect.KinectManager.Instance;
 
 		// Set more aggressive smoothing for cursor if Kinect1 is connected.
 		if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
@@ -495,18 +495,35 @@ public class MGC : Singleton<MGC>
 			Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
 			im.smoothFactor = 5;
 		}
-		
-		// TODO: Deactivate KinectManager object if no device is connected.
-		KinectManager manager = KinectManager.Instance;
-		if(manager && manager.IsInitialized())
-		{
-			KinectInterop.SensorData sensorData = manager.GetSensorData();
-			int sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
 			
+		kinectManagerInstance = KinectManager.Instance;
+		int sensorsCount = 0;
+
+		if(KinectManager.Instance.IsInitialized())
+		{
+			KinectInterop.SensorData sensorData = kinectManagerInstance.GetSensorData();
+			sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
+			//Debug.Log("Connected sensors: " + sensorsCount);
+					
+			if (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount < 2)
+			{
+				Destroy(kinectManagerObject);
+				yield return new WaitForSeconds(1);
+				Debug.Log ("First Kinect 2 initialization failed. Trying to recreate KinectManager again.");
+				kinectManagerObject = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
+				kinectManagerObject.transform.parent = this.transform;
+			}
 			// sensorsCount == 0 means no sensor is currently connected
-			Debug.Log ("Sensor count: " + sensorsCount);
 		}
-		else
-			Debug.Log ("Something with Kinect initialization went terribly wrong!");
+		
+		if((Kinect.KinectInterop.GetSensorType() == "Kinect1Interface" && sensorsCount == 0) || (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount == 1))
+		{
+			kinectManagerObject.SetActive(false);
+			Debug.Log ("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
+		}
+
+#else
+		yield return null;
+#endif
 	}
 }
