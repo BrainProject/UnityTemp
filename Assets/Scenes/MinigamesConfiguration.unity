@@ -78,8 +78,8 @@ NavMeshSettings:
 --- !u!1 &95137100
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 198976, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 128540, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 95137101}
@@ -94,21 +94,21 @@ GameObject:
 --- !u!4 &95137101
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 498976, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 428540, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   m_GameObject: {fileID: 95137100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1988512470}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!114 &95137102
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11498976, guid: 5b786390f31d34d4e8e07844eccd460a,
+  m_PrefabParentObject: {fileID: 11428540, guid: 5b786390f31d34d4e8e07844eccd460a,
     type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabInternal: {fileID: 779667320}
   m_GameObject: {fileID: 95137100}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -121,59 +121,103 @@ MonoBehaviour:
   MaxDifficulty: 4
   difficultyLowIcon: {fileID: 21300000, guid: 48cd924ea8fd3694ba8c041bd4663327, type: 3}
   difficultyHighIcon: {fileID: 21300000, guid: 6ab08a83c2ec351408923849c56d4eba, type: 3}
---- !u!1001 &155851047
-Prefab:
+--- !u!1 &610390470
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 220.113007
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 248.606506
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-      propertyPath: m_Name
-      value: Mini-games
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_RootGameObject: {fileID: 1988512469}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
+  m_PrefabParentObject: {fileID: 128542, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 610390471}
+  - 114: {fileID: 610390472}
+  m_Layer: 0
+  m_Name: Pexeso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &610390471
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 428542, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  m_GameObject: {fileID: 610390470}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -220.113007, y: -248.606506, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1988512470}
+  m_RootOrder: 3
+--- !u!114 &610390472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11428542, guid: 5b786390f31d34d4e8e07844eccd460a,
+    type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  m_GameObject: {fileID: 610390470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readableName: Pexeso
+  initialScene: Pexeso
+  sceneWithHelp: Pexeso
+  MaxDifficulty: 3
+  difficultyLowIcon: {fileID: 0}
+  difficultyHighIcon: {fileID: 0}
+--- !u!1 &678500631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 128538, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 678500633}
+  - 114: {fileID: 678500632}
+  m_Layer: 0
+  m_Name: Puzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &678500632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11428538, guid: 5b786390f31d34d4e8e07844eccd460a,
+    type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  m_GameObject: {fileID: 678500631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readableName: Puzzle
+  initialScene: PuzzleChoosePicture
+  sceneWithHelp: PuzzleGame
+  MaxDifficulty: 2
+  difficultyLowIcon: {fileID: 0}
+  difficultyHighIcon: {fileID: 0}
+--- !u!4 &678500633
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 428538, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
+  m_GameObject: {fileID: 678500631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -220.113007, y: -248.606506, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1988512470}
+  m_RootOrder: 2
 --- !u!1 &736540829
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 198974, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 128536, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 736540831}
@@ -188,9 +232,9 @@ GameObject:
 --- !u!114 &736540830
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11498974, guid: 5b786390f31d34d4e8e07844eccd460a,
+  m_PrefabParentObject: {fileID: 11428536, guid: 5b786390f31d34d4e8e07844eccd460a,
     type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabInternal: {fileID: 779667320}
   m_GameObject: {fileID: 736540829}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -206,15 +250,63 @@ MonoBehaviour:
 --- !u!4 &736540831
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 498974, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 428536, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   m_GameObject: {fileID: 736540829}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1988512470}
-  m_RootOrder: 2
+  m_RootOrder: 1
+--- !u!1001 &779667320
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 220.113007
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 248.606506
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 128534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+      propertyPath: m_Name
+      value: Mini-games
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_RootGameObject: {fileID: 1988512469}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &813977557
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,57 +352,11 @@ MonoBehaviour:
   MaxDifficulty: 0
   difficultyLowIcon: {fileID: 0}
   difficultyHighIcon: {fileID: 0}
---- !u!1 &1985710423
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 198972, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1985710424}
-  - 114: {fileID: 1985710425}
-  m_Layer: 0
-  m_Name: Pexeso
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1985710424
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 498972, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
-  m_GameObject: {fileID: 1985710423}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1988512470}
-  m_RootOrder: 0
---- !u!114 &1985710425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11498972, guid: 5b786390f31d34d4e8e07844eccd460a,
-    type: 2}
-  m_PrefabInternal: {fileID: 155851047}
-  m_GameObject: {fileID: 1985710423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  readableName: Pexeso
-  initialScene: Pexeso
-  sceneWithHelp: Pexeso
-  MaxDifficulty: 3
-  difficultyLowIcon: {fileID: 0}
-  difficultyHighIcon: {fileID: 0}
 --- !u!1 &1988512469
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 198970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 128534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1988512470}
@@ -324,15 +370,16 @@ GameObject:
 --- !u!4 &1988512470
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 498970, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
-  m_PrefabInternal: {fileID: 155851047}
+  m_PrefabParentObject: {fileID: 428534, guid: 5b786390f31d34d4e8e07844eccd460a, type: 2}
+  m_PrefabInternal: {fileID: 779667320}
   m_GameObject: {fileID: 1988512469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 220.113007, y: 248.606506, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1985710424}
   - {fileID: 95137101}
   - {fileID: 736540831}
+  - {fileID: 678500633}
+  - {fileID: 610390471}
   m_Father: {fileID: 0}
   m_RootOrder: 1

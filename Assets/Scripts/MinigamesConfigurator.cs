@@ -125,6 +125,8 @@ namespace Game
             Object prefab = PrefabUtility.CreateEmptyPrefab(fileLocation);
             PrefabUtility.ReplacePrefab(minigamesParent, prefab, ReplacePrefabOptions.ConnectToPrefab);
 
+            //reset statistics of all mini-games as they depend on configurations...
+            MGC.Instance.ResetMinigamesStatistics();
 #endif
 
         }

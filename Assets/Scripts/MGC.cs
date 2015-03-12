@@ -129,6 +129,7 @@ public class MGC : Singleton<MGC>
 		//initiate minigame properties
 		minigamesProperties = this.gameObject.AddComponent<Minigames> ();
         minigamesProperties.loadConfigurationsfromFile();
+        LoadMinigamesStatisticsFromFile();
 
         //initiate minigames GUI
         minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
@@ -231,7 +232,7 @@ public class MGC : Singleton<MGC>
 		if (Input.GetKeyDown (KeyCode.F3))
 		{
 #endif
-			ResetGameStatus ();
+			ResetMinigamesStatistics ();
 		}
 	}
 
@@ -283,25 +284,31 @@ public class MGC : Singleton<MGC>
 	{
 		#if !UNITY_WEBPLAYER
         if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
-		{
-			BinaryFormatter bf = new BinaryFormatter();
+        {
+            BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/mini-games.stats", FileMode.Open);
-			FileInfo info = new FileInfo(file.Name);
-			if(info.Length > 0)
-			{
-				for(int i=0; i<minigamesProperties.minigames.Count; ++i)
-				{
-					minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
-				}
+            FileInfo info = new FileInfo(file.Name);
+            if (info.Length > 0)
+            {
+                for (int i = 0; i < minigamesProperties.minigames.Count; ++i)
+                {
+                    minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
+                }
 
-				print ("Saved mini-games statistics was loaded.");
-			}
-			else
-			{
+                print("Saved mini-games statistics was loaded.");
+            }
+            else
+            {
                 Debug.LogError("Saved mini-games statistics was NOT loaded.");
-			}
-			file.Close();
-		}
+            }
+            file.Close();
+        }
+
+        // if file doesn't exists, allocate new statistics and save initial version of file
+        else
+        {
+            ResetMinigamesStatistics();
+        }
 
         if (Application.loadedLevelName == "GameSelection")
         {
@@ -309,6 +316,7 @@ public class MGC : Singleton<MGC>
         }
 		#endif
 	}
+
 
 	public void ShowCustomCursor(bool isShown)
 	{
@@ -353,21 +361,35 @@ public class MGC : Singleton<MGC>
 #endif
 	}
 
-	void ResetGameStatus()
-	{		
-		foreach(MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
-		{
-			minigameProperties.stats.played = false;
-			minigameProperties.stats.initialShowHelpCounter = 0;
-		}
-
-		print ("Game statuses were reset to 'not yet played' (MinigameProperties.played == false)");
-
-		SaveMinigamesStatisticsToFile ();
-        if (Application.loadedLevelName == "GameSelection")
+    /// <summary>
+    /// resets statistics of all mini-games
+    /// </summary>
+    /// creates new data-structure and fills it for each mini-game
+    /// saves freshly created data to file
+	public void ResetMinigamesStatistics()
+	{
+        foreach (MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
         {
-            sceneLoader.LoadScene("GameSelection");
+            Game.MinigameStatistics newstats = new MinigameStatistics();
+            newstats.played = false;
+            newstats.initialShowHelpCounter = 0;
+            newstats.DifficutlyLastPlayed = 0;
+            newstats.playedCount = new int[minigameProperties.MaxDifficulty + 1];
+            newstats.finishedCount = new int[minigameProperties.MaxDifficulty + 1];
+
+            minigameProperties.stats = newstats;
         }
+
+        SaveMinigamesStatisticsToFile();
+
+		print ("Mini-games statistics were reseted");
+
+
+        //TODO ?question by jch? what is purpose of this code?
+        //if (Application.loadedLevelName == "GameSelection")
+        //{
+        //    sceneLoader.LoadScene("GameSelection");
+        //}
 	}
 
 	public void ShowHelpBubble()

@@ -7,11 +7,12 @@ using System.Collections.Generic;
 namespace Game
 {
 
-    public struct  MinigameConfiguration
-    {
-        
-    }
-
+    /// <summary>
+    /// Just a structure to distinguish between "configuration" and "statistics" of mini-game
+    /// </summary>
+    /// 
+    /// \author Jiri Chmelik
+    [System.Serializable]
     public struct MinigameStatistics
     {
         // on what difficulty was this minigame last played?
