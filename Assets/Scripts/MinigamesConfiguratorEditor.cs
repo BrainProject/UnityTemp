@@ -11,6 +11,10 @@ namespace Game
     /// <summary>
     /// Creates custom editor for defining new mini-games or changing properties of existing ones
     /// </summary>
+    ///  
+    /// This script is "editor-only" 
+    /// 
+    /// \author Jiri Chmelik
     [CustomEditor(typeof(MinigamesConfigurator))]
     public class MinigamesConfiguratorEditor : Editor
     {

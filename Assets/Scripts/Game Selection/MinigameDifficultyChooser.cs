@@ -7,8 +7,10 @@ public class MinigameDifficultyChooser : MonoBehaviour
 {
     
     public GameObject diffSliderGO;
-    public Image diffLowImage;
-    public Image diffHighImage;
+    public Image IconDifficultyLow;
+    public Image IconDifficultyHigh;
+    public Sprite DefaultSpriteDiffLow;
+    public Sprite DefaultSpriteDiffHigh;
 
     internal Slider diffSlider;
 
@@ -59,6 +61,25 @@ public class MinigameDifficultyChooser : MonoBehaviour
             }
 
             //TODO set correct difficulties icons for different minigames
+            if (props.IconDifficultyLow)
+            {
+                IconDifficultyLow.sprite = props.IconDifficultyLow;
+            }
+                // use default
+            else
+            {
+                IconDifficultyLow.sprite = DefaultSpriteDiffLow;
+            }
+
+            if (props.IconDifficultyHigh)
+            {
+                IconDifficultyHigh.sprite = props.IconDifficultyHigh;
+            }
+            // use default
+            else
+            {
+                IconDifficultyHigh.sprite = DefaultSpriteDiffHigh;
+            }
 
 
         }

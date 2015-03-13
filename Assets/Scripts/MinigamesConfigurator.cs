@@ -15,6 +15,10 @@ namespace Game
     /// <summary>
     /// Defines content of MinigamesConfiguratorEditor
     /// </summary>
+    /// 
+    /// This script is "editor-only" 
+    /// 
+    /// \author Jiri Chmelik
     public class MinigamesConfigurator : MonoBehaviour
     {
 
@@ -90,8 +94,8 @@ namespace Game
             minigameProperties.sceneWithHelp = sceneWithHelp;
             minigameProperties.initialScene = initialScene;
             minigameProperties.MaxDifficulty = MaxDifficulty;
-            minigameProperties.difficultyLowIcon = difficultyLowIcon;
-            minigameProperties.difficultyHighIcon = difficultyHighIcon;
+            minigameProperties.IconDifficultyLow = difficultyLowIcon;
+            minigameProperties.IconDifficultyHigh = difficultyHighIcon;
 
             //clear values in editor
             readableName = "";
@@ -108,7 +112,6 @@ namespace Game
 
         public void SaveConfigurationstoFile()
         {
-#if UNITY_EDITOR
             print("Saving configuration of mini-games into prefab");
 
             minigamesParent = GameObject.Find("Mini-games");
@@ -125,9 +128,11 @@ namespace Game
             Object prefab = PrefabUtility.CreateEmptyPrefab(fileLocation);
             PrefabUtility.ReplacePrefab(minigamesParent, prefab, ReplacePrefabOptions.ConnectToPrefab);
 
-            //reset statistics of all mini-games as they depend on configurations...
-            MGC.Instance.ResetMinigamesStatistics();
-#endif
+            //clear statistics of all mini-games as they depend on configurations...
+            if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
+            {
+                File.Delete(Application.persistentDataPath + "/mini-games.stats");
+            }
 
         }
 

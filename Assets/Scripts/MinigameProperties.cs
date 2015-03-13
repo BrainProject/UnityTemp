@@ -67,12 +67,12 @@ namespace Game
         /// <summary>
         /// Image symbolizing low difficulty
         /// </summary>
-        public Sprite difficultyLowIcon;
+        public Sprite IconDifficultyLow;
 
         /// <summary>
         /// Image symbolizing high difficulty
         /// </summary>
-        public Sprite difficultyHighIcon;
+        public Sprite IconDifficultyHigh;
 
 
         public MinigameStatistics stats;

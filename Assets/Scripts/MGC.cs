@@ -366,21 +366,34 @@ public class MGC : Singleton<MGC>
     /// saves freshly created data to file
 	public void ResetMinigamesStatistics()
 	{
-        foreach (MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
+        print("Reset...");
+        Minigames minigames = this.GetComponent<Minigames>();
+        if (minigames != null)
         {
-            Game.MinigameStatistics newstats = new MinigameStatistics();
-            newstats.played = false;
-            newstats.initialShowHelpCounter = 0;
-            newstats.DifficutlyLastPlayed = 0;
-            newstats.playedCount = new int[minigameProperties.MaxDifficulty + 1];
-            newstats.finishedCount = new int[minigameProperties.MaxDifficulty + 1];
 
-            minigameProperties.stats = newstats;
+
+            foreach (MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
+            {
+                print("   reseting minigame: " + minigameProperties.readableName);
+                Game.MinigameStatistics newstats = new MinigameStatistics();
+                newstats.played = false;
+                newstats.initialShowHelpCounter = 0;
+                newstats.DifficutlyLastPlayed = 0;
+                newstats.playedCount = new int[minigameProperties.MaxDifficulty + 1];
+                newstats.finishedCount = new int[minigameProperties.MaxDifficulty + 1];
+
+                minigameProperties.stats = newstats;
+            }
+
+            SaveMinigamesStatisticsToFile();
+
+            print("Mini-games statistics were reseted");
         }
 
-        SaveMinigamesStatisticsToFile();
-
-		print ("Mini-games statistics were reseted");
+        else
+        {
+            Debug.LogError("Missing component in MGC...");
+        }
 
 
         //TODO ?question by jch? what is purpose of this code?

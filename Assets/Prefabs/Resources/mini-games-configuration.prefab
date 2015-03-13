@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &128534
+--- !u!1 &109018
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 428534}
+  - 4: {fileID: 409018}
   m_Layer: 0
   m_Name: mini-games-configuration
   m_TagString: Untagged
@@ -15,15 +15,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &128536
+--- !u!1 &109020
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 428536}
-  - 114: {fileID: 11428536}
+  - 4: {fileID: 409020}
+  - 114: {fileID: 11409020}
   m_Layer: 0
   m_Name: Coloring
   m_TagString: Untagged
@@ -31,15 +31,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &128538
+--- !u!1 &109022
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 428538}
-  - 114: {fileID: 11428538}
+  - 4: {fileID: 409022}
+  - 114: {fileID: 11409022}
   m_Layer: 0
   m_Name: Puzzle
   m_TagString: Untagged
@@ -47,31 +47,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &128540
+--- !u!1 &109024
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 428540}
-  - 114: {fileID: 11428540}
-  m_Layer: 0
-  m_Name: Hanoi Towers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &128542
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 428542}
-  - 114: {fileID: 11428542}
+  - 4: {fileID: 409024}
+  - 114: {fileID: 11409024}
   m_Layer: 0
   m_Name: Pexeso
   m_TagString: Untagged
@@ -79,76 +63,92 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &428534
+--- !u!1 &109026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 409026}
+  - 114: {fileID: 11409026}
+  m_Layer: 0
+  m_Name: Hanoi Towers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409018
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128534}
+  m_GameObject: {fileID: 109018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 220.113007, y: 248.606506, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 428540}
-  - {fileID: 428536}
-  - {fileID: 428538}
-  - {fileID: 428542}
+  - {fileID: 409026}
+  - {fileID: 409020}
+  - {fileID: 409022}
+  - {fileID: 409024}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &428536
+--- !u!4 &409020
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128536}
+  m_GameObject: {fileID: 109020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 428534}
+  m_Father: {fileID: 409018}
   m_RootOrder: 1
---- !u!4 &428538
+--- !u!4 &409022
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128538}
+  m_GameObject: {fileID: 109022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -220.113007, y: -248.606506, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 428534}
+  m_Father: {fileID: 409018}
   m_RootOrder: 2
---- !u!4 &428540
+--- !u!4 &409024
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128540}
+  m_GameObject: {fileID: 109024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -220.113007, y: -248.606506, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 409018}
+  m_RootOrder: 3
+--- !u!4 &409026
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 428534}
+  m_Father: {fileID: 409018}
   m_RootOrder: 0
---- !u!4 &428542
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128542}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -220.113007, y: -248.606506, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 428534}
-  m_RootOrder: 3
---- !u!114 &11428536
+--- !u!114 &11409020
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128536}
+  m_GameObject: {fileID: 109020}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
@@ -158,14 +158,14 @@ MonoBehaviour:
   initialScene: Coloring
   sceneWithHelp: Coloring
   MaxDifficulty: 0
-  difficultyLowIcon: {fileID: 0}
-  difficultyHighIcon: {fileID: 0}
---- !u!114 &11428538
+  IconDifficultyLow: {fileID: 0}
+  IconDifficultyHigh: {fileID: 0}
+--- !u!114 &11409022
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128538}
+  m_GameObject: {fileID: 109022}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
@@ -175,31 +175,14 @@ MonoBehaviour:
   initialScene: PuzzleChoosePicture
   sceneWithHelp: PuzzleGame
   MaxDifficulty: 2
-  difficultyLowIcon: {fileID: 0}
-  difficultyHighIcon: {fileID: 0}
---- !u!114 &11428540
+  IconDifficultyLow: {fileID: 0}
+  IconDifficultyHigh: {fileID: 0}
+--- !u!114 &11409024
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  readableName: Hanoi Towers
-  initialScene: HanoiTowers
-  sceneWithHelp: HanoiTowers
-  MaxDifficulty: 4
-  difficultyLowIcon: {fileID: 21300000, guid: 48cd924ea8fd3694ba8c041bd4663327, type: 3}
-  difficultyHighIcon: {fileID: 21300000, guid: 6ab08a83c2ec351408923849c56d4eba, type: 3}
---- !u!114 &11428542
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128542}
+  m_GameObject: {fileID: 109024}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
@@ -207,10 +190,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   readableName: Pexeso
   initialScene: Pexeso
-  sceneWithHelp: Pexeso
+  sceneWithHelp: 
   MaxDifficulty: 3
-  difficultyLowIcon: {fileID: 0}
-  difficultyHighIcon: {fileID: 0}
+  IconDifficultyLow: {fileID: 21300000, guid: 4d8beb99557a4f64a9d5f51e6d81777f, type: 3}
+  IconDifficultyHigh: {fileID: 21300000, guid: d2e0b14c155aaaa4aa3c6222330af7e7, type: 3}
+--- !u!114 &11409026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readableName: Hanoi Towers
+  initialScene: HanoiTowers
+  sceneWithHelp: 
+  MaxDifficulty: 4
+  IconDifficultyLow: {fileID: 21300000, guid: 48cd924ea8fd3694ba8c041bd4663327, type: 3}
+  IconDifficultyHigh: {fileID: 21300000, guid: 6ab08a83c2ec351408923849c56d4eba, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -220,6 +220,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 128534}
+  m_RootGameObject: {fileID: 109018}
   m_IsPrefabParent: 1
   m_IsExploded: 1
