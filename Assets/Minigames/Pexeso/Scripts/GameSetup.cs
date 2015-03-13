@@ -251,7 +251,7 @@ namespace MinigamePexeso
 	    
 
 		/// <summary>
-		/// Player selected resource pack. Enable gameScript menu (size selection)
+		/// Player selected resource pack. Set difficulty and start game itself
 		/// and pass some parameters.
 		/// </summary>
 		/// <param name="chosenButton">Chosen button.</param>
@@ -331,6 +331,9 @@ namespace MinigamePexeso
                     break;
                 }
 			}
+
+            print("Chosen diff: " + diff);
+            print("rows: " + rows + "; columns: " + columns);
 			
 			if (mainGameScript != null)
 			{

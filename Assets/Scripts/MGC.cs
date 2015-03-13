@@ -84,8 +84,6 @@ public class MGC : Singleton<MGC>
 	internal bool fromMain;
 	internal bool fromSelection;
 
-    internal Vector3 selectedMinigame;
-
     // name of MiniGame scene to be loaded
     internal string selectedMiniGameName;
 

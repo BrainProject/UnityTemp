@@ -132,7 +132,6 @@ namespace MinigameSelection
                     }
 
                     MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
-					MGC.Instance.selectedMinigame = this.gameObject.transform.position;
 	                
                     //start the mini-game - choose difficulty (if applicable) and then load first scene of mini-game
                     MGC.Instance.startMiniGame(minigameName);

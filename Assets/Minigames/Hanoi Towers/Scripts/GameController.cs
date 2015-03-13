@@ -9,7 +9,6 @@ using System.Collections;
  * 
  * Functionality is divided into GameController class,
  * Column class and Disk class.
- * There is also simple end-game GUI
  *
  * @author Jiří Chmelík
  */
@@ -25,12 +24,11 @@ namespace HanoiTowers
         Right
     }
 
+    /// <summary>
+    /// Main class for 'Hanoi Towers' mini-game
+    /// </summary>
     public class GameController : MonoBehaviour
     {
-
-        //TODO proper initialization - ??
-        //TODO better graphics ??
-
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
 
@@ -165,7 +163,6 @@ namespace HanoiTowers
         /// </summary>
         public void endGame()
         {
-
             MGC.Instance.FinishMinigame();
         }
     }
