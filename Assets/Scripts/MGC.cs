@@ -117,9 +117,7 @@ public class MGC : Singleton<MGC>
 
 		//Initiate Logger
 		logger = this.gameObject.AddComponent<Logger> ();
-        string pathString = Application.persistentDataPath + "/Logs";
-		logger.Initialize ( pathString, "PlayerActions.txt");
-        
+		logger.Initialize ("Logs", "PlayerActions.txt");
 
 		//initiate level loader
 		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
