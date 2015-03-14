@@ -7,7 +7,8 @@ using System.IO;
 /// <summary>
 /// Class for parsing XML file into data about level
 /// </summary>
-public class LondonToweXMLGameLoader  {
+public class LondonToweXMLGameLoader
+{
 
     List<LondonToweGameStartWinData> data = new List<LondonToweGameStartWinData>();
     LondonToweGameStartWinData pokus1;
@@ -53,13 +54,14 @@ public class LondonToweXMLGameLoader  {
             {
                 if (xr.Name == "level")
                 {
-                    
+
                     idGame = int.Parse(xr.GetAttribute("lid"));
                     pokus1 = new LondonToweGameStartWinData(true, idGame);
                     pokus2 = new LondonToweGameStartWinData(false, idGame);
                     start = true;
                     rodeCount = 0;
                 }
+
                 else if (xr.Name == "rod")
                 {
                     start = true;
@@ -83,10 +85,12 @@ public class LondonToweXMLGameLoader  {
                     }
 
                 }
+                
                 else if (xr.Name == "solution")
                 {
                     start = false;
                 }
+                
                 else if (xr.Name == "sphere")
                 {
                     if (start)
@@ -121,7 +125,8 @@ public class LondonToweXMLGameLoader  {
                     }
                 }
             }
-            // loading element vaue
+            
+                // loading element vaue
             else if ((xr.NodeType == XmlNodeType.EndElement) && (xr.Name == "level"))
             {
                 if (pokus1 != null && pokus2 != null)
@@ -133,6 +138,4 @@ public class LondonToweXMLGameLoader  {
         }
         return data;
     }
-	
-
 }
