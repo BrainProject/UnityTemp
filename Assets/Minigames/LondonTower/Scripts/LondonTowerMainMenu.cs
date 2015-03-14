@@ -19,7 +19,7 @@ public class LondonTowerMainMenu : MonoBehaviour
 
     public void Level(int level)
     {
-        LondonTowerGameManager.dataSet = level;
+        //LondonTowerGameManager.dataSet = level;
         MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
     }
 

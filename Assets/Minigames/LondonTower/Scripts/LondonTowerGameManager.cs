@@ -18,7 +18,7 @@ public enum LondonTowerGameState
 
 /// <summary>
 /// main class in London Tower mini-game
-/// chaeck game statce, create start, check and etc
+/// check game state, create start, check and etc
 /// </summary>
 public class LondonTowerGameManager : MonoBehaviour
 {
@@ -37,7 +37,7 @@ public class LondonTowerGameManager : MonoBehaviour
     /// dataSet ~ difficulty 
     /// currently implemented: 1, 2, 3
     /// </summary>
-    public static int dataSet = 1;
+    int dataSet = 0;
 
     /// <summary>
     /// data 1,2,3,4 , random "level" from current dataset
@@ -55,6 +55,7 @@ public class LondonTowerGameManager : MonoBehaviour
     public List<LondonTowePoleScript> poles;
 
     LondonToweGameStartWinData endGame;
+    
     LondonToweGameStartWinData startGame;
 
     public List<TextAsset> xmlLevels = new List<TextAsset>();
@@ -64,12 +65,9 @@ public class LondonTowerGameManager : MonoBehaviour
     public GameObject backButton, GoalTexture;
 
 
-    // Use this for initialization
     void Start()
     {
         StartGame();
-
-
     }
 
     // Update is called once per frame
@@ -303,6 +301,9 @@ public class LondonTowerGameManager : MonoBehaviour
     public void StartGame()
     {
         LondonToweXMLGameLoader loader = new LondonToweXMLGameLoader();
+
+        // load difficulty from MGC
+        dataSet = MGC.Instance.selectedMiniGameDiff;
 
         data = loader.ParseXmlTextAsset(xmlLevels[dataSet]);
         levelSet = Random.Range(1, data.Count / 2 + 1);
