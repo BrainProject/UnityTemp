@@ -31,27 +31,15 @@ namespace SocialGame
 			{
 				if(handMode)
 				{
-					if(player1)
+					foreach(Kinect.AvatarController avatar in KManager.avatarControllers)
 					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
+						if((player1 && avatar.playerIndex == 0)||(player2 && avatar.playerIndex == 1))
 						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
+							ExtendsAvatar avatarEx = avatar as ExtendsAvatar;
+							if(avatarEx)
 							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
+								Targets.Add(avatarEx.handLeft);
+								Targets.Add(avatarEx.handRight);
 							}
 						}
 					}
@@ -158,7 +146,7 @@ namespace SocialGame
 					return;
 				}
 			}
-			LevelManager.finish();
+			LevelManager.win();
 
 		}
 	

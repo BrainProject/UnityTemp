@@ -63,13 +63,11 @@ namespace Game
                     if (restartDifferentScene)
                     {
                         restartDifferentScene = false;
-                        //MGC.Instance.sceneLoader.LoadScene(differentSceneName);
                         MGC.Instance.startMiniGame(differentSceneName);
                     }
 
                     else
                     {
-                        //MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
                         MGC.Instance.startMiniGame(Application.loadedLevelName);
                     }
 

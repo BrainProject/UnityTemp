@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace SocialGame{
@@ -15,7 +15,7 @@ public class Check : MonoBehaviour {
 		show();
 	}
 
-	public bool Checked(Transform target)
+	public virtual bool Checked(Transform target)
 	{
 		bool last = false;
 		finishTarget = target;
@@ -53,7 +53,7 @@ public class Check : MonoBehaviour {
 			show();
 	}
 
-	public void show()
+	public virtual void show()
 	{
 		MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
 		if(render)

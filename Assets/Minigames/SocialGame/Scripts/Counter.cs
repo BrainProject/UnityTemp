@@ -42,7 +42,7 @@ namespace SocialGame{
 			else
 			{
 
-				LevelManager.finish();
+				LevelManager.win();
 				transform.localScale = new Vector3 (step * max,transform.localScale.y,transform.localScale.z);
 				checkShooter check = (checkShooter) FindObjectOfType(typeof(checkShooter));
 				if(check)

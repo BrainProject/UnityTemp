@@ -10,7 +10,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		setThisLevelManager();
-		defaultKManager = MGC.Instance.kinectManager;
+		defaultKManager = MGC.Instance.kinectManagerObject;
 		activateThisLevelKManager();
 	}
 	

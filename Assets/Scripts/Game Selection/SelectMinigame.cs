@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by: Milan Doležal
  */ 
 
@@ -119,11 +119,12 @@ namespace MinigameSelection
 					if(kinectRequired)
 					{
 						print("Kinect is required for this game.");
-						if(!MGC.Instance.kinectManager.activeSelf)
+						if(!MGC.Instance.kinectManagerObject.activeSelf)
 						{
 							levelManager.FadeInOutKinectIcon();
 							return;
 						}
+//						Kinect.KinectInterop.changeAngle = false;
 					}
 
                     if (MGC.Instance.neuronHelp)

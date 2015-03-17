@@ -4,21 +4,15 @@ using System.Collections;
 using Kinect;
 
 public class ExtendsAvatar : AvatarController {
-	private Vector3 newPos;
+	public Transform handLeft;
+	public Transform handRight;
 
-	// Use this for initialization
-	/*void Start () {
+	private Vector3 newPos;
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}*/
 
 	void Update()
 	{
-		if(Kinect.KinectManager.Instance && (LastUserID != 0))
+		if(KinectManager.Instance && (LastUserID != 0))
 		{
 			newPos = this.transform.position;
 			newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
