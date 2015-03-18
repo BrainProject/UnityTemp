@@ -94,7 +94,7 @@ public class GestureListener : MonoBehaviour, KinectGestures.GestureListenerInte
 	}
 
 
-	public void UserDetected(uint userId, int userIndex)
+	public void UserDetected(long userId, int userIndex)
 	{
 		// detect these user specific gestures
 		KinectManager manager = KinectManager.Instance;
@@ -116,19 +116,19 @@ public class GestureListener : MonoBehaviour, KinectGestures.GestureListenerInte
 
 	}
 	
-	public void UserLost(uint userId, int userIndex)
+	public void UserLost(long userId, int userIndex)
 	{
 
 	}
 
-	public void GestureInProgress(uint userId, int userIndex, KinectGestures.Gestures gesture, 
-		float progress, KinectWrapper.SkeletonJoint joint, Vector3 screenPos)
+	public void GestureInProgress(long userId, int userIndex, KinectGestures.Gestures gesture, 
+		float progress, KinectInterop.JointType joint, Vector3 screenPos)
 	{
 		// don't do anything here
 	}
 
-	public bool GestureCompleted (uint userId, int userIndex, KinectGestures.Gestures gesture, 
-		KinectWrapper.SkeletonJoint joint, Vector3 screenPos)
+	public bool GestureCompleted (long userId, int userIndex, KinectGestures.Gestures gesture, 
+	       KinectInterop.JointType joint, Vector3 screenPos)
 	{
 
 		
@@ -150,8 +150,8 @@ public class GestureListener : MonoBehaviour, KinectGestures.GestureListenerInte
 		return true;
 	}
 
-	public bool GestureCancelled (uint userId, int userIndex, KinectGestures.Gestures gesture, 
-		KinectWrapper.SkeletonJoint joint)
+	public bool GestureCancelled (long userId, int userIndex, KinectGestures.Gestures gesture, 
+	   KinectInterop.JointType joint)
 	{
 		// don't do anything here, just reset the gesture state
 		return true;

@@ -144,7 +144,7 @@ namespace Game
                 }
                 
 				
-				Application.LoadLevel(levelName);
+				Application.LoadLevel(0);
 			}
 		}
 		/// <summary>

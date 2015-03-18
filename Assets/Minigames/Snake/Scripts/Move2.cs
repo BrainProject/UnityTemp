@@ -20,13 +20,17 @@ public class Move2 : MonoBehaviour
 	public GameObject foodColored;
 	public AudioClip eating;
 	public GameObject ko;
+	public MGC controller;
 	// Use this for initialization
 	void Start () 
 	{
+		controller = MGC.Instance;
 		//gestureListener = Camera.main.GetComponent<GestureListener>();
 		ko = GameObject.Find ("KinectObject");
 		if (ko != null) {  //pohyb
-						gestureListener = ko.GetComponent<KinectGestures> ();
+				
+				//gestureListener = ko.GetComponent<KinectGestures> ();
+//			gestureListener = controller.kinectManagerInstance;
 				}
 
 		// repeats the moving routine every "frequency" seconds
@@ -162,9 +166,9 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}
-		if (gestureListener) 
+		if (gestureListener != null) 
 		{
-			if (gestureListener.IsSwipeLeft ()) 
+			/*if (gestureListener.IsSwipeLeft ()) 
 			{
 				if (lr == 0) 
 				{
@@ -237,7 +241,7 @@ public class Move2 : MonoBehaviour
 						init = false;
 					}
 				}
-			}
+			}*/
 		}
 	}
 }
