@@ -143,8 +143,9 @@ namespace Game
                     yield return null;
                 }
                 
-				
+				//obtiaznost
 				Application.LoadLevel(0);
+
 			}
 		}
 		/// <summary>
