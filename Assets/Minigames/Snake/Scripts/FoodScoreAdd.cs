@@ -62,7 +62,8 @@ public class FoodScoreAdd : MonoBehaviour {
 				//manager.ControlMouseCursor = true;
 				// TODO show cursor
 				}
-			Application.LoadLevel("WinningScreen");
+				//MGC.Instance.FinishMinigame();
+			//Application.LoadLevel("WinningScreen");
 			//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().TakeOffPointsAddedAfterSnakeDead (3+level/2);
 			print("winning screen loaded");
 			}

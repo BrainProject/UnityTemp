@@ -17,12 +17,14 @@ public class LevelManager : MonoBehaviour
 	public GameObject poisonColored;
 	public Vector3[] foodPosition;
 	public Vector3[] poisonPosition;
+	//public MGC controller;
 
 	public Camera mainCamera;
 
 	// Use this for initialization
 	void Start () 
 	{
+		MGC.Instance.minigameStates.SetPlayed("Snake");
 		Screen.showCursor = false;
 		// creates snake
 		GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;

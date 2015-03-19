@@ -78,6 +78,8 @@ namespace Game
 			minigames.Add (repeat);
 			Minigame cooperative = new Minigame ("Cooperative");
 			minigames.Add (cooperative);
+			Minigame snake = new Minigame ("Snake");
+			minigames.Add (snake);
 
 			MGC.Instance.LoadGame ();
 		}
