@@ -11,6 +11,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     private bool lastClicked = false;
     private bool moveX = true;
     private float lastPolePolesition;
+    private Vector3 polePosition = new Vector3();
     public LondonTowerGameManager gameManager;
 
     //ratio of moving spehre by mouse - to scene
@@ -39,12 +40,14 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (moveX)
             {
                 //9,-1 are bordes when sphere can be moved
-                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstant)), this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
+               
+                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstant)),this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
             }
             else
             {
                 //9,-1 are bordes when sphere can be moved + nax can only move down/up becaus id on the pole
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
+                //spehre is on stick
+                this.transform.position = new Vector3(this.transform.position.x, Mathf.Max(this.transform.position.y + distance.y / moveConstant, polePosition.y), this.transform.position.z);
             }
             lastPosition = Input.mousePosition;
             if (lastClicked)
@@ -102,6 +105,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked)
             {
                 clicked = true;
+                polePosition = this.transform.position;
                 lastPosition = Input.mousePosition;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;
