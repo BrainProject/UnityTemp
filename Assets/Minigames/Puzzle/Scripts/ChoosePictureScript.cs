@@ -23,8 +23,7 @@ namespace Puzzle
         {
             PlayerPrefs.SetString("Image", gameObject.renderer.material.mainTexture.name);
             PuzzleStatistics.pictureName = gameObject.renderer.material.mainTexture.name;
-			MGC.Instance.sceneLoader.LoadScene("PuzzleChooseDifficulty",true);
-			//Application.LoadLevel("PuzzleChooseDifficulty");
+			MGC.Instance.sceneLoader.LoadScene("PuzzleGame",true);
         }
     }
 }

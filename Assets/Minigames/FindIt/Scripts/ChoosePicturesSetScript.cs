@@ -17,17 +17,17 @@ namespace FindIt
 		{
 			PlayerPrefs.SetString("resourcePackName", resourcePackName);
 
-			if(!checkResourcePackForEnoughImages(BIG_SIZE))
-			{
-				PlayerPrefs.SetInt("numberPieces", SMALL_SIZE);
-				//Application.LoadLevel("FindItGame");
-				MGC.Instance.sceneLoader.LoadScene("FindItGame",true);
-			}
-			else 
-			{
-				//Application.LoadLevel("FindItSize");
-				MGC.Instance.sceneLoader.LoadScene("FindItSize",true);
-			}
+            MGC.Instance.sceneLoader.LoadScene("FindItGame", true);
+
+			//if(!checkResourcePackForEnoughImages(BIG_SIZE))
+			//{
+			//	PlayerPrefs.SetInt("numberPieces", SMALL_SIZE);
+			//	MGC.Instance.sceneLoader.LoadScene("FindItGame",true);
+			//}
+			//else 
+			//{
+			//	MGC.Instance.sceneLoader.LoadScene("FindItSize",true);
+			//}
 		}
 		
 		void OnMouseEnter()

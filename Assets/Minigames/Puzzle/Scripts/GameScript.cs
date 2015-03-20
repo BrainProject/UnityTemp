@@ -87,24 +87,11 @@ namespace Puzzle
             targetImage.sprite = testSprite;
 
             //  loading number of pieces
-            try
-            {
-                numberPieces = PlayerPrefs.GetInt("size");
-                PuzzleStatistics.numberPieces = numberPieces;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("Exception occured while trying to get number of pieces: " + ex.Message);
-                Debug.Log("Using number 4.");
-                numberPieces = 4;
-                PuzzleStatistics.numberPieces = numberPieces;
-            }
+            int dim = (MGC.Instance.selectedMiniGameDiff + 2);
+            numberPieces = dim * dim;
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
             pieces = new Dictionary<string, PuzzlePiece>();
-
-            int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
-            numberPieces = dim * dim;
 
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
@@ -435,7 +422,11 @@ namespace Puzzle
 			//animate Neuron
 			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
 			
-			MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+			//MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+
+            MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+
+            MGC.Instance.FinishMinigame();
 		}
     }
 }

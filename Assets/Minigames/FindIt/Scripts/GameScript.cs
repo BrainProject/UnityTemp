@@ -49,18 +49,19 @@ namespace FindIt
             FindItStatistics.expectedGameTurnsTotal = numberTurns;
 
             // loading number of pieces
-            try
+            switch(MGC.Instance.selectedMiniGameDiff)
             {
-                numberPieces = PlayerPrefs.GetInt("numberPieces");
-                FindItStatistics.numberPieces = numberPieces;
+                case 0:
+                    numberPieces = 20;
+                    break;
+                case 1:
+                    numberPieces = 44;
+                    break;
+                default:
+                    numberPieces = PIECES_RECOMMENDED;
+                    break;
             }
-            catch (Exception ex)
-            {
-                Debug.Log("Exception occured while trying to get number of pieces: " + ex.Message);
-                Debug.Log("Using minimum.");
-                numberPieces = MIN_PIECES;
-                FindItStatistics.numberPieces = numberPieces;
-            }
+            FindItStatistics.numberPieces = numberPieces;
         }
 
 
@@ -136,6 +137,8 @@ namespace FindIt
 				MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
 				MGC.Instance.minigamesGUI.show(false,true,"FindIt");
 
+                MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                MGC.Instance.FinishMinigame();
             }
         }
 
