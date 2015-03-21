@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/**
+ * @file GameScript.cs
+ * @author Ján Bella
+ */
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
