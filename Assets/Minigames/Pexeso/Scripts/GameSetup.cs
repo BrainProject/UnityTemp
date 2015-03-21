@@ -39,7 +39,7 @@ namespace MinigamePexeso
         public string[] resPacksNames;
 
         private string resPackPath;
-        private string customResPackPath = "\\CustomImages\\";
+        private string customResPackPath;
 
 		/// <summary>
 		/// Menu tiles.
@@ -99,11 +99,15 @@ namespace MinigamePexeso
 		/// <returns>Number of custom resource packs.</returns>
 		private int GetCustomResroucePacksCount()
 		{
+            print("Getting Custom Resource Packs...");
             //sort of tests, if directories exists
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath);
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath + "\\" + currentGame);
-            
-            return Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\").Length;
+            Directory.CreateDirectory(customResPackPath);
+            //Debug.Log("___directory: " + dInfo.FullName + " should exists now");
+            DirectoryInfo dInfo = Directory.CreateDirectory(customResPackPath + "/" + currentGame);
+            print("___customResrourcePack path: '" + dInfo.FullName + "'");
+            MGC.Instance.logger.addEntry("!!! CustomResrourcePack path: " + dInfo.FullName);
+
+            return Directory.GetDirectories(customResPackPath + "/" + currentGame + "/").Length;
 		}
 
 		/// <summary>
@@ -112,7 +116,7 @@ namespace MinigamePexeso
 		/// <returns>The custom resource packs.</returns>
 		private IEnumerator LoadCustomResourcePacks()
 		{
-            string[] customResourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + currentGame + "\\");
+            string[] customResourcePacks = Directory.GetDirectories(customResPackPath + "/" + currentGame + "/");
 
 			//Run from 0 to number of menu items minus default resource packs
 			for (int i = 0; i < (menuColumns * menuRows) - resPacksNames.Length; i++)
@@ -147,6 +151,7 @@ namespace MinigamePexeso
             Debug.Log("Current chosen game: " + currentGame);
 
 			resPackPath = "Textures/Pictures/" + currentGame + "/";
+            customResPackPath = "CustomImages";
 
 			//Number of default resource packs
 			int menuLength = resPacksNames.Length;

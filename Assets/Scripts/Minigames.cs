@@ -109,7 +109,7 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                print("checking mini-game: '" + game.readableName + "'");
+                //print("checking mini-game: '" + game.readableName + "'");
                 if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
                 {
                     return game;

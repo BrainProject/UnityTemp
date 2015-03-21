@@ -58,7 +58,7 @@ namespace Puzzle
             this.left = index % puzzle_width == 0 ? -1 : index - 1;
 
             gameObject = new GameObject();
-            MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
+            //MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
             MeshFilter filter = gameObject.AddComponent<MeshFilter>();
             MeshCollider collider = gameObject.AddComponent<MeshCollider>();
 
