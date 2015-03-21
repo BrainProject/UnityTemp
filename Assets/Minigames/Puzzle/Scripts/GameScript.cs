@@ -83,8 +83,7 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
-            Sprite testSprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
-            targetImage.sprite = testSprite;
+            targetImage.sprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
 
             //  loading number of pieces
             int dim = (MGC.Instance.selectedMiniGameDiff + 2);

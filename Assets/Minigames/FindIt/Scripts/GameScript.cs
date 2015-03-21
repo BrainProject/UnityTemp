@@ -27,6 +27,11 @@ namespace FindIt
 
 		public GameObject clona;
 
+        public UnityEngine.UI.Text textProgress;
+        public UnityEngine.UI.Image progressBar;
+
+        public GameObject targetImage;
+
 		private bool gameWon = false;
 
         private void LoadResourcePack()
@@ -107,7 +112,7 @@ namespace FindIt
                 if (chosen == numberPieces) chosen = 0;
             }
             selectedImage = usedIndices[chosen];
-            GameObject.Find("SearchedImage").GetComponent<SpriteRenderer>().sprite = images[selectedImage];
+            targetImage.GetComponent<SpriteRenderer>().sprite = images[selectedImage];
         }
 
         
@@ -130,7 +135,6 @@ namespace FindIt
             if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal && !gameWon)
             {
 				gameWon = true;
-                //Application.LoadLevel("FindItVictory");
 				FindItStatistics.StopMeasuringTime();
 				clona.SetActive(true);
 
@@ -144,12 +148,8 @@ namespace FindIt
 
         void UpdateGreenBarAndText()
         {
-            GUITexture bar = GameObject.Find("greenBar").guiTexture;
-            GUIText textProgress = GameObject.Find("LevelProgressGUIText").guiText;
-
-            bar.transform.localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * 2.0f, 0f, 1f);
-            textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();
-
+            progressBar.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
+            textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();            
         }
 
         void Update()

@@ -11,7 +11,7 @@ namespace FindIt
             //restartIdleTimer();
             //double actualTime = gameStopwatch.ElapsedMilliseconds;
 
-            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("SearchedImage").GetComponent<SpriteRenderer>().sprite))
+            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("TargetImage").GetComponent<SpriteRenderer>().sprite))
             {
                 if (this.gameObject.tag == "Left")
                 {
