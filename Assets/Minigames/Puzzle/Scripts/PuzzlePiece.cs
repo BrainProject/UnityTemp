@@ -59,7 +59,7 @@ namespace Puzzle
             //Debug.Log("Puzzle piece with index " + index + ", has neighbours set to L: " + left + ", R: " + right + ", T: " + top + ", B: " + bottom);
 
             gameObject = new GameObject();
-            //MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
+            MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
             MeshFilter filter = gameObject.AddComponent<MeshFilter>();
             MeshCollider collider = gameObject.AddComponent<MeshCollider>();
 

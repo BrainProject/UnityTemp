@@ -116,8 +116,6 @@ namespace Puzzle
      */
     private void CreateResourcePacksIcons(int menuRows, int menuColumns, Texture2D[] defaultPics, IEnumerable<string> customPics)
     {
-        System.Random r = new System.Random();
-
         // defines borders in the scene
         const float minx = -6.5f;
         const float maxx = 6.5f;

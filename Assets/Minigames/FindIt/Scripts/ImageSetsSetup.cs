@@ -40,17 +40,9 @@ namespace FindIt
          */
         public int[] GetMenuDimensions(int elementsCount)
         {
-            if (elementsCount == 1)
+            if (elementsCount <= 4)
             {
-                return new int[] { 1, 1 };
-            }
-            else if (elementsCount == 2)
-            {
-                return new int[] { 1, 2 };
-            }
-            else if (elementsCount <= 4)
-            {
-                return new int[] { 2, 2 };
+                return new int[] { 1, elementsCount };
             }
             else if (elementsCount <= 6)
             {
