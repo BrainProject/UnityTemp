@@ -14,6 +14,9 @@ namespace Puzzle
 {
     public class ChoosePictureScript : MonoBehaviour
     {
+        public bool custom = false;
+        public string imageName = "Bonobo";
+        public string defaultPicsPath = "Pictures";
 
 		/**
 		 * Handles MouseDown event
@@ -21,10 +24,12 @@ namespace Puzzle
 		 */
         void OnMouseDown()
         {
-            PlayerPrefs.SetString("Image", gameObject.renderer.material.mainTexture.name);
+            PlayerPrefs.SetString("defaultPicsPath", defaultPicsPath);
+            PlayerPrefs.SetString("Image", imageName);
+            PlayerPrefs.SetInt("custom", custom ? 1 : 0);
+
             PuzzleStatistics.pictureName = gameObject.renderer.material.mainTexture.name;
-			MGC.Instance.sceneLoader.LoadScene("PuzzleChooseDifficulty",true);
-			//Application.LoadLevel("PuzzleChooseDifficulty");
+			MGC.Instance.sceneLoader.LoadScene("PuzzleGame",true);
         }
     }
 }

@@ -56,9 +56,10 @@ namespace Puzzle
             this.right = (index + 1) % puzzle_width == 0 ? -1 : index + 1;
             this.top =  (index + 1 + puzzle_width) > puzzle_width * puzzle_height ? -1 : index + puzzle_width;
             this.left = index % puzzle_width == 0 ? -1 : index - 1;
+            //Debug.Log("Puzzle piece with index " + index + ", has neighbours set to L: " + left + ", R: " + right + ", T: " + top + ", B: " + bottom);
 
             gameObject = new GameObject();
-            //MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
+            MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
             MeshFilter filter = gameObject.AddComponent<MeshFilter>();
             MeshCollider collider = gameObject.AddComponent<MeshCollider>();
 
