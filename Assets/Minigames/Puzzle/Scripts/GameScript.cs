@@ -424,14 +424,21 @@ namespace Puzzle
 		 */
 		private void EndGame()
 		{
-			//animate Neuron
-			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-			
-			//MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+            // this would be sufficient, if we do not want an option to change the picture for puzzle when different 
+            // difficulty is set
+			//MGC.Instance.FinishMinigame();
 
-            MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
 
-            MGC.Instance.FinishMinigame();
+            GameObject Neuron = MGC.Instance.neuronHelp;
+            if (Neuron)
+            {
+                Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            }
+
+            MGC.Instance.minigamesProperties.SetSuccessfullyPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+            MGC.Instance.SaveMinigamesStatisticsToFile();
+
+            MGC.Instance.minigamesGUI.show(false, true, "Puzzle");
 		}
     }
 }

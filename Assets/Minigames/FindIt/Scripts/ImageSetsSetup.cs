@@ -116,8 +116,6 @@ namespace FindIt
 
         void Start()
         {
-            MGC.Instance.selectedMiniGameDiff = 0;
-
             numberPieces = 0;
             switch (MGC.Instance.selectedMiniGameDiff)
             {
@@ -176,9 +174,9 @@ namespace FindIt
             {
                 GameObject g = new GameObject();
                 g.transform.localPosition = new Vector3(
-                    ((maxx - minx)/(menuColumns-1))*j + minx,
-                    ((maxy - miny)/(menuRows-1))*i + miny,
-                     0.0f);
+                    menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
+                    menuRows - 1 == 0 ? 0 : ((maxy - miny)/(menuRows-1))*i + miny,
+                    0.0f);
                 if (menuRows > 2)
                     g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
                 SpriteRenderer sr = g.AddComponent<SpriteRenderer>();

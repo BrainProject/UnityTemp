@@ -179,6 +179,7 @@ namespace FindIt
             FindItStatistics.Clear();
 			FindItStatistics.StartMeasuringTime();
 			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+
 			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 
@@ -193,11 +194,19 @@ namespace FindIt
 				FindItStatistics.StopMeasuringTime();
 				clona.SetActive(true);
 
-				MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-				MGC.Instance.minigamesGUI.show(false,true,"FindIt");
+                // Cannot use MGC.Instance.FinishMinigame(). It would load FindItGame, which may cause crash,
+                // when different difficulty is selected and current resource pack does not contain enough pictures
+               
+                GameObject Neuron = MGC.Instance.neuronHelp;
+                if (Neuron)
+                {
+                    Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+                }
 
-                MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
-                MGC.Instance.FinishMinigame();
+                MGC.Instance.minigamesProperties.SetSuccessfullyPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                MGC.Instance.SaveMinigamesStatisticsToFile();
+
+                MGC.Instance.minigamesGUI.show(false, true, "FindIt");
             }
         }
 

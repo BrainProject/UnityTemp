@@ -38,17 +38,9 @@ namespace Puzzle
          */
         public int[] GetMenuDimensions(int elementsCount)
         {
-            if (elementsCount == 1)
+            if (elementsCount <= 4)
             {
-                return new int[] { 1, 1 };
-            }
-            else if (elementsCount == 2)
-            {
-                return new int[] { 1, 2 };
-            }
-            else if (elementsCount <= 4)
-            {
-                return new int[] { 2, 2 };
+                return new int[] { 1, elementsCount };
             }
             else if (elementsCount <= 6)
             {
@@ -135,8 +127,8 @@ namespace Puzzle
                 GameObject g = Instantiate(TilePrefab) as GameObject;
 
                 g.transform.localPosition = new Vector3(
-                    ((maxx - minx)/(menuColumns-1))*j + minx,
-                    ((maxy - miny)/(menuRows-1))*i + miny,
+                     menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
+                     menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
                      0.0f);
                 if (menuRows > 2)
                     g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
