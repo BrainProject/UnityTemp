@@ -210,10 +210,10 @@ namespace Puzzle
 			//Debug.Log ("ID: " + puzzleObject.name);
 			//Debug.Log ("top: " + my_piece.top + ", bottom: " + my_piece.bottom + ", left: " + my_piece.left + ", right: " + my_piece.right);
 
-			PuzzlePiece topPiece = my_piece.top > 0 ? pieces[my_piece.top.ToString()] : null;
-			PuzzlePiece bottomPiece = my_piece.bottom > 0 ? pieces[my_piece.bottom.ToString()] : null;
-			PuzzlePiece leftPiece = my_piece.left > 0 ? pieces[my_piece.left.ToString()] : null;
-			PuzzlePiece rightPiece = my_piece.right > 0 ? pieces[my_piece.right.ToString()] : null;
+			PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
+			PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
+			PuzzlePiece leftPiece = my_piece.left >= 0 ? pieces[my_piece.left.ToString()] : null;
+			PuzzlePiece rightPiece = my_piece.right >= 0 ? pieces[my_piece.right.ToString()] : null;
 
 			HashSet<GameObject> top_component = null;
 			HashSet<GameObject> bottom_component = null;
