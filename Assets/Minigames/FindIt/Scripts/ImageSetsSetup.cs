@@ -194,7 +194,8 @@ namespace FindIt
                 g.AddComponent<BoxCollider2D>();
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = false;
-                chis.name = defResPacks[(menuRows - 1 - i) * menuColumns + j];
+                chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
+                chis.name = chis.resourcePackName;
             }
         }
 

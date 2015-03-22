@@ -19,13 +19,11 @@ namespace Puzzle
 		/// <summary>
         /// number of puzzle pieces
 		/// </summary>
- 
         public int numberPieces = 4;
 
 		/// <summary>
         /// texture of image to complete in puzzle 
 		/// </summary>
- 
         public Texture2D puzzleImage;
 
 		/// <summary>
@@ -43,7 +41,6 @@ namespace Puzzle
 		/// <summary>
         /// indicates whether game was won or not
 		/// </summary>
-
         public Image targetImage;
 
 		bool gameWon = false;
@@ -69,11 +66,20 @@ namespace Puzzle
             // loading image texture
             try
             {
-                puzzleImage = Resources.Load("Pictures/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                bool custom = PlayerPrefs.GetInt("custom") == 1;
+                if(custom)
+                {
+                    WWW www = new WWW("file://" + PlayerPrefs.GetString("Image"));
+                    puzzleImage = www.texture;
+                }
+                else 
+                {
+                    puzzleImage = Resources.Load(PlayerPrefs.GetString("defaultPicsPath") + "/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                }
                 PuzzleStatistics.pictureName = PlayerPrefs.GetString("Image");
 
             }
-            catch (Exception ex)
+            catch (PlayerPrefsException ex)
             {
                 Debug.Log("Exception occured while trying to load image: " + ex.Message);
                 Debug.Log("Trying to load Bonobo image");

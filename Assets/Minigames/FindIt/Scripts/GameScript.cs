@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace FindIt
 {
+    /**
+     * Game logic for FindIt
+     */
     public class GameScript : MonoBehaviour
     {
         const int MIN_PIECES = 8;
@@ -41,6 +44,9 @@ namespace FindIt
 
 		private bool gameWon = false;
 
+        /**
+         * Loads resource pack to the scene
+         */
         private void LoadResourcePack()
         {
             try
@@ -103,6 +109,10 @@ namespace FindIt
         }
 
 
+        /**
+         * Sets up tiles textures in the scene
+         * @param numPictures number of images
+         */
         private void SetUpSprites(int numPictures)
         {
             System.Random random = new System.Random();
@@ -129,11 +139,17 @@ namespace FindIt
             }
         }
 
+        /**
+         * Modifies camera such that it properly fits objects in the scene
+         */
         private void UpdateCameraSize()
         {
             Camera.main.orthographicSize = numberPieces <= 28 ? CAMERA_SIZE_LESS_28 : CAMERA_SIZE_MORE_28;
         }
 
+        /**
+         * Chooses new target image
+         */
         public void newTargetImage()
         {
             System.Random r = new System.Random();
@@ -148,7 +164,9 @@ namespace FindIt
             targetImage.GetComponent<SpriteRenderer>().sprite = images[selectedImage];
         }
 
-        
+        /**
+         * UnityEngine Start() function
+         */
         void Start()
         {
 			clona.SetActive(false);
@@ -164,6 +182,9 @@ namespace FindIt
 			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 
+        /**
+         * Checks for end of the game
+         */
         void CheckEndGame()
         {
             if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal && !gameWon)
@@ -180,12 +201,18 @@ namespace FindIt
             }
         }
 
+        /**
+         * Updates progress
+         */
         void UpdateGreenBarAndText()
         {
             progressBar.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
             textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();            
         }
 
+        /**
+         * UnityEngine Update() function
+         */
         void Update()
         {
             UpdateGreenBarAndText();
