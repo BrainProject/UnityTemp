@@ -6,6 +6,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FindIt
 {
@@ -24,6 +26,7 @@ namespace FindIt
         private string resourcePackName = "";
         public int numberPieces = MIN_PIECES;
         public int numberTurns = 50;
+        private bool customPackChosen = false;
 
         private List<int> usedIndices = new List<int>();
 
@@ -42,10 +45,36 @@ namespace FindIt
         {
             try
             {
+                customPackChosen = PlayerPrefs.GetInt("custom") == 1;
                 resourcePackName = PlayerPrefs.GetString("resourcePackName");
-                images = Resources.LoadAll<Sprite>(resourcePackName);
+                Debug.Log("Resource pack name found as " + resourcePackName);
+                if (customPackChosen)
+                {
+                    Debug.Log("Loading custom packs ");
+                    List<Sprite> list = new List<Sprite>();
+                    var allFiles = Directory.GetFiles(resourcePackName).Where(
+                    p => Path.GetExtension(p).ToLower() == ".png"  || Path.GetExtension(p).ToLower() == ".jpg" ||
+                         Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
+                         Path.GetExtension(p).ToLower() == ".gif"  || Path.GetExtension(p).ToLower() == ".tif" );
+
+                    Debug.Log("Found " + allFiles.Count() +" files");
+
+                    foreach(string file in allFiles)
+                    {
+                        Debug.Log("Loading file " + file);
+                        WWW www = new WWW("file://" + file);
+                        Sprite s = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+                        list.Add(s);
+                    }
+                    images = list.ToArray<Sprite>();
+                    Debug.Log("Images contain " + images.Count() + " sprites");
+                }
+                else 
+                {
+                    images = Resources.LoadAll<Sprite>(resourcePackName);
+                }
             }
-            catch (Exception ex)
+            catch (PlayerPrefsException ex)
             {
                 Debug.Log("Exception occured while trying to load imaged: " + ex.Message);
                 Debug.Log("Trying to load Animals set");
@@ -124,6 +153,7 @@ namespace FindIt
         {
 			clona.SetActive(false);
 			gameWon = false;
+            Debug.Log("Load sprites");
             LoadResourcePack();
             SetUpSprites(numberPieces);
             UpdateCameraSize();

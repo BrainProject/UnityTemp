@@ -1,5 +1,5 @@
 ﻿/**
- * @file ChoosePicturesSetScript.cs
+ * @file ChooseImageSet.cs
  * @author Ján Bella
  */
 using UnityEngine;
@@ -12,13 +12,15 @@ namespace FindIt
     /*
      * Logic for choosing set of images for Find It.
      */
-	public class ChoosePicturesSetScript : MonoBehaviour
+    public class ChooseImageSet : MonoBehaviour
 	{
 		public string resourcePackName = "Animals";
+        public bool custom = false;
 
         void OnMouseDown()
 		{
 			PlayerPrefs.SetString("resourcePackName", resourcePackName);
+            PlayerPrefs.SetInt("custom", custom ? 1 : 0);
             MGC.Instance.sceneLoader.LoadScene("FindItGame", true);
 		}
 	}
