@@ -13,7 +13,7 @@
   SetCompressor bzip2
   
   ;Properly display all languages
-  Unicode true
+  ;Unicode true
 
   # pøidání informací
   VIProductVersion                 "0.9.7.0"

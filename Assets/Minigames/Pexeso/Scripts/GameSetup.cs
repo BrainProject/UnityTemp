@@ -125,13 +125,13 @@ namespace MinigamePexeso
 				if (i < customResourcePacks.Length)
 				{
 					//set name of game-object (will be used later as chosen resource-pack identifier]
-					string[] s = customResourcePacks[i].Split('\\');
+					string[] s = customResourcePacks[i].Split('/');
 					Debug.Log("Custom resource pack name: '" + s[s.Length - 1] + "'");
-					gameTiles[i + resPacksNames.Length].name = "[CUSTOM]" + s[s.Length - 1];
+					gameTiles[i + resPacksNames.Length].name = "CUSTOM-" + s[s.Length - 1];
 
 					//use first image in pack as tile texture
-					Debug.Log ("file://" + customResourcePacks[i] + "\\00.png");
-					WWW www = new WWW ("file://" + customResourcePacks[i] + "\\00.png");
+					Debug.Log ("file:///" + customResourcePacks[i] + "/00.png");
+					WWW www = new WWW ("file:///" + customResourcePacks[i] + "/00.png");
 					yield return www;
 					gameTiles[i + resPacksNames.Length].transform.GetChild(0).renderer.material.mainTexture = www.texture;
 				}
@@ -151,7 +151,7 @@ namespace MinigamePexeso
             Debug.Log("Current chosen game: " + currentGame);
 
 			resPackPath = "Textures/Pictures/" + currentGame + "/";
-            customResPackPath = "CustomImages";
+            customResPackPath = Application.persistentDataPath + "/CustomImages";
 
 			//Number of default resource packs
 			int menuLength = resPacksNames.Length;
@@ -270,10 +270,10 @@ namespace MinigamePexeso
 	        }
 
 			//if user selected custom resource pack
-			if (chosenButton.name.Contains ("[CUSTOM]"))
+			if (chosenButton.name.Contains ("CUSTOM-"))
 			{
 				mainGameScript.customPack = true;
-				chosenButton.name = chosenButton.name.Remove(0, 8);
+				chosenButton.name = chosenButton.name.Remove(0, 7);
 			}
 
             Debug.Log("Chosen resource pack: " + chosenButton.name);

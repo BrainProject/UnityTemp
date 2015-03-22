@@ -60,6 +60,7 @@ public class Logger : MonoBehaviour
             print("Newron Log will be saved to: '" + logPath + "PlayerActions.txt'");
 
             bool addCreatedEntry = false;
+            
             //check if log already exists
             if (!File.Exists(logPath))
             {

@@ -23,15 +23,7 @@ namespace Game
 
         public void Start()
         {
-            //MinigameProperties main = new MinigameProperties("Main");
-            //minigames.Add(main);
-            //MinigameProperties selection = new MinigameProperties("GameSelection");
-            //selection.initialShowHelpCounter = 2;
-            //minigames.Add(selection);
-
-            //// Set your minigame here (don't forget to add it into collection too):
-            //// If You change anything in following collection, be sure to delete 'newron.sav' file in '...\AppData\LocalLow\HCI\Newron'
-
+            //TODO following comments are used just as reference for poor-memory humans, to see the names and difficulties...
             //MinigameProperties hanoi = new MinigameProperties("HanoiTowers", 4);
             //minigames.Add(hanoi);
             //MinigameProperties london = new MinigameProperties("LondonTowerGUIMenu", 3, "LondonTowerGame");
@@ -168,7 +160,7 @@ namespace Game
                 //TODO checks...
                     // if there is scene with such name
                 MinigameProperties props = child.GetComponent<MinigameProperties>();
-                print("   loading mini-game (readable): '" + props.readableName + "'");
+                print("   loading mini-game: '" + props.readableName + "'");
                 minigames.Add(props);
             }
 
