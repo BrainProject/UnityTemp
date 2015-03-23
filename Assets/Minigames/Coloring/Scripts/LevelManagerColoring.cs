@@ -9,6 +9,7 @@ namespace Coloring
 		public Texture brush;
 		public GameObject backGUI;
 		public GameObject savePictureGUI;
+		public SetColor brushColor;
 
 		internal bool painting = false;
 		internal bool hiddenGUIwhilePainting = false;
@@ -20,8 +21,8 @@ namespace Coloring
 		private int h = Screen.height / 9;
 
 #if UNITY_ANDROID
-		public Material neuronMaterial;
-		public Color neuronOriginalColor;
+		internal Material neuronMaterial;
+		internal Color neuronOriginalColor;
 #endif
 
 //		void Awake()
@@ -53,7 +54,9 @@ namespace Coloring
 
 			if(MGC.Instance.minigamesGUIObject.activeSelf && MGC.Instance.minigamesGUI.clicked)
 			{
+#if UNITY_ANDROID
 				neuronMaterial.color = neuronOriginalColor;
+#endif
 				MGC.Instance.minigamesGUI.clicked = false;
 			}
 		}

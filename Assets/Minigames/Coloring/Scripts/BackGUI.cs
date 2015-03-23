@@ -52,7 +52,10 @@ namespace Coloring
 			else
 			{
 				StartCoroutine("FadeOutGUI");
+				thisLevelManager.brushColor.renderer.material.color = Color.white;
+#if UNITY_ANDROID
 				thisLevelManager.neuronMaterial.color = thisLevelManager.neuronOriginalColor;
+#endif
 			}
 		}
 
