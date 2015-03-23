@@ -11,7 +11,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     private bool lastClicked = false;
     private bool moveX = true;
     private float lastPolePolesition;
-    private Vector3 polePosition = new Vector3();
+    private Vector3 polePosition = new Vector3(0,0,0);
     public LondonTowerGameManager gameManager;
 
     //ratio of moving spehre by mouse - to scene
@@ -105,7 +105,10 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked)
             {
                 clicked = true;
-                polePosition = this.transform.position;
+                if (!moveX)
+                {
+                    polePosition = this.transform.position;
+                }
                 lastPosition = Input.mousePosition;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;

@@ -94,7 +94,7 @@ public class LondonTowerCamera : MonoBehaviour {
         }
         if (LondonTowerGameManager.state == LondonTowerGameState.game)
         {
-            GUI.DrawTexture(new Rect(Screen.width /35.0f, Screen.height / 30.0f , Screen.width/ 4.2f , Screen.height / 4.2f), minimapBacground);
+            GUI.DrawTexture(new Rect(Screen.width /35.0f-5, Screen.height / 30.0f-5 , Screen.width/ 4.2f+10 , Screen.height / 4.2f+10), minimapBacground);
             GUI.DrawTexture(new Rect(Screen.width / 35.0f, Screen.height / 30.0f, Screen.width / 4.2f, Screen.height / 4.2f), screen);
         }
     }
