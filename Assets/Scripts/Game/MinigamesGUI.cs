@@ -13,6 +13,7 @@ namespace Game
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
+		public bool clicked = false;
 
 		/// <summary>
 		/// Shows minigames GUI.

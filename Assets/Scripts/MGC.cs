@@ -199,7 +199,7 @@ public class MGC : Singleton<MGC>
 
 		//Hidden menu possible to show with secret gesture
 #if UNITY_ANDROID
-		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2))
+		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
 		{
 			touchBlockTimestamp = Time.time;
 #else

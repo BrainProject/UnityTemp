@@ -45,9 +45,15 @@ namespace Coloring
 		public void IconVisible(bool isVisible)
 		{
 			if(isVisible)
+			{
 				StartCoroutine ("FadeInGUI");
+				//thisLevelManager.neuronMaterial = thisLevelManager.neuronOriginalMaterial;
+			}
 			else
+			{
 				StartCoroutine("FadeOutGUI");
+				thisLevelManager.neuronMaterial.color = thisLevelManager.neuronOriginalColor;
+			}
 		}
 
 		IEnumerator FadeInGUI()

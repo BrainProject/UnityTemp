@@ -19,6 +19,11 @@ namespace Coloring
 		private int w = Screen.width / 16;
 		private int h = Screen.height / 9;
 
+#if UNITY_ANDROID
+		public Material neuronMaterial;
+		public Color neuronOriginalColor;
+#endif
+
 //		void Awake()
 //		{
 //			MGC.Instance.ShowCustomCursor (true);
@@ -27,6 +32,11 @@ namespace Coloring
 		void Start()
 		{
 			timestamp = -2;
+
+#if UNITY_ANDROID
+			neuronMaterial = GameObject.Find("Neuron_body").renderer.material;
+			neuronOriginalColor = neuronMaterial.color;
+#endif
 		}
 
 		void Update()
@@ -39,6 +49,12 @@ namespace Coloring
 					MGC.Instance.ShowCustomCursor(true);
 				if(painting && !hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);
+			}
+
+			if(MGC.Instance.minigamesGUIObject.activeSelf && MGC.Instance.minigamesGUI.clicked)
+			{
+				neuronMaterial.color = neuronOriginalColor;
+				MGC.Instance.minigamesGUI.clicked = false;
 			}
 		}
 
@@ -54,6 +70,7 @@ namespace Coloring
 			savePictureGUI.GetComponent<SavePictureGUI> ().IconVisible (isVisible);
 			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<SavePictureGUI> ().normal;
 		}
+
 
 #if UNITY_STANDALONE
 		void OnGUI()

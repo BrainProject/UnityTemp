@@ -49,7 +49,9 @@ namespace Game
 
         void OnMouseDown()
         {
-			transform.parent.GetComponent<MinigamesGUI> ().hide ();
+			MinigamesGUI parent = transform.parent.GetComponent<MinigamesGUI> ();
+			parent.hide ();
+			parent.clicked = true;
 
             //resolve action
             switch(action)
@@ -106,9 +108,13 @@ namespace Game
 
 					break;
 				}
-			}
-            
+			}   
         }
+
+		void OnMouseUp()
+		{
+			transform.parent.GetComponent<MinigamesGUI> ().clicked = false;
+		}
 
 		public void SetRestartDifferentScene(bool shouldRestartDifferentScene,string differentRestartSceneName)
 		{

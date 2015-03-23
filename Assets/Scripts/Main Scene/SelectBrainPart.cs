@@ -14,6 +14,7 @@ namespace MainScene {
 	public class SelectBrainPart : MonoBehaviour {
 		public GameObject icon;
 		public BrainPartName brainPartToLoad;
+		public bool showOnAndroid = true;
 		public bool CanSelect{ get; set; }
 
 		private bool initialMouseOver;
@@ -85,8 +86,11 @@ namespace MainScene {
 #if UNITY_ANDROID
 		public void ShowIcon()
 		{
-			StartCoroutine("FadeIn");
-			initialMouseOver = false;
+			if(showOnAndroid)
+			{
+				StartCoroutine("FadeIn");
+				initialMouseOver = false;
+			}
 		}
 #endif
 
