@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
   //plati pre head
+
+namespace MinigameSnake {
 public class WhereIAM : MonoBehaviour {
 	Vector3 currentPosition;
 	public Vector3 previousPosition;
@@ -27,4 +29,5 @@ public class WhereIAM : MonoBehaviour {
 	{
 		return previousPosition;
 		}
+}
 }

@@ -2,6 +2,8 @@
 using System.Collections;
 using Kinect;
 
+
+namespace MinigameSnake {
 public class Buttons : MonoBehaviour {
 
 	public string levelToLoad;
@@ -48,4 +50,5 @@ public class Buttons : MonoBehaviour {
 
 		Application.LoadLevel(levelToLoad);
 	}
+}
 }

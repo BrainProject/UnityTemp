@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using Kinect;
 
+
+namespace MinigameSnake {
 public class FoodScoreAdd : MonoBehaviour {
 	static GameObject ob;
 	static GameManager sc;
@@ -73,4 +75,4 @@ public class FoodScoreAdd : MonoBehaviour {
 			}*/
 		}
 	}
-
+}

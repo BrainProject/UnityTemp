@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Kinect;
 
+
+namespace MinigameSnake {
 public class Move2 : MonoBehaviour 
 {
 	private KinectGestures gestureListener; //gesture listener for Kinect
@@ -244,4 +246,6 @@ public class Move2 : MonoBehaviour
 			}*/
 		}
 	}
+}
+
 }

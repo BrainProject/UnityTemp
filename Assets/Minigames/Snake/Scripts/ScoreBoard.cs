@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake {
 public class ScoreBoard : MonoBehaviour {
 
 	public int newScore;
@@ -163,4 +165,5 @@ public class ScoreBoard : MonoBehaviour {
 		SaveScore ();
 	}
 
+}
 }

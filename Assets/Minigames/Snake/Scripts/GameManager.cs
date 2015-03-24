@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Kinect;
 
+namespace MinigameSnake {
+
 public class GameManager : MonoBehaviour {
 	private int score;
 	//private string levelToLoad;
@@ -87,4 +89,5 @@ public class GameManager : MonoBehaviour {
 		currentLevel = number;
 	}
 	
+}
 }

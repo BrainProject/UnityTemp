@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake {
 public class ScoreLoadAfterSnakeDeath : MonoBehaviour {
 
 	public int level;
@@ -36,4 +38,5 @@ public class ScoreLoadAfterSnakeDeath : MonoBehaviour {
 
 
 	}
+}
 }

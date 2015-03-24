@@ -14,6 +14,8 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text; 
 
+namespace MinigameSnake {
+
 // Wrapper class that holds the various structs and dll imports
 // needed to set up a model with the Kinect.
 public class KinectWrapper
@@ -1253,4 +1255,5 @@ public class KinectWrapper
     }
 	
 	
+}
 }

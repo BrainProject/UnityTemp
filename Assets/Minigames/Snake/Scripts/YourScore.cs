@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake {
 public class YourScore : MonoBehaviour {
 	GUIStyle aFont;
 	public int newScore;
@@ -32,4 +34,4 @@ public class YourScore : MonoBehaviour {
 //	void Update () {
 	
 	}
-
+}

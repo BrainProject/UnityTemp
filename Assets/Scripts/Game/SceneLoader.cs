@@ -26,7 +26,7 @@ namespace Game
         /// </summary>
 		void Start()
 		{
-            print("SceneLoader::Start()...");
+            //print("SceneLoader::Start()...");
 
             transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -36,11 +36,11 @@ namespace Game
 
             if (fadeCanvas == null)
             {
-                print("Missing 'FadeCanvas' prefab");
+                Debug.LogError("Missing 'FadeCanvas' prefab");
             }
             else
             {
-                print("Fade Canvas instantiated");
+                //print("Fade Canvas instantiated");
                 fadeCanvas.name = "Fade Canvas";
 
                 //set proper parent to canvas
@@ -51,11 +51,11 @@ namespace Game
 
                 if (fadePanel == null)
                 {
-                    print("There should be <Image> component in 'FadeCanvas' prefab");
+                    Debug.LogError("There should be <Image> component in 'FadeCanvas' prefab");
                 }
                 else
                 {
-                    print("fadePanel founded.");
+                    //print("fadePanel founded.");
                     fadePanel.enabled = false;
                 }
             }
@@ -100,7 +100,7 @@ namespace Game
 
         private IEnumerator FadeInCoroutine()
         {
-			print("fading in...");
+			//print("fading in...");
 			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
 			
             float startTime = Time.time;
@@ -125,7 +125,7 @@ namespace Game
 		{
 			Instantiate (Resources.Load ("BlockBorder"));
 
-			print("fading out coroutine...");
+			//print("fading out coroutine...");
 			if (levelName == "")
 			{
 				Debug.LogError("Level name not defined.");

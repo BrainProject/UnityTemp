@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake {
 public class WhereIsMyParent : MonoBehaviour {
 	Vector3 currentPosition;
 	Vector3 previousPosition;
@@ -55,4 +57,5 @@ public class WhereIsMyParent : MonoBehaviour {
 	{
 		return previousPosition;
 		}
+}
 }
