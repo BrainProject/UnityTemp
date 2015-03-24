@@ -83,8 +83,6 @@ namespace Puzzle
 
         void Start()
         {
-            MGC.Instance.selectedMiniGameDiff = 0;
-
             Texture2D[] defaultPics = Resources.LoadAll<Texture2D>(defaultPicturesPath);
 
             IEnumerable<string> customPics;

@@ -40,7 +40,7 @@ namespace Game
         /// <summary>
         /// When this scene is loaded, help for mini-game will be shown
         /// </summary>
-        public string sceneWithHelp;
+        public string mainScene;
 
         //maximum difficulty
         public int MaxDifficulty;
@@ -91,7 +91,7 @@ namespace Game
 
             //set properties of mini-game
             minigameProperties.readableName = readableName;
-            minigameProperties.sceneWithHelp = sceneWithHelp;
+            minigameProperties.mainScene = mainScene;
             minigameProperties.initialScene = initialScene;
             minigameProperties.MaxDifficulty = MaxDifficulty;
             minigameProperties.IconDifficultyLow = difficultyLowIcon;
@@ -99,7 +99,7 @@ namespace Game
 
             //clear values in editor
             readableName = "";
-            sceneWithHelp = "";
+            mainScene = "";
             initialScene = "";
             MaxDifficulty = 0;
             difficultyHighIcon = null;

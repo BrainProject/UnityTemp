@@ -66,7 +66,7 @@ namespace Game
 
             foreach (MinigameProperties gameProps in minigames)
             {
-                if (gameProps.sceneWithHelp == minigameName || gameProps.initialScene == minigameName)
+                if (gameProps.mainScene == minigameName || gameProps.initialScene == minigameName)
                 {
                     gameProps.stats.played = true;
                     gameProps.stats.playedCount[diff] += 1;
@@ -82,7 +82,7 @@ namespace Game
         {
             foreach (MinigameProperties game in minigames)
             {
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (game.mainScene == minigameName || game.initialScene == minigameName)
                 {
                     game.stats.finishedCount[diff] += 1;
                 }
@@ -92,7 +92,7 @@ namespace Game
         public bool GetPlayed(string minigameName)
         {
             foreach (MinigameProperties game in minigames)
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (game.mainScene == minigameName || game.initialScene == minigameName)
                     return game.stats.played;
             return false;
         }
@@ -102,7 +102,7 @@ namespace Game
             foreach (MinigameProperties game in minigames)
             {
                 //print("checking mini-game: '" + game.readableName + "'");
-                if (game.sceneWithHelp == minigameName || game.initialScene == minigameName)
+                if (game.mainScene == minigameName || game.initialScene == minigameName)
                 {
                     return game;
                 }
@@ -117,7 +117,7 @@ namespace Game
             List<string> minigamesWithHelp = new List<string>();
             foreach (MinigameProperties game in minigames)
             {
-                minigamesWithHelp.Add(game.sceneWithHelp);
+                minigamesWithHelp.Add(game.mainScene);
             }
 
             return minigamesWithHelp;

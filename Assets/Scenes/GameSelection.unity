@@ -76,6 +76,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &2905465
 GameObject:
@@ -586,7 +587,7 @@ Transform:
   m_LocalScale: {x: .134681568, y: .134681538, z: .134681538}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!122 &48414069
 Halo:
   m_ObjectHideFlags: 0
@@ -685,7 +686,7 @@ Transform:
   m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!122 &49773205
 Halo:
   m_ObjectHideFlags: 0
@@ -1430,7 +1431,7 @@ Transform:
   m_LocalScale: {x: .124456182, y: .124456249, z: .124456227}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!122 &343425399
 Halo:
   m_ObjectHideFlags: 0
@@ -2005,7 +2006,7 @@ Transform:
   m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!122 &478998302
 Halo:
   m_ObjectHideFlags: 0
@@ -3534,7 +3535,7 @@ Transform:
   m_Children:
   - {fileID: 262994659}
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 7
+  m_RootOrder: 0
 --- !u!122 &943927971
 Halo:
   m_ObjectHideFlags: 0
@@ -3945,7 +3946,7 @@ Transform:
   m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!122 &1137495740
 Halo:
   m_ObjectHideFlags: 0
@@ -4549,6 +4550,7 @@ Transform:
   m_LocalPosition: {x: 10.1225405, y: -.218430519, z: -4.717834}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 943927970}
   - {fileID: 343425398}
   - {fileID: 48414068}
   - {fileID: 1398849975}
@@ -4556,7 +4558,6 @@ Transform:
   - {fileID: 478998301}
   - {fileID: 49773204}
   - {fileID: 1423108758}
-  - {fileID: 943927970}
   - {fileID: 1781215947}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -4851,7 +4852,7 @@ Transform:
   m_LocalScale: {x: .134682029, y: .134681985, z: .134682044}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!122 &1398849976
 Halo:
   m_ObjectHideFlags: 0
@@ -5049,7 +5050,7 @@ Transform:
   m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
   m_Children: []
   m_Father: {fileID: 1366205587}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!122 &1423108759
 Halo:
   m_ObjectHideFlags: 0
@@ -6997,7 +6998,7 @@ MonoBehaviour:
   minigameName: HanoiTowers
   cameraDistance: 3
   minigameIcon: {fileID: 2800000, guid: a41e648fa3d94704fbce0467e910f030, type: 3}
-  minigameHelp: {fileID: 2800000, guid: 22b54ffcd0052d24c95cc2517eac0365, type: 3}
+  minigameHelp: {fileID: 0}
   kinectRequired: 0
   levelManager: {fileID: 1456585141}
 --- !u!23 &2096740295
