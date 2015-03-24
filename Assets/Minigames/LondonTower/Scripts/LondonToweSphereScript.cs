@@ -13,15 +13,27 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     private float lastPolePolesition;
     private Vector3 polePosition = new Vector3(0,0,0);
     public LondonTowerGameManager gameManager;
-
+    private float maxY;
     //ratio of moving spehre by mouse - to scene
-    private float moveConstant =(Screen.height /9.3f);
+    private float moveConstantX =(Screen.height /9.3f);
+    private float moveConstantY = (Screen.height / 9.3f);
     public bool start = true;
     public string idColor;
     public int currentPoleID;
     public int orderOnPole;
-   
 
+
+    void Start()
+    {
+        Vector3 cameraSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9));
+        maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 8.5f)).y;
+        Debug.Log(maxY);
+        Vector3 cameraSize2 = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 9));
+        moveConstantX =  Screen.width/cameraSize.x ;
+        moveConstantY = Screen.height/ cameraSize.y;
+        
+
+    }
 		
 	// Update is called once per frame
 	void Update () {
@@ -41,13 +53,13 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             {
                 //9,-1 are bordes when sphere can be moved
                
-                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstant)),this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
+                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstantX)),Mathf.Min(maxY,this.transform.position.y + distance.y / moveConstantY), this.transform.position.z);
             }
             else
             {
                 //9,-1 are bordes when sphere can be moved + nax can only move down/up becaus id on the pole
                 //spehre is on stick
-                this.transform.position = new Vector3(this.transform.position.x, Mathf.Max(this.transform.position.y + distance.y / moveConstant, polePosition.y), this.transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x,Mathf.Min(maxY,Mathf.Max(this.transform.position.y + distance.y / moveConstantY, polePosition.y)), this.transform.position.z);
             }
             lastPosition = Input.mousePosition;
             if (lastClicked)
