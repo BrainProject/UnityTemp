@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &2541623
 GameObject:
@@ -2443,7 +2444,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 630e7a4bfc052a74592fb5585c14ab64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bcfc927492937b4cbf9ae0a48140035, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &387923814
 Transform:
@@ -7086,8 +7087,6 @@ MonoBehaviour:
   backGUI: {fileID: 1039476856}
   savePictureGUI: {fileID: 464385359}
   brushColor: {fileID: 598424735}
-  neuronMaterial: {fileID: 0}
-  neuronOriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1373029205
 GameObject:
   m_ObjectHideFlags: 0
@@ -11579,6 +11578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e816262b8cd8cc45a5d24897992eae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 983009478}
+  width: 1920
+  height: 1080
+  defaultFileName: Obrazek.png
 --- !u!1 &2065516084
 GameObject:
   m_ObjectHideFlags: 0

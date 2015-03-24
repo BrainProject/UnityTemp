@@ -8,7 +8,8 @@ public class RenderCameraToFile : MonoBehaviour
     public Camera cam;
     public int width = 3840;
     public int height = 2160;
-    public string defaultFileName = "savedCameraFrame.png";
+    public string defaultFileName = "Picture.png";
+    
 
     public void RenderToFile(string fileName)
 	{
@@ -19,6 +20,16 @@ public class RenderCameraToFile : MonoBehaviour
             return;
         }
 #endif
+
+        // camera should be assigned in editor
+        // check, throw exception if it is not...
+        if (!cam)
+        {
+            throw new UnityException("Camera is not set - check settings of this script in inspector");
+        }
+
+        string path = Application.persistentDataPath + "/Pictures/";
+
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);
         cam.targetTexture = tempRT;
@@ -35,11 +46,14 @@ public class RenderCameraToFile : MonoBehaviour
         RenderTexture.active = null; 
         cam.targetTexture = null;
         
+        //check or create directory
+        Directory.CreateDirectory(path);
+
         //save Texture2D to file
         byte[] bytes;
         bytes = virtualPhoto.EncodeToPNG();
-        print("Saving picture to file: " + Application.dataPath + "/" + fileName);
-        System.IO.File.WriteAllBytes(Application.dataPath + "/" + fileName, bytes);
+        print("Saving picture to file: " + path + fileName);
+        System.IO.File.WriteAllBytes(path + fileName, bytes);
 
         Destroy(tempRT);
     }
