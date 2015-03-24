@@ -83,20 +83,26 @@ namespace Puzzle
 
         void Start()
         {
+            //MGC.Instance.selectedMiniGameDiff = 0;
+
             Texture2D[] defaultPics = Resources.LoadAll<Texture2D>(defaultPicturesPath);
 
             IEnumerable<string> customPics;
-            //Check for custom resource packs
-            #if UNITY_STANDALONE_WIN
-                customPics = LoadCustomResourcePacks();
-                
-            #endif
 
+            //TODO this should works on all platforms
+
+            //Check for custom resource packs
+        #if !UNITY_WEBPLAYER
+            customPics = LoadCustomResourcePacks();
+        
             //Calculate number of menu items
-                int[] menu = GetMenuDimensions(customPics.Count() + defaultPics.Length);
+            int[] menu = GetMenuDimensions(customPics.Count() + defaultPics.Length);
 
             //Create menu
-            CreateResourcePacksIcons(menu[0], menu[1],defaultPics,customPics);
+            CreateResourcePacksIcons(menu[0], menu[1],defaultPics,customPics);    
+        #endif
+
+
         }
 
     /**
