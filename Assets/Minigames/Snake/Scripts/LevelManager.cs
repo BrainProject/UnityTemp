@@ -93,6 +93,7 @@ public class LevelManager : MonoBehaviour
 	{
 		GameObject[] snakeBody;
 		bool inside = false;
+		print(GameObject.Find ("snake1"));
 		int snakeLength = GameObject.Find ("snake1").GetComponent<Move2> ().snakeLength;
 		for (int i = 1; i <= snakeLength; i++) 
 		{
@@ -109,10 +110,10 @@ public class LevelManager : MonoBehaviour
 		}
 		if (!inside) 
 		{
-			GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
+			//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
 			GameObject.Find ("loserMessage").guiText.enabled = true;
 			
-			(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
+			/*(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
 			GameObject.Find ("_GameManager_").GetComponent<GameManager>().Dead();
 			snakeBody = GameObject.FindGameObjectsWithTag ("Snake");			
 			for (int i = 0; i < snakeBody.Length; i++) 
@@ -123,7 +124,7 @@ public class LevelManager : MonoBehaviour
 			for (int i = 0; i < snakeBody.Length; i++) 
 			{
 				Destroy (snakeBody [i]);
-			}
+			}*/
 		}
 		
 	}

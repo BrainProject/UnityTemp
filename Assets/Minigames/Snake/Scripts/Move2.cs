@@ -92,7 +92,7 @@ public class Move2 : MonoBehaviour
 	{
 		KinectManager kinectManager = KinectManager.Instance;
 
-		if (Input.GetKey ("left")) 
+		if (Input.GetKey ("left") || Input.GetKey(KeyCode.Keypad1)|| Input.GetKey(KeyCode.J)) 
 		{
 			if (lr == 0) 
 			{
@@ -105,7 +105,7 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}		
-		if (Input.GetKey ("right") && !init) 
+		if (Input.GetKey ("right") && !init || Input.GetKey(KeyCode.Keypad3) || Input.GetKey(KeyCode.L)) 
 		{
 			if (lr == 0) 
 			{
@@ -114,7 +114,7 @@ public class Move2 : MonoBehaviour
 				fb = 0;
 			}
 		}	
-		if (Input.GetKey ("up"))
+		if (Input.GetKey ("up")|| Input.GetKey(KeyCode.Keypad5))
 		{	
 			if (ud == 0) 
 			{
@@ -127,7 +127,7 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}		
-		if (Input.GetKey ("down")) 
+		if (Input.GetKey ("down")|| Input.GetKey(KeyCode.Keypad0)) 
 		{
 			if (ud == 0) 
 			{
