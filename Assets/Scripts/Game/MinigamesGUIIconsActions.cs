@@ -47,7 +47,7 @@ namespace Game
             resetState();
         }
 
-        void OnMouseDown()
+        void OnMouseUp()
         {
 			MinigamesGUI parent = transform.parent.GetComponent<MinigamesGUI> ();
 			parent.hide ();
@@ -62,12 +62,17 @@ namespace Game
 	                MGC.Instance.minigamesGUI.hide();
 
 	                //load proper scene
-					if(restartDifferentScene)
-					{
-						restartDifferentScene = false;
-						MGC.Instance.sceneLoader.LoadScene(differentSceneName);
-					}
-					else MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
+                    if (restartDifferentScene)
+                    {
+                        restartDifferentScene = false;
+                        MGC.Instance.startMiniGame(differentSceneName);
+                    }
+
+                    else
+                    {
+                        MGC.Instance.startMiniGame(Application.loadedLevelName);
+                    }
+
 
 					break;
 	            }
@@ -110,11 +115,6 @@ namespace Game
 				}
 			}   
         }
-
-		void OnMouseUp()
-		{
-			transform.parent.GetComponent<MinigamesGUI> ().clicked = false;
-		}
 
 		public void SetRestartDifferentScene(bool shouldRestartDifferentScene,string differentRestartSceneName)
 		{

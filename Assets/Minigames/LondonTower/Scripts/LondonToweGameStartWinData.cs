@@ -6,20 +6,20 @@ using System.Collections.Generic;
 /// containst start/win configuration for level
 /// work with 3 poles
 /// </summary>
-public class LondonToweGameStartWinData  {
+public class LondonToweGameStartWinData
+{
 
     /// <summary>
     /// for matching win-start configuration in list
     /// </summary>
     int gameID;
 
-   
-
     bool isStart;
 
-   public List<string> pole1 = new List<string>();
-   public List<string> pole2 = new List<string>();
-   public List<string> pole3 = new List<string>();
+    public List<string> pole1 = new List<string>();
+    public List<string> pole2 = new List<string>();
+    public List<string> pole3 = new List<string>();
+
     int pole1Size, pole2Size, pole3Size;
 
     public int GameID
@@ -69,24 +69,22 @@ public class LondonToweGameStartWinData  {
 
     public override string ToString()
     {
-        string data =gameID.ToString()+ "==";
+        string data = gameID.ToString() + "==";
         foreach (string s in pole1)
         {
-            data = data + s+";";
+            data = data + s + ";";
         }
-        data = data +"::";
+        data = data + "::";
         foreach (string s in pole2)
         {
-            data = data + s+";";
+            data = data + s + ";";
         }
         data = data + "::";
         foreach (string s in pole3)
         {
             data = data + s + ";";
         }
-      
-        return data + "__" + pole1Size.ToString() + "__" + pole2Size.ToString() + "__" + pole3Size.ToString() +";;"+ isStart.ToString();
+
+        return data + "__" + pole1Size.ToString() + "__" + pole2Size.ToString() + "__" + pole3Size.ToString() + ";;" + isStart.ToString();
     }
-    
-	
 }
