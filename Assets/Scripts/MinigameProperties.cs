@@ -44,6 +44,9 @@ namespace Game
     public class MinigameProperties : MonoBehaviour
     {
 
+        //TODO parameters here are the same as in MinigamesConfigurator
+        // how to re-use the code?
+
         /// <summary>
         /// human-friendly name of mini-game
         /// </summary>
@@ -54,15 +57,27 @@ namespace Game
         /// <summary>
         /// if mini-game has more than one scene, this one will be loaded first
         /// </summary>
+        /// Usualy this is some settings scene, like choosing image-set for Pexeso mini-game
         public string initialScene;
 
         /// <summary>
-        /// When this scene is loaded, help for mini-game will be shown
+        /// Main scene of the mini-game
         /// </summary>
-        public string sceneWithHelp;
+        /// When this scene is loaded, mini-game is considered as "played"
+        /// Also, mini-game help will appear (if required) after loading of this scene
+        public string mainScene;
 
-        //maximum difficulty
+        /// <summary>
+        /// Maximal difficulty
+        /// </summary>
+        /// Range of diff is: {0, MaxDifficulty}. So if You set MaxDifficulty to value 2, there will be three different difficulties
+        /// If mini-game has no difficulty setting (e. g. Coloring mini-game), set value to 0.
         public int MaxDifficulty;
+
+        /// <summary>
+        /// mini-game help. So far, simple texture
+        /// </summary>
+        public Texture helpTexture;
 
         /// <summary>
         /// Image symbolizing low difficulty
