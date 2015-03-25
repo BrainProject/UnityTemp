@@ -27,7 +27,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     {
         Vector3 cameraSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9));
         maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 8.5f)).y;
-        Debug.Log(maxY);
+        //Debug.Log(maxY);
         Vector3 cameraSize2 = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 9));
         moveConstantX =  Screen.width/cameraSize.x ;
         moveConstantY = Screen.height/ cameraSize.y;
