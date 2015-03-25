@@ -9,8 +9,8 @@ using System.Collections;
  * 
  * Functionality is divided into GameController class,
  * Column class and Disk class.
- * There is also simple end-game GUI
  *
+ * @author Jiří Chmelík
  */
 namespace HanoiTowers
 {
@@ -24,12 +24,11 @@ namespace HanoiTowers
         Right
     }
 
+    /// <summary>
+    /// Main class for 'Hanoi Towers' mini-game
+    /// </summary>
     public class GameController : MonoBehaviour
     {
-
-        //TODO proper initialization - ??
-        //TODO better graphics ??
-
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
 
@@ -57,6 +56,9 @@ namespace HanoiTowers
 
         private float gameStartTime;
 
+        /// <summary>
+        /// game starts...  
+        /// </summary>
         void Start()
         {
             //set up columns
@@ -72,15 +74,16 @@ namespace HanoiTowers
                 Debug.LogError("Wrong pointers to columns...");
             }
 
+            MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+
             ResetGame();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
+			
         }
 
         public void ResetGame()
         {
-            //TODO temporary hack
-            // fix it with unified difficulty settings
-            numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
+            //load difficulty from ...
+            numberOfDisks = MGC.Instance.selectedMiniGameDiff + 2;
 
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 
@@ -110,16 +113,6 @@ namespace HanoiTowers
 
             numberofMoves = 0;
             gameStartTime = Time.time;
-        }
-
-        // parameter has to be float to be usable with Unity UI
-        public void setDifficulty(float newNumberofDisks)
-        {
-            print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
-            numberOfDisks = (int)newNumberofDisks;
-
-            //TODO temporary hack - solve by implementing mini-game statistics saving
-            MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
         }
 
         public void increaseNumberofMoves()
@@ -165,18 +158,12 @@ namespace HanoiTowers
         }
 
 
+        /// <summary>
+        /// No special stuff needed here, just call MGC...
+        /// </summary>
         public void endGame()
         {
-            //animate Neuron
-            
-            GameObject Neuronek = MGC.Instance.neuronHelp;
-            if (Neuronek)
-            {
-                Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-            }
-
-            //global GUI
-            MGC.Instance.minigamesGUI.show(true);
+            MGC.Instance.FinishMinigame();
         }
     }
 }

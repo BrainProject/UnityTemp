@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿/**
+ * @file ClickImageScript.cs
+ * @author Ján Bella
+ */
+using UnityEngine;
 using System.Collections;
 
 
 namespace FindIt
 {
+    /**
+     * Callback for clicking on an image
+     */
     public class ClickImageScript : MonoBehaviour
     {
         void OnMouseDown()
         {
-            //restartIdleTimer();
-            //double actualTime = gameStopwatch.ElapsedMilliseconds;
-
-            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("SearchedImage").GetComponent<SpriteRenderer>().sprite))
+            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("TargetImage").GetComponent<SpriteRenderer>().sprite))
             {
                 if (this.gameObject.tag == "Left")
                 {
