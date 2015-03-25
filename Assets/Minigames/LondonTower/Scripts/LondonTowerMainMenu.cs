@@ -4,12 +4,19 @@ using System.Collections;
 /// <summary>
 /// Main menu gui for london tower
 /// </summary>
-public class LondonTowerMainMenu : MonoBehaviour
-{
+public class LondonTowerMainMenu : MonoBehaviour {
+
+
+   // public Texture selectLevel, exitGame, levelSet1, levelSet2, levelSet3, levelSet4, back;
+
 
     public GameObject mainMenuPanel;
     public GameObject levelSelectPanel;
 
+    
+
+
+  
 
     public void SelectLevel()
     {
@@ -19,7 +26,7 @@ public class LondonTowerMainMenu : MonoBehaviour
 
     public void Level(int level)
     {
-        //LondonTowerGameManager.dataSet = level;
+        LondonTowerGameManager.dataSet = level;
         MGC.Instance.sceneLoader.LoadScene("LondonTowerGame");
     }
 

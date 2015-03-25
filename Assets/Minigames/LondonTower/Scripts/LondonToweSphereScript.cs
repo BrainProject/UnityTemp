@@ -4,33 +4,46 @@ using System.Collections;
 /// <summary>
 /// Spehre gameobject script
 /// </summary>
-public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript>
-{
+public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript> {
 
     private Vector3 lastPosition;
     private bool clicked = false;
     private bool lastClicked = false;
     private bool moveX = true;
     private float lastPolePolesition;
+    private Vector3 polePosition = new Vector3(0,0,0);
     public LondonTowerGameManager gameManager;
-
+    private float maxY;
     //ratio of moving spehre by mouse - to scene
-    private float moveConstant = (Screen.height / 9.3f);
+    private float moveConstantX =(Screen.height /9.3f);
+    private float moveConstantY = (Screen.height / 9.3f);
     public bool start = true;
     public string idColor;
     public int currentPoleID;
     public int orderOnPole;
 
-    // Update is called once per frame
-    void Update()
+
+    void Start()
     {
+        Vector3 cameraSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9));
+        maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 8.5f)).y;
+        Debug.Log(maxY);
+        Vector3 cameraSize2 = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 9));
+        moveConstantX =  Screen.width/cameraSize.x ;
+        moveConstantY = Screen.height/ cameraSize.y;
+        
+
+    }
+		
+	// Update is called once per frame
+	void Update () {
         if (transform.rigidbody.velocity.y > 0)
         {
             transform.rigidbody.velocity = new Vector3();
         }
         if (transform.position.y <= 0)
         {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 6, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x , this.transform.position.y + 6, this.transform.position.z);
         }
         if (clicked)
         {
@@ -39,17 +52,20 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (moveX)
             {
                 //9,-1 are bordes when sphere can be moved
-                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstant)), this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
+               
+                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstantX)),Mathf.Min(maxY,this.transform.position.y + distance.y / moveConstantY), this.transform.position.z);
             }
             else
             {
                 //9,-1 are bordes when sphere can be moved + nax can only move down/up becaus id on the pole
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + distance.y / moveConstant, this.transform.position.z);
+                //spehre is on stick
+                this.transform.position = new Vector3(this.transform.position.x,Mathf.Min(maxY,Mathf.Max(this.transform.position.y + distance.y / moveConstantY, polePosition.y)), this.transform.position.z);
             }
             lastPosition = Input.mousePosition;
             if (lastClicked)
             {
                 lastClicked = !lastClicked;
+
             }
             else
             {
@@ -59,9 +75,11 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                     this.rigidbody.useGravity = true;
                 }
             }
+           
         }
         else
         {
+
             int xPosition = (((int)this.transform.position.x) / 4 * 4);
             float rozdil = this.transform.position.x - xPosition;
             if (rozdil > 2)
@@ -79,30 +97,40 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                 Debug.Log(lastPolePolesition);
                 //    Debug.Log(currentPoleID + "poleID");
                 this.transform.position = (new Vector3((currentPoleID - 1) * 4, this.transform.position.y + 1, this.transform.position.z));
+                //this.transform.position = (new Vector3(lastPolePolesition, this.transform.position.y, this.transform.position.z));
+
             }
             else
             {
                 this.transform.position = (new Vector3(xPosition, this.transform.position.y, this.transform.position.z));
             }
         }
-    }
+	
+	}
+
+   
 
     void OnMouseDown()
     {
-        if (LondonTowerGameManager.gameState == LondonTowerGameState.game)
+        if (LondonTowerGameManager.state == LondonTowerGameState.game)
         {
             if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked)
             {
                 clicked = true;
+                if (!moveX)
+                {
+                    polePosition = this.transform.position;
+                }
                 lastPosition = Input.mousePosition;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;
             }
+           
         }
     }
+  
 
-    public void EnableXMove(bool enableX)
-    {
+    public void EnableXMove(bool enableX) {
         moveX = enableX;
     }
 
@@ -115,13 +143,15 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         this.lastPolePolesition = polePosition;
     }
 
+
     /// <summary>
     /// return spehre to last pole
     /// </summary>
     /// <param name="poleHeight"> how big pole is, so spehre can be move directly on top of pole</param>
-    public void BackToLastPole(float poleHeight)
+    public void BackToLastPole( float poleHeight)
     {
         this.transform.position = new Vector3(lastPolePolesition, poleHeight, this.transform.position.z);
+
     }
 
     /// <summary>
@@ -132,7 +162,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     /// <param name="game"></param>
     public void SetPoleData(int poleID, int orderOnPole, bool game)
     {
-        currentPoleID = poleID;
+        currentPoleID=poleID;
         if (start)
         {
             start = false;
@@ -141,6 +171,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         {
             this.orderOnPole = orderOnPole;
         }
+
     }
 
     /// <summary>
@@ -154,11 +185,14 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         renderer.material.color = color;
     }
 
+
+
     public int CompareTo(LondonToweSphereScript other)
     {
         if (other == null) return 1;
         return orderOnPole.CompareTo(other.orderOnPole);
     }
+
 
     void OnTriggerEnter(Collider other)
     {
