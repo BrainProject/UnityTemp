@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake
+{
 public class LevelManager : MonoBehaviour 
 {
 
@@ -128,4 +131,5 @@ public class LevelManager : MonoBehaviour
 		}
 		
 	}
+}
 }
