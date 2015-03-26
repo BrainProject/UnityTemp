@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Kinect;
+using MinigameSnake;
 
 public class Move2 : MonoBehaviour 
 {

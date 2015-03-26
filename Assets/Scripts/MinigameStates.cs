@@ -81,7 +81,7 @@ namespace Game
 			Minigame snake = new Minigame ("Snake");
 			minigames.Add (snake);
 
-			MGC.Instance.LoadGame ();
+		//	MGC.Instance.LoadGame ();
 		}
 
 		/// <summary>
@@ -99,7 +99,7 @@ namespace Game
 				}
 			}
 
-			MGC.Instance.SaveGame ();
+		//	MGC.Instance.SaveGame ();
 		}
 
 		public bool GetPlayed(string minigameName)

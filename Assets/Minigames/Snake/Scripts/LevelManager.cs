@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		MGC.Instance.minigameStates.SetPlayed("Snake");
+		MGC.Instance.startMiniGame("Snake");
 		Screen.showCursor = false;
 		// creates snake
 		GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;

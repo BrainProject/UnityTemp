@@ -160,7 +160,8 @@ namespace Game
                 //TODO checks...
                     // if there is scene with such name
                 MinigameProperties props = child.GetComponent<MinigameProperties>();
-                print("   loading mini-game: '" + props.readableName + "'");
+				Debug.Log(props.readableName);
+               print("   loading mini-game: '" + props.readableName + "'");
                 minigames.Add(props);
             }
 
