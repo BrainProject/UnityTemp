@@ -3637,7 +3637,6 @@ GameObject:
   - 224: {fileID: 1776871354}
   - 222: {fileID: 1776871353}
   - 114: {fileID: 1776871352}
-  - 114: {fileID: 1776871355}
   - 114: {fileID: 1776871356}
   m_Layer: 5
   m_Name: Cursor
@@ -3690,17 +3689,6 @@ RectTransform:
   m_AnchoredPosition: {x: -169, y: 206}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: .5, y: .5}
---- !u!114 &1776871355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776871351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9909f74ca2b69f94096230e4c2eba0e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1776871356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3717,7 +3705,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1776871355}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDown
           m_Mode: 1
           m_Arguments:
@@ -3735,7 +3723,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1776871355}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseUp
           m_Mode: 1
           m_Arguments:
