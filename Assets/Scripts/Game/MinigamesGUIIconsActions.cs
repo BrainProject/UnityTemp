@@ -61,19 +61,7 @@ namespace Game
 	                //hide GUI
 	                MGC.Instance.minigamesGUI.hide();
 
-	                //load proper scene
-                    if (restartDifferentScene)
-                    {
-                        restartDifferentScene = false;
-                        MGC.Instance.startMiniGame(differentSceneName);
-                    }
-
-                    else
-                    {
-                        MGC.Instance.startMiniGame(Application.loadedLevelName);
-                    }
-
-
+                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
 					break;
 	            }
 
