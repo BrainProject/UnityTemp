@@ -90,7 +90,8 @@ public class MGC : Singleton<MGC>
     internal string selectedMiniGameName;
 
     // minigame will be started with this difficulty
-    internal int selectedMiniGameDiff { get; set; }
+    
+	internal int selectedMiniGameDiff { get; set; }
 
     internal string inactivityScene = "Figure";
     internal bool checkInactivity = true;
@@ -479,9 +480,13 @@ public class MGC : Singleton<MGC>
     {
         //store the name of selected minigame
         selectedMiniGameName = name;
+		
+		MinigameProperties props = getSelectedMinigameProperties ();
 
         // check, if difficulty is applicable for this mini-game
         // if not, run it directly
+				Debug.Log ("properties: " + getSelectedMinigameProperties ());
+				Debug.Log ("max diff: " + getSelectedMinigameProperties ().MaxDifficulty);
         if (getSelectedMinigameProperties().MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);

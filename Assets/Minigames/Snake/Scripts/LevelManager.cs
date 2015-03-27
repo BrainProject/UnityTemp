@@ -97,7 +97,7 @@ public class LevelManager : MonoBehaviour
 			looserMessage = GameObject.Find ("loserMessage");
 			snake1length = GameObject.Find ("snake1").GetComponent<Move2> ();
 
-			MGC.Instance.getMinigameStates ().SetPlayed ("Snake", level-1);
+			MGC.Instance.getMinigameStates ().SetPlayed ("Snake", level);
 	}
 
 

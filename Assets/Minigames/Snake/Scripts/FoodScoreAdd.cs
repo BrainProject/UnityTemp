@@ -6,6 +6,7 @@ public class FoodScoreAdd : MonoBehaviour {
 	static GameObject ob;
 	static GameManager sc;
 	public int score;
+	public MGC controller;
 	public int level;
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,8 @@ public class FoodScoreAdd : MonoBehaviour {
 
 
 			print("won the level");
-			MGC.Instance.FinishMinigame ();
+			controller = MGC.Instance;
+			controller.FinishMinigame ();
 		/*
 			if(GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel == 10)
 			{

@@ -115,7 +115,7 @@ public class Move2 : MonoBehaviour
 				fb = 0;
 			}
 		}	
-		if (Input.GetKey ("up")|| Input.GetKey(KeyCode.Keypad5))
+		if (Input.GetKey ("up")|| Input.GetKey(KeyCode.U))
 		{	
 			if (ud == 0) 
 			{
@@ -128,7 +128,7 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}		
-		if (Input.GetKey ("down")|| Input.GetKey(KeyCode.Keypad0)) 
+		if (Input.GetKey ("down")|| Input.GetKey(KeyCode.D)) 
 		{
 			if (ud == 0) 
 			{
@@ -141,7 +141,7 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}
-		if (Input.GetKey ("f")) 
+		if (Input.GetKey(KeyCode.F)) 
 		{
 			if (fb == 0) 
 			{
@@ -154,7 +154,7 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}
-		if (Input.GetKey ("b")) 
+		if (Input.GetKey(KeyCode.B)) 
 		{
 			if (fb == 0) 
 			{

@@ -1071,6 +1071,7 @@ namespace Kinect
 							break;
 					
 						case 1:  // gesture phase 2 = complete
+					Debug.Log("SWIPE UP in progress");
 							if((timestamp - gestureData.timestamp) < 1.5f)
 							{
 								bool isInPose = gestureData.joint == rightHandIndex ?
@@ -1089,6 +1090,11 @@ namespace Kinect
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+								if(gestureData.complete)
+								{
+								Debug.Log("SWIPE UP");
+								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_U);
+								}
 								}
 							}
 							else
@@ -1136,6 +1142,11 @@ namespace Kinect
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+							if(gestureData.complete)
+							{
+								Debug.Log("SWIPE DOWN");
+								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_D);
+							}
 								}
 							}
 							else
@@ -1442,7 +1453,13 @@ namespace Kinect
 								if(isInPose)
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);	
+							if(gestureData.complete)
+							{
+								Debug.Log("SWIPE Back");
+								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_B);
+							}
+
 								}
 							}
 							else
@@ -1494,6 +1511,11 @@ namespace Kinect
 								{
 									Vector3 jointPos = jointsPos[gestureData.joint];
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+							if(gestureData.complete)
+							{
+								Debug.Log("SWIPE Front");
+								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_F);
+							}
 								}
 							}
 							else
