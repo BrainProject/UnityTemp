@@ -4,10 +4,11 @@ using System.Collections;
 namespace SocialGame{
 	public class CheckClip : Check {
 		Transform followObj;
-
+		public Halo2D halo;
 		public override void thisActivate()
 		{
 			followObj = finishTarget;
+			Destroy(halo.gameObject);
 			//transform.localPosition = Vector3.zero;
 			showNow();
 			foreach(Check nextP in next)
@@ -31,6 +32,15 @@ namespace SocialGame{
 						spriteRender.enabled = true;
 					}
 				}
+				
+		}
+
+		public void Halo(bool active)
+		{
+			if(halo)
+			{
+				halo.Acitivate(active);
+			}
 		}
 
 		void Update()

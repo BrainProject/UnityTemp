@@ -21,7 +21,7 @@ namespace SocialGame{
 			finishTarget.rotation = transform.rotation;
 			Debug.Log(gameObject.name);
 			if(count)
-				count.next();
+				count.Next();
 		}
 
 
