@@ -44,8 +44,6 @@ namespace Game
 				brainIcon.show ();
 
             //rewardIcon.gameObject.SetActive(false);
-
-			restartIcon.GetComponent<MinigamesGUIIconsActions>().SetRestartDifferentScene(differentRestartScene,differentRestartSceneName);
         }
 
         public void hide()
