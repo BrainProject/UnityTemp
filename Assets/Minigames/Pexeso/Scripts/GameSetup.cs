@@ -135,6 +135,7 @@ namespace MinigamePexeso
 					yield return www;
 					gameTiles[i + resPacksNames.Length].transform.GetChild(0).renderer.material.mainTexture = www.texture;
 				}
+
 				//destroy tiles without resource packs 
 				else
 				{
@@ -151,7 +152,7 @@ namespace MinigamePexeso
             Debug.Log("Current chosen game: " + currentGame);
 
 			resPackPath = "Textures/Pictures/" + currentGame + "/";
-            customResPackPath = Application.persistentDataPath + "/CustomImages";
+            customResPackPath = MGC.Instance.getPathtoCustomImageSets();
 
 			//Number of default resource packs
 			int menuLength = resPacksNames.Length;
