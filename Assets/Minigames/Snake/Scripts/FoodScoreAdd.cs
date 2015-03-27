@@ -20,7 +20,7 @@ public class FoodScoreAdd : MonoBehaviour {
 		if (ob != null) {
 			score = ob.GetComponent<GameManager> ().LastScore ();
 		
-			print ("eaten food, score " + score);
+		//	print ("eaten food, score " + score);
 
 
 			if (score % 5 == 0 && !GameObject.Find ("_GameManager_").GetComponent<GameManager> ().death) {
@@ -37,6 +37,7 @@ public class FoodScoreAdd : MonoBehaviour {
 
 
 			print("won the level");
+			MGC.Instance.FinishMinigame ();
 		/*
 			if(GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel == 10)
 			{

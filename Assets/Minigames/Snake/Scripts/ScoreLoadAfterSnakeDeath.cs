@@ -13,7 +13,7 @@ public class ScoreLoadAfterSnakeDeath : MonoBehaviour {
 		{
 		death = GameObject.Find ("_GameManager_").GetComponent<GameManager> ().death;
 		level = GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel;
-		print("checking death: " + death);
+		//print("checking death: " + death);
 		if (death) {
 			Screen.showCursor = true;
 			GameObject.Find ("loserMessage").guiText.enabled = true;
@@ -29,9 +29,9 @@ public class ScoreLoadAfterSnakeDeath : MonoBehaviour {
 						manager.Player1Gestures [5] = KinectGestures.Gestures.None;
 						manager.ControlMouseCursor = true;
 			}*/
-						print ("score screen");
+						
 					//	Application.LoadLevel ("Score");
-						print ("score screen LOADED");
+						
 				}
 
 
