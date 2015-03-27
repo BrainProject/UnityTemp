@@ -121,7 +121,7 @@ public class LondonToweXMLGameLoader  {
                     }
                 }
             }
-            // načítáme hodnotu elementu
+            // loading element vaue
             else if ((xr.NodeType == XmlNodeType.EndElement) && (xr.Name == "level"))
             {
                 if (pokus1 != null && pokus2 != null)

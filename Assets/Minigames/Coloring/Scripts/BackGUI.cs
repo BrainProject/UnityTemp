@@ -45,9 +45,18 @@ namespace Coloring
 		public void IconVisible(bool isVisible)
 		{
 			if(isVisible)
+			{
 				StartCoroutine ("FadeInGUI");
+				//thisLevelManager.neuronMaterial = thisLevelManager.neuronOriginalMaterial;
+			}
 			else
+			{
 				StartCoroutine("FadeOutGUI");
+#if UNITY_ANDROID
+				thisLevelManager.brushColor.renderer.material.color = Color.white;
+				thisLevelManager.neuronMaterial.color = thisLevelManager.neuronOriginalColor;
+#endif
+			}
 		}
 
 		IEnumerator FadeInGUI()

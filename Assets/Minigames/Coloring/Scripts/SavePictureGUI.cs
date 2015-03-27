@@ -25,8 +25,9 @@ namespace Coloring
 		
 		void OnMouseDown()
 		{
-            string dateText = String.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now);
-			Camera.main.GetComponent<RenderCameraToFile> ().RenderToFile ("Obrázek - " + dateText + ".png");
+			string dateText =/* "YYYY-MM-DD";*/ String.Format ("{0:yyyy-MM-dd--HH-mm-ss}", DateTime.Now);
+			Camera.main.GetComponent<RenderCameraToFile> ().RenderToFile ("Picture-" + dateText + ".png");
+			//MGC.Instance.logger.addEntry ("Snapshot saved into " + Application.persistentDataPath);
 		}
 
 		public void IconVisible(bool isVisible)
