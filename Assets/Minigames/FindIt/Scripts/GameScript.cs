@@ -68,7 +68,7 @@ namespace FindIt
                     foreach(string file in allFiles)
                     {
                         Debug.Log("Loading file " + file);
-                        WWW www = new WWW("file://" + file);
+                        WWW www = new WWW("file:///" + file);
                         Sprite s = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
                         list.Add(s);
                     }
