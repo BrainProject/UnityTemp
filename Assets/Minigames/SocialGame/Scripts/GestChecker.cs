@@ -219,7 +219,8 @@ namespace SocialGame
 
 		public void ActivateChecking(bool active)
 		{
-			activeChecking = active;
+			//bugbug
+			activeChecking = true; //active;
 			for(int i = 0; i< transform.childCount; i++)
 			{
 				Transform child = transform.GetChild(i);

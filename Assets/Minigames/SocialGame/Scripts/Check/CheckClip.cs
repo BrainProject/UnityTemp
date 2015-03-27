@@ -5,19 +5,28 @@ namespace SocialGame{
 	public class CheckClip : Check {
 		Transform followObj;
 		public Halo2D halo;
+		public FinalCount count;
+
 		public override void thisActivate()
 		{
 			followObj = finishTarget;
-			Destroy(halo.gameObject);
+			if (halo) 
+			{
+				Destroy (halo.gameObject);
+				if(count)
+				{
+					count.Selected();
+				}
+			}
 			//transform.localPosition = Vector3.zero;
-			showNow();
+			//showNow();
 			foreach(Check nextP in next)
 			{
 					nextP.target = new Transform[] {gameObject.transform};
 			}
 		}
 		
-		private void showNow()
+		/*private void showNow()
 		{
 				MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
 				if(render)
@@ -33,6 +42,11 @@ namespace SocialGame{
 					}
 				}
 				
+		}*/
+
+		public override void show ()
+		{
+
 		}
 
 		public void Halo(bool active)
@@ -40,6 +54,7 @@ namespace SocialGame{
 			if(halo)
 			{
 				halo.Acitivate(active);
+				activated = active;
 			}
 		}
 
