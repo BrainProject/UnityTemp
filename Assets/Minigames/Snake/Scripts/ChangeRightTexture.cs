@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake
+{
 public class ChangeRightTexture : MonoBehaviour {
 	public Material samePlane;
 	public Material back;
@@ -36,4 +39,5 @@ public class ChangeRightTexture : MonoBehaviour {
 			this.renderer.material = front;
 		}
 	}
+}
 }

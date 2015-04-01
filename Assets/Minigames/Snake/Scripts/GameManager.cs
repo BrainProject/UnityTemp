@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Kinect;
 
+
+namespace MinigameSnake
+{
 public class GameManager : MonoBehaviour {
 	private int score;
 	//private string levelToLoad;
@@ -34,11 +37,11 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
-		if (game) {
-						this.guiText.text = "Score:" + score;
-				} else {
-			this.guiText.text = "";
-				}
+		//if (game) {
+			this.guiText.text = "Score: " + score;
+			//	} else {
+			//this.guiText.text = "";
+			//	}
 
 	}
 
@@ -87,4 +90,5 @@ public class GameManager : MonoBehaviour {
 		currentLevel = number;
 	}
 	
+}
 }

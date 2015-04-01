@@ -32,6 +32,13 @@ public class LevelManager : MonoBehaviour
 		//MGC.Instance.startMiniGame("Snake");
 
 		Screen.showCursor = false;
+		/*	MGC.Instance.minigamesGUI.transform.position.x = 4;
+			MGC.Instance.minigamesGUI.transform.position.y = 2;
+			MGC.Instance.minigamesGUI.transform.position.y = 12;
+			MGC.Instance.minigamesGUI.transform.rotation.x = 0;
+			MGC.Instance.minigamesGUI.transform.rotation.y = 180;
+			MGC.Instance.minigamesGUI.transform.rotation.z = 0;*/
+
 		// creates snake
 		GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;
 		GameObject snake1 = (GameObject)Instantiate (snakehead, new Vector3(4, 4, 2), Quaternion.identity);
@@ -123,8 +130,8 @@ public class LevelManager : MonoBehaviour
 		if (!inside) 
 		{
 			//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
-			looserMessage.guiText.enabled = true;
-			
+			//looserMessage.guiText.enabled = true;
+			GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;
 			/*(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
 			GameObject.Find ("_GameManager_").GetComponent<GameManager>().Dead();
 			snakeBody = GameObject.FindGameObjectsWithTag ("Snake");			

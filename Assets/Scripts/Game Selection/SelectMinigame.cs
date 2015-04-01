@@ -135,7 +135,7 @@ namespace MinigameSelection
                     MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 	                
                     //start the mini-game - choose difficulty (if applicable) and then load first scene of mini-game
-					Debug.Log("starting minigame or chooser");
+			//		Debug.Log("starting minigame or chooser");
                     MGC.Instance.startMiniGame(minigameName);
 				}
 

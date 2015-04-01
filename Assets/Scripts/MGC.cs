@@ -84,6 +84,7 @@ public class MGC : Singleton<MGC>
     internal GameObject minigamesGUIObject;
     internal MinigamesGUI minigamesGUI;
     internal bool fromMain;
+
     internal bool fromSelection;
 
     // name of MiniGame scene to be loaded
@@ -485,8 +486,8 @@ public class MGC : Singleton<MGC>
 
         // check, if difficulty is applicable for this mini-game
         // if not, run it directly
-				Debug.Log ("properties: " + getSelectedMinigameProperties ());
-				Debug.Log ("max diff: " + getSelectedMinigameProperties ().MaxDifficulty);
+	//			Debug.Log ("properties: " + getSelectedMinigameProperties ());
+	//			Debug.Log ("max diff: " + getSelectedMinigameProperties ().MaxDifficulty);
         if (getSelectedMinigameProperties().MaxDifficulty == 0)
         {
             sceneLoader.LoadScene(selectedMiniGameName);

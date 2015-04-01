@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake
+{
 public class LevelButtons : MonoBehaviour {
 
 	public string levelToLoad;
@@ -34,4 +37,5 @@ public class LevelButtons : MonoBehaviour {
 		GameObject.Find ("_GameManager_").GetComponent<GameManager> ().SetLevel (levelNumber);
 		Application.LoadLevel(levelToLoad);
 	}
+}
 }

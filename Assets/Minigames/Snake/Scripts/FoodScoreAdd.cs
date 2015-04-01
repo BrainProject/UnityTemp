@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using Kinect;
 
+
+namespace MinigameSnake
+{
 public class FoodScoreAdd : MonoBehaviour {
 	static GameObject ob;
 	static GameManager sc;
@@ -24,11 +27,19 @@ public class FoodScoreAdd : MonoBehaviour {
 		//	print ("eaten food, score " + score);
 
 
-			if (score % 5 == 0 && !GameObject.Find ("_GameManager_").GetComponent<GameManager> ().death) {
+			//if (score % 5 == 0 && !GameObject.Find ("_GameManager_").GetComponent<GameManager> ().death) {
+				if (score == 5)
+				{
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
 				Screen.showCursor = true;
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().Winning ();
-			}
+			
+				print("won the level, score " + score);
+				controller = MGC.Instance;
+				controller.FinishMinigame ();
+				MGC.Instance.minigamesGUI.show (true, false);
+				print("GUI shown");
+				}
 		}
 
 		
@@ -37,9 +48,11 @@ public class FoodScoreAdd : MonoBehaviour {
 
 
 
-			print("won the level");
+		/*	print("won the level, score " + score);
 			controller = MGC.Instance;
 			controller.FinishMinigame ();
+			MGC.Instance.minigamesGUI.show (true, false);
+			print("GUI shown");*/
 		/*
 			if(GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel == 10)
 			{
@@ -76,4 +89,4 @@ public class FoodScoreAdd : MonoBehaviour {
 			}*/
 		}
 	}
-
+}

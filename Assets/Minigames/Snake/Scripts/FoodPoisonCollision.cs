@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake
+{
 // If a food object is created at the coordinates of an existing poison object, this script deletes it and creates a new one somewhere else
 public class FoodPoisonCollision : MonoBehaviour 
 {	
@@ -26,4 +29,5 @@ public class FoodPoisonCollision : MonoBehaviour
 			print("created right food");
 		}
 	}
+}
 }

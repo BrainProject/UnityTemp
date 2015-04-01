@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+namespace MinigameSnake
+{
 // kills the snake if he collides with poison
 public class KillSnake : MonoBehaviour 
 {
@@ -39,4 +42,5 @@ public class KillSnake : MonoBehaviour
 			yield return new WaitForSeconds(0);
 		}
 	}
+}
 }

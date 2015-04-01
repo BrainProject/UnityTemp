@@ -42,7 +42,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
             //create "checked" icons for difficulties already finished
             for (int i = 0; i <= maxDiff; i++)
             {
-				print(i);
+//				print(i);
                 if (props.stats.finishedCount[i] > 0)
                 {
                     x = i * shiftX - 1050;

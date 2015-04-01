@@ -3,6 +3,9 @@ using System.Collections;
 using System;
 using Kinect;
 
+
+namespace MinigameSnake
+{
 public class GestureListener : MonoBehaviour, KinectGestures.GestureListenerInterface
 {
 
@@ -157,4 +160,5 @@ public class GestureListener : MonoBehaviour, KinectGestures.GestureListenerInte
 		return true;
 	}
 	
+}
 }

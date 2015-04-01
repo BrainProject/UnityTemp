@@ -1071,7 +1071,7 @@ namespace Kinect
 							break;
 					
 						case 1:  // gesture phase 2 = complete
-					Debug.Log("SWIPE UP in progress");
+					//Debug.Log("SWIPE UP in progress");
 							if((timestamp - gestureData.timestamp) < 1.5f)
 							{
 								bool isInPose = gestureData.joint == rightHandIndex ?
@@ -1092,7 +1092,7 @@ namespace Kinect
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
 								if(gestureData.complete)
 								{
-								Debug.Log("SWIPE UP");
+						//		Debug.Log("SWIPE UP");
 								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_U);
 								}
 								}
@@ -1144,7 +1144,7 @@ namespace Kinect
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
 							if(gestureData.complete)
 							{
-								Debug.Log("SWIPE DOWN");
+						//		Debug.Log("SWIPE DOWN");
 								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_D);
 							}
 								}
@@ -1392,29 +1392,28 @@ namespace Kinect
 							}
 							break;
 					
-						case 1:  // gesture phase 2 = complete
-							if((timestamp - gestureData.timestamp) < 1.5f)
-							{
-								bool isInPose = jointsTracked[hipCenterIndex] &&
-									(jointsPos[hipCenterIndex].y - gestureData.jointPos.y) < -0.15f && 
-									Mathf.Abs(jointsPos[hipCenterIndex].x - gestureData.jointPos.x) < 0.15f;
-
-								if(isInPose)
-								{
-									Vector3 jointPos = jointsPos[gestureData.joint];
-									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
-								}
-							}
-							else
-							{
-								// cancel the gesture
-								SetGestureCancelled(ref gestureData);
-							}
-							break;
+				case 1:  // gesture phase 2 = complete
+					if((timestamp - gestureData.timestamp) < 1.5f)
+					{
+						bool isInPose = jointsTracked[hipCenterIndex] &&
+							(jointsPos[hipCenterIndex].y - gestureData.jointPos.y) < -0.15f && 
+								Mathf.Abs(jointsPos[hipCenterIndex].x - gestureData.jointPos.x) < 0.15f;
+						if(isInPose)
+						{
+							Vector3 jointPos = jointsPos[gestureData.joint];
+							CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
+						}
+					}
+					else
+					{
+						// cancel the gesture
+						SetGestureCancelled(ref gestureData);
 					}
 					break;
+				}
+				break;
 
-				// check for Push
+
 				case Gestures.Push:
 					switch(gestureData.state)
 					{
@@ -1456,7 +1455,7 @@ namespace Kinect
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);	
 							if(gestureData.complete)
 							{
-								Debug.Log("SWIPE Back");
+				//				Debug.Log("SWIPE Back");
 								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_B);
 							}
 
@@ -1513,7 +1512,7 @@ namespace Kinect
 									CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, 0f);
 							if(gestureData.complete)
 							{
-								Debug.Log("SWIPE Front");
+						//		Debug.Log("SWIPE Front");
 								Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_F);
 							}
 								}
@@ -1603,4 +1602,5 @@ namespace Kinect
 			#endif
 		}
 	}
-}
+	}
+

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Kinect;
 using MinigameSnake;
 
+
+namespace MinigameSnake
+{
 public class Move2 : MonoBehaviour 
 {
 	private KinectGestures gestureListener; //gesture listener for Kinect
@@ -37,7 +40,7 @@ public class Move2 : MonoBehaviour
 		// repeats the moving routine every "frequency" seconds
 		level = (float)GameObject.Find("_Level Manager_").GetComponent<LevelManager>().level;
 		//speed = 1.1f - (0.5f + level/10);
-		speed = 2 / (level + 2);
+		speed = 2 / (level/5 + 1.5f);
 		InvokeRepeating("Move", 0.1f, speed);
 	}
 
@@ -51,15 +54,15 @@ public class Move2 : MonoBehaviour
 			float pz = (float) Random.Range(0,10);
 			Vector3 foodPosition = new Vector3 (px, py, pz);
 			Instantiate (food, foodPosition, Quaternion.identity);
-			print("cerated new food");
+//			print("cerated new food");
 			Instantiate(foodColored, foodPosition, Quaternion.identity);
-			print("created second food");
+//			print("created second food");
 			
 			Vector3 NewBodyPosition = GameObject.Find("snake" + GameObject.Find("snake1").GetComponent<Move2>().snakeLength).transform.position;
 			GameObject newbody = (GameObject)Instantiate (snakeprefab, NewBodyPosition, Quaternion.identity);
 			GameObject.Find("snake1").GetComponent<Move2>().snakeLength++;
 			newbody.name = "snake" + GameObject.Find("snake1").GetComponent<Move2>().snakeLength;
-			print("destroyed food");
+//			print("destroyed food");
 			Destroy(c.gameObject);
 		}
 		if (c.gameObject.tag == "RightFood") {
@@ -245,4 +248,5 @@ public class Move2 : MonoBehaviour
 			}*/
 		}
 	}
+}
 }

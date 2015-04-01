@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+namespace MinigameSnake
+{
 public class StoreBody : MonoBehaviour {
 	public List<Object> foodObject; 
 	// Use this for initialization
@@ -15,4 +18,5 @@ public class StoreBody : MonoBehaviour {
 	void Update () {
 	
 	}
+}
 }
