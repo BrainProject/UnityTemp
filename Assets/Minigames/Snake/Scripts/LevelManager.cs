@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
 	public GameObject poisonColored;
 	public Vector3[] foodPosition;
 	public Vector3[] poisonPosition;
+
+		public GameManager manager;
 	//public MGC controller;
 
 	public Camera mainCamera;
@@ -67,7 +69,8 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 		}
-
+			manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
+			manager.game = true;
 		// creates initial food
 		//level = GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel;
 		level = MGC.Instance.selectedMiniGameDiff;
@@ -110,6 +113,7 @@ public class LevelManager : MonoBehaviour
 
 	void Update () 
 	{
+		//	print("started update");
 		GameObject[] snakeBody;
 		bool inside = false;
 		//print(GameObject.Find ("snake1"));
@@ -130,8 +134,12 @@ public class LevelManager : MonoBehaviour
 		if (!inside) 
 		{
 			//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
-			//looserMessage.guiText.enabled = true;
-			GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;
+			looserMessage.guiText.enabled = true;
+			manager.game = false;
+			GameObject.Find("snake1").GetComponent<Move2>().Stop();
+		//	print("stopped");
+		//	break;
+			
 			/*(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
 			GameObject.Find ("_GameManager_").GetComponent<GameManager>().Dead();
 			snakeBody = GameObject.FindGameObjectsWithTag ("Snake");			
@@ -145,7 +153,8 @@ public class LevelManager : MonoBehaviour
 				Destroy (snakeBody [i]);
 			}*/
 		}
-		
+			//print("stopped2");
 	}
+	
 }
 }

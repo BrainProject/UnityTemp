@@ -11,6 +11,7 @@ public class FoodScoreAdd : MonoBehaviour {
 	public int score;
 	public MGC controller;
 	public int level;
+	
 	// Use this for initialization
 	void Start () {
 		ob = GameObject.Find("_GameManager_");
@@ -31,14 +32,17 @@ public class FoodScoreAdd : MonoBehaviour {
 				if (score == 5)
 				{
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
+					print("change game to fgalse");
+					GameObject.Find("snake1").GetComponent<Move2>().Stop();
 				Screen.showCursor = true;
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().Winning ();
 			
-				print("won the level, score " + score);
+			//	print("won the level, score " + score);
 				controller = MGC.Instance;
 				controller.FinishMinigame ();
 				MGC.Instance.minigamesGUI.show (true, false);
-				print("GUI shown");
+				
+			//	print("GUI shown");
 				}
 		}
 

@@ -19,6 +19,7 @@ public class KillSnake : MonoBehaviour
 		{
 
 			audio.PlayOneShot (death);
+			GameObject.Find("snake1").GetComponent<Move2>().Stop();
 			GameObject.Find ("loserMessage").guiText.enabled = true;
 
 			(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;

@@ -25,12 +25,14 @@ public class Move2 : MonoBehaviour
 	public AudioClip eating;
 	public GameObject ko;
 	public MGC controller;
+	public GameManager manager;
 	// Use this for initialization
 	void Start () 
 	{
 		controller = MGC.Instance;
 		//gestureListener = Camera.main.GetComponent<GestureListener>();
 		ko = GameObject.Find ("KinectObject");
+		manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
 		if (ko != null) {  //pohyb
 				
 				//gestureListener = ko.GetComponent<KinectGestures> ();
@@ -42,6 +44,7 @@ public class Move2 : MonoBehaviour
 		//speed = 1.1f - (0.5f + level/10);
 		speed = 2 / (level/5 + 1.5f);
 		InvokeRepeating("Move", 0.1f, speed);
+			manager.game = true;
 	}
 
 	void OnTriggerEnter(Collider c)
@@ -68,6 +71,11 @@ public class Move2 : MonoBehaviour
 		if (c.gameObject.tag == "RightFood") {
 			Destroy(c.gameObject);
 				}
+
+			print("checking game " + manager.game);
+
+
+		
 	}
 
 	public void Move()
@@ -172,81 +180,18 @@ public class Move2 : MonoBehaviour
 		}
 		if (gestureListener != null) 
 		{
-			/*if (gestureListener.IsSwipeLeft ()) 
-			{
-				if (lr == 0) 
-				{
-					lr = 1;
-					ud = 0;
-					fb = 0;
-					if (init) 
-					{
-						init = false;
-					}
-				}
-			}
-			if (gestureListener.IsSwipeRight () && !init) 
-			{
-				if (lr == 0) 
-				{
-					lr = -1;
-					ud = 0;
-					fb = 0;
-				}
-			}
-			if (gestureListener.IsSwipeUp ()) 
-			{
-				if (ud == 0) 
-				{
-					lr = 0;
-					ud = 1;
-					fb = 0;
-					if (init) 
-					{
-						init = false;
-					}
-				}
-			}
-			if (gestureListener.IsSwipeDown ()) 
-			{
-				if (ud == 0) 
-				{
-					lr = 0;
-					ud = -1;
-					fb = 0;
-					if (init) 
-					{
-						init = false;
-					}
-				}
-			}
-			if (gestureListener.IsPull ()) 
-			{
-				if (fb == 0) 
-				{
-					lr = 0;
-					ud = 0;
-					fb = 1;
-					if (init) 
-					{
-						init = false;
-					}
-				}
-			}
-			if (gestureListener.IsPush ()) 
-			{
-				if (fb == 0) 
-				{
-					lr = 0;
-					ud = 0;
-					fb = -1;
-					if (init) 
-					{
-						init = false;
-					}
-				}
-			}*/
+			
 		}
 	}
+
+		public void Stop()
+		{
+			CancelInvoke();
+			print("stop");
+			controller = MGC.Instance;
+			controller.FinishMinigame ();
+			MGC.Instance.minigamesGUI.show (true, false);
+			//break;
+		}
 }
 }
