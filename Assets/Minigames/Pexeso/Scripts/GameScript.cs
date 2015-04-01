@@ -54,11 +54,6 @@ namespace MinigamePexeso
         public Boolean customPack;
 
         /// <summary>
-        /// Path to custom image-sets.
-        /// </summary>
-        private string customResPackPath = "\\CustomImages\\";
-
-        /// <summary>
         /// Array of tiles.
         /// </summary>
         private GameObject[] gameTiles;
@@ -505,6 +500,8 @@ namespace MinigamePexeso
         /// </summary>
         public IEnumerator AddCustomPicturesToGameTiles()
         {
+            string customImagesPath = MGC.Instance.getPathtoCustomImageSets() + currentGame.ToString() + "/" + resourcePack + "/";
+
             if (currentGame == GameType.Pexeso)
             {
                 List<Texture2D> classicPic = new List<Texture2D>();
@@ -513,7 +510,7 @@ namespace MinigamePexeso
                 int num;
 
                 //Load all pictures
-                string[] files = Directory.GetFiles(Environment.CurrentDirectory + customResPackPath + currentGame.ToString() + "\\" + resourcePack + "\\", "*.png");
+                string[] files = Directory.GetFiles(customImagesPath, "*.png");
                 images = new UnityEngine.Object[files.Length];
 
                 WWW www;
@@ -578,6 +575,8 @@ namespace MinigamePexeso
                     chosen.RemoveAt(num);
                 }
             }
+
+            // game is not classic pexeso, but some other variant (siluethes, similiraties...)
             else
             {
                 List<Texture2D> classicPic = new List<Texture2D>();
@@ -586,14 +585,14 @@ namespace MinigamePexeso
                 System.Random random = new System.Random();
                 int num;
 
-                //string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" +  resourcePack + "\\");
+                
                 //Load all pictures and their matching silhouettes/similarities.
                 int o = 0;
                 while (o != -1)
                 {
-                    WWW www = new WWW("file://" + Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" + resourcePack + "\\" + o.ToString("00") + ".png");
+                    WWW www = new WWW("file:///" + customImagesPath + o.ToString("00") + ".png");
                     yield return www;
-                    WWW wwwA = new WWW("file://" + Environment.CurrentDirectory + "\\Assets\\Minigames\\Pexeso\\Resources\\Textures\\Pictures\\" + currentGame.ToString() + "\\" + resourcePack + "\\" + o.ToString("00") + "a.png");
+                    WWW wwwA = new WWW("file:///" + customImagesPath + o.ToString("00") + "a.png");
                     yield return wwwA;
 
                     tex = www.texture;
@@ -604,6 +603,7 @@ namespace MinigamePexeso
                         Debug.Log(www.error);
                         tex = null;
                     }
+
                     if (wwwA.error != null)
                     {
                         Debug.Log(wwwA.error);
@@ -625,9 +625,17 @@ namespace MinigamePexeso
                     }
                 }
 
+                //check, if there is enough pictures loaded
+                int neededPics = (rows * columns) / 2;
+                if(classicPic.Count < neededPics)
+                {
+                    MGC.Instance.logger.addEntry("There is not enough pictures in costum pack: '" + currentGame.ToString() + "'");
+                    throw new UnityException("There is not enough pictures in costum pack: '" + currentGame.ToString() + "'");
+                }
+
                 //Choose randomly appropriate number of pictures and their matching silhouettes/similarities.
                 List<Texture2D> chosen = new List<Texture2D>();
-                for (int i = 0; i < (rows * columns) / 2; i++)
+                for (int i = 0; i < neededPics; i++)
                 {
                     num = random.Next(0, classicPic.Count);
                     chosen.Add(classicPic[num]);
@@ -635,12 +643,14 @@ namespace MinigamePexeso
                     classicPic.RemoveAt(num);
                     classicPic_a.RemoveAt(num);
                 }
+
                 //Check if appropriate number of pics have been chosen.
                 if (chosen.Count != (rows * columns))
                 {
                     //This happens when some image fails to load
                     throw new UnityException("Some images failed to load");
                 }
+
                 //Assign textures to planes.
                 for (int i = 0; i < (rows * columns); i++)
                 {

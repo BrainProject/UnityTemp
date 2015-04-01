@@ -24,7 +24,7 @@ namespace Puzzle
         private int numberPieces;
 
         // custom resource packs path 
-        private string customResPackPath = "\\CustomImages\\";
+        private string customResPackPath;
         
         // default resource packs array
         public string defaultPicturesPath = "Pictures";
@@ -71,11 +71,9 @@ namespace Puzzle
          */
         private IEnumerable<string> LoadCustomResourcePacks()
         {
-            //sort of tests, if directories exists
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath);
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath + "\\Puzzle");
+            Directory.CreateDirectory(customResPackPath);
 
-            return Directory.GetFiles(Environment.CurrentDirectory + customResPackPath + "Puzzle\\").Where(
+            return Directory.GetFiles(customResPackPath).Where(
                     p => Path.GetExtension(p).ToLower() == ".png" || Path.GetExtension(p).ToLower() == ".jpg" ||
                          Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
                          Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif");    
@@ -88,6 +86,8 @@ namespace Puzzle
             Texture2D[] defaultPics = Resources.LoadAll<Texture2D>(defaultPicturesPath);
 
             IEnumerable<string> customPics;
+
+            customResPackPath = MGC.Instance.getPathtoCustomImageSets() + "/Puzzle";
 
             //TODO this should works on all platforms
 
@@ -155,7 +155,7 @@ namespace Puzzle
         {
             while (j < menuColumns && (menuRows - 1 - i) * menuColumns + j - defaultPics.Length < customPics.Count())
             {
-                WWW www = new WWW("file://" + customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + j - defaultPics.Length));
+                WWW www = new WWW("file:///" + customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + j - defaultPics.Length));
 
                 GameObject g = Instantiate(TilePrefab) as GameObject;
 

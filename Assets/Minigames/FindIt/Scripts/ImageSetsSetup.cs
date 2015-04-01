@@ -24,7 +24,7 @@ namespace FindIt
         private int numberPieces;
 
         // custom resource packs path 
-        private string customResPackPath = "\\CustomImages\\";
+        private string customResPackPath;
         
         // default resource packs array
         public string[] resPacksNames;
@@ -74,10 +74,10 @@ namespace FindIt
         private void CheckCustomResourcePacks(int demandedCount)
         {
             //sort of tests, if directories exists
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath);
-            Directory.CreateDirectory(Environment.CurrentDirectory + customResPackPath + "\\FindIt");
+            Directory.CreateDirectory(customResPackPath);
 
-            string[] customResourcePacks = Directory.GetDirectories(Environment.CurrentDirectory + customResPackPath + "FindIt\\");
+            string[] customResourcePacks = Directory.GetDirectories(customResPackPath);
+            print("Founded custom image sets: " + customResourcePacks.Count());
 
             for (int i = 0; i < customResourcePacks.Count(); i++)
             {
@@ -100,7 +100,13 @@ namespace FindIt
                     p => Path.GetExtension(p).ToLower() == ".png" || Path.GetExtension(p).ToLower() == ".jpg" ||
                          Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
                          Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif");
-            return (allFilenames.Count() >= demandedCount);
+            if(allFilenames.Count() < demandedCount)
+            {
+                print("Image set: '" + directory + "', contains only: " + allFilenames.Count() + " images. Required: " + demandedCount);
+                return false;
+            }
+
+            return true;
         }
 
         /**
@@ -135,6 +141,10 @@ namespace FindIt
                     defResPacks.Add(resPacksNames[i]);
                 }
             }
+
+            customResPackPath = MGC.Instance.getPathtoCustomImageSets() + "/FindIt";
+
+            //TODO solve this for Android platform
 
             //Check for custom resource packs
 #if UNITY_STANDALONE_WIN
@@ -209,7 +219,7 @@ namespace FindIt
                     g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
                 SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
 
-                WWW www = new WWW ("file://" + file);
+                WWW www = new WWW ("file:///" + file);
                 sr.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
                 g.AddComponent<BoxCollider2D>();
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();

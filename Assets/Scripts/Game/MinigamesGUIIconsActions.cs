@@ -17,9 +17,6 @@ namespace Game
 		internal Color startColor;
 		internal Color targetColor;
 
-		private bool restartDifferentScene = false;
-		private string differentSceneName;
-
 		void Start()
 		{
 			startColor = this.renderer.material.color;
@@ -61,19 +58,7 @@ namespace Game
 	                //hide GUI
 	                MGC.Instance.minigamesGUI.hide();
 
-	                //load proper scene
-                    if (restartDifferentScene)
-                    {
-                        restartDifferentScene = false;
-                        MGC.Instance.startMiniGame(differentSceneName);
-                    }
-
-                    else
-                    {
-                        MGC.Instance.startMiniGame(Application.loadedLevelName);
-                    }
-
-
+                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
 					break;
 	            }
 
@@ -115,12 +100,6 @@ namespace Game
 				}
 			}   
         }
-
-		public void SetRestartDifferentScene(bool shouldRestartDifferentScene,string differentRestartSceneName)
-		{
-			this.restartDifferentScene = shouldRestartDifferentScene;
-			this.differentSceneName = differentRestartSceneName;
-		}
 
 		public void show()
 		{

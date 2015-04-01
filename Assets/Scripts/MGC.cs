@@ -94,6 +94,16 @@ public class MGC : Singleton<MGC>
     
 	internal int selectedMiniGameDiff { get; set; }
 
+    /// <summary>
+    /// Path, where painting created by players will be stored
+    /// </summary>
+    internal string pathtoPaintings;
+
+    /// <summary>
+    /// Path, where users shloud put their custom image sets...
+    /// </summary>
+    internal string pathtoCustomImageSets;
+
     internal string inactivityScene = "Figure";
     internal bool checkInactivity = true;
 
@@ -146,6 +156,14 @@ public class MGC : Singleton<MGC>
         {
             Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
         }
+
+        //set up path, check or create directories
+        pathtoPaintings = Application.persistentDataPath + "/Pictures/";
+        pathtoCustomImageSets = Application.persistentDataPath + "/CustomImages/";
+
+        Directory.CreateDirectory(pathtoPaintings);
+        Directory.CreateDirectory(pathtoCustomImageSets);
+        
 
         //initiate kinect manager
         Debug.Log("Trying to create KinectManager.");
@@ -270,10 +288,10 @@ public class MGC : Singleton<MGC>
         {
             MGC.Instance.sceneLoader.FadeIn();
         }
-        /*else
+        else
         {
             gameObject.guiTexture.enabled = false;
-        }*/
+        }
     }
 
     /// <summary>
@@ -528,6 +546,15 @@ public class MGC : Singleton<MGC>
         return minigamesProperties;
     }
 
+    public string getPathtoPaintings()
+    {
+        return pathtoPaintings;
+    }
+
+    public string getPathtoCustomImageSets()
+    {
+        return pathtoCustomImageSets;
+    }
 
 
     /// <summary>

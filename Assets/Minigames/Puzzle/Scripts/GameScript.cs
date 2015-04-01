@@ -69,7 +69,7 @@ namespace Puzzle
                 bool custom = PlayerPrefs.GetInt("custom") == 1;
                 if(custom)
                 {
-                    WWW www = new WWW("file://" + PlayerPrefs.GetString("Image"));
+                    WWW www = new WWW("file:///" + PlayerPrefs.GetString("Image"));
                     puzzleImage = www.texture;
                 }
                 else 

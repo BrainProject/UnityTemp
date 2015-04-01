@@ -28,7 +28,7 @@ public class RenderCameraToFile : MonoBehaviour
             throw new UnityException("Camera is not set - check settings of this script in inspector");
         }
 
-        string path = Application.persistentDataPath + "/Pictures/";
+        string path = MGC.Instance.getPathtoPaintings();
 
         // create new render texture and set it        
         RenderTexture tempRT = new RenderTexture(width, height, 24);
@@ -46,8 +46,6 @@ public class RenderCameraToFile : MonoBehaviour
         RenderTexture.active = null; 
         cam.targetTexture = null;
         
-        //check or create directory
-        Directory.CreateDirectory(path);
 
         //save Texture2D to file
         byte[] bytes;
