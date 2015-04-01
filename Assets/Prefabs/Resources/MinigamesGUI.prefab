@@ -101,7 +101,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 400010}
   - 20: {fileID: 2000000}
-  - 92: {fileID: 9200000}
   m_Layer: 0
   m_Name: GUI Camera
   m_TagString: Untagged
@@ -266,7 +265,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 2.75
-  m_Depth: 0
+  m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -385,13 +384,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!92 &9200000
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100010}
-  m_Enabled: 1
 --- !u!108 &10800000
 Light:
   m_ObjectHideFlags: 1
@@ -493,6 +485,7 @@ MonoBehaviour:
   guiDetection: {fileID: 11400010}
   visible: 0
   gsiStandalone: 0
+  clicked: 0
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
