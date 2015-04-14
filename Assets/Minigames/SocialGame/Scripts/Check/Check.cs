@@ -14,7 +14,8 @@ public class Check : MonoBehaviour {
 	{
 		show();
 	}
-
+	
+	
 	public virtual bool Checked(Transform target)
 	{
 		bool last = false;
@@ -34,7 +35,8 @@ public class Check : MonoBehaviour {
 		thisActivate();
 		return last;
 	}
-
+	
+	[ContextMenu("Check")]
 	public virtual void thisActivate()
 	{
 			activated = false;
