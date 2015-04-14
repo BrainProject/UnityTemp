@@ -49,7 +49,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 1bf82c1d6ff7700489a88474ba0dcfa7, type: 2}
+  - {fileID: 2100000, guid: a434f74a541d98145bd2f8738888c794, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   death: 0
+  gm: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,11 +216,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snakeLength: 3
-  food: {fileID: 100000, guid: 0730bad85955bce428bf7adee1b0426f, type: 2}
+  food: {fileID: 140080, guid: 544b0f1757ecd184b8df5c3cb007bb67, type: 2}
   snakeprefab: {fileID: 100000, guid: 5bb2727b222d8c74eafbfb6d4a927fd1, type: 2}
   foodColored: {fileID: 100000, guid: 60b956eb260e4544e85381490ecbd7b0, type: 2}
   eating: {fileID: 8300000, guid: 3b4b67ccd67a15e44937e365a4caa2d7, type: 3}
   ko: {fileID: 0}
+  controller: {fileID: 0}
+  manager: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

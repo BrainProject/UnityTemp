@@ -17,6 +17,11 @@ public class Move2 : MonoBehaviour
 	private int lr = 0; // x axis increment
 	private int ud = 0; // z axis increment
 	private int fb = 0; // y axis increment
+
+	private int rlr = 0; // x axis rotation
+	private int rud = 0; // z axis rotation
+	private int rfb = 0; // y axis rotation
+
 	private bool init = true;
 
 	public GameObject food;
@@ -26,10 +31,12 @@ public class Move2 : MonoBehaviour
 	public GameObject ko;
 	public MGC controller;
 	public GameManager manager;
+	private Quaternion rot;
 	// Use this for initialization
 	void Start () 
 	{
 		controller = MGC.Instance;
+		Vector3 rot;
 		//gestureListener = Camera.main.GetComponent<GestureListener>();
 		ko = GameObject.Find ("KinectObject");
 		manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
@@ -68,11 +75,12 @@ public class Move2 : MonoBehaviour
 //			print("destroyed food");
 			Destroy(c.gameObject);
 		}
+
 		if (c.gameObject.tag == "RightFood") {
 			Destroy(c.gameObject);
 				}
 
-			print("checking game " + manager.game);
+//			print("checking game " + manager.game);
 
 
 		
@@ -82,11 +90,16 @@ public class Move2 : MonoBehaviour
 	{
 		// moves the head
 		Vector3 pos = transform.position;
+		Quaternion rotation = transform.rotation;
+		//	Vector3 rot;
 		Vector3 oldPos = transform.position;
 		pos.x += lr;
 		pos.y += ud;
 		pos.z += fb;
+		rotation = rot;
 		transform.position = pos;
+		transform.rotation = rotation;
+		
 
 		// makes the rest of the body follow
 		if (transform.position != oldPos) 
@@ -111,6 +124,7 @@ public class Move2 : MonoBehaviour
 				lr = 1;
 				ud = 0;
 				fb = 0;
+				rot.eulerAngles = new Vector3(0, 0, 0);
 				if (init) 
 				{
 					init = false;
@@ -124,6 +138,7 @@ public class Move2 : MonoBehaviour
 				lr = -1;
 				ud = 0;
 				fb = 0;
+				rot.eulerAngles = new Vector3(0, -180, 0);
 			}
 		}	
 		if (Input.GetKey ("up")|| Input.GetKey(KeyCode.U))
@@ -133,6 +148,7 @@ public class Move2 : MonoBehaviour
 				lr = 0;
 				ud = 1;
 				fb = 0;
+				rot.eulerAngles = new Vector3(0, 90, 90);
 				if (init) 
 				{
 					init = false;
@@ -146,6 +162,7 @@ public class Move2 : MonoBehaviour
 				lr = 0;
 				ud = -1;
 				fb = 0;
+				rot.eulerAngles = new Vector3(0, -90, -90);
 				if (init) 
 				{
 					init = false;
@@ -159,6 +176,7 @@ public class Move2 : MonoBehaviour
 				lr = 0;
 				ud = 0;
 				fb = 1;
+				rot.eulerAngles = new Vector3(0, 281, 0);
 				if (init) 
 				{
 					init = false;
@@ -172,6 +190,7 @@ public class Move2 : MonoBehaviour
 				lr = 0;
 				ud = 0;
 				fb = -1;
+				rot.eulerAngles = new Vector3(0, 90, 0);
 				if (init) 
 				{
 					init = false;
@@ -191,6 +210,7 @@ public class Move2 : MonoBehaviour
 			controller = MGC.Instance;
 			controller.FinishMinigame ();
 			MGC.Instance.minigamesGUI.show (true, false);
+
 			//break;
 		}
 }

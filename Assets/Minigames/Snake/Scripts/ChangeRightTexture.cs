@@ -14,6 +14,7 @@ public class ChangeRightTexture : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		snake = GameObject.FindGameObjectWithTag ("Snake");
+		//	print (snake);
 		if (snake.transform.position.z == this.transform.position.z) {
 			this.renderer.material = samePlane;
 				}
@@ -29,15 +30,17 @@ public class ChangeRightTexture : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		snake = GameObject.FindGameObjectWithTag ("Snake");
-		if (snake.transform.position.z == this.transform.position.z) {
-			this.renderer.material = samePlane;
-		}
-		if (snake.transform.position.z > this.transform.position.z) {
-			this.renderer.material = back;
-		}
-		if (snake.transform.position.z < this.transform.position.z) {
-			this.renderer.material = front;
-		}
+			if (snake != null) {
+				if (snake.transform.position.z == this.transform.position.z) {
+					this.renderer.material = samePlane;
+				}
+				if (snake.transform.position.z > this.transform.position.z) {
+					this.renderer.material = back;
+				}
+				if (snake.transform.position.z < this.transform.position.z) {
+					this.renderer.material = front;
+				}
+			}
 	}
 }
 }

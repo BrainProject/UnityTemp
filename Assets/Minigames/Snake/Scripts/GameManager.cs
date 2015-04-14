@@ -7,7 +7,7 @@ using Kinect;
 namespace MinigameSnake
 {
 public class GameManager : MonoBehaviour {
-	private int score;
+	public int score;
 	//private string levelToLoad;
 	public int currentLevel;
 	public bool death;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 		game = false;
 		score = 0;
 		//This keeps the object alive across multiple scenes.
-		DontDestroyOnLoad (this.gameObject);
+		//DontDestroyOnLoad (this.gameObject);
 		
 		//Sets the position of GUI Text
 		this.guiText.pixelOffset = new Vector2 (Screen.width/6,Screen.height/2);

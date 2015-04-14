@@ -14,12 +14,13 @@ public class LevelManager : MonoBehaviour
 
 	public int level;
 
-	public GameObject food;
-	public GameObject poison;
+	public GameObject apple;
+	public GameObject poison1;
 	public GameObject foodColored;
 	public GameObject poisonColored;
 	public Vector3[] foodPosition;
 	public Vector3[] poisonPosition;
+ 	private GameObject snake1;
 
 		public GameManager manager;
 	//public MGC controller;
@@ -42,8 +43,10 @@ public class LevelManager : MonoBehaviour
 			MGC.Instance.minigamesGUI.transform.rotation.z = 0;*/
 
 		// creates snake
-		GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = true;
-		GameObject snake1 = (GameObject)Instantiate (snakehead, new Vector3(4, 4, 2), Quaternion.identity);
+		manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
+		manager.game = true;
+		manager.score = 0;
+		snake1 = (GameObject)Instantiate (snakehead, new Vector3(4, 4, 2), Quaternion.identity);
 		snake1.name = "snake1";
 		GameObject snake2 = (GameObject)Instantiate (snakeprefab, new Vector3(3, 4, 2), Quaternion.identity);
 		snake2.name = "snake2";
@@ -71,6 +74,9 @@ public class LevelManager : MonoBehaviour
 		}
 			manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
 			manager.game = true;
+			manager.score = 0;
+
+
 		// creates initial food
 		//level = GameObject.Find ("_GameManager_").GetComponent<GameManager> ().currentLevel;
 		level = MGC.Instance.selectedMiniGameDiff;
@@ -84,7 +90,7 @@ public class LevelManager : MonoBehaviour
 			float pz = (float) Random.Range(0,10);
 			foodPosition[i] = new Vector3(px, py, pz);
 			//creates food for both screens
-			Instantiate(food, foodPosition[i], Quaternion.identity);
+			Instantiate(apple, foodPosition[i], Quaternion.identity);
 			//print("created normal food");
 			Instantiate(foodColored, foodPosition[i], Quaternion.identity);
 			//print("created right food");
@@ -99,7 +105,7 @@ public class LevelManager : MonoBehaviour
 			float py = (float) Random.Range(0,10);
 			float pz = (float) Random.Range(0,10);
 			poisonPosition[i] = new Vector3(px, py, pz);
-			Instantiate(poison, poisonPosition[i], Quaternion.identity);
+			Instantiate(poison1, poisonPosition[i], Quaternion.identity);
 			Instantiate(poisonColored, poisonPosition[i], Quaternion.identity);
 			//print("poison created");
 		}	
@@ -108,53 +114,49 @@ public class LevelManager : MonoBehaviour
 			snake1length = GameObject.Find ("snake1").GetComponent<Move2> ();
 
 			MGC.Instance.getMinigameStates ().SetPlayed ("Snake", level);
+
+			StartCoroutine("Levels");
 	}
 
 
 	void Update () 
+		{
+
+		}
+
+	IEnumerator Levels () 
 	{
-		//	print("started update");
-		GameObject[] snakeBody;
-		bool inside = false;
-		//print(GameObject.Find ("snake1"));
-			int snakeLength = snake1length.snakeLength;
-		for (int i = 1; i <= snakeLength; i++) 
-		{
-			// check whether is snake out of gameplane
-			inside = GeometryUtility.TestPlanesAABB (GeometryUtility.CalculateFrustumPlanes (mainCamera), GameObject.Find ("snake" + i).GetComponent<BoxCollider>().bounds);
-			if (GameObject.Find ("snake" + i).GetComponent<BoxCollider>().bounds.center.z<-20)
-			{
-				inside = false;
-			}
-			if (inside) 
-			{
-				break;
+			bool inside = true;
+			while (inside) {
+				//	print("started update");
+				GameObject[] snakeBody;
+			//	bool inside = false;
+				//print(GameObject.Find ("snake1"));
+				int snakeLength = snake1length.snakeLength;
+				if (snake1 != null)
+				{
+				for (int i = 1; i <= snakeLength; i++) {
+					// check whether is snake out of gameplane
+					inside = GeometryUtility.TestPlanesAABB (GeometryUtility.CalculateFrustumPlanes (mainCamera), GameObject.Find ("snake" + i).GetComponent<BoxCollider> ().bounds);
+					if (GameObject.Find ("snake" + i).GetComponent<BoxCollider> ().bounds.center.z < -20) {
+						inside = false;
+					}
+					if (inside) {
+						break;
+					}
+					
+				}
+				if (!inside) {
+					//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
+					looserMessage.guiText.enabled = true;
+					manager.game = false;
+					GameObject.Find ("snake1").GetComponent<Move2> ().Stop ();
+				
+				}
+				}
+				yield return null;
 			}
 		}
-		if (!inside) 
-		{
-			//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
-			looserMessage.guiText.enabled = true;
-			manager.game = false;
-			GameObject.Find("snake1").GetComponent<Move2>().Stop();
-		//	print("stopped");
-		//	break;
-			
-			/*(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
-			GameObject.Find ("_GameManager_").GetComponent<GameManager>().Dead();
-			snakeBody = GameObject.FindGameObjectsWithTag ("Snake");			
-			for (int i = 0; i < snakeBody.Length; i++) 
-			{
-				Destroy (snakeBody [i]);
-			}
-			snakeBody = GameObject.FindGameObjectsWithTag ("Tail");			
-			for (int i = 0; i < snakeBody.Length; i++) 
-			{
-				Destroy (snakeBody [i]);
-			}*/
-		}
-			//print("stopped2");
-	}
 	
 }
 }

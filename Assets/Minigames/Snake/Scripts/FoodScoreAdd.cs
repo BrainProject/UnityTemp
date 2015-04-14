@@ -16,6 +16,7 @@ public class FoodScoreAdd : MonoBehaviour {
 	void Start () {
 		ob = GameObject.Find("_GameManager_");
 		sc = (GameManager)ob.GetComponent(typeof(GameManager));
+			print (sc);
 	}
 	
 	// Update is called once per frame
@@ -29,18 +30,19 @@ public class FoodScoreAdd : MonoBehaviour {
 
 
 			//if (score % 5 == 0 && !GameObject.Find ("_GameManager_").GetComponent<GameManager> ().death) {
-				if (score == 5)
+				if (score == 5 )
 				{
+					//TODO moze byt null
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
-					print("change game to fgalse");
-					GameObject.Find("snake1").GetComponent<Move2>().Stop();
+//					print("change game to fgalse");
+				GameObject.Find("snake1").GetComponent<Move2>().Stop();
 				Screen.showCursor = true;
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().Winning ();
 			
 			//	print("won the level, score " + score);
-				controller = MGC.Instance;
-				controller.FinishMinigame ();
-				MGC.Instance.minigamesGUI.show (true, false);
+			//	controller = MGC.Instance;
+			//	controller.FinishMinigame ();
+			//	MGC.Instance.minigamesGUI.show (true, false);
 				
 			//	print("GUI shown");
 				}

@@ -106,12 +106,13 @@ MonoBehaviour:
   gridCube: {fileID: 100000, guid: 4fa403a707e3fc447a6fa7ab4b3eab57, type: 2}
   gridCubeRight: {fileID: 100000, guid: 0fc03e1b77385cf4b9e9e92854c05db9, type: 2}
   level: 1
-  food: {fileID: 100000, guid: 0730bad85955bce428bf7adee1b0426f, type: 2}
-  poison: {fileID: 100000, guid: 27b1a0bc515b0a64f96d932fbb8da62a, type: 2}
-  foodColored: {fileID: 100000, guid: 60b956eb260e4544e85381490ecbd7b0, type: 2}
-  poisonColored: {fileID: 100000, guid: 753d70d7571d17a47944078dbb7ba729, type: 2}
+  apple: {fileID: 160708, guid: e356e769971dbc943be3cdf9ffe136ab, type: 2}
+  poison1: {fileID: 149070, guid: 90fc74a922ee6544f99f3e8f01676d58, type: 2}
+  foodColored: {fileID: 160708, guid: b124d22eacec29746962dd8d110b3fb7, type: 2}
+  poisonColored: {fileID: 149070, guid: 89f24c5f49999ec4d8f4a687570c4046, type: 2}
   foodPosition: []
   poisonPosition: []
+  manager: {fileID: 0}
   mainCamera: {fileID: 2017941376}
   looserMessage: {fileID: 0}
   snake1length: {fileID: 0}
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d106a960d7a8b7245acebda0d1343040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
   currentLevel: 1
   death: 0
   winning: 0
@@ -860,7 +862,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2017941375}
-  m_LocalRotation: {x: -8.74227766e-08, y: -1, z: 1.42429793e-14, w: 1.62920685e-07}
+  m_LocalRotation: {x: -1.42174961e-09, y: -.999961913, z: -.00872663688, w: 1.62914475e-07}
   m_LocalPosition: {x: 4.5, y: 4.5, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
