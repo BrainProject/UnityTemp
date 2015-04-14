@@ -95,6 +95,11 @@ namespace SocialGame{
 					break;
 				}
 		}
+		#else
+		public void Selected()
+		{
+
+		}
 		#endif
 }
 }
