@@ -28,6 +28,21 @@ namespace Game
 			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
 			MGC.Instance.ShowCustomCursor (true);
+
+
+			//Move Neuron according to screen aspect.
+			//The solution is only for following aspect ratios (it might work with other ratios, but they are not supported anyway):
+			//5:4, 4:3, 3:2, 16:10, 16:9
+			Vector3 tmp;
+
+			tmp = transform.parent.camera.ScreenToViewportPoint(new Vector3 (transform.parent.camera.WorldToScreenPoint(transform.localPosition).x, 0, 0));
+			//tmp.x = tmp.x - transform.parent.camera.aspect / 2;
+			tmp.x = 1.45f * transform.localPosition.x - (tmp.x - tmp.x/16)/Camera.main.aspect;
+			tmp.y = transform.localPosition.y;
+			tmp.z = transform.localPosition.z;
+			
+			Debug.Log (tmp.x);
+			transform.localPosition = tmp;
 		}
 
 		void LateUpdate()

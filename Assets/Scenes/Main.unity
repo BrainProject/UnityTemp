@@ -564,6 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -3348,6 +3349,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: fac94cbf44903f24e97807dc7b53f26a, type: 2}
+      propertyPath: neuronCamera
+      value: 
+      objectReference: {fileID: 1929061214}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fac94cbf44903f24e97807dc7b53f26a, type: 2}
   m_RootGameObject: {fileID: 1929061210}
@@ -4114,8 +4119,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1929061215}
   - 20: {fileID: 1929061214}
-  - 124: {fileID: 1929061213}
-  - 92: {fileID: 1929061212}
   - 114: {fileID: 1929061216}
   m_Layer: 0
   m_Name: _Newron
@@ -4124,22 +4127,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!92 &1929061212
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9200000, guid: fac94cbf44903f24e97807dc7b53f26a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1665214423}
-  m_GameObject: {fileID: 1929061210}
-  m_Enabled: 1
---- !u!124 &1929061213
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: fac94cbf44903f24e97807dc7b53f26a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1665214423}
-  m_GameObject: {fileID: 1929061210}
-  m_Enabled: 1
 --- !u!20 &1929061214
 Camera:
   m_ObjectHideFlags: 0
@@ -4162,7 +4149,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 1
+  m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 2081
