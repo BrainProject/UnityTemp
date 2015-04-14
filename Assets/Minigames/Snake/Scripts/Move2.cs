@@ -12,7 +12,7 @@ public class Move2 : MonoBehaviour
 	private KinectGestures gestureListener; //gesture listener for Kinect
 	public int snakeLength = 3;
 	public static float level; 
-	private float speed;
+	public float speed;
 	//private float frenquency = 1.0f/speed;
 	private int lr = 0; // x axis increment
 	private int ud = 0; // z axis increment
@@ -212,6 +212,10 @@ public class Move2 : MonoBehaviour
 			MGC.Instance.minigamesGUI.show (true, false);
 
 			//break;
+		}
+		public void StopMove()
+		{
+			CancelInvoke();
 		}
 }
 }

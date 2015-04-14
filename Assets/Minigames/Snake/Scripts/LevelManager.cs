@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 	public Vector3[] foodPosition;
 	public Vector3[] poisonPosition;
  	private GameObject snake1;
-
+		public bool paused;
 		public GameManager manager;
 	//public MGC controller;
 
@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
 	{
 		//MGC.Instance.startMiniGame("Snake");
 
-		Screen.showCursor = false;
+		//Screen.showCursor = false;
 		/*	MGC.Instance.minigamesGUI.transform.position.x = 4;
 			MGC.Instance.minigamesGUI.transform.position.y = 2;
 			MGC.Instance.minigamesGUI.transform.position.y = 12;
@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour
 						//print("created back plne");
 					}
 					//GameObject.Find("gridCube(Clone)").gameObject.transform.parent = GameObject.Find("_LevelManager_").transform;
-					GameObject.Find("gridCube(Clone)").gameObject.name = "gridCell(" + i + ", " + j + ", " + k + ")";
+					GameObject.Find("gridCubeHighligted(Clone)").gameObject.name = "gridCell(" + i + ", " + j + ", " + k + ")";
 					
 				}
 			}
@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < poisonNumber; i++) 
 		{
 			float px = (float) Random.Range(0,10);
-			float py = (float) Random.Range(0,10);
+			float py = (float) Random.Range(-0.3f,9.7f);
 			float pz = (float) Random.Range(0,10);
 			poisonPosition[i] = new Vector3(px, py, pz);
 			Instantiate(poison1, poisonPosition[i], Quaternion.identity);
@@ -114,8 +114,9 @@ public class LevelManager : MonoBehaviour
 			snake1length = GameObject.Find ("snake1").GetComponent<Move2> ();
 
 			MGC.Instance.getMinigameStates ().SetPlayed ("Snake", level);
-
+			paused = true;
 			StartCoroutine("Levels");
+
 	}
 
 
@@ -126,6 +127,8 @@ public class LevelManager : MonoBehaviour
 
 	IEnumerator Levels () 
 	{
+//			print("STARTED COROUTINE");
+//			print("paused " + paused);
 			bool inside = true;
 			while (inside) {
 				//	print("started update");
@@ -153,6 +156,13 @@ public class LevelManager : MonoBehaviour
 					GameObject.Find ("snake1").GetComponent<Move2> ().Stop ();
 				
 				}
+					if (paused) {
+						//GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
+						//looserMessage.guiText.enabled = true;
+						//manager.game = false;
+						GameObject.Find ("snake1").GetComponent<Move2> ().StopMove ();
+						
+					}
 				}
 				yield return null;
 			}

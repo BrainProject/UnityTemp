@@ -224,14 +224,16 @@ public class MGC : Singleton<MGC>
         if (Input.GetKeyDown(KeyCode.I))
         {
 #endif
-            print("Show hidden menu.");
+            
             if (!minigamesGUI.visible)
             {
                 minigamesGUI.show();
+				print("Showing hidden menu.");
             }
             else
             {
                 minigamesGUI.hide();
+				print("Hiding hidden menu.");
             }
         }
 
