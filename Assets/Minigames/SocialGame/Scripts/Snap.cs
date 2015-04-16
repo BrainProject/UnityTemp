@@ -85,6 +85,7 @@ namespace SocialGame{
 				FigureCreate figCreate = playerObj.GetComponentInChildren<FigureCreate>();
 				GameObject checker = figCreate.createPoints();
 				GestCheckerFigure checkerScript = checker.GetComponent<GestCheckerFigure>();
+
 				//GameObject root = GameObjectEx.findGameObjectWithNameTag("root",tag);
 				setTags(checker,tag);
 				if(targetPlayer && (targetPlayer.transform.position.x > 0))
@@ -95,8 +96,15 @@ namespace SocialGame{
 				{
 					checker.transform.position = positionLeft;
 				}
-				checkerScript.findTartgetByCheckName();
-				setCheckerScript(checkerScript);
+				if(checkerScript)
+				{
+					checkerScript.findTartgetByCheckName();
+					setCheckerScript(checkerScript);
+				}
+				else
+				{
+					Debug.LogError("checker script missing");
+				}
 				if(cancle)
 				{
 					cancle.figure = checkerScript;
@@ -117,7 +125,14 @@ namespace SocialGame{
 			}
 		}
 
-
+		void Stop(bool stop)
+		{
+			if (stop)
+			{
+			  //bugbug
+			}
+				//Destroy (gameObject);
+		}
 
 		public void setCheckerScript(GestCheckerFigure script)
 		{
