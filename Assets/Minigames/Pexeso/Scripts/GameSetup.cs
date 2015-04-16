@@ -134,6 +134,12 @@ namespace MinigamePexeso
 					WWW www = new WWW ("file:///" + customResourcePacks[i] + "/00.png");
 					yield return www;
 					gameTiles[i + resPacksNames.Length].transform.GetChild(0).renderer.material.mainTexture = www.texture;
+
+					if (www.error != null)
+					{
+						Debug.Log("Custom resource pack '" + s[s.Length - 1] + "' is not valid");
+						Destroy(gameTiles[i + resPacksNames.Length]);
+					}
 				}
 
 				//destroy tiles without resource packs 
