@@ -33,6 +33,8 @@ namespace FindIt
         private List<string> defResPacks = new List<string>();
         private List<string> customResPacks = new List<string>();
 
+        public GameObject TilePrefab;
+
         /**
          * Returns proper dimensions of the grid to put the tiles
          * @ param elementsCount Number of elements to fit in the grid
@@ -116,7 +118,7 @@ namespace FindIt
          */
         public bool checkDefaultForEnoughImages(int numberImages, string resourcePackName)
         {
-            return Resources.LoadAll<Sprite>(resourcePackName).Length >= numberImages;
+            return Resources.LoadAll<Texture2D>(resourcePackName).Length >= numberImages;
         }
 
 
@@ -182,8 +184,27 @@ namespace FindIt
         {
             for (j = 0; j < menuColumns && (menuRows - 1 - i) * menuColumns + j < defResPacks.Count; j++)
             {
-                GameObject g = new GameObject();
+                GameObject g = Instantiate(TilePrefab) as GameObject;
+
                 g.transform.localPosition = new Vector3(
+                    menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
+                    menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
+                    0.0f);
+                if (menuRows > 2)
+                    g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+
+                g.renderer.material.mainTexture = Resources.LoadAll<Texture2D>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[0];
+
+                ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
+                chis.custom = false;
+                chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
+                chis.name = chis.resourcePackName;
+                
+
+
+                
+                /*g.transform.localPosition = new Vector3(
                     menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
                     menuRows - 1 == 0 ? 0 : ((maxy - miny)/(menuRows-1))*i + miny,
                     0.0f);
@@ -195,7 +216,7 @@ namespace FindIt
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = false;
                 chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
-                chis.name = chis.resourcePackName;
+                chis.name = chis.resourcePackName;*/
             }
         }
 
@@ -209,8 +230,29 @@ namespace FindIt
                 string file = Directory.GetFiles(customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count]).Where(
                    p => Path.GetExtension(p).ToLower() == ".png" || Path.GetExtension(p).ToLower() == ".jpg" ||
                         Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
-                        Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif").ElementAt<string>(r.Next(numberPieces));
-                GameObject g = new GameObject();
+                        Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif").ElementAt<string>(/*r.Next(numberPieces)*/0);
+
+                GameObject g = Instantiate(TilePrefab) as GameObject;
+
+                g.transform.localPosition = new Vector3(
+                    menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
+                    menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
+                    0.0f);
+                if (menuRows > 2)
+                    g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+
+                WWW www = new WWW("file:///" + file);
+                g.renderer.material.mainTexture = www.texture;
+
+                ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
+                chis.custom = true;
+                chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
+                //chis.name = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
+                
+                
+                
+                /*GameObject g = new GameObject();
                 g.transform.localPosition = new Vector3(
                     ((maxx - minx) / (menuColumns - 1)) * j + minx,
                     ((maxy - miny) / (menuRows - 1)) * i + miny,
@@ -224,7 +266,7 @@ namespace FindIt
                 g.AddComponent<BoxCollider2D>();
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = true;
-                chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
+                chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];*/
                 j++;
             }
             j = 0;
