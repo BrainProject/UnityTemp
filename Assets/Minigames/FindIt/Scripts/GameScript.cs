@@ -69,7 +69,6 @@ namespace FindIt
                     {
                         Debug.Log("Loading file " + file);
                         WWW www = new WWW("file:///" + file);
-                        //Sprite s = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
                         list.Add(www.texture);
                     }
                     images = list.ToArray<Texture2D>();
@@ -132,7 +131,6 @@ namespace FindIt
                 GameObject o = GameObject.Find(i.ToString());
                 o.SetActive(true);
                 o.renderer.material.mainTexture = images[index];
-                //o.GetComponent<SpriteRenderer>().sprite = images[index];
             }
             for(int i=numPictures+1;i<=MAX_PIECES;i++)
             {
@@ -162,7 +160,6 @@ namespace FindIt
                 if (chosen == numberPieces) chosen = 0;
             }
             selectedImage = usedIndices[chosen];
-            //targetImage.GetComponent<SpriteRenderer>().sprite = images[selectedImage];
             targetImage.renderer.material.mainTexture = images[selectedImage];
 
         }

@@ -200,23 +200,6 @@ namespace FindIt
                 chis.custom = false;
                 chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
                 chis.name = chis.resourcePackName;
-                
-
-
-                
-                /*g.transform.localPosition = new Vector3(
-                    menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
-                    menuRows - 1 == 0 ? 0 : ((maxy - miny)/(menuRows-1))*i + miny,
-                    0.0f);
-                if (menuRows > 2)
-                    g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-                SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
-                sr.sprite = Resources.LoadAll<Sprite>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[r.Next(numberPieces)];
-                g.AddComponent<BoxCollider2D>();
-                ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
-                chis.custom = false;
-                chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
-                chis.name = chis.resourcePackName;*/
             }
         }
 
@@ -250,23 +233,6 @@ namespace FindIt
                 chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
                 //chis.name = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
                 
-                
-                
-                /*GameObject g = new GameObject();
-                g.transform.localPosition = new Vector3(
-                    ((maxx - minx) / (menuColumns - 1)) * j + minx,
-                    ((maxy - miny) / (menuRows - 1)) * i + miny,
-                     0.0f);
-                if (menuRows > 2)
-                    g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-                SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
-
-                WWW www = new WWW ("file:///" + file);
-                sr.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
-                g.AddComponent<BoxCollider2D>();
-                ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
-                chis.custom = true;
-                chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];*/
                 j++;
             }
             j = 0;

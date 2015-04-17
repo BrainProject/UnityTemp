@@ -16,7 +16,6 @@ namespace FindIt
         void OnMouseDown()
         {
             if(this.gameObject.renderer.material.mainTexture.Equals(GameObject.Find("TargetImage").renderer.material.mainTexture))
-//            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("TargetImage").GetComponent<SpriteRenderer>().sprite))
             {
                 if (this.gameObject.tag == "Left")
                 {
