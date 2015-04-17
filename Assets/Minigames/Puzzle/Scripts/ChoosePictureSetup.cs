@@ -32,6 +32,23 @@ namespace Puzzle
         public GameObject TilePrefab;
 
         /**
+         * Directory.GetFiles() returns files, where folder is 
+         * 
+         */
+        private string repairPath(string s)
+        {
+            string c = "";
+            for(int i=0;i<s.Length;i++)
+            {
+                char v = s.ElementAt(i);
+                if (v == '/')
+                    c = c + '\\';
+                else c += v;
+            }
+            return c;
+        }
+
+        /**
          * Returns proper dimensions of the grid to put the tiles
          * @ param elementsCount Number of elements to fit in the grid
          * @ array containing number of rows, number of columns
@@ -87,14 +104,14 @@ namespace Puzzle
 
             IEnumerable<string> customPics;
 
-            customResPackPath = MGC.Instance.getPathtoCustomImageSets() + "/Puzzle";
+            customResPackPath = MGC.Instance.getPathtoCustomImageSets() + "Puzzle/";
 
             //TODO this should works on all platforms
 
             //Check for custom resource packs
         #if !UNITY_WEBPLAYER
             customPics = LoadCustomResourcePacks();
-        
+
             //Calculate number of menu items
             int[] menu = GetMenuDimensions(customPics.Count() + defaultPics.Length);
 
@@ -123,9 +140,9 @@ namespace Puzzle
 
         Debug.Log("Grid size chosen as " + menuRows + " x " + menuColumns);
 
-        for (i = menuRows - 1; i >= 0 && (menuRows - 2 - i) * menuColumns + j < defaultPics.Length; i--)
+        for (i = menuRows - 1; i >= 0 && (menuRows - 2 - i) * menuColumns + (menuColumns - 1 - j) < defaultPics.Length; i--)
         {
-            for (j = 0; j < menuColumns && (menuRows - 1 - i) * menuColumns + j < defaultPics.Length; j++)
+            for (j = menuColumns - 1; j >= 0 && (menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) < defaultPics.Length; j--)
             {
 
                 GameObject g = Instantiate(TilePrefab) as GameObject;
@@ -138,12 +155,12 @@ namespace Puzzle
                     g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                 else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
 
-                g.GetComponent<MeshRenderer>().material.mainTexture = defaultPics[(menuRows - 1 - i) * menuColumns + j];
+                g.GetComponent<MeshRenderer>().material.mainTexture = defaultPics[(menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j)];
                 
                 ChoosePictureScript chps = g.AddComponent<ChoosePictureScript>();
                 chps.custom = false;
-                chps.name = defaultPics[(menuRows - 1 - i) * menuColumns + j].name;
-                chps.imageName = defaultPics[(menuRows - 1 - i) * menuColumns + j].name;
+                chps.name = defaultPics[(menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j)].name;
+                chps.imageName = defaultPics[(menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j)].name;
                 chps.defaultPicsPath = defaultPicturesPath;
             }
         }
@@ -151,11 +168,12 @@ namespace Puzzle
         //Add custom resoruce packs
         #if UNITY_STANDALONE_WIN
         i++;
-        while (i >= 0 && (menuRows - 1 - i) * menuColumns + j - defaultPics.Length < customPics.Count())
+        while (i >= 0 && (menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) - defaultPics.Length < customPics.Count())
         {
-            while (j < menuColumns && (menuRows - 1 - i) * menuColumns + j - defaultPics.Length < customPics.Count())
+            while (j >= 0 && (menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) - defaultPics.Length < customPics.Count())
             {
-                WWW www = new WWW("file:///" + customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + j - defaultPics.Length));
+                Debug.Log("file:///" + /*repairPath*/(customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) - defaultPics.Length)));
+                WWW www = new WWW("file:///" + /*repairPath*/(customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) - defaultPics.Length)));
 
                 GameObject g = Instantiate(TilePrefab) as GameObject;
 
@@ -172,11 +190,11 @@ namespace Puzzle
                 ChoosePictureScript chps = g.AddComponent<ChoosePictureScript>();
                 chps.custom = true;
                 chps.name = www.texture.name;
-                chps.imageName = customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + j - defaultPics.Length);
+                chps.imageName = customPics.ElementAt<string>((menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) - defaultPics.Length);
                 chps.defaultPicsPath = defaultPicturesPath;
-                j++;
+                j--;
             }
-            j = 0;
+            j = menuColumns -1;
             i--;
         }
         #endif
