@@ -130,8 +130,8 @@ namespace Puzzle
     private void CreateResourcePacksIcons(int menuRows, int menuColumns, Texture2D[] defaultPics, IEnumerable<string> customPics)
     {
         // defines borders in the scene
-        const float minx = -6.5f;
-        const float maxx = 6.5f;
+        /*const*/ float minx = -5.7f; // -6.5f;
+        /*const*/ float maxx = 5.7f; // 6.5f;
         const float miny = -2.75f;
         const float maxy = 2.75f;
 
@@ -139,6 +139,12 @@ namespace Puzzle
         int i, j = 0;
 
         Debug.Log("Grid size chosen as " + menuRows + " x " + menuColumns);
+
+        if (menuColumns == 2)
+        {
+            minx += 2;
+            maxx -= 2;
+        }
 
         for (i = menuRows - 1; i >= 0 && (menuRows - 2 - i) * menuColumns + (menuColumns - 1 - j) < defaultPics.Length; i--)
         {
