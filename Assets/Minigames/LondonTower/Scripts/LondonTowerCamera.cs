@@ -21,12 +21,16 @@ public class LondonTowerCamera : MonoBehaviour {
     private Texture2D minimapBacground;
     private float goalTime = 3.5f;
 
+    public static float LeftBound =0;
+    public static float RightBound = 0;
 
     void Awake()
     {
         minimapBacground = new Texture2D(1, 1);
         minimapBacground.SetPixel(0, 0, new Color(7.0f/255.0f,24.0f/255.0f,51.0f/255.0f));
         minimapBacground.Apply();
+        RightBound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)).x;
+        LeftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9)).x;
     }
     
     /// <summary>

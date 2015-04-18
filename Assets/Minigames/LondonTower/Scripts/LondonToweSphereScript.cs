@@ -6,34 +6,25 @@ using System.Collections;
 /// </summary>
 public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript> {
 
-    private Vector3 lastPosition;
     private bool clicked = false;
     private bool lastClicked = false;
     private bool moveX = true;
     private float lastPolePolesition;
-    private Vector3 polePosition = new Vector3(0,0,0);
-    public LondonTowerGameManager gameManager;
-    private float maxY;
-    //ratio of moving spehre by mouse - to scene
-    private float moveConstantX =(Screen.height /9.3f);
-    private float moveConstantY = (Screen.height / 9.3f);
+    public LondonTowerGameManager gameManager; 
+    private float heightY = 5.2f;
     public bool start = true;
     public string idColor;
     public int currentPoleID;
     public int orderOnPole;
+    //  private float maxY;
+    //ratio of moving spehre by mouse - to scene
+    //  private float moveConstantX =(Screen.height /9.3f);
+    //  private float moveConstantY = (Screen.height / 9.3f);
+    // private Vector3 lastPosition;
+    //  private Vector3 polePosition = new Vector3(0,0,0);
+    
 
-
-    void Start()
-    {
-        Vector3 cameraSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9));
-        maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 8.5f)).y;
-        Debug.Log(maxY);
-        Vector3 cameraSize2 = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 9));
-        moveConstantX =  Screen.width/cameraSize.x ;
-        moveConstantY = Screen.height/ cameraSize.y;
-        
-
-    }
+   
 		
 	// Update is called once per frame
 	void Update () {
@@ -47,7 +38,11 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         }
         if (clicked)
         {
-            Vector3 distance = Input.mousePosition - lastPosition;
+            this.transform.position = new Vector3(this.transform.position.x, heightY, this.transform.position.z);
+            Vector3 mosePosition = Camera.main.ScreenToWorldPoint(new Vector3( Input.mousePosition.x,Input.mousePosition.y, 9));
+
+            this.transform.position = new Vector3(Mathf.Min(Mathf.Max(LondonTowerCamera.LeftBound, mosePosition.x), LondonTowerCamera.RightBound), this.transform.position.y, this.transform.position.z);
+           /* Vector3 distance = Input.mousePosition - lastPosition;
 
             if (moveX)
             {
@@ -61,7 +56,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                 //spehre is on stick
                 this.transform.position = new Vector3(this.transform.position.x,Mathf.Min(maxY,Mathf.Max(this.transform.position.y + distance.y / moveConstantY, polePosition.y)), this.transform.position.z);
             }
-            lastPosition = Input.mousePosition;
+            lastPosition = Input.mousePosition;*/
             if (lastClicked)
             {
                 lastClicked = !lastClicked;
@@ -117,11 +112,11 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked)
             {
                 clicked = true;
-                if (!moveX)
-                {
-                    polePosition = this.transform.position;
-                }
-                lastPosition = Input.mousePosition;
+                //if (!moveX)
+               // {
+               // polePosition = this.transform.position;
+               // }
+              //  lastPosition = Input.mousePosition;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;
             }
