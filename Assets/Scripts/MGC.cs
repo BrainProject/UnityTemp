@@ -515,17 +515,16 @@ public class MGC : Singleton<MGC>
 
 
     // evoked when player successfuully finish minigame
-    internal void FinishMinigame()
+    public void WinMinigame()
     {
         print("Minigame successffully finished");
 
         //TODO Add "Celebration phase" stuff here
 
         //animate Neuron character
-        GameObject Neuron = MGC.Instance.neuronHelp;
-        if (Neuron)
+        if (neuronHelp)
         {
-            Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
         }
 
         minigamesProperties.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
@@ -534,6 +533,18 @@ public class MGC : Singleton<MGC>
         //global GUI
         MGC.Instance.minigamesGUI.show(true);
     }
+
+	public void LoseMinigame()
+	{
+        print("Minigame successffully unfinished");
+
+		//animate Neuron character
+		if (neuronHelp)
+		{
+			neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
+		}
+	}
+
 
     public Minigames getMinigameStates()
     {

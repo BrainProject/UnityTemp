@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /**
@@ -163,7 +163,7 @@ namespace HanoiTowers
         /// </summary>
         public void endGame()
         {
-            MGC.Instance.FinishMinigame();
+            MGC.Instance.WinMinigame();
         }
     }
 }
