@@ -49,7 +49,7 @@ public class Move2 : MonoBehaviour
 		// repeats the moving routine every "frequency" seconds
 		level = (float)GameObject.Find("_Level Manager_").GetComponent<LevelManager>().level;
 		//speed = 1.1f - (0.5f + level/10);
-		speed = 2 / (level/5 + 1.5f);
+		speed = 2 / (level/5 + 1.8f);
 		InvokeRepeating("Move", 0.1f, speed);
 			manager.game = true;
 	}
