@@ -9,7 +9,7 @@ namespace MinigameSnake
 {
 public class Move2 : MonoBehaviour 
 {
-	private KinectGestures gestureListener; //gesture listener for Kinect
+//	private KinectGestures gestureListener; //gesture listener for Kinect
 	public int snakeLength = 3;
 	public static float level; 
 	public float speed;
@@ -18,9 +18,9 @@ public class Move2 : MonoBehaviour
 	private int ud = 0; // z axis increment
 	private int fb = 0; // y axis increment
 
-	private int rlr = 0; // x axis rotation
-	private int rud = 0; // z axis rotation
-	private int rfb = 0; // y axis rotation
+//	private int rlr = 0; // x axis rotation
+//	private int rud = 0; // z axis rotation
+//	private int rfb = 0; // y axis rotation
 
 	private bool init = true;
 
@@ -36,7 +36,7 @@ public class Move2 : MonoBehaviour
 	void Start () 
 	{
 		controller = MGC.Instance;
-		Vector3 rot;
+//		Vector3 rot;
 		//gestureListener = Camera.main.GetComponent<GestureListener>();
 		ko = GameObject.Find ("KinectObject");
 		manager = GameObject.Find ("_GameManager_").GetComponent<GameManager> ();
@@ -115,7 +115,7 @@ public class Move2 : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		KinectManager kinectManager = KinectManager.Instance;
+//		KinectManager kinectManager = KinectManager.Instance;
 
 		if (Input.GetKey ("left") || Input.GetKey(KeyCode.Keypad1)|| Input.GetKey(KeyCode.J)) 
 		{
@@ -197,10 +197,10 @@ public class Move2 : MonoBehaviour
 				}
 			}
 		}
-		if (gestureListener != null) 
+		/*if (gestureListener != null) 
 		{
 			
-		}
+		}*/
 	}
 
 		public void Stop()
@@ -208,7 +208,7 @@ public class Move2 : MonoBehaviour
 			CancelInvoke();
 			print("stop");
 			controller = MGC.Instance;
-			controller.FinishMinigame ();
+			controller.LoseMinigame ();
 			MGC.Instance.minigamesGUI.show (true, false);
 
 			//break;
@@ -216,6 +216,17 @@ public class Move2 : MonoBehaviour
 		public void StopMove()
 		{
 			CancelInvoke();
+		}
+
+		public void StopWon()
+		{
+			CancelInvoke();
+			print("stop");
+			controller = MGC.Instance;
+			controller.WinMinigame ();
+			MGC.Instance.minigamesGUI.show (true, false);
+			
+			//break;
 		}
 }
 }

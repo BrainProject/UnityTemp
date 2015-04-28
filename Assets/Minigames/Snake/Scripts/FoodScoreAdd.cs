@@ -35,7 +35,7 @@ public class FoodScoreAdd : MonoBehaviour {
 					//TODO moze byt null
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().game = false;
 //					print("change game to fgalse");
-				GameObject.Find("snake1").GetComponent<Move2>().Stop();
+					GameObject.Find("snake1").GetComponent<Move2>().StopWon();
 				Screen.showCursor = true;
 				GameObject.Find ("_GameManager_").GetComponent<GameManager> ().Winning ();
 			
