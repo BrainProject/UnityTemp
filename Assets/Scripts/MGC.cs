@@ -543,6 +543,9 @@ public class MGC : Singleton<MGC>
 		{
 			neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
 		}
+				
+		//global GUI
+		MGC.Instance.minigamesGUI.show(true);
 	}
 
 
