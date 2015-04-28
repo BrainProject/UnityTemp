@@ -80,6 +80,7 @@ public class MGC : Singleton<MGC>
     internal Kinect.KinectManager kinectManagerInstance;
     internal GameObject mouseCursor;
     internal GameObject neuronHelp;
+	internal GameObject leapControllerObject;
 
     internal GameObject minigamesGUIObject;
     internal MinigamesGUI minigamesGUI;
@@ -167,6 +168,11 @@ public class MGC : Singleton<MGC>
         Debug.Log("Trying to create KinectManager.");
         kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
         kinectManagerObject.transform.parent = this.transform;
+
+		//initiate leap controller
+		Debug.Log("Trying to create LeapController.");
+		leapControllerObject = (GameObject)Instantiate(Resources.Load("LeapController") as GameObject);
+		leapControllerObject.transform.parent = this.transform;
     }
 
     void Start()
