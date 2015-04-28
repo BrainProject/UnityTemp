@@ -19,6 +19,7 @@ namespace FindIt
 
         void OnMouseDown()
 		{
+            Debug.Log("Respack chosen");
 			PlayerPrefs.SetString("resourcePackName", resourcePackName);
             PlayerPrefs.SetInt("custom", custom ? 1 : 0);
             MGC.Instance.sceneLoader.LoadScene("FindItGame", true);

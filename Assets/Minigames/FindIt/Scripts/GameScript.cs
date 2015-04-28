@@ -25,7 +25,7 @@ namespace FindIt
         const float CAMERA_SIZE_MORE_28 = 15.5f;
 
 
-        private Sprite[] images;
+        private Texture2D[] images;
         private string resourcePackName = "";
         public int numberPieces = MIN_PIECES;
         public int numberTurns = 50;
@@ -57,7 +57,7 @@ namespace FindIt
                 if (customPackChosen)
                 {
                     Debug.Log("Loading custom packs ");
-                    List<Sprite> list = new List<Sprite>();
+                    List<Texture2D> list = new List<Texture2D>();
                     var allFiles = Directory.GetFiles(resourcePackName).Where(
                     p => Path.GetExtension(p).ToLower() == ".png"  || Path.GetExtension(p).ToLower() == ".jpg" ||
                          Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
@@ -69,15 +69,14 @@ namespace FindIt
                     {
                         Debug.Log("Loading file " + file);
                         WWW www = new WWW("file:///" + file);
-                        Sprite s = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
-                        list.Add(s);
+                        list.Add(www.texture);
                     }
-                    images = list.ToArray<Sprite>();
+                    images = list.ToArray<Texture2D>();
                     Debug.Log("Images contain " + images.Count() + " sprites");
                 }
                 else 
                 {
-                    images = Resources.LoadAll<Sprite>(resourcePackName);
+                    images = Resources.LoadAll<Texture2D>(resourcePackName);
                 }
             }
             catch (PlayerPrefsException ex)
@@ -86,7 +85,7 @@ namespace FindIt
                 Debug.Log("Trying to load Animals set");
 
                 resourcePackName = "Animals";
-                images = Resources.LoadAll<Sprite>(resourcePackName);
+                images = Resources.LoadAll<Texture2D>(resourcePackName);
             }
             FindItStatistics.resourcePackName = resourcePackName;
 
@@ -131,7 +130,7 @@ namespace FindIt
 
                 GameObject o = GameObject.Find(i.ToString());
                 o.SetActive(true);
-                o.GetComponent<SpriteRenderer>().sprite = images[index];
+                o.renderer.material.mainTexture = images[index];
             }
             for(int i=numPictures+1;i<=MAX_PIECES;i++)
             {
@@ -161,7 +160,8 @@ namespace FindIt
                 if (chosen == numberPieces) chosen = 0;
             }
             selectedImage = usedIndices[chosen];
-            targetImage.GetComponent<SpriteRenderer>().sprite = images[selectedImage];
+            targetImage.renderer.material.mainTexture = images[selectedImage];
+
         }
 
         /**

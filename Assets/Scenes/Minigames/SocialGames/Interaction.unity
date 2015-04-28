@@ -137,6 +137,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -169,6 +173,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.data[0]
+      value: 
+      objectReference: {fileID: 1116271520}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
   m_RootGameObject: {fileID: 2056390251}
@@ -1031,7 +1039,7 @@ Transform:
   m_Children:
   - {fileID: 1116271521}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!114 &1392888052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,7 +1328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activated: 0
   ObjToPause:
-  - {fileID: 0}
+  - {fileID: 1116271520}
 --- !u!81 &2056390254
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1390,7 +1398,7 @@ Transform:
   m_Children:
   - {fileID: 2129113431}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &2129113429
 GameObject:
   m_ObjectHideFlags: 0

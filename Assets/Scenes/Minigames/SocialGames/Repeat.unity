@@ -272,6 +272,10 @@ MonoBehaviour:
   activated: 0
   next:
   - {fileID: 980225727}
+  figure: {fileID: 0}
+  anim: {fileID: 514295421}
+  numOfParts: 16
+  delayPerPart: .100000001
 --- !u!212 &62383023
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -337,6 +341,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a669d15f0035bbf4889c8092b5bcd201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useHandCursor: 1
+  gripHandTexture: {fileID: 0}
+  releaseHandTexture: {fileID: 0}
+  normalHandTexture: {fileID: 0}
+  smoothFactor: 3
+  controlMouseCursor: 0
+  controlMouseDrag: 0
+  convertMouseToFullScreen: 0
+  debugText: {fileID: 0}
 --- !u!114 &102131958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +362,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b531f336dfee5f438f94ed501caefc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensorHeight: 0
+  sensorAngle: 5
+  computeUserMap: 0
+  computeColorMap: 0
+  computeInfraredMap: 0
+  displayUserMap: 0
+  displayColorMap: 0
+  displaySkeletonLines: 0
+  DisplayMapsWidthPercent: 20
+  useMultiSourceReader: 0
+  minUserDistance: .5
+  maxUserDistance: 0
+  detectClosestUser: 1
+  ignoreInferredJoints: 1
+  smoothing: 1
+  useBoneOrientationConstraints: 1
+  avatarControllers: []
+  playerCalibrationPose: 0
+  playerCommonGestures: 15000000
+  minTimeBetweenGestures: .699999988
+  gestureListeners: []
+  calibrationText: {fileID: 0}
 --- !u!4 &102131959
 Transform:
   m_ObjectHideFlags: 0
@@ -404,6 +439,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b815ccff7ec10a4bac1457929e307a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeChecking: 1
+  distance: .400000006
+  next: {fileID: 100000, guid: 7b2e0987707324c4fa1abf99e1b2dd94, type: 2}
+  clipBone: 
+  handMode: 1
+  player1: 0
+  player2: 1
+  destroy: 0
+  finish: 0
+  allChecked: 0
+  KManager: {fileID: 0}
 --- !u!1 &156562269
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +484,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -470,6 +520,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.data[0]
+      value: 
+      objectReference: {fileID: 2096746264}
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.data[1]
+      value: 
+      objectReference: {fileID: 2081588152}
+    - target: {fileID: 11400000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: ObjToPause.Array.data[2]
+      value: 
+      objectReference: {fileID: 1022150957}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
   m_RootGameObject: {fileID: 258028626}
@@ -535,6 +597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b459a28a2f86b3248bd63fa27e930d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activated: 0
+  ObjToPause:
+  - {fileID: 2096746264}
+  - {fileID: 2081588152}
+  - {fileID: 1022150957}
 --- !u!81 &258028628
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1408,7 +1475,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400032, guid: d6f02611379378b43bb578d66d326c00, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400038, guid: d6f02611379378b43bb578d66d326c00, type: 2}
       propertyPath: m_RootOrder
@@ -1529,24 +1596,9 @@ MonoBehaviour:
   playerIndex: 1
   mirroredMovement: 1
   verticalMovement: 0
-  moveRate: 1
   smoothFactor: 10
-  bodyRoot: {fileID: 0}
-  offsetNode: {fileID: 0}
-  bones: []
-  initialRotations: []
-  initialLocalRotations: []
-  initialPosition: {x: 0, y: 0, z: 0}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
-  OffsetCalibrated: 0
-  XOffset: 0
-  YOffset: 0
-  ZOffset: 0
-  kinectManager: {fileID: 0}
-  _transformCache: {fileID: 0}
   handLeft: {fileID: 1292170151}
   handRight: {fileID: 1631310042}
-  newPos: {x: 0, y: 0, z: 0}
 --- !u!95 &1022150961
 Animator:
   serializedVersion: 3
@@ -1658,6 +1710,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03bef4e17e4554196598ac993d0fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: fbc2ffebcd1ca894e9350ddb9e721b77, type: 2}
+  mesh: {fileID: 1022150957}
+  checke: {fileID: 100000, guid: 71b697e38a52076469c7e38dddff8374, type: 2}
+  checker: {fileID: 100000, guid: 575bc86832658eb419f8ccd385632cf5, type: 2}
 --- !u!1001 &1229551390
 Prefab:
   m_ObjectHideFlags: 0
@@ -1805,6 +1861,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487ef05445106524c9874a085bdb27d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TwoPlayer: 1
+  player2: {fileID: 1022150959}
+  animPlayer2: {fileID: 0}
+  button: {fileID: 0}
+  ghost: {fileID: 2100000, guid: 7030f05cc0449964689c7cab25a16fd2, type: 2}
 --- !u!1 &1350572047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +1906,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03bef4e17e4554196598ac993d0fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 0}
+  mesh: {fileID: 0}
+  checke: {fileID: 0}
+  checker: {fileID: 0}
 --- !u!1 &1351578210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,24 +2655,9 @@ MonoBehaviour:
   playerIndex: 0
   mirroredMovement: 1
   verticalMovement: 0
-  moveRate: 1
   smoothFactor: 10
-  bodyRoot: {fileID: 0}
-  offsetNode: {fileID: 0}
-  bones: []
-  initialRotations: []
-  initialLocalRotations: []
-  initialPosition: {x: 0, y: 0, z: 0}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
-  OffsetCalibrated: 0
-  XOffset: 0
-  YOffset: 0
-  ZOffset: 0
-  kinectManager: {fileID: 0}
-  _transformCache: {fileID: 0}
   handLeft: {fileID: 1369815893}
   handRight: {fileID: 1515573201}
-  newPos: {x: 0, y: 0, z: 0}
 --- !u!95 &2081588155
 Animator:
   serializedVersion: 3
@@ -2785,6 +2835,12 @@ MonoBehaviour:
   activated: 0
   next:
   - {fileID: 62383022}
+  player: 1
+  after: {fileID: 155431992}
+  positionLeft: {x: -.5, y: 1, z: 0}
+  positionRight: {x: .5, y: 1, z: 0}
+  cancle: {fileID: 62383022}
+  anim: {fileID: 2096746267}
 --- !u!4 &2096746266
 Transform:
   m_ObjectHideFlags: 0

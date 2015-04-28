@@ -177,7 +177,6 @@ namespace Puzzle
             {
 				gameWon = true;
                 PuzzleStatistics.StopMeasuringTime();
-				//MGC.Instance.sceneLoader.LoadScene("PuzzleVictory");
 				EndGame();
             }
         }
@@ -207,8 +206,6 @@ namespace Puzzle
             }
 
 			PuzzlePiece my_piece = pieces[puzzleObject.name];
-			//Debug.Log ("ID: " + puzzleObject.name);
-			//Debug.Log ("top: " + my_piece.top + ", bottom: " + my_piece.bottom + ", left: " + my_piece.left + ", right: " + my_piece.right);
 
 			PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
 			PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
