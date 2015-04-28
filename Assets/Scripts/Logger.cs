@@ -68,7 +68,14 @@ public class Logger : MonoBehaviour
             }
 
             //create new stream writer - will create new or append to existing file
-            logfile = new System.IO.StreamWriter(logPath, true);
+			try
+			{
+            	logfile = new System.IO.StreamWriter(logPath, true);
+			}
+			catch(IOException e)
+			{
+				Debug.LogWarning("Log file creation failed!");
+			}
 
             if (addCreatedEntry)
             {
