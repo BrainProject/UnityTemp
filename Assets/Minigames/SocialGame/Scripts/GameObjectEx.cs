@@ -28,5 +28,16 @@ public class GameObjectEx{
 		}
 		return null;
 
+	
+	}
+
+	public static void DestroyObjectWithAllParents(Transform child)
+	{
+		Transform parent = child;
+		while (parent.parent) 
+		{
+			parent = parent.parent;
+		}
+		GameObject.Destroy(parent.gameObject);
 	}
 }

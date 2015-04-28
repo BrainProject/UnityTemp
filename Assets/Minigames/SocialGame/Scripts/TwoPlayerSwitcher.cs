@@ -28,7 +28,7 @@ namespace SocialGame{
 		// Update is called once per frame
 		void Update () {
 			//Debug.Log(KManager.GetPlayer2ID());
-			if(KManager && KManager.GetPlayer2ID() != 0)
+			if(KManager && KManager.GetUserIdByIndex(1) != 0)
 			{
 				if(!TwoPlayer)
 				{

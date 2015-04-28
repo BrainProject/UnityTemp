@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿/**
+ * @file GameScript.cs
+ * @author Ján Bella
+ */
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FindIt
 {
+    /**
+     * Game logic for FindIt
+     */
     public class GameScript : MonoBehaviour
     {
         const int MIN_PIECES = 8;
@@ -16,10 +25,11 @@ namespace FindIt
         const float CAMERA_SIZE_MORE_28 = 15.5f;
 
 
-        private Sprite[] images;
+        private Texture2D[] images;
         private string resourcePackName = "";
         public int numberPieces = MIN_PIECES;
         public int numberTurns = 50;
+        private bool customPackChosen = false;
 
         private List<int> usedIndices = new List<int>();
 
@@ -27,43 +37,81 @@ namespace FindIt
 
 		public GameObject clona;
 
+        public UnityEngine.UI.Text textProgress;
+        public UnityEngine.UI.Image progressBar;
+
+        public GameObject targetImage;
+
 		private bool gameWon = false;
 
+        /**
+         * Loads resource pack to the scene
+         */
         private void LoadResourcePack()
         {
             try
             {
+                customPackChosen = PlayerPrefs.GetInt("custom") == 1;
                 resourcePackName = PlayerPrefs.GetString("resourcePackName");
-                images = Resources.LoadAll<Sprite>(resourcePackName);
+                Debug.Log("Resource pack name found as " + resourcePackName);
+                if (customPackChosen)
+                {
+                    Debug.Log("Loading custom packs ");
+                    List<Texture2D> list = new List<Texture2D>();
+                    var allFiles = Directory.GetFiles(resourcePackName).Where(
+                    p => Path.GetExtension(p).ToLower() == ".png"  || Path.GetExtension(p).ToLower() == ".jpg" ||
+                         Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
+                         Path.GetExtension(p).ToLower() == ".gif"  || Path.GetExtension(p).ToLower() == ".tif" );
+
+                    Debug.Log("Found " + allFiles.Count() +" files");
+
+                    foreach(string file in allFiles)
+                    {
+                        Debug.Log("Loading file " + file);
+                        WWW www = new WWW("file:///" + file);
+                        list.Add(www.texture);
+                    }
+                    images = list.ToArray<Texture2D>();
+                    Debug.Log("Images contain " + images.Count() + " sprites");
+                }
+                else 
+                {
+                    images = Resources.LoadAll<Texture2D>(resourcePackName);
+                }
             }
-            catch (Exception ex)
+            catch (PlayerPrefsException ex)
             {
                 Debug.Log("Exception occured while trying to load imaged: " + ex.Message);
                 Debug.Log("Trying to load Animals set");
 
                 resourcePackName = "Animals";
-                images = Resources.LoadAll<Sprite>(resourcePackName);
+                images = Resources.LoadAll<Texture2D>(resourcePackName);
             }
             FindItStatistics.resourcePackName = resourcePackName;
 
             FindItStatistics.expectedGameTurnsTotal = numberTurns;
 
             // loading number of pieces
-            try
+            switch(MGC.Instance.selectedMiniGameDiff)
             {
-                numberPieces = PlayerPrefs.GetInt("numberPieces");
-                FindItStatistics.numberPieces = numberPieces;
+                case 0:
+                    numberPieces = 20;
+                    break;
+                case 1:
+                    numberPieces = 44;
+                    break;
+                default:
+                    numberPieces = PIECES_RECOMMENDED;
+                    break;
             }
-            catch (Exception ex)
-            {
-                Debug.Log("Exception occured while trying to get number of pieces: " + ex.Message);
-                Debug.Log("Using minimum.");
-                numberPieces = MIN_PIECES;
-                FindItStatistics.numberPieces = numberPieces;
-            }
+            FindItStatistics.numberPieces = numberPieces;
         }
 
 
+        /**
+         * Sets up tiles textures in the scene
+         * @param numPictures number of images
+         */
         private void SetUpSprites(int numPictures)
         {
             System.Random random = new System.Random();
@@ -82,7 +130,7 @@ namespace FindIt
 
                 GameObject o = GameObject.Find(i.ToString());
                 o.SetActive(true);
-                o.GetComponent<SpriteRenderer>().sprite = images[index];
+                o.renderer.material.mainTexture = images[index];
             }
             for(int i=numPictures+1;i<=MAX_PIECES;i++)
             {
@@ -90,11 +138,17 @@ namespace FindIt
             }
         }
 
+        /**
+         * Modifies camera such that it properly fits objects in the scene
+         */
         private void UpdateCameraSize()
         {
             Camera.main.orthographicSize = numberPieces <= 28 ? CAMERA_SIZE_LESS_28 : CAMERA_SIZE_MORE_28;
         }
 
+        /**
+         * Chooses new target image
+         */
         public void newTargetImage()
         {
             System.Random r = new System.Random();
@@ -106,49 +160,68 @@ namespace FindIt
                 if (chosen == numberPieces) chosen = 0;
             }
             selectedImage = usedIndices[chosen];
-            GameObject.Find("SearchedImage").GetComponent<SpriteRenderer>().sprite = images[selectedImage];
+            targetImage.renderer.material.mainTexture = images[selectedImage];
+
         }
 
-        
+        /**
+         * UnityEngine Start() function
+         */
         void Start()
         {
 			clona.SetActive(false);
 			gameWon = false;
+            Debug.Log("Load sprites");
             LoadResourcePack();
             SetUpSprites(numberPieces);
             UpdateCameraSize();
             newTargetImage();
             FindItStatistics.Clear();
 			FindItStatistics.StartMeasuringTime();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveGame ();
+			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+
+			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 
+        /**
+         * Checks for end of the game
+         */
         void CheckEndGame()
         {
             if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal && !gameWon)
             {
 				gameWon = true;
-                //Application.LoadLevel("FindItVictory");
 				FindItStatistics.StopMeasuringTime();
 				clona.SetActive(true);
 
-				MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-				MGC.Instance.minigamesGUI.show(false,true,"FindIt");
+                // Cannot use MGC.Instance.FinishMinigame(). It would load FindItGame, which may cause crash,
+                // when different difficulty is selected and current resource pack does not contain enough pictures
+               
+                GameObject Neuron = MGC.Instance.neuronHelp;
+                if (Neuron)
+                {
+                    Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+                }
 
+                MGC.Instance.minigamesProperties.SetSuccessfullyPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                MGC.Instance.SaveMinigamesStatisticsToFile();
+
+                MGC.Instance.minigamesGUI.show(false, true, "FindIt");
             }
         }
 
+        /**
+         * Updates progress
+         */
         void UpdateGreenBarAndText()
         {
-            GUITexture bar = GameObject.Find("greenBar").guiTexture;
-            GUIText textProgress = GameObject.Find("LevelProgressGUIText").guiText;
-
-            bar.transform.localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * 2.0f, 0f, 1f);
-            textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();
-
+            progressBar.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
+            textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();            
         }
 
+        /**
+         * UnityEngine Update() function
+         */
         void Update()
         {
             UpdateGreenBarAndText();

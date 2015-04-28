@@ -51,6 +51,12 @@ namespace SocialGame
 			{
 				Destroy(avatar);
 			}
+			if (figure.transform.parent) 	
+			{
+				Transform temp = figure.transform.parent;
+				figure.transform.parent = null;
+				GameObjectEx.DestroyObjectWithAllParents(temp);
+			}
 			FigureCreate creator = figure.GetComponentInChildren<FigureCreate>();
 			if(creator)
 			{
@@ -70,6 +76,8 @@ namespace SocialGame
 			}
 			return figure;
 		}
+
+
 #endif
 	}
 }

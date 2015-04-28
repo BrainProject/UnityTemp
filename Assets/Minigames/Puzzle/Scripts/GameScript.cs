@@ -19,13 +19,11 @@ namespace Puzzle
 		/// <summary>
         /// number of puzzle pieces
 		/// </summary>
- 
         public int numberPieces = 4;
 
 		/// <summary>
         /// texture of image to complete in puzzle 
 		/// </summary>
- 
         public Texture2D puzzleImage;
 
 		/// <summary>
@@ -43,7 +41,6 @@ namespace Puzzle
 		/// <summary>
         /// indicates whether game was won or not
 		/// </summary>
-
         public Image targetImage;
 
 		bool gameWon = false;
@@ -69,11 +66,20 @@ namespace Puzzle
             // loading image texture
             try
             {
-                puzzleImage = Resources.Load("Pictures/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                bool custom = PlayerPrefs.GetInt("custom") == 1;
+                if(custom)
+                {
+                    WWW www = new WWW("file:///" + PlayerPrefs.GetString("Image"));
+                    puzzleImage = www.texture;
+                }
+                else 
+                {
+                    puzzleImage = Resources.Load(PlayerPrefs.GetString("defaultPicsPath") + "/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                }
                 PuzzleStatistics.pictureName = PlayerPrefs.GetString("Image");
 
             }
-            catch (Exception ex)
+            catch (PlayerPrefsException ex)
             {
                 Debug.Log("Exception occured while trying to load image: " + ex.Message);
                 Debug.Log("Trying to load Bonobo image");
@@ -83,28 +89,14 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
-            Sprite testSprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
-            targetImage.sprite = testSprite;
+            targetImage.sprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
 
             //  loading number of pieces
-            try
-            {
-                numberPieces = PlayerPrefs.GetInt("size");
-                PuzzleStatistics.numberPieces = numberPieces;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("Exception occured while trying to get number of pieces: " + ex.Message);
-                Debug.Log("Using number 4.");
-                numberPieces = 4;
-                PuzzleStatistics.numberPieces = numberPieces;
-            }
+            int dim = (MGC.Instance.selectedMiniGameDiff + 2);
+            numberPieces = dim * dim;
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
             pieces = new Dictionary<string, PuzzlePiece>();
-
-            int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
-            numberPieces = dim * dim;
 
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
@@ -131,8 +123,9 @@ namespace Puzzle
 
             PuzzleStatistics.Clear();
             PuzzleStatistics.StartMeasuringTime();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveGame ();
+			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+			
+
         }
 
 		/**
@@ -184,7 +177,6 @@ namespace Puzzle
             {
 				gameWon = true;
                 PuzzleStatistics.StopMeasuringTime();
-				//MGC.Instance.sceneLoader.LoadScene("PuzzleVictory");
 				EndGame();
             }
         }
@@ -214,13 +206,11 @@ namespace Puzzle
             }
 
 			PuzzlePiece my_piece = pieces[puzzleObject.name];
-			//Debug.Log ("ID: " + puzzleObject.name);
-			//Debug.Log ("top: " + my_piece.top + ", bottom: " + my_piece.bottom + ", left: " + my_piece.left + ", right: " + my_piece.right);
 
-			PuzzlePiece topPiece = my_piece.top > 0 ? pieces[my_piece.top.ToString()] : null;
-			PuzzlePiece bottomPiece = my_piece.bottom > 0 ? pieces[my_piece.bottom.ToString()] : null;
-			PuzzlePiece leftPiece = my_piece.left > 0 ? pieces[my_piece.left.ToString()] : null;
-			PuzzlePiece rightPiece = my_piece.right > 0 ? pieces[my_piece.right.ToString()] : null;
+			PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
+			PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
+			PuzzlePiece leftPiece = my_piece.left >= 0 ? pieces[my_piece.left.ToString()] : null;
+			PuzzlePiece rightPiece = my_piece.right >= 0 ? pieces[my_piece.right.ToString()] : null;
 
 			HashSet<GameObject> top_component = null;
 			HashSet<GameObject> bottom_component = null;
@@ -431,10 +421,21 @@ namespace Puzzle
 		 */
 		private void EndGame()
 		{
-			//animate Neuron
-			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-			
-			MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+            // this would be sufficient, if we do not want an option to change the picture for puzzle when different 
+            // difficulty is set
+			//MGC.Instance.FinishMinigame();
+
+
+            GameObject Neuron = MGC.Instance.neuronHelp;
+            if (Neuron)
+            {
+                Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            }
+
+            MGC.Instance.minigamesProperties.SetSuccessfullyPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+            MGC.Instance.SaveMinigamesStatisticsToFile();
+
+            MGC.Instance.minigamesGUI.show(false, true, "Puzzle");
 		}
     }
 }

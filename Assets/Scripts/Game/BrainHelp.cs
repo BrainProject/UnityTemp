@@ -28,6 +28,21 @@ namespace Game
 			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
 			MGC.Instance.ShowCustomCursor (true);
+
+
+			//Move Neuron according to screen aspect.
+			//The solution is only for following aspect ratios (it might work with other ratios, but they are not supported anyway):
+			//5:4, 4:3, 3:2, 16:10, 16:9
+			Vector3 tmp;
+
+			tmp = transform.parent.camera.ScreenToViewportPoint(new Vector3 (transform.parent.camera.WorldToScreenPoint(transform.localPosition).x, 0, 0));
+			//tmp.x = tmp.x - transform.parent.camera.aspect / 2;
+			tmp.x = 1.45f * transform.localPosition.x - (tmp.x - tmp.x/16)/Camera.main.aspect;
+			tmp.y = transform.localPosition.y;
+			tmp.z = transform.localPosition.z;
+			
+			Debug.Log (tmp.x);
+			transform.localPosition = tmp;
 		}
 
 		void LateUpdate()
@@ -43,14 +58,14 @@ namespace Game
 			
 			if(initialHelp)
 			{
-				if(MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+				if(MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 				{
-					Minigame thisMinigame = MGC.Instance.minigameStates.GetMinigame(Application.loadedLevelName);
-					Debug.Log ("Help shown in this minigame " + thisMinigame.initialShowHelpCounter + " times.");
-					++thisMinigame.initialShowHelpCounter;
-					if(thisMinigame.initialShowHelpCounter < 3)
+					MinigameProperties thisMinigame = MGC.Instance.minigamesProperties.GetMinigame(Application.loadedLevelName);
+					Debug.Log ("Help shown in this minigame " + thisMinigame.stats.initialShowHelpCounter + " times.");
+					++thisMinigame.stats.initialShowHelpCounter;
+					if(thisMinigame.stats.initialShowHelpCounter < 3)
 					{
-						if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+						if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 						{
 							helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
 							helpObject.guiTexture.texture = helpTexture;
@@ -67,18 +82,18 @@ namespace Game
 			}
 			else
 			{
-				if(helpTexture && !helpExists && MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+				if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
 				{
 					helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
 					helpObject.guiTexture.texture = helpTexture;
 					//helpObject.transform.parent = this.transform;
 					//helpObject.layer = this.gameObject.layer;
 					helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
-					MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+					MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
 				}
 				else
 				{
-				//print ("here " + helpExists + ", '" + MGC.Instance.minigameStates.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
+				//print ("here " + helpExists + ", '" + MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
 					//       + Application.loadedLevelName + ", ");
 					this.GetComponent<Animator>().SetBool("wave", true);
 				}
@@ -105,7 +120,7 @@ namespace Game
 			}
 			else if(level > 2)
 			{
-				//if(!MGC.Instance.minigameStates.GetPlayed(Application.loadedLevelName))
+				//if(!MGC.Instance.minigamesProperties.GetPlayed(Application.loadedLevelName))
 				//{
 					ShowHelpBubble(true);
 				//}

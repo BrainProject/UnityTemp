@@ -3,6 +3,7 @@ Newron project
 
 Temporary repository for Unity assests of The Newron project.
 
+See www.newron.cz for more details...
 
 
 Git-flow

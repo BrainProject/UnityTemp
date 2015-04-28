@@ -7,6 +7,7 @@ namespace SocialGame
 {
 	public class GestChecker : MonoBehaviour {
 #if UNITY_STANDALONE
+		public bool activeChecking = true;
 		public float distance;
 		public GameObject next;
 		public string clipBone;
@@ -31,27 +32,15 @@ namespace SocialGame
 			{
 				if(handMode)
 				{
-					if(player1)
+					foreach(Kinect.AvatarController avatar in KManager.avatarControllers)
 					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
+						if((player1 && avatar.playerIndex == 0)||(player2 && avatar.playerIndex == 1))
 						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
+							ExtendsAvatar avatarEx = avatar as ExtendsAvatar;
+							if(avatarEx)
 							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
+								Targets.Add(avatarEx.handLeft);
+								Targets.Add(avatarEx.handRight);
 							}
 						}
 					}
@@ -85,45 +74,48 @@ namespace SocialGame
 	
 		// Update is called once per frame
 		void Update () {
-			bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
-			for(int i = 0; i< transform.childCount; i++)
+			if(activeChecking)
 			{
-				Transform child = transform.GetChild(i);
-				Check script = child.GetComponent<Check>();
-				if(script  && script.activated)
+				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+				for(int i = 0; i< transform.childCount; i++)
 				{
-					Transform[] targets = script.target;
-					foreach(Transform target in targets)
+					Transform child = transform.GetChild(i);
+					Check script = child.GetComponent<Check>();
+					if(script  && script.activated)
 					{
-						bool next = Vector2.Distance(child.position,target.position) < distance;
-						if(next)
+						Transform[] targets = script.target;
+						foreach(Transform target in targets)
 						{
-							if(!allChecked)
+							bool next = Vector2.Distance(child.position,target.position) < distance;
+							if(next)
 							{
-								complete = script.Checked(target);
-							}
+								if(!allChecked)
+								{
+									complete = script.Checked(target);
+								}
+								else
+								{
+									complete = script.Checked(target) && complete;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.green);
+								break;
+							}	
 							else
 							{
-								complete = script.Checked(target) && complete;
+								if(allChecked)
+								{
+									complete = false;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.red);
+								//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.green);
-							break;
-						}	
-						else
-						{
-							if(allChecked)
-							{
-								complete = false;
-							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.red);
-							//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 						}
 					}
 				}
-			}
-			if(complete)
-			{
-				CompleteGest();
+				if(complete)
+				{
+					CompleteGest();
+				}
 			}
 		}
 
@@ -154,11 +146,11 @@ namespace SocialGame
 				FinalCount script = root.GetComponent<FinalCount>();
 				if(script)
 				{
-					script.next();
+					script.Next();
 					return;
 				}
 			}
-			LevelManager.finish();
+			LevelManager.win();
 
 		}
 	
@@ -224,6 +216,22 @@ namespace SocialGame
 				findTartgetByCheckName(check);
 			}
 		}
+
+		public void ActivateChecking(bool active)
+		{
+			//bugbug
+			activeChecking = true; //active;
+			for(int i = 0; i< transform.childCount; i++)
+			{
+				Transform child = transform.GetChild(i);
+				CheckClip script = child.GetComponent<CheckClip>();
+				if(script)
+				{
+					script.Halo(active);
+				}
+			}
+		}
+		
 		#else
 		public void findTartgetByCheckName()
 		{

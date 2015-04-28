@@ -57,10 +57,8 @@ namespace HanoiTowers
             {
                 if (disks.Count == gameController.numberOfDisks)
                 {
-                    //TODO win!
-                    print("WIN");
+                    //local stuff, specific for this minigame
                     MGC.Instance.logger.addEntry("Game successfully finished | time " + (Time.time - gameController.getGameStartTime()) + " | number of moves " + gameController.getNumberofMoves());
-
                     gameController.endGame();
                 }
             }
