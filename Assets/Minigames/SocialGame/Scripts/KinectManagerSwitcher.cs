@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 
 public class KinectManagerSwitcher : MonoBehaviour {
+	#if UNITY_STANDALONE
 	public static GameObject thisLevelKManager;
 	public static GameObject defaultKManager;
 	// Use this for initialization
 	void Awake () {
 		setThisLevelManager();
-		defaultKManager = MGC.Instance.kinectManager;
+		defaultKManager = MGC.Instance.kinectManagerObject;
 		activateThisLevelKManager();
 	}
 	
@@ -54,10 +54,13 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			MGC.Instance.checkInactivity = active;
 			defaultKManager.SetActive(active);
 		}
-		if(!active && MGC.Instance.mouseCursor)
-			MGC.Instance.ShowCustomCursor(false);
-		else if(active)
-			MGC.Instance.ShowCustomCursor(true);
+		if (!active && MGC.Instance.mouseCursor)
+			MGC.Instance.ShowCustomCursor (false);
+		else if (active) 
+		{
+			MGC.Instance.ShowCustomCursor (true);
+			MGC.Instance.kinectManagerInstance.Start();
+		}
 			//MGC.Instance.mouseCursor.SetActive(active);*/
 	}
 
@@ -76,5 +79,5 @@ public class KinectManagerSwitcher : MonoBehaviour {
 	{
 		deactivateThisLevelKManager();
 	}*/
+	#endif
 }
-#endif

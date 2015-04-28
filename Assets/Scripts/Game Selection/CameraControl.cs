@@ -20,6 +20,10 @@ namespace MinigameSelection
 		//public bool ReadyToLeave { get; set; }
 
 		private bool OnTransition { get; set; }
+		#if UNITY_ANDROID
+		private float initialTouchPosition = 0;
+		private float swipeDistance;
+		#endif
 		
         private MGC mgc;
 
@@ -31,19 +35,24 @@ namespace MinigameSelection
 			this.transform.position = mgc.currentCameraDefaultPosition;
 			this.transform.rotation = currentWaypoint.transform.rotation;
 			this.transform.position = currentWaypoint.transform.position;
+#if UNITY_ANDROID
+			swipeDistance = Screen.width/4;
+#endif
 		}
 		
 		void Update()
 		{
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
-			#if UNITY_STANDALONE
-			if(Input.GetButtonDown("Horizontal") || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
-			#else
-			if(Input.GetButtonDown("Horizontal"))
-			#endif
+#if UNITY_ANDROID
+			if(Input.GetMouseButtonDown(0))
 			{
-				if((Input.GetAxis("Horizontal") < 0 || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
+				initialTouchPosition = Input.mousePosition.x;
+			}
+
+			if(Input.GetMouseButtonUp(0) && (initialTouchPosition != 0))
+			{
+				if(((initialTouchPosition - Input.mousePosition.x) < -swipeDistance) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
@@ -55,7 +64,7 @@ namespace MinigameSelection
 					movingRight = false;
 					SetNewTarget();
 				}
-				else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
+				else if(((initialTouchPosition - Input.mousePosition.x) > swipeDistance) && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
@@ -67,7 +76,38 @@ namespace MinigameSelection
 					movingRight = true;
 					SetNewTarget();
 				}
+				initialTouchPosition = 0;
 			}
+#else
+				if(Input.GetButtonDown("Horizontal") || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
+				{
+					if((Input.GetAxis("Horizontal") < 0 || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
+					{
+						//Set current waypoint to left
+						if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
+						{
+							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+						}
+						movingLeft = true;
+						movingRight = false;
+						SetNewTarget();
+					}
+					else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
+					{
+						//Set current waypoint to right
+						if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
+						{
+							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+						}
+						movingLeft = false;
+						movingRight = true;
+						SetNewTarget();
+					}
+				}
+#endif
+
 
 			if(movingLeft || movingRight)
 			{

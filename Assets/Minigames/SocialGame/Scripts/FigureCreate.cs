@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class FigureCreate : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public Material mat;
 		public GameObject mesh;
 		public GameObject checke;
@@ -51,6 +51,12 @@ namespace SocialGame
 			{
 				Destroy(avatar);
 			}
+			if (figure.transform.parent) 	
+			{
+				Transform temp = figure.transform.parent;
+				figure.transform.parent = null;
+				GameObjectEx.DestroyObjectWithAllParents(temp);
+			}
 			FigureCreate creator = figure.GetComponentInChildren<FigureCreate>();
 			if(creator)
 			{
@@ -70,6 +76,8 @@ namespace SocialGame
 			}
 			return figure;
 		}
+
+
 #endif
 	}
 }

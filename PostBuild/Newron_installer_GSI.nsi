@@ -126,7 +126,7 @@ Section "Newron" SecNewron
   File /r Newron-gsi_Data
   File Newron-gsi.exe
   File README.txt
-  File Version.txt
+  File Changelog.txt
   File *.dll
   
   ;Store installation folder

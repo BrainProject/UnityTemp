@@ -6,19 +6,21 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class GestCheckerFigure : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public float distance;
 		public GameObject next;
+		public Check[] nextCheck;
+		public CheckCancleFigure cancle;
 		public string clipBone;
-		public bool handMode = true;
+
 		public bool player1;
 		public bool player2;
 		public bool destroy = true;
 		public bool allChecked = false;
 
 		private Vector3 temp;
-		private List<Transform> Targets = new List<Transform>();
-
+		//private List<Transform> Targets = new List<Transform>();
+		private bool runningcorutine;
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
@@ -29,49 +31,8 @@ namespace SocialGame
 			}
 			if(KManager)
 			{
-				if(handMode)
-				{
-					if(player1)
-					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					for(int i =0; i <transform.childCount; i++)
-					{
-						Transform child = transform.GetChild(i);
-						Check che =child.GetComponent<Check>();
-						if (che != null)
-						{
-							Transform[] targ = Targets.ToArray();
-							che.target = targ;
-						}
-					}
-
-					}
-					else
-					{
-						findTartgetByCheckName();
-					}
-				StartCoroutine("Check");
+				findTartgetByCheckName();
+				StartCoroutine(Check());
 			}
 			else
 			{
@@ -83,8 +44,8 @@ namespace SocialGame
 		// Update is called once per frame
 		IEnumerator Check() {
 			//string name = gameObject.name;
-
-			while(true)
+			runningcorutine = true;
+			while(runningcorutine)
 			{
 				//Debug.Log(name + " is chenking");
 				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
@@ -126,6 +87,7 @@ namespace SocialGame
 				}
 				if(complete)
 				{
+					runningcorutine =false;
 					CompleteGest();
 					//Debug.Log( name + "finish checking");
 					//StopCoroutine("Check");
@@ -145,10 +107,24 @@ namespace SocialGame
 			{
 				GameObject.Instantiate(this.next);
 			}
+			if (cancle) 
+			{
+				cancle.deactivate();
+			}
+			foreach(Check check in nextCheck)
+			{
+				check.activate();
+			}
 			if(destroy)
 			{
-				Destroy(gameObject);
+				DestroyChecker();
 			}
+		}
+
+		public void DestroyChecker()
+		{
+			runningcorutine = false;
+			Destroy(gameObject);
 		}
 
 		public void findTartgetByCheckName()
@@ -184,20 +160,8 @@ namespace SocialGame
 		public void addCheck(Transform check)
 		{
 			check.parent = transform;
-
-			if(handMode)
-			{
-				Check che =check.GetComponent<Check>();
-				if (che != null)
-				{
-					Transform[] targ = Targets.ToArray();
-					che.target = targ;
-				}
-			}
-			else
-			{
-				findTartgetByCheckName(check);
-			}
+			findTartgetByCheckName(check);
+			
 		}
 		#else
 		public void findTartgetByCheckName()

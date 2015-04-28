@@ -207,7 +207,6 @@ MonoBehaviour:
   - {fileID: 1270382864}
   - {fileID: 1991067939}
   ceilingObject: {fileID: 15745948}
-  endGameGUI: {fileID: 0}
 --- !u!4 &73479877
 Transform:
   m_ObjectHideFlags: 0
@@ -231,7 +230,7 @@ GameObject:
   - 33: {fileID: 89793359}
   - 23: {fileID: 89793358}
   - 114: {fileID: 89793361}
-  - 136: {fileID: 89793362}
+  - 65: {fileID: 89793362}
   m_Layer: 10
   m_Name: Middle collumn
   m_TagString: Untagged
@@ -296,18 +295,17 @@ MonoBehaviour:
   starting: 0
   ending: 0
   coloredLight: {fileID: 1584960579}
---- !u!136 &89793362
-CapsuleCollider:
+--- !u!65 &89793362
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 89793357}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 2.25
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 2.25, z: 1}
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!1 &207015509
 GameObject:
@@ -322,7 +320,7 @@ GameObject:
   - 114: {fileID: 207015510}
   - 54: {fileID: 207015515}
   - 65: {fileID: 207015514}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +460,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bcc7e10c6ee563c4cbe53bbeb05b031b, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcc7e10c6ee563c4cbe53bbeb05b031b, type: 2}
@@ -480,7 +478,6 @@ GameObject:
   - 20: {fileID: 263965712}
   - 92: {fileID: 263965711}
   - 81: {fileID: 263965709}
-  - 114: {fileID: 263965715}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -519,7 +516,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 1000
+  far clip plane: 30
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -546,17 +543,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1440278878}
   m_RootOrder: 1
---- !u!114 &263965715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 263965708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db9624b018ef97d4bb6c9b4bd54d73dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &344555383
 Prefab:
   m_ObjectHideFlags: 0
@@ -606,7 +592,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8faa25f26113076478f35843bdc4a3f1, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8faa25f26113076478f35843bdc4a3f1, type: 2}
@@ -706,7 +692,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f7ef50a8e4f9db9478745da99b5197c0, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7ef50a8e4f9db9478745da99b5197c0, type: 2}
@@ -826,7 +812,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 982e2037d593d884bbb2926db343879b, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 982e2037d593d884bbb2926db343879b, type: 2}
@@ -846,7 +832,7 @@ GameObject:
   - 114: {fileID: 684843548}
   - 54: {fileID: 684843553}
   - 65: {fileID: 684843554}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1034,7 @@ GameObject:
   - 114: {fileID: 817961450}
   - 54: {fileID: 817961455}
   - 65: {fileID: 817961454}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1150,7 +1136,7 @@ GameObject:
   - 33: {fileID: 858063375}
   - 23: {fileID: 858063374}
   - 114: {fileID: 858063377}
-  - 136: {fileID: 858063378}
+  - 65: {fileID: 858063378}
   m_Layer: 10
   m_Name: Left collumn
   m_TagString: Untagged
@@ -1215,18 +1201,17 @@ MonoBehaviour:
   starting: 1
   ending: 0
   coloredLight: {fileID: 1584960579}
---- !u!136 &858063378
-CapsuleCollider:
+--- !u!65 &858063378
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 858063373}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 2.25
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 2.25, z: 1}
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!1 &1256585171
 GameObject:
@@ -1241,7 +1226,7 @@ GameObject:
   - 114: {fileID: 1256585172}
   - 54: {fileID: 1256585177}
   - 65: {fileID: 1256585173}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1345,7 +1330,7 @@ GameObject:
   - 114: {fileID: 1270382865}
   - 54: {fileID: 1270382870}
   - 65: {fileID: 1270382869}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1543,7 +1528,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: b8a4cf9599204874287c850c92f65cfe, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8a4cf9599204874287c850c92f65cfe, type: 2}
@@ -1688,7 +1673,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c0ae19a95b9bc924ba2d83b062eb9603, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0ae19a95b9bc924ba2d83b062eb9603, type: 2}
@@ -1767,7 +1752,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1621058038}
   - 212: {fileID: 1621058037}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Background Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1885,7 +1870,7 @@ GameObject:
   - 54: {fileID: 1789927700}
   - 65: {fileID: 1789927696}
   - 114: {fileID: 1789927701}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1987,7 +1972,7 @@ GameObject:
   - 33: {fileID: 1882439639}
   - 23: {fileID: 1882439638}
   - 114: {fileID: 1882439641}
-  - 136: {fileID: 1882439642}
+  - 65: {fileID: 1882439642}
   m_Layer: 10
   m_Name: Right collumn
   m_TagString: Untagged
@@ -2052,18 +2037,17 @@ MonoBehaviour:
   starting: 0
   ending: 1
   coloredLight: {fileID: 1584960579}
---- !u!136 &1882439642
-CapsuleCollider:
+--- !u!65 &1882439642
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1882439637}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 2.25
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 2.25, z: 1}
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!1 &1888834561
 GameObject:
@@ -2078,7 +2062,7 @@ GameObject:
   - 114: {fileID: 1888834562}
   - 54: {fileID: 1888834567}
   - 65: {fileID: 1888834566}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2218,7 +2202,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 74397631fc0fbdd4e802bb0d72169b25, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74397631fc0fbdd4e802bb0d72169b25, type: 2}
@@ -2296,7 +2280,7 @@ GameObject:
   - 114: {fileID: 1991067940}
   - 54: {fileID: 1991067945}
   - 65: {fileID: 1991067944}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Disk-8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2436,7 +2420,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 855a1af0af8d42c4884fff8bee95be8e, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 855a1af0af8d42c4884fff8bee95be8e, type: 2}

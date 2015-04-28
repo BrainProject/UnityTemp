@@ -1,37 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace Game 
 {
     /// <summary>
     /// For loading scenes and fading
     /// </summary>
+    /// One instance of this class is a member of the MGC. Therefore, you can access sceneLoader simply by: <code>MGC.Instance.sceneLoader</code>.
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 5f;
+        public float fadeSpeed = 0.5f;
 
         private float speed;
-		private Color originalColor;
-		private Color targetColor;
+        private Color transparentColor;
+		private Color opaqueColor;
 		private float startTime;
 		private string levelName;
 
+        private Image fadePanel;
+
+        /// <summary>
+        /// Set it up, mainly UI panel used for fading
+        /// </summary>
 		void Start()
 		{
-            print("SceneLoader::Start()...");
+            //print("SceneLoader::Start()...");
 
-            gameObject.AddComponent<GUITexture>();
-            guiTexture.texture = Resources.Load("Textures/white") as Texture;
-            guiTexture.pixelInset = new Rect(Screen.width / 2, Screen.height / 2, 1, 1);
+            transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
-            originalColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-            targetColor = this.guiTexture.color;
-            guiTexture.color = originalColor;
-            guiTexture.enabled = false;
+            //instatiate prefab of canvas with fadepanel
+            GameObject fadeCanvas = Instantiate(Resources.Load("FadeCanvas")) as GameObject;
 
-            speed = 0.1f * fadeSpeed;
-			
+            if (fadeCanvas == null)
+            {
+                Debug.LogError("Missing 'FadeCanvas' prefab");
+            }
+            else
+            {
+                //print("Fade Canvas instantiated");
+                fadeCanvas.name = "Fade Canvas";
+
+                //set proper parent to canvas
+                fadeCanvas.transform.SetParent(gameObject.transform);
+
+                //find 'Image' component
+                fadePanel = fadeCanvas.GetComponentInChildren<Image>();
+
+                if (fadePanel == null)
+                {
+                    Debug.LogError("There should be <Image> component in 'FadeCanvas' prefab");
+                }
+                else
+                {
+                    //print("fadePanel founded.");
+                    fadePanel.enabled = false;
+                }
+            }
 		}
 
         public void LoadScene(string levelName, bool doFadeInOut = true)
@@ -52,7 +79,7 @@ namespace Game
 
 		public void LoadScene(int levelIndex, bool doFadeInOut = true)
 		{
-			print("Loading scene: '" + levelIndex + "'");
+			print("Loading scene with index: " + levelIndex + "");
 			
 			doFade = doFadeInOut;
 			
@@ -73,25 +100,19 @@ namespace Game
 
         private IEnumerator FadeInCoroutine()
         {
-			print("fading in...");
+			//print("fading in...");
 			GameObject blockBorderClone = (GameObject)Instantiate (Resources.Load ("BlockBorder"));
-			guiTexture.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-            //print("initial alpha = " + guiTexture.color.a);
+			
             float startTime = Time.time;
-            originalColor = guiTexture.color;
-            targetColor.a = 0;
+            fadePanel.enabled = true;
             
-            guiTexture.enabled = true;
-            
-            while (guiTexture.color.a > 0.01f)
+            while (fadePanel.color.a > 0.01f)
             {
-                //guiTexture.enabled = true;
-                this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-                //print("alpha = " + this.guiTexture.color.a);
-
+                fadePanel.color = Color.Lerp(opaqueColor, transparentColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
-            guiTexture.enabled = false;
+
+            fadePanel.enabled = false;
 			Destroy (blockBorderClone);
         }
 
@@ -103,34 +124,25 @@ namespace Game
 		private IEnumerator LoadWithFadeOut(string levelName)
 		{
 			Instantiate (Resources.Load ("BlockBorder"));
-			print("fading out coroutine...");
+
+			//print("fading out coroutine...");
 			if (levelName == "")
 			{
 				Debug.LogError("Level name not defined.");
-				this.gameObject.guiTexture.enabled = false;
+				//this.gameObject.guiTexture.enabled = false;
 			}
 			else
 			{
-				
-				//GameObject kinectObject = GameObject.Find("KinectControls");
-				//if (kinectObject)
-				//    kinectObject.SetActive(false);
-				
-				float startTime = Time.time;
-				originalColor.a = 0.0f;
-				targetColor.a = 1.0f;                
-				if(!this.guiTexture)
-				{
-					print ("GUITexture not assigned to MGC.");
-					this.gameObject.AddComponent<GUITexture>();
-				}
-				this.guiTexture.enabled = true;
-				while (this.guiTexture.color.a < 0.51f)
-				{
-					this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-					//print("alpha = " + this.guiTexture.color.a);
-					yield return null;
-				}
+				float startTime = Time.time;              
+                fadePanel.enabled = true;
+
+                while (fadePanel.color.a < 0.99f)
+                {
+                    fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                    //print("barva: " + fadePanel.color);
+                    yield return null;
+                }
+                
 				
 				Application.LoadLevel(levelName);
 			}
@@ -146,15 +158,13 @@ namespace Game
 			print("fading out coroutine...");
 
 			float startTime = Time.time;
-			originalColor.a = 0.0f;
-			targetColor.a = 1.0f;                
+            fadePanel.enabled = true;
 
-			this.gameObject.guiTexture.enabled = true;
-			while (this.guiTexture.color.a < 0.51f)
-			{
-				this.guiTexture.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) * speed);
-				yield return null;
-			}
+            while (fadePanel.color.a < 0.99f)
+            {
+                fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                yield return null;
+            }
 				
 			Application.LoadLevel(levelIndex);
 		}

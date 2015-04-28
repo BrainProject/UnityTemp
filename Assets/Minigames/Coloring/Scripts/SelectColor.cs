@@ -44,6 +44,11 @@ namespace Coloring
 						Brush.renderer.material.color = orange;
 						break;
 				}
+
+				
+#if UNITY_ANDROID
+				thisLevelManager.neuronMaterial.color = Brush.renderer.material.color;
+#endif
 				thisLevelManager.brush = cursorTexture;
 			}
 		}

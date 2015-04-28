@@ -1928,7 +1928,7 @@ Transform:
   m_Children:
   - {fileID: 1171028347}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!95 &272874702
 Animator:
   serializedVersion: 3
@@ -2415,7 +2415,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 387923814}
   - 212: {fileID: 387923813}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Background Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2443,7 +2443,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 630e7a4bfc052a74592fb5585c14ab64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bcfc927492937b4cbf9ae0a48140035, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &387923814
 Transform:
@@ -2881,7 +2881,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
 --- !u!114 &464385362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3908,7 +3908,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
@@ -3940,8 +3940,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 665736907}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -.646340013, y: .206855416, z: .105658904}
-  m_LocalScale: {x: .0245815925, y: .0245815869, z: .0245815869}
+  m_LocalPosition: {x: -.646340013, y: .206860006, z: .105659999}
+  m_LocalScale: {x: .0539641492, y: .0539641306, z: .0539641306}
   m_Children: []
   m_Father: {fileID: 219122194}
   m_RootOrder: 7
@@ -3990,7 +3990,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 12, y: 11.999999, z: .199999988}
+  m_Size: {x: 5, y: 5, z: .199999988}
   m_Center: {x: 0, y: 0, z: -4.76837158e-07}
 --- !u!1 &688437478
 GameObject:
@@ -5163,7 +5163,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &983687589
 GameObject:
   m_ObjectHideFlags: 0
@@ -5360,7 +5360,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!114 &1039476859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7070,7 +7070,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!114 &1371562514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7083,8 +7083,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brush: {fileID: 2800000, guid: 865f66c6fb419e846b79f7fe61e3c6a6, type: 3}
+  defaultBrush: {fileID: 2800000, guid: 865f66c6fb419e846b79f7fe61e3c6a6, type: 3}
   backGUI: {fileID: 1039476856}
   savePictureGUI: {fileID: 464385359}
+  brushColor: {fileID: 598424735}
 --- !u!1 &1373029205
 GameObject:
   m_ObjectHideFlags: 0
@@ -8167,7 +8169,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507728634}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: 0, y: 1.20000005, z: .231963664}
+  m_LocalPosition: {x: 0, y: 1.20200002, z: .230000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 302860415}
@@ -8176,7 +8178,7 @@ Transform:
   - {fileID: 2096735637}
   - {fileID: 219122194}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!114 &1507728636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11530,7 +11532,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 1000
+  far clip plane: 20
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -11577,9 +11579,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 983009478}
-  width: 1600
-  height: 900
-  defaultFileName: savedCameraFrame.png
+  width: 1920
+  height: 1080
+  defaultFileName: Obrazek.png
 --- !u!1 &2065516084
 GameObject:
   m_ObjectHideFlags: 0
@@ -11830,6 +11832,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1462127246}
   m_GameObject: {fileID: 2074636654}
   m_Mesh: {fileID: 4300004, guid: cbc88509ce9259c44b8820b646fd8f8b, type: 3}
+--- !u!1 &2077934483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2077934484}
+  m_Layer: 0
+  m_Name: DeskParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2077934484
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2077934483}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
+  m_LocalPosition: {x: 0, y: .310000002, z: .230000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
 --- !u!1 &2079045235
 GameObject:
   m_ObjectHideFlags: 0

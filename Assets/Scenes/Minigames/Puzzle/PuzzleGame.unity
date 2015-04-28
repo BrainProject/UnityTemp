@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &358537700
 GameObject:
@@ -125,16 +126,16 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 358537700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 815606463}
   m_RootOrder: 0
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -280, y: 118}
-  m_SizeDelta: {x: 177, y: 177}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 230}
+  m_SizeDelta: {x: 200, y: 200}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &417734289
 Prefab:
   m_ObjectHideFlags: 0
@@ -144,15 +145,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23
+      value: 32.4000015
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 51.7999992
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalRotation.x
@@ -176,12 +177,21 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5bcfc927492937b4cbf9ae0a48140035,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cc61b6f43c806e458ffcc3ca44f498b, type: 2}
   m_RootGameObject: {fileID: 1126558271}
@@ -234,9 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: 3
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -251,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -287,7 +296,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1126558273}
   - 212: {fileID: 1126558272}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Background Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +324,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 630e7a4bfc052a74592fb5585c14ab64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bcfc927492937b4cbf9ae0a48140035, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1126558273
 Transform:
@@ -324,8 +333,8 @@ Transform:
   m_PrefabInternal: {fileID: 417734289}
   m_GameObject: {fileID: 1126558271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 23, z: 51.7999992}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: -19, y: 32.4000015, z: 17}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -416,6 +425,7 @@ GameObject:
   - 81: {fileID: 1911045095}
   - 114: {fileID: 1911045094}
   - 108: {fileID: 1911045100}
+  - 45: {fileID: 1911045101}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -466,7 +476,7 @@ Camera:
   m_GameObject: {fileID: 1911045093}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -475,7 +485,7 @@ Camera:
     width: 16
     height: 9
   near clip plane: .300000012
-  far clip plane: 1000
+  far clip plane: 60
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -537,3 +547,11 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!45 &1911045101
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1911045093}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: ba5fdd37570b30844b721ac9896199ef, type: 2}

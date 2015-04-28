@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 public class HelpListener : MonoBehaviour {
+	#if UNITY_STANDALONE
 	public bool activated = false;
 	public GameObject[] ObjToPause;
 
@@ -12,7 +12,7 @@ public class HelpListener : MonoBehaviour {
 
 	void Start()
 	{
-		MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+        MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
 		//KinectManagerSwitcher.deactivateThisLevelKManager();
 //		if(MGC.Instance.neuronHelp)
 //			neuronHelp = MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>();
@@ -61,5 +61,5 @@ public class HelpListener : MonoBehaviour {
 			obj.SendMessage("Stop",stop);
 		}
 	}
+	#endif
 }
-#endif

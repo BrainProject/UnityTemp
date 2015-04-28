@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 
 namespace SocialGame{
 	public class TwoPlayerSwitcher : MonoBehaviour {
+		#if UNITY_STANDALONE
 		KinectManager KManager;
 		public bool TwoPlayer;
 		public SkinnedMeshRenderer player2;
@@ -28,7 +28,7 @@ namespace SocialGame{
 		// Update is called once per frame
 		void Update () {
 			//Debug.Log(KManager.GetPlayer2ID());
-			if(KManager && KManager.GetPlayer2ID() != 0)
+			if(KManager && KManager.GetUserIdByIndex(1) != 0)
 			{
 				if(!TwoPlayer)
 				{
@@ -93,6 +93,6 @@ namespace SocialGame{
 				LevelManager.finish();
 			}
 		}
+		#endif
 	}
 }
-#endif

@@ -6,6 +6,7 @@ using System.Collections;
 /// </summary>
 public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript> {
 
+    public static bool someSphereMove = false;
     private bool clicked = false;
     private bool lastClicked = false;
     private bool moveX = true;
@@ -109,9 +110,10 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     {
         if (LondonTowerGameManager.state == LondonTowerGameState.game)
         {
-            if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked)
+            if (gameManager.OnTop(currentPoleID, orderOnPole) && !clicked && !someSphereMove)
             {
                 clicked = true;
+                someSphereMove = true;
                 //if (!moveX)
                // {
                // polePosition = this.transform.position;
@@ -194,6 +196,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         if (other.gameObject.GetComponent<LondonTowePoleScript>() != null)
         {
             //Debug.Log(" sphere is hitted by pole");
+            someSphereMove = false;
             if (clicked)
             {
                 clicked = false;

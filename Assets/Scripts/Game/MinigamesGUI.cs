@@ -13,6 +13,7 @@ namespace Game
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
+		public bool clicked = false;
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -43,8 +44,6 @@ namespace Game
 				brainIcon.show ();
 
             //rewardIcon.gameObject.SetActive(false);
-
-			restartIcon.GetComponent<MinigamesGUIIconsActions>().SetRestartDifferentScene(differentRestartScene,differentRestartSceneName);
         }
 
         public void hide()
