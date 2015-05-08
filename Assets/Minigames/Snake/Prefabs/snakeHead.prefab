@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2300000}
   - 54: {fileID: 5400000}
   - 33: {fileID: 3300000}
-  - 114: {fileID: 11400002}
   - 114: {fileID: 11400006}
   - 111: {fileID: 11100000}
   - 114: {fileID: 11400008}
@@ -178,18 +177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   death: {fileID: 8300000, guid: b79e3a2c6e3c472489efb7524ea2cb38, type: 3}
   dead: 0
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c774b945b23851248ade940db71bfd46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodObject: []
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -216,9 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snakeLength: 3
+  speed: 0
   food: {fileID: 140080, guid: 544b0f1757ecd184b8df5c3cb007bb67, type: 2}
   snakeprefab: {fileID: 100000, guid: 5bb2727b222d8c74eafbfb6d4a927fd1, type: 2}
-  foodColored: {fileID: 100000, guid: 60b956eb260e4544e85381490ecbd7b0, type: 2}
+  foodColored: {fileID: 160708, guid: b124d22eacec29746962dd8d110b3fb7, type: 2}
   eating: {fileID: 8300000, guid: 3b4b67ccd67a15e44937e365a4caa2d7, type: 3}
   ko: {fileID: 0}
   controller: {fileID: 0}

@@ -4,17 +4,13 @@ using System.Collections;
 
 namespace MinigameSnake
 {
-// If a food object is created at the coordinates of an existing poison object, this script deletes it and creates a new one somewhere else
+// If a food object is created at the coordinates of an existing poison object, this script deletes it ( object is created with left object - see FoodPoisonCollision)
 public class FoodPoisonCollisionRight : MonoBehaviour 
 {	
-	//public GameObject food;
-	//public GameObject foodColored;
-
-	//Destroy the food from right screen
-
+	
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.gameObject.tag == "Poison") 
+			if (c.gameObject.tag == "Poison" || c.gameObject.tag == "Snake" || c.gameObject.tag == "Tail") 
 		{
 			Destroy(this.gameObject);
 			

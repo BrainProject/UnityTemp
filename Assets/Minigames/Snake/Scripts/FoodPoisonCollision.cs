@@ -12,7 +12,7 @@ public class FoodPoisonCollision : MonoBehaviour
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.gameObject.tag == "Poison") 
+			if ((c.gameObject.tag == "Poison") || c.gameObject.tag == "Food" || c.gameObject.tag == "Snake" || c.gameObject.tag == "Tail") 
 		{
 			print("collision food poison");
 			Destroy(this.gameObject);
@@ -24,9 +24,9 @@ public class FoodPoisonCollision : MonoBehaviour
 			Vector3 foodPosition = new Vector3(px, py, pz);
 			
 			Instantiate(food, foodPosition, Quaternion.identity);
-			print("created normal food");
+			//print("created normal food");
 			Instantiate(foodColored, foodPosition, Quaternion.identity);
-			print("created right food");
+			//print("created right food");
 		}
 	}
 }

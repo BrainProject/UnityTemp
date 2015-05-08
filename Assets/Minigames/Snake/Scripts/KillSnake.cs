@@ -17,14 +17,14 @@ public class KillSnake : MonoBehaviour
 	{
 		if (c.gameObject.name.StartsWith("snake") || (c.gameObject.tag == "Tail")) 
 		{
-
+			//print("death");
 			audio.PlayOneShot (death);
-			GameObject.Find("snake1").GetComponent<Move2>().Stop();
+			GameObject.Find("snake1").GetComponent<MoveSnake>().Stop();
 			GameObject.Find ("loserMessage").guiText.enabled = true;
 
-			(GameObject.Find ("snake1").GetComponent<Move2>()).enabled = false;
+			(GameObject.Find ("snake1").GetComponent<MoveSnake>()).enabled = false;
 			yield return new WaitForSeconds(3);
-			GameObject.Find ("_GameManager_").GetComponent<GameManager>().Dead();
+			GameObject.Find ("_Level Manager_").GetComponent<GameManager>().Dead();
 			snakeBody = GameObject.FindGameObjectsWithTag ("Snake");			
 			for (int i = 0; i < snakeBody.Length; i++) 
 			{

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: foodMaterialback
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,12 +17,24 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
+          m_Texture: {fileID: 2800000, guid: 083812da190a6a54a9077de03dece183, type: 3}
+          m_Scale: {x: 4, y: 1}
+          m_Offset: {x: 1, y: 1}
+    m_Floats:
+      data:
+        first:
+          name: _Shininess
+        second: 1
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .772549033, g: .992156863, b: .564705908, a: 1}
+        second: {r: .992156863, g: .992156863, b: .992156863, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .996078432, g: .996078432, b: .996078432, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: .0509803928, g: .0705882385, b: 0, a: 0}

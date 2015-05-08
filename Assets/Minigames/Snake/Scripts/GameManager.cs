@@ -8,12 +8,10 @@ namespace MinigameSnake
 {
 public class GameManager : MonoBehaviour {
 	public int score;
-	//private string levelToLoad;
 	public int currentLevel;
 	public bool death;
 	public bool winning;
 	public bool game;
-	//private GestureListener gestureListener; //gesture listener for Kinect
 	public AudioClip eating;
 
 	void Start()
@@ -23,31 +21,20 @@ public class GameManager : MonoBehaviour {
 		winning = false;
 		game = false;
 		score = 0;
-		//This keeps the object alive across multiple scenes.
-		//DontDestroyOnLoad (this.gameObject);
 		
-		//Sets the position of GUI Text
+		
+		//Sets the position of GUI Text with score
 		this.guiText.pixelOffset = new Vector2 (Screen.width/6,Screen.height/2);
-
-		
-		//Checks, if there is no other GameManager in scene
-		if(GameObject.Find("_GameManager_") != this.gameObject)
-			Destroy(this.gameObject);
 	}
 
 	void Update()
 	{
-		//if (game) {
 			this.guiText.text = "Score: " + score;
-			//	} else {
-			//this.guiText.text = "";
-			//	}
-
 	}
 
 	public void AddPoints(){
 		score++;
-//		print (score);
+		print (score);
 	}
 
 	public int LastScore(){
@@ -58,8 +45,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void TakeOffPointsAddedAfterSnakeDead(int i){
-		//score = score - i;
-		//print("erasing " + i + "points");
 		score = score - 3;
 	}
 	public string NextLevel()

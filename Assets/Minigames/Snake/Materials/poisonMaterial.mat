@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: poisonMaterial
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -34,13 +34,55 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
+      data:
+        first:
+          name: _Shininess
+        second: 1
       data:
         first:
           name: _EmissionLM
         second: 0
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _InvFade
+        second: 1
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .200000003, g: .596078455, b: .992156863, a: 1}
+        second: {r: .0431372561, g: .215686277, b: .533333361, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .0627451017, g: .321568638, b: .850980401, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _ReflectColor
+        second: {r: .0274509806, g: .149019614, b: .36470589, a: .5}
+      data:
+        first:
+          name: _TintColor
+        second: {r: .5, g: .5, b: .5, a: .5}
