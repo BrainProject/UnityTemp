@@ -12,7 +12,7 @@ public class FoodPoisonCollision : MonoBehaviour
 
 	void OnTriggerEnter(Collider c)
 	{
-			if ((c.gameObject.tag == "Poison") || c.gameObject.tag == "Food" || c.gameObject.tag == "Snake" || c.gameObject.tag == "Tail") 
+			if ((c.gameObject.tag == "Poison") || c.gameObject.tag == "Food" /*|| c.gameObject.tag == "Snake"*/ || c.gameObject.tag == "Tail") 
 		{
 			print("collision food poison");
 			Destroy(this.gameObject);
