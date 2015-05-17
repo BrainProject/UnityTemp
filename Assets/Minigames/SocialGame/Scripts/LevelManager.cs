@@ -19,6 +19,7 @@ namespace SocialGame{
 
 		public static void finish()
 		{
+			HelpListener.Instance.StopAll(true);
 			KinectManagerSwitcher.deactivateThisLevelKManager();
 			MGC.Instance.minigamesGUI.show(true);
 			//Debug.LogError("finito");

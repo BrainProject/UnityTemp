@@ -22,6 +22,7 @@ public class ExtendsAvatar : AvatarController {
 
 	void Stop(bool stop)
 	{
+		Debug.Log (stop);
 		run = !stop;
 	}
 }

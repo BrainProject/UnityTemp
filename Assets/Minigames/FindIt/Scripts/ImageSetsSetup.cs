@@ -33,6 +33,8 @@ namespace FindIt
         private List<string> defResPacks = new List<string>();
         private List<string> customResPacks = new List<string>();
 
+        public GameObject TilePrefab;
+
         /**
          * Returns proper dimensions of the grid to put the tiles
          * @ param elementsCount Number of elements to fit in the grid
@@ -116,7 +118,7 @@ namespace FindIt
          */
         public bool checkDefaultForEnoughImages(int numberImages, string resourcePackName)
         {
-            return Resources.LoadAll<Sprite>(resourcePackName).Length >= numberImages;
+            return Resources.LoadAll<Texture2D>(resourcePackName).Length >= numberImages;
         }
 
 
@@ -168,8 +170,8 @@ namespace FindIt
         System.Random r = new System.Random();
 
         // defines borders in the scene
-        const float minx = -6.5f;
-        const float maxx = 6.5f;
+        /*const*/ float minx = -5.7f; // -6.5f;
+        /*const*/ float maxx = 5.7f;  // 6.5f;
         const float miny = -2.75f;
         const float maxy = 2.75f;
 
@@ -178,20 +180,28 @@ namespace FindIt
 
         Debug.Log("Grid size chosen as " + menuRows + " x " + menuColumns);
 
+        if (menuColumns == 2)
+        {
+            minx += 2;
+            maxx -= 2;
+        }
+
         for (i = menuRows - 1; i >= 0 && (menuRows - 2 - i) * menuColumns + j < defResPacks.Count; i--)
         {
             for (j = 0; j < menuColumns && (menuRows - 1 - i) * menuColumns + j < defResPacks.Count; j++)
             {
-                GameObject g = new GameObject();
+                GameObject g = Instantiate(TilePrefab) as GameObject;
+
                 g.transform.localPosition = new Vector3(
                     menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
-                    menuRows - 1 == 0 ? 0 : ((maxy - miny)/(menuRows-1))*i + miny,
+                    menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
                     0.0f);
                 if (menuRows > 2)
-                    g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-                SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
-                sr.sprite = Resources.LoadAll<Sprite>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[r.Next(numberPieces)];
-                g.AddComponent<BoxCollider2D>();
+                    g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+
+                g.renderer.material.mainTexture = Resources.LoadAll<Texture2D>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[0];
+
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = false;
                 chis.resourcePackName = defResPacks[(menuRows - 1 - i) * menuColumns + j];
@@ -209,22 +219,26 @@ namespace FindIt
                 string file = Directory.GetFiles(customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count]).Where(
                    p => Path.GetExtension(p).ToLower() == ".png" || Path.GetExtension(p).ToLower() == ".jpg" ||
                         Path.GetExtension(p).ToLower() == ".jpeg" || Path.GetExtension(p).ToLower() == ".bmp" ||
-                        Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif").ElementAt<string>(r.Next(numberPieces));
-                GameObject g = new GameObject();
-                g.transform.localPosition = new Vector3(
-                    ((maxx - minx) / (menuColumns - 1)) * j + minx,
-                    ((maxy - miny) / (menuRows - 1)) * i + miny,
-                     0.0f);
-                if (menuRows > 2)
-                    g.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-                SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
+                        Path.GetExtension(p).ToLower() == ".gif" || Path.GetExtension(p).ToLower() == ".tif").ElementAt<string>(/*r.Next(numberPieces)*/0);
 
-                WWW www = new WWW ("file:///" + file);
-                sr.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
-                g.AddComponent<BoxCollider2D>();
+                GameObject g = Instantiate(TilePrefab) as GameObject;
+
+                g.transform.localPosition = new Vector3(
+                    menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
+                    menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
+                    0.0f);
+                if (menuRows > 2)
+                    g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+
+                WWW www = new WWW("file:///" + file);
+                g.renderer.material.mainTexture = www.texture;
+
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = true;
                 chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
+                //chis.name = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
+                
                 j++;
             }
             j = 0;

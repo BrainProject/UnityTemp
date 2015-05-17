@@ -14,7 +14,7 @@ namespace SocialGame{
 			if(counterSript)
 			{
 				counterSript.nextComplete();
-				Destroy(this);
+				Destroy(gameObject);
 			}
 			else
 			{

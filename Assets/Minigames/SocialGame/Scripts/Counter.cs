@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace SocialGame{
@@ -40,10 +40,8 @@ namespace SocialGame{
 		void CreatePoints()
 		{
 			pointsGraf = new CounterPointControlDodge[max];
-			//float step = (fieldOnSreen.y - fieldOnSreen.x)/max;
 			int leftHalf = max/2;
 			float center = fieldOnSreen.x + (fieldOnSreen.y - fieldOnSreen.x)/2;
-			//float start = center - leftHalf * step;
 			for(int i = 0; i < max; i++)
 			{
 				Vector3 position = transform.position;
@@ -61,6 +59,7 @@ namespace SocialGame{
 
 		}
 
+		[ContextMenu("Redraw")]
 		void redraw()
 		{
 			if(points < max)
