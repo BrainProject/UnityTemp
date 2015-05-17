@@ -15,19 +15,23 @@ namespace SocialGame{
 
 
 		protected override void Start () {
+			GameObject clone = null;
 			good =  Random.Range(0,100) <= ChanceOfGood;
 			if(good && goodObj)
 			{
-				GameObject clone = (GameObject) GameObject.Instantiate(goodObj,transform.position,Quaternion.identity);
-				clone.transform.parent= transform;
+				clone = (GameObject) GameObject.Instantiate(goodObj,transform.position,Quaternion.identity);
 			}
 			else
 			{
 				if(badObj)
 				{
-					GameObject clone = (GameObject) GameObject.Instantiate(badObj,transform.position,Quaternion.identity);
-					clone.transform.parent= transform;
+					clone = (GameObject) GameObject.Instantiate(badObj,transform.position,Quaternion.identity);
+
 				}
+			}
+			if(clone)
+			{
+				clone.transform.parent= transform;
 			}
 		}
 		

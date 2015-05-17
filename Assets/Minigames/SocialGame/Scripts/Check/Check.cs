@@ -7,6 +7,7 @@ public class Check : MonoBehaviour {
 	public Transform[] target;
 	private bool inPos;
 	public bool activated;
+	public float multiDist =1;
 	public Check[] next;
 	protected Transform finishTarget;
 
@@ -36,7 +37,6 @@ public class Check : MonoBehaviour {
 		return last;
 	}
 	
-	[ContextMenu("Check")]
 	public virtual void thisActivate()
 	{
 			activated = false;
@@ -57,22 +57,10 @@ public class Check : MonoBehaviour {
 
 	public virtual void show()
 	{
-		MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
-		if(render)
-		{
-			render.enabled = activated;	
-		}
-		else
-		{
-			SpriteRenderer spriteRender = gameObject.GetComponent<SpriteRenderer>();
-			if(spriteRender)
-			{
-				spriteRender.enabled = activated;
-			}
-		}
+		show(activated);
 	}
 
-		public void show(bool showObj)
+	public void show(bool showObj)
 		{
 			MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
 			if(render)

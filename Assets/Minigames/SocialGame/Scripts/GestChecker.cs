@@ -86,7 +86,7 @@ namespace SocialGame
 						Transform[] targets = script.target;
 						foreach(Transform target in targets)
 						{
-							bool next = Vector2.Distance(child.position,target.position) < distance;
+							bool next = Vector2.Distance(child.position,target.position) < (child.multiDist * distance);
 							if(next)
 							{
 								if(!allChecked)
@@ -219,8 +219,8 @@ namespace SocialGame
 
 		public void ActivateChecking(bool active)
 		{
-			//bugbug
-			activeChecking = true; //active;
+
+			activeChecking = true;//active;
 			for(int i = 0; i< transform.childCount; i++)
 			{
 				Transform child = transform.GetChild(i);

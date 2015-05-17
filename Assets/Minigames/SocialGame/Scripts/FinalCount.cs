@@ -10,10 +10,6 @@ namespace SocialGame{
 		public GestChecker gestPlayer1;
 		public GestChecker gestPlayer2;
 		public int playerOnTurn =0;
-		
-		public Color defColor;
-		public Color P1Color;
-		public Color P2Color;
 
 		void Start(){
 			if(switching)

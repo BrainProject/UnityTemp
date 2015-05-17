@@ -4,7 +4,7 @@ using System.Collections;
 namespace SocialGame{
 	public class CheckFigure : Check {
 		public bool check;
-		private bool checkedLastUpdate;
+		//private bool checkedLastUpdate;
 
 		public void UnCheck()
 		{
