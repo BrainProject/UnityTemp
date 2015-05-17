@@ -86,7 +86,7 @@ namespace SocialGame
 						Transform[] targets = script.target;
 						foreach(Transform target in targets)
 						{
-							bool next = Vector2.Distance(child.position,target.position) < (child.multiDist * distance);
+							bool next = Vector2.Distance(child.position,target.position) < (script.multiDist * distance);
 							if(next)
 							{
 								if(!allChecked)
