@@ -29,12 +29,14 @@ namespace SocialGame{
 					Next();
 				}
 		}
-		
+
+		/// <summary>
+		/// Next bollon was added.
+		/// </summary>
 		void Next()
 		{
 			if(obj)
 			{
-				Debug.LogWarning("baf");
 				GameObject clone = (GameObject) GameObject.Instantiate(obj,transform.position,Quaternion.identity);
 				clone.transform.parent = transform.parent;
 				Ballon ballon = clone.GetComponent<Ballon>();

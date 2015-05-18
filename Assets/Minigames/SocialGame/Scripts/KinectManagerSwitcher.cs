@@ -2,82 +2,85 @@
 using System.Collections;
 using Kinect;
 
-
+namespace SocialGame{
 public class KinectManagerSwitcher : MonoBehaviour {
-	#if UNITY_STANDALONE
-	public static GameObject thisLevelKManager;
-	public static GameObject defaultKManager;
-	// Use this for initialization
-	void Awake () {
-		setThisLevelManager();
-		defaultKManager = MGC.Instance.kinectManagerObject;
-		activateThisLevelKManager();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+		#if UNITY_STANDALONE
+		public static GameObject thisLevelKManager;
+		public static GameObject defaultKManager;
 
-	void setThisLevelManager()
-	{
-		GameObject kinectObj = GameObject.FindGameObjectWithTag("GameController");
-		if(kinectObj)
+		// Use this for initialization
+		void Awake () {
+			setThisLevelManager();
+			defaultKManager = MGC.Instance.kinectManagerObject;
+			activateThisLevelKManager();
+		}
+
+		/// <summary>
+		/// Sets the this level manager.
+		/// </summary>
+		void setThisLevelManager()
 		{
-			thisLevelKManager = kinectObj;
-			/*KinectManager kinectMan = kinectObj.GetComponentInChildren<KinectManager>();
-			if(kinectMan)
+			GameObject kinectObj = GameObject.FindGameObjectWithTag("GameController");
+			if(kinectObj)
 			{
-				thisLevelKManager = kinectMan;
-			}*/
+				thisLevelKManager = kinectObj;
+				/*KinectManager kinectMan = kinectObj.GetComponentInChildren<KinectManager>();
+				if(kinectMan)
+				{
+					thisLevelKManager = kinectMan;
+				}*/
+			}
 		}
-	}
 
-	public static void activateThisLevelKManager()
-	{
-		setActiveMGC(false);
-		
-		if(thisLevelKManager)
+		/// <summary>
+		/// Activates the this level K manager.
+		/// </summary>
+		public static void activateThisLevelKManager()
 		{
-			thisLevelKManager.SetActive(true);
+			setActiveMGC(false);
+			
+			if(thisLevelKManager)
+			{
+				thisLevelKManager.SetActive(true);
+			}
+			else
+			{
+				setActiveMGC(true);
+			}
 		}
-		else
+
+		/// <summary>
+		/// Sets the active MGC.
+		/// </summary>
+		/// <param name="active">If set to <c>true</c> active.</param>
+		public static void setActiveMGC(bool active)
 		{
+			if(defaultKManager)
+			{
+				MGC.Instance.checkInactivity = active;
+				defaultKManager.SetActive(active);
+			}
+			if (!active && MGC.Instance.mouseCursor)
+				MGC.Instance.ShowCustomCursor (false);
+			else if (active) 
+			{
+				MGC.Instance.ShowCustomCursor (true);
+				MGC.Instance.kinectManagerInstance.Start();
+			}
+		}
+
+
+		/// <summary>
+		/// Deactivates the this level K manager.
+		/// </summary>
+		public static void deactivateThisLevelKManager()
+		{
+			if(thisLevelKManager)
+			{
+				thisLevelKManager.SetActive(false);
+			}
 			setActiveMGC(true);
 		}
+		#endif
 	}
-
-	public static void setActiveMGC(bool active)
-	{
-		if(defaultKManager)
-		{
-			MGC.Instance.checkInactivity = active;
-			defaultKManager.SetActive(active);
-		}
-		if (!active && MGC.Instance.mouseCursor)
-			MGC.Instance.ShowCustomCursor (false);
-		else if (active) 
-		{
-			MGC.Instance.ShowCustomCursor (true);
-			MGC.Instance.kinectManagerInstance.Start();
-		}
-			//MGC.Instance.mouseCursor.SetActive(active);*/
-	}
-
-
-
-	public static void deactivateThisLevelKManager()
-	{
-		if(thisLevelKManager)
-		{
-			thisLevelKManager.SetActive(false);
-		}
-		setActiveMGC(true);
-	}
-
-	/*public void OnDestroy()
-	{
-		deactivateThisLevelKManager();
-	}*/
-	#endif
 }

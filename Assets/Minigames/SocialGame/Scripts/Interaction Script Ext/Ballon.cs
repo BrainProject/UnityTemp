@@ -18,6 +18,10 @@ namespace SocialGame{
 
 		}
 
+		/// <summary>
+		/// Sets the joint.
+		/// </summary>
+		/// <param name="body">Body.</param>
 		public void setJoint(Rigidbody2D body)
 		{
 			Debug.LogWarning(joint);
@@ -34,6 +38,10 @@ namespace SocialGame{
 
 		}
 
+		/// <summary>
+		/// Sets the color.
+		/// </summary>
+		/// <param name="color">Color.</param>
 		public void setColor(Color color)
 		{
 			if(render)

@@ -72,7 +72,9 @@ namespace SocialGame
 		}
 
 	
-		// Update is called once per frame
+		/// <summary>
+		/// Checking collision
+		/// </summary>
 		void Update () {
 			if(activeChecking)
 			{
@@ -119,6 +121,9 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Completes the gest.
+		/// </summary>
 		protected virtual void CompleteGest()
 		{
 			if(next)
@@ -136,7 +141,9 @@ namespace SocialGame
 		}
 
 
-
+		/// <summary>
+		/// Finishs the him.
+		/// </summary>
 		void finishHim()
 		{
 			GameObject root = gameObject.transform.root.gameObject;
@@ -153,7 +160,10 @@ namespace SocialGame
 
 		}
 	
-
+		/// <summary>
+		/// Moves the parent on bone.
+		/// </summary>
+		/// <param name="boneName">Bone name.</param>
 		public void MoveParentOnBone(string boneName)
 		{
 			GameObject bone = GameObjectEx.FindGameObjectWithNameTag(boneName,gameObject.tag);
@@ -167,6 +177,9 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
 		public void findTartgetByCheckName()
 		{
 			for(int i =0; i <transform.childCount; i++)
@@ -184,6 +197,10 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
+		/// <param name="child">Child.</param>
 		public void findTartgetByCheckName(Transform child)
 		{
 			string nameGest = child.name;
@@ -197,6 +214,10 @@ namespace SocialGame
 			}										
 		}
 
+		/// <summary>
+		/// Adds the check.
+		/// </summary>
+		/// <param name="check">Check.</param>
 		public void addCheck(Transform check)
 		{
 			check.parent = transform;
@@ -216,6 +237,10 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Activates the checking.
+		/// </summary>
+		/// <param name="active">If set to <c>true</c> active.</param>
 		public void ActivateChecking(bool active)
 		{
 

@@ -7,6 +7,9 @@ namespace SocialGame{
 		#if UNITY_STANDALONE
 		public static int gameSelected = 0; //1-player 2-player 0-nonselect
 
+		/// <summary>
+		/// win this level
+		/// </summary>
 		public static void win()
 		{
 			GameObject Neuronek = MGC.Instance.neuronHelp;
@@ -17,6 +20,9 @@ namespace SocialGame{
 			finish ();
 		}
 
+		/// <summary>
+		/// Finish this level.
+		/// </summary>
 		public static void finish()
 		{
 			HelpListener.Instance.StopAll(true);

@@ -11,12 +11,18 @@ public class Check : MonoBehaviour {
 	public Check[] next;
 	protected Transform finishTarget;
 
+	/// <summary>
+	/// Start this instance. Hide or show object.
+	/// </summary>
 	protected virtual void Start()
 	{
 		show();
 	}
 	
-	
+	/// <summary>
+	/// Checked the specified target.
+	/// </summary>
+	/// <param name="target">Target.</param>
 	public virtual bool Checked(Transform target)
 	{
 		bool last = false;
@@ -36,30 +42,45 @@ public class Check : MonoBehaviour {
 		thisActivate();
 		return last;
 	}
-	
+
+	/// <summary>
+	/// this is deactivatrd aftert is checked.
+	/// </summary>
 	public virtual void thisActivate()
 	{
-			activated = false;
-			show ();
+			deactivate();
 	}
 	
+	/// <summary>
+	/// Activate this instance.
+	/// </summary>
 	public void activate()
 	{
 		activated = true;
 		show();
 	}
 	
+	/// <summary>
+	/// Deactivate this instance.
+	/// </summary>
 	public void deactivate()
 	{
 			activated = false;
 			show();
 	}
 
+		/// <summary>
+		/// Show this instance.
+		/// </summary>
 	public virtual void show()
 	{
 		show(activated);
 	}
 
+		/// <summary>
+		/// Show this intance if showObj is true else hide intance.
+		/// </summary>
+		/// <param name="showObj">If set to <c>true</c> show object.</param>
 	public void show(bool showObj)
 		{
 			MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();

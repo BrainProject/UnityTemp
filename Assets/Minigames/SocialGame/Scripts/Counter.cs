@@ -19,6 +19,10 @@ namespace SocialGame{
 			redraw();
 		}
 
+		/// <summary>
+		/// Adds the points.
+		/// </summary>
+		/// <param name="point">Point.</param>
 		public void addPoints(int point)
 		{
 			if((point + points)<0)
@@ -28,6 +32,10 @@ namespace SocialGame{
 			redraw();
 		}
 
+		/// <summary>
+		/// Sets the points.
+		/// </summary>
+		/// <param name="point">Point.</param>
 		public void setPoints(int point)
 		{
 			if(point < 0)
@@ -37,6 +45,9 @@ namespace SocialGame{
 			redraw();
 		}
 
+		/// <summary>
+		/// Creates the points.
+		/// </summary>
 		void CreatePoints()
 		{
 			pointsGraf = new CounterPointControlDodge[max];
@@ -60,6 +71,9 @@ namespace SocialGame{
 		}
 
 		[ContextMenu("Redraw")]
+		/// <summary>
+		/// Redraw this instance.
+		/// </summary>
 		void redraw()
 		{
 			if(points < max)

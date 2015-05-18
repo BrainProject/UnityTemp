@@ -12,6 +12,9 @@ public class OnDestroyDestroy : MonoBehaviour {
 		SocialGame.LevelManager.gameSelected = 0;
 	}
 
+	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
 	void OnDestroy()
 	{
 		if(destroy)

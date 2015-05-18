@@ -5,7 +5,7 @@ namespace SocialGame{
 	public class NextExcer : MonoBehaviour {
 #if UNITY_STANDALONE
 		public string CounterName = "FitCounter";
-		// Use this for initialization
+
 		void Start () {
 			GameObject counter = GameObject.Find(CounterName);
 			FitCounter counterSript = null;

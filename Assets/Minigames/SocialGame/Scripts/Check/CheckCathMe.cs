@@ -35,7 +35,9 @@ namespace SocialGame{
 			}
 		}
 		
-		// Update is called once per frame
+		/// <summary>
+		/// Update  whith move object.
+		/// </summary>
 		void Update () {
 			if(transform.position.y < deathZone)
 			{

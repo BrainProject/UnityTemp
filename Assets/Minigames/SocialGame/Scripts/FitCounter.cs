@@ -24,7 +24,9 @@ namespace SocialGame{
 			redraw();
 		}
 
-
+		/// <summary>
+		/// Nexts is complete.
+		/// </summary>
 		public void  nextComplete()
 		{
 			count ++;
@@ -40,6 +42,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Draws the counter.
+		/// </summary>
 		void drawCount()
 		{
 			lines = new SpriteRenderer[max];
@@ -63,6 +68,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Redraw this object.
+		/// </summary>
 		void redraw()
 		{
 			for(int i = 0; i < lines.Length;i++)

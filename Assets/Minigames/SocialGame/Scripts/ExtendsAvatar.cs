@@ -3,27 +3,32 @@ using UnityEngine;
 using System.Collections;
 using Kinect;
 
-public class ExtendsAvatar : AvatarController {
-	public Transform handLeft;
-	public Transform handRight;
+namespace SocialGame{
+	public class ExtendsAvatar : AvatarController {
+		public Transform handLeft;
+		public Transform handRight;
 
-	private Vector3 newPos;
-	private bool run = true;
+		private Vector3 newPos;
+		private bool run = true;
 
-	void Update()
-	{
-		if(KinectManager.Instance && (LastUserID != 0) && run)
+		/// <summary>
+		/// Crection of posion of avatar.
+		/// </summary>
+		void Update()
 		{
-			newPos = this.transform.position;
-			newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
-			this.transform.position = newPos;
+			if(KinectManager.Instance && (LastUserID != 0) && run)
+			{
+				newPos = this.transform.position;
+				newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;
+				this.transform.position = newPos;
+			}
 		}
-	}
 
-	void Stop(bool stop)
-	{
-		Debug.Log (stop);
-		run = !stop;
+		void Stop(bool stop)
+		{
+			Debug.Log (stop);
+			run = !stop;
+		}
 	}
 }
 #endif

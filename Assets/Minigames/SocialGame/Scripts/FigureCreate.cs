@@ -11,14 +11,19 @@ namespace SocialGame
 		public GameObject checke;
 		public GameObject checker;
 		
-		// Update is called once per frame
+		/// <summary>
+		/// create point after pressed E
+		/// </summary>
 		void Update () {
 			if(Input.GetKeyDown(KeyCode.E))
 			{
 				createPoints();
 			}
 		}
-
+		/// <summary>
+		/// Creates the points.
+		/// </summary>
+		/// <returns>GestChecker wtih points</returns>
 		public GameObject createPoints()
 		{
 			//int count = transform.childCount;
@@ -43,6 +48,10 @@ namespace SocialGame
 			return checkerClone;
 		}
 
+		/// <summary>
+		/// Figures the copy.
+		/// </summary>
+		/// <returns>The copy.</returns>
 		GameObject figureCopy()
 		{
 			GameObject figure = (GameObject) GameObject.Instantiate(mesh,mesh.transform.position,Quaternion.AngleAxis(180,Vector3.up));

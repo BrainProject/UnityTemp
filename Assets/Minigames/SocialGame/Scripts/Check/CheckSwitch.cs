@@ -23,12 +23,7 @@ namespace SocialGame{
 			if(count)
 				count.Next();
 		}
-
-
-		/*protected void removeFromTarget()
-		{
-
-		}*/
+		
 		#endif
 	}
 }

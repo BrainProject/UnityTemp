@@ -13,13 +13,10 @@ namespace SocialGame{
 		void Start () {
 			Shake();
 		}
-
-		void Update()
-		{
-			Debug.DrawLine(new Vector3(-width/2 , height/2,0)+  center + transform.position,new Vector3(width/2 , height/2,0)+ center + transform.position,Color.cyan);
-			Debug.DrawLine(new Vector3(-width/2 , -height/2,0)+ center + transform.position,new Vector3(width/2 , -height/2,0)+ center + transform.position,Color.cyan);
-		}
 		
+		/// <summary>
+		/// Shake with objects.
+		/// </summary>
 		void Shake()
 		{
 			for(int i = 0; i < Objects.Length; i++)

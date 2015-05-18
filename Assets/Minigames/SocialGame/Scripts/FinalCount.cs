@@ -32,6 +32,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// say next part is selected.
+		/// </summary>
 		public void Selected()
 		{
 			switch(playerOnTurn)
@@ -47,6 +50,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Next part is added on place
+		/// </summary>
 		public void Next()
 		{
 			count--;
@@ -60,6 +66,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Switchs the player.
+		/// </summary>
 		void switchPlayer()
 		{
 				if(!gestPlayer1 || !gestPlayer2)
@@ -69,21 +78,16 @@ namespace SocialGame{
 						gestPlayer1.ActivateChecking( true);
 					if(gestPlayer2)
 						gestPlayer2.ActivateChecking( true);
-					//Camera.main.backgroundColor = defColor;
 					return;
 				}
 				switch(playerOnTurn)
 				{
 					case 1 :
-					//Camera.main.backgroundColor = P2Color;
-					//gestPlayer1.ActivateChecking( false);
 					gestPlayer2.ActivateChecking( true);
 					playerOnTurn = 2;
 					break;
 					case 2 :
-					//Camera.main.backgroundColor = P1Color;
 					gestPlayer1.ActivateChecking( true);
-					//gestPlayer2.ActivateChecking( false);
 					playerOnTurn = 1;
 					break;
 					default:

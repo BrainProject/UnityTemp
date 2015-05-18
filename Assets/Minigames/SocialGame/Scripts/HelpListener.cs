@@ -8,9 +8,7 @@ namespace SocialGame{
 		public  bool activated = false;
 		public  GameObject[] ObjToPause;
 
-		//	public Game.BrainHelp neuronHelp;
-		
-		//	private bool hideHelp = true;
+
 		void Awake()
 		{
 			if (Instance) 
@@ -26,32 +24,13 @@ namespace SocialGame{
 		void Start()
 		{
 			StartCoroutine (SetThisMinigamePlayed ());
-			//KinectManagerSwitcher.deactivateThisLevelKManager();
-	//		if(MGC.Instance.neuronHelp)
-	//			neuronHelp = MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>();
 		}
 
-		// Update is called once per frame
+		/// <summary>
+		/// Wait to acvtivate secret menu
+		/// </summary>
 		void Update () {
-	//		if(hideHelp)
-	//		{
-	//			if(neuronHelp)
-	//			{
-	//	 			if(!neuronHelp.helpExists)
-	//				{
-	//					KinectManagerSwitcher.activateThisLevelKManager();
-	//					hideHelp = false;
-	//				}
-	//			}
-	//			else
-	//			{
-	//				KinectManagerSwitcher.activateThisLevelKManager();
-	//				hideHelp = false;
-	//				Debug.Log("neco");
-	//			}
-	//		}
-
-			if(Input.GetKeyDown(KeyCode.I))
+		if(Input.GetKeyDown(KeyCode.I))
 			{
 				if(!activated)
 				{
@@ -67,6 +46,10 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Stops all.
+		/// </summary>
+		/// <param name="stop">If set to <c>true</c> stop.</param>
 		public	void StopAll(bool stop)
 		{
 			foreach(GameObject  obj in ObjToPause)
@@ -75,6 +58,10 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Sets the this minigame played.
+		/// </summary>
+		/// <returns>The this minigame played.</returns>
 		private IEnumerator SetThisMinigamePlayed()
 		{
 			while(!MGC.Instance)
