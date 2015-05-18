@@ -212,16 +212,17 @@ public class LeapBehaviorScript : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate(){
 		
-		if (gestureTimerActive) {
-			gestureTimer++;
-			if(gestureTimer >= gestureTimerDefault){
-				gestureTimer = 0;
-				gestureTimerActive = false;
-			}
-		}
-		
 		if (controller.IsConnected) {
 			//Debug.Log ("Leap is connected");
+
+			//gestureTimer
+			if (gestureTimerActive) {
+				gestureTimer++;
+				if(gestureTimer >= gestureTimerDefault){
+					gestureTimer = 0;
+					gestureTimerActive = false;
+				}
+			}
 			
 			//inicialize the frames
 			Frame frame = controller.Frame (0);
