@@ -56,18 +56,23 @@ namespace MinigameSelection {
 
 			if(((Input.GetAxis("Vertical") > 0) && Input.GetMouseButton(0)) || Input.GetMouseButtonDown(1))
 			{
-				//OnSelection = false;
-				//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
-				Move = true;
-				Speed = defaultSpeed;
-				From = this.transform.position;
-				To = this.GetComponent<CameraControl>().currentWaypoint.transform.position;
-				FromYRot = this.transform.eulerAngles.y;
-				ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
-				Camera.main.GetComponent<CameraControl>().BackToMain();
-				Camera.main.GetComponent<CameraControl>().ReadyToLeave = true;
-				//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
+				MoveCameraBack();
 			}
+		}
+
+		public void MoveCameraBack()
+		{
+			//OnSelection = false;
+			//StartCoroutine(mainCamera.GetComponent<SmoothCameraMove>().CameraLerp(Time.time));
+			Move = true;
+			Speed = defaultSpeed;
+			From = this.transform.position;
+			To = this.GetComponent<CameraControl>().currentWaypoint.transform.position;
+			FromYRot = this.transform.eulerAngles.y;
+			ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
+			Camera.main.GetComponent<CameraControl>().BackToMain();
+			Camera.main.GetComponent<CameraControl>().ReadyToLeave = true;
+			//mainCamera.GetComponent<SmoothCameraMove>().To = GameObject.Find("_GameManager").GetComponent<GameManager>().currentCameraDefaultPosition;
 		}
 	}
 }

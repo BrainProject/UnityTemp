@@ -33,7 +33,9 @@ namespace SocialGame{
 
 			}
 		}
-
+		/// <summary>
+		/// Running this objct.
+		/// </summary>
 		IEnumerator Running() {
 			while(deathZone < transform.position.x)
 			{

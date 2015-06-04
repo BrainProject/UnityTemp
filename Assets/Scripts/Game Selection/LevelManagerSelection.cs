@@ -11,9 +11,11 @@ namespace MinigameSelection
 		public GameObject temporalLobePos;
 		public GameObject minigameOnSelection;
 		public GUITexture kinectRequiredIcon;
+		public bool OnSelection { get; set; }
 
 		void Start()
 		{
+			OnSelection = false;
 			print ("this is game selection scene...");
 
 			kinectRequiredIcon.guiTexture.pixelInset = new Rect (0, 0, Screen.width / 16 * 2, Screen.height / 9 * 2);

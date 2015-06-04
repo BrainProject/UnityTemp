@@ -9,12 +9,9 @@ namespace SocialGame{
 		public float step;
 		private int num;
 		private  bool up;
-		// Use this for initialization
-		void Start () {
 		
-		}
-		
-		// Update is called once per frame
+
+
 		void Update () {
 			if(transform.position.y>3)
 			{
@@ -28,6 +25,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Adds the ballon.
+		/// </summary>
 		public void addBallon()
 		{
 			num++;

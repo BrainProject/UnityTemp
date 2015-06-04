@@ -166,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.13057685, y: -1.34541297, z: 0}
+  m_LocalPosition: {x: -1.64999998, y: -1.01999998, z: 0}
   m_LocalScale: {x: .600000024, y: .600000024, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -178,7 +178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.17810249, y: -2.02364659, z: -3.05444336}
+  m_LocalPosition: {x: 2.17799997, y: -1.65400004, z: -3.0539999}
   m_LocalScale: {x: 29.6875, y: .212499872, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -260,9 +260,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: []
   activated: 1
+  multiDist: 1
   next: []
   obj: {fileID: 100000, guid: c347dbc04fa843a4280d6f56b0282fd8, type: 2}
   basket: {fileID: 100008}
+  speed: .5
   render: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -277,9 +279,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: []
   activated: 1
+  multiDist: 1
   next: []
   obj: {fileID: 100000, guid: c347dbc04fa843a4280d6f56b0282fd8, type: 2}
   basket: {fileID: 100008}
+  speed: .5
   render: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -292,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b815ccff7ec10a4bac1457929e307a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeChecking: 1
   distance: .200000003
   next: {fileID: 0}
   clipBone: 
@@ -333,9 +338,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: []
   activated: 1
+  multiDist: 1
   next: []
   obj: {fileID: 100000, guid: c347dbc04fa843a4280d6f56b0282fd8, type: 2}
   basket: {fileID: 100008}
+  speed: .5
   render: {fileID: 0}
 --- !u!114 &11400010
 MonoBehaviour:

@@ -5,6 +5,11 @@ namespace SocialGame{
 
 		public Sprite[] steps;
 		public SpriteRenderer spriteRender;
+
+		/// <summary>
+		/// Sets the image.
+		/// </summary>
+		/// <param name="index">Index.</param>
 		public void SetImage(int index)
 		{
 			if(index < steps.Length)
@@ -13,6 +18,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Resets the sprites.
+		/// </summary>
 		public void ResetSprites()
 		{
 			spriteRender.sprite = steps[steps.Length - 1];

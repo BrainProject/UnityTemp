@@ -354,7 +354,7 @@ namespace MinigamePexeso
             //gameEndTime = Time.time;
 
             //global stuff, happening for each minigame
-            MGC.Instance.FinishMinigame();
+            MGC.Instance.WinMinigame();
         }
 
         /// <summary>

@@ -25,9 +25,10 @@ namespace SocialGame{
 			}
 		}
 		
-		// Update is called once per frame
+		/// <summary>
+		/// check second player and show him
+		/// </summary>
 		void Update () {
-			//Debug.Log(KManager.GetPlayer2ID());
 			if(KManager && KManager.GetUserIdByIndex(1) != 0)
 			{
 				if(!TwoPlayer)
@@ -42,16 +43,11 @@ namespace SocialGame{
 					Deactivate2player();
 				}
 			}
-			/*if(TwoPlayer)
-			{
-				Activate2player();
-			}
-			else
-			{
-				Deactivate2player();
-			}*/
 		}
 
+		/// <summary>
+		/// Activate2player this instance.
+		/// </summary>
 		 public void Activate2player()
 		{
 			TwoPlayer = true;
@@ -71,6 +67,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Deactivate2player this instance.
+		/// </summary>
 		public void Deactivate2player()
 		{
 			TwoPlayer = false;

@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 using Game;
+using UnityEngine.EventSystems;
 
 /**
  * \brief name-space for classes and method related to main scene
@@ -34,7 +35,11 @@ namespace MainScene {
 #if UNITY_STANDALONE
 		void OnMouseEnter()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 			{
 				StartCoroutine("FadeIn");
 
@@ -46,7 +51,11 @@ namespace MainScene {
 
 		void OnMouseExit()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 				StartCoroutine("FadeOut");
 
 			this.renderer.material.color = originalColor;
@@ -54,7 +63,11 @@ namespace MainScene {
 #endif
 		void OnMouseOver()
 		{
-			if(CanSelect)
+			if(CanSelect && !EventSystem.current.IsPointerOverGameObject()
+#if UNITY_ANDROID
+			   && showOnAndroid
+#endif
+			   )
 			{
 				if(Input.GetButtonDown ("Fire1"))
 				{
@@ -102,7 +115,7 @@ namespace MainScene {
 			Color targetColor = icon.renderer.material.color;
 			targetColor.a = 1;
 			
-			while(icon.renderer.material.color.a < 0.99f)
+			while(icon.renderer.material.color.a < 1)
 			{
 				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
@@ -117,7 +130,7 @@ namespace MainScene {
 			Color targetColor = icon.renderer.material.color;
 			targetColor.a = 0;
 			
-			while(icon.renderer.material.color.a > 0.01f)
+			while(icon.renderer.material.color.a > 0)
 			{
 				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;

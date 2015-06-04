@@ -17,6 +17,7 @@ namespace SocialGame
 		public bool player2;
 		public bool destroy = true;
 		public bool allChecked = false;
+		public FitCounter counter;
 
 		private Vector3 temp;
 		//private List<Transform> Targets = new List<Transform>();
@@ -38,17 +39,23 @@ namespace SocialGame
 			{
 				Debug.Log("Kinect Manager not founded");
 			}
+			temp = GameObject.FindWithTag("Board");
+			if(temp != null)
+			{
+				counter = temp.GetComponent<FitCounter>();
+			}
 		}
 
 	
-		// Update is called once per frame
+		/// <summary>
+		/// Check collison.
+		/// </summary>
 		IEnumerator Check() {
 			//string name = gameObject.name;
 			runningcorutine = true;
 			while(runningcorutine)
 			{
-				//Debug.Log(name + " is chenking");
-				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+				bool complete = allChecked;
 				for(int i = 0; i< transform.childCount; i++)
 				{
 					Transform child = transform.GetChild(i);
@@ -69,7 +76,6 @@ namespace SocialGame
 								{
 									complete = script.Checked(target) && complete;
 								}
-								//Debug.DrawRay(target.position,child.position - target.position,Color.green);
 								break;
 							}	
 							else
@@ -79,8 +85,6 @@ namespace SocialGame
 								{
 									complete = false;
 								}
-								//Debug.DrawRay(target.position,child.position - target.position,Color.red);
-								//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 							}
 						}
 					}
@@ -89,8 +93,6 @@ namespace SocialGame
 				{
 					runningcorutine =false;
 					CompleteGest();
-					//Debug.Log( name + "finish checking");
-					//StopCoroutine("Check");
 					yield return null;
 
 				}
@@ -101,6 +103,9 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Completes the gest.
+		/// </summary>
 		protected virtual void CompleteGest()
 		{
 			if(next)
@@ -110,6 +115,10 @@ namespace SocialGame
 			if (cancle) 
 			{
 				cancle.deactivate();
+			}
+			if (counter)
+			{
+				counter.nextComplete();
 			}
 			foreach(Check check in nextCheck)
 			{
@@ -121,12 +130,18 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Destroies the checker.
+		/// </summary>
 		public void DestroyChecker()
 		{
 			runningcorutine = false;
 			Destroy(gameObject);
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
 		public void findTartgetByCheckName()
 		{
 			for(int i =0; i <transform.childCount; i++)
@@ -144,6 +159,10 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
+		/// <param name="child">Child.</param>
 		public void findTartgetByCheckName(Transform child)
 		{
 			string nameGest = child.name;
@@ -157,6 +176,10 @@ namespace SocialGame
 			}										
 		}
 
+		/// <summary>
+		/// Adds the check.
+		/// </summary>
+		/// <param name="check">Check.</param>
 		public void addCheck(Transform check)
 		{
 			check.parent = transform;

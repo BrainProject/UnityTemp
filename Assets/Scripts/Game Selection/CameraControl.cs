@@ -13,6 +13,7 @@ namespace MinigameSelection
 		public float sweepSpeed = 1.0f;
 		public GameObject currentWaypoint;
 		public GameObject targetWaypoint;
+		public LevelManagerSelection levelManager;
 		public bool movingLeft;
 		public bool movingRight;
 
@@ -42,6 +43,12 @@ namespace MinigameSelection
 		
 		void Update()
 		{
+			//Set target position of camera back to its original point
+			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
+			{
+				ZoomOutCamera();
+			}
+
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
 #if UNITY_ANDROID
@@ -57,7 +64,11 @@ namespace MinigameSelection
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.left.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 					movingLeft = true;
@@ -69,7 +80,11 @@ namespace MinigameSelection
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.right.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 					movingLeft = false;
@@ -86,7 +101,11 @@ namespace MinigameSelection
 						//Set current waypoint to left
 						if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 						{
-							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+							SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+							while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+								next = next.left.GetComponent<SelectionWaypoint>();
+
+							targetWaypoint = currentWaypoint = next.gameObject;
 							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 						}
 						movingLeft = true;
@@ -98,7 +117,11 @@ namespace MinigameSelection
 						//Set current waypoint to right
 						if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 						{
-							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+							SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+							while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+								next = next.right.GetComponent<SelectionWaypoint>();
+							
+							targetWaypoint = currentWaypoint = next.gameObject;
 							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 						}
 						movingLeft = false;
@@ -143,53 +166,12 @@ namespace MinigameSelection
 				movingRight = false;
 			}
 		}
-
-		void OnGUI()
+		
+		public void ZoomOutCamera()
 		{
-//			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
-//			{
-//				currentWaypoint = GameObject.Find ("OccipitalLobePos");
-//				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
-//				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
-//				this.GetComponent<SmoothCameraMove>().FromYRot = currentWaypoint.transform.eulerAngles.y;
-//				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
-//				this.transform.position = currentWaypoint.transform.position;
-//				this.transform.rotation = currentWaypoint.transform.rotation;
-//				movingLeft = false;
-//				movingRight = false;
-//			}
-			/*
-			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
-			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
-			{
-				targetWaypoint = GameObject.Find ("OccipitalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 100, 100, 30), "Temporal"))
-			{
-				targetWaypoint = GameObject.Find ("TemporalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 140, 100, 30), "Frontal"))
-			{
-				targetWaypoint = GameObject.Find ("FrontalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 180, 100, 30), "Parietal"))
-			{
-				targetWaypoint = GameObject.Find ("ParietalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 220, 100, 30), "Cerebellum"))
-			{
-				targetWaypoint = GameObject.Find ("CerebellumPos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}*/
+			levelManager.OnSelection = false;
+			levelManager.minigameOnSelection = null;
+			GetComponent<SmoothCameraMove> ().MoveCameraBack ();
 		}
 
 		public void BackToMain()
@@ -240,10 +222,10 @@ namespace MinigameSelection
 			this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
 			this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
 			this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
-			if(GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection)
+			if(levelManager.minigameOnSelection)
 			{
-				GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
-				GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection = null;
+				levelManager.OnSelection = false;
+				levelManager.minigameOnSelection = null;
 			}
 			ReadyToLeave = true;
 		}

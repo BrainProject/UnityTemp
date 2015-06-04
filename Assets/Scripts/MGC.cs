@@ -17,6 +17,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -140,14 +141,14 @@ public class MGC : Singleton<MGC>
         LoadMinigamesStatisticsFromFile();
 
         //initiate minigames GUI
-        minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
+        minigamesGUIObject = Instantiate(Resources.Load("MinigamesUI")) as GameObject;
         if (minigamesGUIObject == null)
         {
             Debug.LogError("Nenelazen prefab pro MinigamesGUI");
         }
 
         //make GUI a child of MGC 
-        minigamesGUIObject.transform.parent = this.transform;
+		minigamesGUIObject.transform.parent = this.transform;
 
         minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
         if (minigamesGUI == null)
@@ -167,6 +168,10 @@ public class MGC : Singleton<MGC>
         Debug.Log("Trying to create KinectManager.");
         kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
         kinectManagerObject.transform.parent = this.transform;
+
+		//create UI event system
+		GameObject eventSystem = (GameObject)Instantiate (Resources.Load ("EventSystem") as GameObject);
+		eventSystem.transform.parent = this.transform;
     }
 
     void Start()
@@ -208,20 +213,14 @@ public class MGC : Singleton<MGC>
 
     void Update()
     {
+
+    #if UNITY_ANDROID
+        //if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
+        //{
+        //    touchBlockTimestamp = Time.time;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
-        }
-
-        //Hidden menu possible to show with secret gesture or with keyboard shortcut
-#if UNITY_ANDROID
-		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
-		{
-			touchBlockTimestamp = Time.time;
-#else
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-#endif
             print("Show hidden menu.");
             if (!minigamesGUI.visible)
             {
@@ -233,18 +232,30 @@ public class MGC : Singleton<MGC>
             }
         }
 
-        //Inactivity detection
-        if (Input.anyKeyDown)
+        if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+		{
+			touchBlockTimestamp = Time.time;
+            ResetMinigamesStatistics();
+        }
+       
+    
+    //PC ...
+    #else
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            inactivityTimestamp = Time.time;
-            inactivityCounter = 0;
+            Application.Quit();
         }
 
-        if (checkInactivity)
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (Time.time - inactivityTimestamp > inactivityLenght)
+            print("Show hidden menu.");
+            if (!minigamesGUI.visible)
             {
-                InactivityReaction();
+                minigamesGUI.show();
+            }
+            else
+            {
+                minigamesGUI.hide();
             }
         }
 
@@ -261,16 +272,21 @@ public class MGC : Singleton<MGC>
             minigamesProperties.printStatisticsToFile();
         }
 
-        // reset 'gameProps satuts' - clear data saved in mini-games properties
-#if UNITY_ANDROID
-		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
-		{
-			touchBlockTimestamp = Time.time;
-#else
-        if (Input.GetKeyDown(KeyCode.F3))
+    #endif
+        
+        //Inactivity detection
+        if (Input.anyKeyDown)
         {
-#endif
-            ResetMinigamesStatistics();
+            inactivityTimestamp = Time.time;
+            inactivityCounter = 0;
+        }
+
+        if (checkInactivity)
+        {
+            if (Time.time - inactivityTimestamp > inactivityLenght)
+            {
+                InactivityReaction();
+            }
         }
     }
 
@@ -288,7 +304,7 @@ public class MGC : Singleton<MGC>
         }
         else
         {
-            gameObject.guiTexture.enabled = false;
+//            gameObject.guiTexture.enabled = false;
         }
     }
 
@@ -365,9 +381,9 @@ public class MGC : Singleton<MGC>
         {
             if (!mouseCursor)
             {
-                mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-                mouseCursor.guiTexture.enabled = false;
-                mouseCursor.transform.parent = this.transform;
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = true;
+                mouseCursor.transform.SetParent(this.transform);
             }
             else
             {
@@ -378,9 +394,9 @@ public class MGC : Singleton<MGC>
         {
             if (!mouseCursor)
             {
-                mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-                mouseCursor.guiTexture.enabled = false;
-                mouseCursor.transform.parent = this.transform;
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = false;
+				mouseCursor.transform.SetParent(this.transform);
             }
             else
             {
@@ -459,6 +475,7 @@ public class MGC : Singleton<MGC>
         if (inactivityCounter == 5)
         {
             inactivityCounter = 0;
+			ShowCustomCursor(true);
             print("Load another scene. Im getting bored here.");
             if (Application.loadedLevelName != inactivityScene)
             {
@@ -515,17 +532,16 @@ public class MGC : Singleton<MGC>
 
 
     // evoked when player successfuully finish minigame
-    internal void FinishMinigame()
+    public void WinMinigame()
     {
         print("Minigame successffully finished");
 
         //TODO Add "Celebration phase" stuff here
 
         //animate Neuron character
-        GameObject Neuron = MGC.Instance.neuronHelp;
-        if (Neuron)
+        if (neuronHelp)
         {
-            Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+            neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
         }
 
         minigamesProperties.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
@@ -534,6 +550,21 @@ public class MGC : Singleton<MGC>
         //global GUI
         MGC.Instance.minigamesGUI.show(true);
     }
+
+	public void LoseMinigame()
+	{
+        print("Minigame successffully unfinished");
+
+		//animate Neuron character
+		if (neuronHelp)
+		{
+			neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
+		}
+				
+		//global GUI
+		MGC.Instance.minigamesGUI.show(true);
+	}
+
 
     public Minigames getMinigameStates()
     {

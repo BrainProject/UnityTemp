@@ -16,15 +16,19 @@ namespace SocialGame{
 		public int selectedMovements;
 
 		public GameObject[] movements ;
+		public int[] numOfPose;
 		// Use this for initialization
 		void Start () {
 			selectedMovements = Random.Range(0,movements.Length);
+			max = numOfPose[selectedMovements] * max;
 			GameObject.Instantiate(movements[selectedMovements]);
 			drawCount();
 			redraw();
 		}
 
-
+		/// <summary>
+		/// Nexts is complete.
+		/// </summary>
 		public void  nextComplete()
 		{
 			count ++;
@@ -35,11 +39,13 @@ namespace SocialGame{
 			}
 			else
 			{
-				GameObject.Instantiate(movements[selectedMovements]);
 				redraw();
 			}
 		}
 
+		/// <summary>
+		/// Draws the counter.
+		/// </summary>
 		void drawCount()
 		{
 			lines = new SpriteRenderer[max];
@@ -63,6 +69,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Redraw this object.
+		/// </summary>
 		void redraw()
 		{
 			for(int i = 0; i < lines.Length;i++)

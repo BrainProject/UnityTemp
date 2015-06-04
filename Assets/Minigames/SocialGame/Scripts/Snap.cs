@@ -15,13 +15,15 @@ namespace SocialGame{
 		public Animator anim;
 
 		private GameObject targetPlayer;
-		//private KinectManager _kinect;
+
+
 		private KinectManager kinect
 		{
 			get{
 				return Kinect.KinectManager.Instance;
 			}
 		}
+
 		private Vector3 oldLocalPos;
 		private Transform oldParent;
 
@@ -59,7 +61,9 @@ namespace SocialGame{
 			base.show ();
 		}
 
-
+		/// <summary>
+		/// Snap figure.
+		/// </summary>
 		public void snap()
 		{
 			GameObject playerObj = null;
@@ -85,8 +89,6 @@ namespace SocialGame{
 				FigureCreate figCreate = playerObj.GetComponentInChildren<FigureCreate>();
 				GameObject checker = figCreate.createPoints();
 				GestCheckerFigure checkerScript = checker.GetComponent<GestCheckerFigure>();
-
-				//GameObject root = GameObjectEx.findGameObjectWithNameTag("root",tag);
 				setTags(checker,tag);
 				if(targetPlayer && (targetPlayer.transform.position.x > 0))
 				{
@@ -134,6 +136,10 @@ namespace SocialGame{
 				//Destroy (gameObject);
 		}
 
+		/// <summary>
+		/// Sets the checker script.
+		/// </summary>
+		/// <param name="script">Script.</param>
 		public void setCheckerScript(GestCheckerFigure script)
 		{
 			script.allChecked = true;
@@ -156,6 +162,11 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Gets the avatar object.
+		/// </summary>
+		/// <returns>The avatar object.</returns>
+		/// <param name="player">Player.</param>
 		private GameObject GetAvatarObj(int player)
 		{
 			if(kinect)
@@ -168,7 +179,6 @@ namespace SocialGame{
 					}
 				}
 			}
-			Debug.Log ("neni kinect");
 			return null;
 		}
 

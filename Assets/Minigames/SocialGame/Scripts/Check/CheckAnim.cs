@@ -10,16 +10,17 @@ namespace SocialGame{
 		public bool walk;
 		private Animator anim;
 		private float WalkTime;
-		// Use this for initialization
+
+		/// <summary>
+		/// Start this instance.
+		/// </summary>
 		protected override void Start () {
 			anim = gameObject.GetComponent<Animator>();
 		}
 		
-		// Update is called once per frame
-		/*void Update () {
-		
-		}*/
-
+		/// <summary>
+		/// Walk this objec.
+		/// </summary>
 		IEnumerator Walk() {
 			while((Time.time < WalkTime) && !run)
 			{
@@ -29,12 +30,17 @@ namespace SocialGame{
 			playAnim(false);
 		}
 
+		/// <summary>
+		/// Plaies the animation.
+		/// </summary>
+		/// <param name="start">If set to <c>true</c> start.</param>
 		public void playAnim(bool start)
 		{
 			if(anim)
 				anim.SetBool(Parametr,start);
 			walk = start;
 		}
+
 
 		public override void thisActivate()
 		{
@@ -50,6 +56,10 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Run the object.
+		/// </summary>
+		/// <param name="parametr2">name of animation for run</param>
 		public Vector3 Run(string parametr2)
 		{
 			run = true;
@@ -59,7 +69,9 @@ namespace SocialGame{
 			return translate;
 
 		}
-
+		/// <summary>
+		/// Running this object.
+		/// </summary>
 		IEnumerator Running() {
 			while(run)
 			{
