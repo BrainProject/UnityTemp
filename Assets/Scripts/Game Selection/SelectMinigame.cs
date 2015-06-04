@@ -145,7 +145,10 @@ namespace MinigameSelection
 					Camera.main.GetComponent<SmoothCameraMove>().Move = true;
 					Camera.main.GetComponent<SmoothCameraMove>().From = Camera.main.transform.position;
 					Camera.main.GetComponent<SmoothCameraMove>().FromYRot = Camera.main.transform.eulerAngles.y;
-					Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
+					if(levelManager.OnSelection)
+						Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed/2;
+					else
+						Camera.main.GetComponent<SmoothCameraMove>().Speed = Camera.main.GetComponent<SmoothCameraMove>().defaultSpeed;
 					Camera.main.GetComponent<SmoothCameraMove>().To = CameraZoom;
 					Camera.main.GetComponent<SmoothCameraMove>().ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
 					Camera.main.GetComponent<CameraControl>().ReadyToLeave = false;

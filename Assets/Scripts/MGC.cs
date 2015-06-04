@@ -383,7 +383,7 @@ public class MGC : Singleton<MGC>
             {
                 mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
 				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = true;
-                mouseCursor.transform.parent = this.transform;
+                mouseCursor.transform.SetParent(this.transform);
             }
             else
             {
@@ -396,7 +396,7 @@ public class MGC : Singleton<MGC>
             {
                 mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
 				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = false;
-				mouseCursor.transform.parent = this.transform;
+				mouseCursor.transform.SetParent(this.transform);
             }
             else
             {
