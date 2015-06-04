@@ -229,7 +229,8 @@ namespace Kinect
 		
 		void Start() 
 		{
-			instance = this;
+			if(instance == null)
+				instance = this;
 			interactionInited = true;
 		}
 		
@@ -246,7 +247,8 @@ namespace Kinect
 		void Update () 
 		{
 			KinectManager kinectManager = KinectManager.Instance;
-			//Debug.Log (kinectManager.transform.parent.name);
+			Debug.Log (kinectManager.transform.parent.name + " " + Instance.transform.parent.name);
+
 			// update Kinect interaction
 			if(kinectManager && kinectManager.IsInitialized())
 			{
