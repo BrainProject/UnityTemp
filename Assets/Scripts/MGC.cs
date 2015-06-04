@@ -17,6 +17,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -380,8 +381,8 @@ public class MGC : Singleton<MGC>
         {
             if (!mouseCursor)
             {
-                mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-                mouseCursor.guiTexture.enabled = false;
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = true;
                 mouseCursor.transform.parent = this.transform;
             }
             else
@@ -393,9 +394,9 @@ public class MGC : Singleton<MGC>
         {
             if (!mouseCursor)
             {
-                mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-                mouseCursor.guiTexture.enabled = false;
-                mouseCursor.transform.parent = this.transform;
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = false;
+				mouseCursor.transform.parent = this.transform;
             }
             else
             {
