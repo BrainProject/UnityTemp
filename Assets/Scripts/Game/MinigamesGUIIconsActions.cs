@@ -133,7 +133,16 @@ namespace Game
 							MGC.Instance.sceneLoader.LoadScene(2);
 					}
 					else if(Application.loadedLevel == 2)
-						MGC.Instance.sceneLoader.LoadScene(1);
+					{
+						MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
+						if(cm.ReadyToLeave)
+						{
+							MGC.Instance.fromMain = true;
+							MGC.Instance.sceneLoader.LoadScene(1);
+						}
+						else
+							cm.ZoomOutCamera();
+					}
 					
 					break;
 				}

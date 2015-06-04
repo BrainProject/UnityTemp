@@ -13,7 +13,7 @@ namespace Game
 		public Sprite cursorNormal;
 		public Sprite cursorDrag;
 
-		private Sprite currentCursor;
+//		private Sprite currentCursor;
 		
 #if !UNITY_ANDROID
 		void Start ()
@@ -35,7 +35,7 @@ namespace Game
 		
 		void OnLevelWasLoaded(int level)
 		{
-			currentCursor = cursorNormal;
+			GetComponent<Image>().sprite = cursorNormal;
 		}
 	}
 }

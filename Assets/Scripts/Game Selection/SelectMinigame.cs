@@ -21,8 +21,7 @@ namespace MinigameSelection
 		//Will be changed according to currently selected brain part.
 		//public Vector3 CameraDefaultPosition { get; set; }
 		public GameObject Icon { get; set; }
-		
-		public bool OnSelection { get; set; }
+
 		private bool MouseHover{ get; set; }
 		private Vector3 CameraZoom { get; set; }
 		private Color OriginalColor { get; set; }
@@ -30,7 +29,6 @@ namespace MinigameSelection
 
 		void Start()
 		{
-			OnSelection = false;
 			MouseHover = false;
 
 			if(minigameName == "")
@@ -72,13 +70,6 @@ namespace MinigameSelection
 				dir = dir * this.transform.lossyScale.x*0.75f;
 				Icon.transform.position += dir;
 			}
-
-			//Set target position of camera back to its original point
-			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
-			{
-				OnSelection = false;
-				levelManager.minigameOnSelection = null;
-			}
 		}
 
 		
@@ -114,7 +105,7 @@ namespace MinigameSelection
 			if(!Camera.main.GetComponent<CameraControl>().movingLeft && !Camera.main.GetComponent<CameraControl>().movingRight && !EventSystem.current.IsPointerOverGameObject())
 			{
 				//load mini-game if zooming or zoomed
-				if(OnSelection)
+				if(levelManager.OnSelection)
 				{
 					//check if Kinect is connected
 					if(kinectRequired)
@@ -168,10 +159,10 @@ namespace MinigameSelection
 					else
 					{
 						if(levelManager.minigameOnSelection != this.gameObject)
-							levelManager.minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+							levelManager.OnSelection = false;
 						levelManager.minigameOnSelection = this.gameObject;
 					}
-					OnSelection = true;
+					levelManager.OnSelection = true;
 				}
 			}
 		}
