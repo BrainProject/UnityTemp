@@ -8,7 +8,6 @@ PlayerSettings:
   defaultScreenOrientation: 3
   targetDevice: 2
   targetGlesGraphics: 1
-  targetIOSGraphics: -1
   targetResolution: 0
   accelerometerFrequency: 60
   companyName: MUNI
@@ -65,7 +64,7 @@ PlayerSettings:
   m_SupportedAspectRatios:
     4:3: 0
     5:4: 0
-    16:10: 0
+    16:10: 1
     16:9: 1
     Others: 0
   iPhoneBundleIdentifier: com.MUNI.Newron
@@ -73,7 +72,6 @@ PlayerSettings:
   metroEnableLowLatencyPresentationAPI: 0
   productGUID: 5493349b1baea73479a9e9fd1ccb2534
   iPhoneBundleVersion: 1.0
-  iPhoneShortBundleVersion: 1.0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
@@ -103,15 +101,6 @@ PlayerSettings:
   iPadHighResPortraitSplashScreen: {fileID: 0}
   iPadLandscapeSplashScreen: {fileID: 0}
   iPadHighResLandscapeSplashScreen: {fileID: 0}
-  iOSLaunchScreenType: 0
-  iOSLaunchScreenPortrait: {fileID: 0}
-  iOSLaunchScreenLandscape: {fileID: 0}
-  iOSLaunchScreenBackgroundColor:
-    serializedVersion: 2
-    rgba: 4287465576
-  iOSLaunchScreenFillPct: 100
-  iOSLaunchScreenSize: 100
-  iOSLaunchScreenCustomXibPath: 
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   AndroidKeystoreName: 
@@ -121,7 +110,7 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 2800000, guid: 9e4ca300145f40c4c8bdda3b7063fc76, type: 3}
+    - m_Icon: {fileID: 2800000, guid: c37b3209b42324e4cb0a62d68ce13750, type: 3}
       m_Size: 128
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
@@ -263,7 +252,11 @@ PlayerSettings:
   tizenMicrophonePermissions: 0
   stvDeviceAddress: 
   wp8UnprocessedPlugins: []
-  intPropertyNames: []
+  intPropertyNames:
+  - iOS::Architecture
+  - iOS::ScriptingBackend
+  iOS::Architecture: 2
+  iOS::ScriptingBackend: 0
   firstStreamedLevelWithResources: 0
   unityRebuildLibraryVersion: 9
   unityForwardCompatibleVersion: 39

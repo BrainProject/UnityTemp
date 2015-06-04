@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 using Game;
+using UnityEngine.EventSystems;
 
 namespace MinigameSelection 
 {
@@ -110,7 +111,7 @@ namespace MinigameSelection
 
 		void OnMouseUp()
 		{
-			if(!Camera.main.GetComponent<CameraControl>().movingLeft && !Camera.main.GetComponent<CameraControl>().movingRight)
+			if(!Camera.main.GetComponent<CameraControl>().movingLeft && !Camera.main.GetComponent<CameraControl>().movingRight && !EventSystem.current.IsPointerOverGameObject())
 			{
 				//load mini-game if zooming or zoomed
 				if(OnSelection)

@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 using Game;
+using UnityEngine.EventSystems;
 
 /**
  * \brief name-space for classes and method related to main scene
@@ -34,7 +35,11 @@ namespace MainScene {
 #if UNITY_STANDALONE
 		void OnMouseEnter()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 			{
 				StartCoroutine("FadeIn");
 
@@ -46,7 +51,11 @@ namespace MainScene {
 
 		void OnMouseExit()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 				StartCoroutine("FadeOut");
 
 			this.renderer.material.color = originalColor;
@@ -54,7 +63,7 @@ namespace MainScene {
 #endif
 		void OnMouseOver()
 		{
-			if(CanSelect
+			if(CanSelect && !EventSystem.current.IsPointerOverGameObject()
 #if UNITY_ANDROID
 			   && showOnAndroid
 #endif
