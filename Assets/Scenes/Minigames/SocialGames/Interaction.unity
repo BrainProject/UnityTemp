@@ -529,6 +529,14 @@ Prefab:
       propertyPath: Player1Avatars.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 13100000, guid: 01cd580a2e74f284595025959431ae21, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 01cd580a2e74f284595025959431ae21, type: 2}
+      propertyPath: useHandCursor
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01cd580a2e74f284595025959431ae21, type: 2}
   m_RootGameObject: {fileID: 1652203578}
@@ -827,6 +835,7 @@ MonoBehaviour:
   smoothFactor: 10
   handLeft: {fileID: 974205411}
   handRight: {fileID: 1742478940}
+  realPosition: 1
 --- !u!95 &1116271523
 Animator:
   serializedVersion: 3
@@ -1313,7 +1322,7 @@ MonoBehaviour:
   - {fileID: 100002, guid: fc46a81216dc8aa4fa763e5fd08d7307, type: 2}
   - {fileID: 100000, guid: e0905ff4e6ed8a541997847637aa5b41, type: 2}
   position: {x: 0, y: 1.70000005, z: -3}
-  DebugInt: -1
+  DebugInt: 0
 --- !u!114 &2056390253
 MonoBehaviour:
   m_ObjectHideFlags: 0

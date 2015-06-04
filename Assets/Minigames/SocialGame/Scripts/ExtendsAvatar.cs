@@ -7,6 +7,7 @@ namespace SocialGame{
 	public class ExtendsAvatar : AvatarController {
 		public Transform handLeft;
 		public Transform handRight;
+		public bool realPosition = true;
 
 		private Vector3 newPos;
 		private bool run = true;
@@ -16,7 +17,7 @@ namespace SocialGame{
 		/// </summary>
 		void Update()
 		{
-			if(KinectManager.Instance && (LastUserID != 0) && run)
+			if(realPosition && KinectManager.Instance && (LastUserID != 0) && run)
 			{
 				newPos = this.transform.position;
 				newPos.x = Kinect.KinectManager.Instance.GetUserPosition(LastUserID).x;

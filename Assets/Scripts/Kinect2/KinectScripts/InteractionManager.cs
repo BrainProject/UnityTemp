@@ -246,7 +246,7 @@ namespace Kinect
 		void Update () 
 		{
 			KinectManager kinectManager = KinectManager.Instance;
-			
+			//Debug.Log (kinectManager.transform.parent.name);
 			// update Kinect interaction
 			if(kinectManager && kinectManager.IsInitialized())
 			{

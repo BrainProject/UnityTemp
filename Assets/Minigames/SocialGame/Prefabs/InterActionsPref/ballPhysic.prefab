@@ -44,7 +44,7 @@ Rigidbody2D:
   m_AngularDrag: .0500000007
   m_GravityScale: -.5
   m_FixedAngle: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -73,6 +73,8 @@ MonoBehaviour:
   joint: {fileID: 0}
   render: {fileID: 0}
   lineRender: {fileID: 0}
+  speedRope: 6
+  speed: 2
 --- !u!120 &12000000
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -95,7 +97,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 1, y: 1, z: 1}
-  - {x: 0, y: 0, z: 1}
+  - {x: 1, y: 1, z: 1}
   m_Parameters:
     startWidth: .0199999996
     endWidth: .0199999996
