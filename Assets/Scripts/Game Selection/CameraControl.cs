@@ -171,15 +171,7 @@ namespace MinigameSelection
 		{
 			levelManager.OnSelection = false;
 			levelManager.minigameOnSelection = null;
-
-			SmoothCameraMove scm = GetComponent<SmoothCameraMove> ();
-			scm.Move = true;
-			scm.From = this.transform.position;
-			scm.To = this.GetComponent<CameraControl>().currentWaypoint.transform.position;
-			scm.FromYRot = this.transform.eulerAngles.y;
-			scm.ToYRot = Camera.main.GetComponent<CameraControl>().currentWaypoint.transform.eulerAngles.y;
-			BackToMain();
-			ReadyToLeave = true;
+			GetComponent<SmoothCameraMove> ().MoveCameraBack ();
 		}
 
 		public void BackToMain()

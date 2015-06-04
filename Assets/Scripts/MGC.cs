@@ -148,7 +148,7 @@ public class MGC : Singleton<MGC>
         }
 
         //make GUI a child of MGC 
-        minigamesGUIObject.transform.parent = this.transform;
+		minigamesGUIObject.transform.parent = this.transform;
 
         minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
         if (minigamesGUI == null)
@@ -304,7 +304,7 @@ public class MGC : Singleton<MGC>
         }
         else
         {
-            gameObject.guiTexture.enabled = false;
+//            gameObject.guiTexture.enabled = false;
         }
     }
 

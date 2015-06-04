@@ -105,7 +105,7 @@ namespace MinigameSelection
 			if(!Camera.main.GetComponent<CameraControl>().movingLeft && !Camera.main.GetComponent<CameraControl>().movingRight && !EventSystem.current.IsPointerOverGameObject())
 			{
 				//load mini-game if zooming or zoomed
-				if(levelManager.OnSelection)
+				if(levelManager.OnSelection && levelManager.minigameOnSelection == this.gameObject)
 				{
 					//check if Kinect is connected
 					if(kinectRequired)
