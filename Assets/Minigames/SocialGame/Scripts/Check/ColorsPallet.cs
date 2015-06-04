@@ -10,8 +10,11 @@ public class ColorsPallet : MonoBehaviour {
 	void Awake () {
 		colorsStatic = colors;
 	}
-	
-	// Update is called once per frame
+
+	/// <summary>
+	/// Gets the random color.
+	/// </summary>
+	/// <returns>The random color.</returns>
 	public static Color getRandomColor()
 	{
 		int rnd = Random.Range(0,colorsStatic.Length);

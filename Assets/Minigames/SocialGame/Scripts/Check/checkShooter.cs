@@ -13,7 +13,10 @@ namespace SocialGame{
 		private float nextTime;
 		private float time = 0;
 		private bool run = true;
-		// Use this for initialization
+
+		/// <summary>
+		/// Start this instance.
+		///  </summary>
 		void Start () {
 			/*Vector3  offset = Vector3.right *range.x;
 			GameObject shoot = (GameObject) GameObject.Instantiate(check,transform.position + offset,Quaternion.identity);
@@ -22,7 +25,9 @@ namespace SocialGame{
 			checker = gameObject.GetComponent<GestChecker>();
 		}
 		
-		// Update is called once per frame
+		/// <summary>
+		/// reload next check
+		/// </summary>
 		void Update () {
 			time += Time.deltaTime;
 

@@ -13,6 +13,7 @@ namespace SocialGame{
 
 		private bool handOnIt;
 		private bool corutineRuning;
+
 		public override bool Checked (Transform target)
 		{
 			handOnIt = true;
@@ -23,6 +24,9 @@ namespace SocialGame{
 			return false;
 		}
 
+		/// <summary>
+		/// Stay this until timer gone out.
+		/// </summary>
 		IEnumerator Stay()
 		{
 			corutineRuning = true;
@@ -53,6 +57,9 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Ends the timer.
+		/// </summary>
 		private void EndTimer()
 		{
 			TimerReset ();
@@ -69,6 +76,9 @@ namespace SocialGame{
 
 		}
 
+		/// <summary>
+		/// Reset timers .
+		/// </summary>
 		private void TimerReset()
 		{
 			if(anim)
@@ -78,6 +88,10 @@ namespace SocialGame{
 			corutineRuning = false;
 		}
 
+		/// <summary>
+		/// Timer, vusal control.
+		/// </summary>
+		/// <param name="part">which parts of timer will be show.</param>
 		private void Timer(int part)
 		{
 			if(anim)
@@ -85,12 +99,6 @@ namespace SocialGame{
 				anim.SetImage(part);
 			}
 		}
-
-
-		/*protected void removeFromTarget()
-		{
-
-		}*/
 		#endif
 	}
 }

@@ -18,37 +18,21 @@ namespace SocialGame{
 					count.Selected();
 				}
 			}
-			//transform.localPosition = Vector3.zero;
-			//showNow();
 			foreach(Check nextP in next)
 			{
 					nextP.target = new Transform[] {gameObject.transform};
 			}
 		}
-		
-		/*private void showNow()
-		{
-				MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();
-				if(render)
-				{
-					render.enabled = true;	
-				}
-				else
-				{
-					SpriteRenderer spriteRender = gameObject.GetComponent<SpriteRenderer>();
-					if(spriteRender)
-					{
-						spriteRender.enabled = true;
-					}
-				}
-				
-		}*/
 
 		public override void show ()
 		{
 
 		}
 
+		/// <summary>
+		/// activate halo.
+		/// </summary>
+		/// <param name="active">If set to <c>true</c> active.</param>
 		public void Halo(bool active)
 		{
 			if(halo)
@@ -65,7 +49,9 @@ namespace SocialGame{
 				transform.position = new Vector3 (followObj.position.x, followObj.position.y, transform.position.z);
 			}
 		}
-
+		/// <summary>
+		/// Unclip this object.
+		/// </summary>
 		public void Unclip()
 		{
 			followObj = null;

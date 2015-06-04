@@ -22,6 +22,9 @@ namespace SocialGame{
 			Resize();
 		}
 
+		/// <summary>
+		/// Resize this icons.
+		/// </summary>
 		void Resize()
 		{
 			float spaceForOne = Screen.height / Size;
@@ -30,7 +33,9 @@ namespace SocialGame{
 			GUITex.pixelInset = new Rect(-spaceForOne/2,-spaceForOne/2,spaceForOne,spaceForOne);
 		}
 
-
+		/// <summary>
+		/// Raises the mouse over event.
+		/// </summary>
 		void OnMouseOver()
 		{
 			selected = true;
@@ -39,6 +44,9 @@ namespace SocialGame{
 			GUITex.pixelInset = new Rect(-spaceForOne/2,-spaceForOne/2,spaceForOne,spaceForOne);
 		}
 
+		/// <summary>
+		/// Raises the mouse exit event.
+		/// </summary>
 		void OnMouseExit()
 		{
 			selected = false;
@@ -46,6 +54,9 @@ namespace SocialGame{
 			GUITex.pixelInset = new Rect(-spaceForOne/2,-spaceForOne/2,spaceForOne,spaceForOne);
 		}
 
+		/// <summary>
+		/// Raises the mouse down event.
+		/// </summary>
 		void OnMouseDown()
 		{
 			MainCamera.cullingMask &= ~32;
