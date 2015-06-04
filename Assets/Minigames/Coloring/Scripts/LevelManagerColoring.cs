@@ -7,7 +7,7 @@ namespace Coloring
 	public class LevelManagerColoring : MonoBehaviour
 	{
 		public Texture brush;
-		public GameObject backGUI;
+		public BackGUI backGUI;
 		public GameObject savePictureGUI;
 		public SetColor brushColor;
 
@@ -65,9 +65,9 @@ namespace Coloring
 		public void ShowColoringGUI(bool isVisible)
 		{
 //			print (isVisible);
-			backGUI.SetActive (true);
-			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
-			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
+//			backGUI.SetActive (true);
+//			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
+//			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
 
 			savePictureGUI.SetActive (true);
 			savePictureGUI.GetComponent<SavePictureGUI> ().IconVisible (isVisible);

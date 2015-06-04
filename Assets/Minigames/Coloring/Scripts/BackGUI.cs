@@ -29,13 +29,16 @@ namespace Coloring
 
 		void OnMouseDown()
 		{
+			BackAction ();
+		}
+
+		public void BackAction()
+		{
 			if((Time.time - thisLevelManager.timestamp > 2) && Images.activeSelf)
 			{
 				thisLevelManager.timestamp = Time.time;
 				deskAnimator.SetBool("painting", false);
 				deskAnimator.SetTrigger("animate");
-//				thisLevelManager.GetComponent<PaintingModeTransition>().SetImages(false);
-//				thisLevelManager.GetComponent<PaintingModeTransition>().SetPalette(false);
 				thisLevelManager.painting = false;
 				thisLevelManager.ShowColoringGUI(false);
 				MGC.Instance.ShowCustomCursor(true);

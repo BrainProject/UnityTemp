@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Diagnostics;
 
@@ -10,10 +11,20 @@ namespace Game
         public MinigamesGUIIconsActions gameSelectionIcon;
         public MinigamesGUIIconsActions restartIcon;
 		public MinigamesGUIIconsActions brainIcon;
+		public MinigamesGUIIconsActions backIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
 		public bool clicked = false;
+
+		void Awake()
+		{
+			if (Application.loadedLevel > 1)
+				backIcon.gameObject.SetActive(true);
+			else
+				backIcon.gameObject.SetActive(false);
+		}
+
 
 		/// <summary>
 		/// Shows minigames GUI.
@@ -21,17 +32,10 @@ namespace Game
 		/// <param name="showReward">If set to <c>true</c>, shows reward button.</param>
 		/// <param name="differentRestartScene">If set to <c>true</c>, attempts to load different scene for restart.</param>
 		/// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
-        
 		public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
 		{
 			visible = true;
-            //reset state of all icons
-            //rewardIcon.resetState();
-            //gameSelectionIcon.resetState();
-            //restartIcon.resetState();
-			//brainIcon.resetState();
 
-			//StartCoroutine (rewardIcon.FadeInGUI ());
 			gameSelectionIcon.thisButton.enabled = true;
 			restartIcon.thisButton.enabled = true;
 			if(!gsiStandalone)
@@ -42,8 +46,6 @@ namespace Game
 			restartIcon.show ();
 			if(!gsiStandalone)
 				brainIcon.show ();
-
-            //rewardIcon.gameObject.SetActive(false);
         }
 
         public void hide()
@@ -58,19 +60,10 @@ namespace Game
 
 		void OnLevelWasLoaded (int level)
 		{
-//			visible = false;
-//			Color tmp = gameSelectionIcon.thisImage.color;
-//			tmp.a = 0.01f;
-//			gameSelectionIcon.thisImage.color = tmp;
-//			restartIcon.thisImage.color = tmp;
-//			brainIcon.thisImage.color = tmp;
-//			if(gameSelectionIcon.gameObject.activeSelf)
-//				gameSelectionIcon.hide ();
-//			if(restartIcon.gameObject.activeSelf)
-//				restartIcon.hide ();
-//			if(brainIcon.gameObject.activeSelf)
-//				brainIcon.hide ();
+			if (Application.loadedLevel > 1)
+				backIcon.gameObject.SetActive(true);
+			else
+				backIcon.gameObject.SetActive(false);
 		}
     }
-
 }

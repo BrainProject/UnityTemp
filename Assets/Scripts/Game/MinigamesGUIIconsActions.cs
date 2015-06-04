@@ -10,6 +10,7 @@ namespace Game
 	public class MinigamesGUIIconsActions : MonoBehaviour
     {
 		public string action;
+		public bool defaultDisabled = true;
 		public bool useGSIIcons;	//TODO
 		//public Texture2D texture_normal;
 		//public Texture2D texture_hover;
@@ -27,7 +28,10 @@ namespace Game
 			thisButton = GetComponent<Button> ();
 			startColor = thisImage.color;
 			targetColor = thisImage.color;
-			thisButton.enabled = false;
+			if (defaultDisabled)
+				thisButton.enabled = false;
+			else
+				thisButton.enabled = true;
 		}
         
 //		public void resetState()
@@ -97,7 +101,7 @@ namespace Game
 
 					break;
 	            }
-
+				
 				case "Brain":
 				{
 					//hide GUI
@@ -105,7 +109,34 @@ namespace Game
 					
 					//return to game selection scene
 					MGC.Instance.sceneLoader.LoadScene(1);
+					
+					break;
+				}
 
+				case "Back":
+				{
+					//hide GUI
+					MGC.Instance.minigamesGUI.hide();
+					
+					//return back
+					if(Application.loadedLevel > 2)
+					{
+						if(Application.loadedLevelName == "Coloring")
+						{
+							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+							if(coloringLM.painting)
+							{
+								coloringLM.backGUI.BackAction();
+							}
+							else
+								MGC.Instance.sceneLoader.LoadScene(2);
+						}
+						else
+							MGC.Instance.sceneLoader.LoadScene(2);
+					}
+					else if(Application.loadedLevel == 2)
+						MGC.Instance.sceneLoader.LoadScene(1);
+					
 					break;
 				}
 			}   
