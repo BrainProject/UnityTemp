@@ -54,7 +54,11 @@ namespace MainScene {
 #endif
 		void OnMouseOver()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+			   && showOnAndroid
+#endif
+			   )
 			{
 				if(Input.GetButtonDown ("Fire1"))
 				{

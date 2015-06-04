@@ -76,7 +76,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &2905465
 GameObject:
@@ -3644,6 +3643,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 1407043127}
   right: {fileID: 1062820895}
+  skipOnStandalone: 0
+  skipOnAndroid: 0
 --- !u!1 &988556477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3815,6 +3816,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 984744386}
   right: {fileID: 1657245234}
+  skipOnStandalone: 0
+  skipOnAndroid: 1
 --- !u!1 &1085101862
 GameObject:
   m_ObjectHideFlags: 0
@@ -4961,6 +4964,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 1781215946}
   right: {fileID: 984744386}
+  skipOnStandalone: 1
+  skipOnAndroid: 0
 --- !u!1 &1409278149
 GameObject:
   m_ObjectHideFlags: 0
@@ -5701,6 +5706,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 1062820895}
   right: {fileID: 1781215946}
+  skipOnStandalone: 0
+  skipOnAndroid: 0
 --- !u!1 &1657735274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5961,6 +5968,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 1657245234}
   right: {fileID: 1407043127}
+  skipOnStandalone: 0
+  skipOnAndroid: 0
 --- !u!1 &1846523995
 GameObject:
   m_ObjectHideFlags: 0

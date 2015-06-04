@@ -57,7 +57,11 @@ namespace MinigameSelection
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.left.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 					movingLeft = true;
@@ -69,7 +73,11 @@ namespace MinigameSelection
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.right.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 					movingLeft = false;
@@ -86,7 +94,11 @@ namespace MinigameSelection
 						//Set current waypoint to left
 						if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 						{
-							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+							SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+							while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+								next = next.left.GetComponent<SelectionWaypoint>();
+
+							targetWaypoint = currentWaypoint = next.gameObject;
 							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 						}
 						movingLeft = true;
@@ -98,7 +110,11 @@ namespace MinigameSelection
 						//Set current waypoint to right
 						if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 						{
-							targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+							SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+							while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+								next = next.right.GetComponent<SelectionWaypoint>();
+							
+							targetWaypoint = currentWaypoint = next.gameObject;
 							mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 						}
 						movingLeft = false;
