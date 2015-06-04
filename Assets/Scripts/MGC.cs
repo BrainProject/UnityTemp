@@ -140,7 +140,7 @@ public class MGC : Singleton<MGC>
         LoadMinigamesStatisticsFromFile();
 
         //initiate minigames GUI
-        minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
+        minigamesGUIObject = Instantiate(Resources.Load("MinigamesUI")) as GameObject;
         if (minigamesGUIObject == null)
         {
             Debug.LogError("Nenelazen prefab pro MinigamesGUI");
@@ -167,6 +167,10 @@ public class MGC : Singleton<MGC>
         Debug.Log("Trying to create KinectManager.");
         kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
         kinectManagerObject.transform.parent = this.transform;
+
+		//create UI event system
+		GameObject eventSystem = (GameObject)Instantiate (Resources.Load ("EventSystem") as GameObject);
+		eventSystem.transform.parent = this.transform;
     }
 
     void Start()

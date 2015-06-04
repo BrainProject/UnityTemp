@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
 
@@ -26,16 +26,16 @@ namespace Game
 		{
 			visible = true;
             //reset state of all icons
-            rewardIcon.resetState();
-            gameSelectionIcon.resetState();
-            restartIcon.resetState();
-			brainIcon.resetState();
+            //rewardIcon.resetState();
+            //gameSelectionIcon.resetState();
+            //restartIcon.resetState();
+			//brainIcon.resetState();
 
 			//StartCoroutine (rewardIcon.FadeInGUI ());
-			gameSelectionIcon.gameObject.SetActive (true);
-			restartIcon.gameObject.SetActive (true);
+			gameSelectionIcon.thisButton.enabled = true;
+			restartIcon.thisButton.enabled = true;
 			if(!gsiStandalone)
-				brainIcon.gameObject.SetActive (true);
+				brainIcon.thisButton.enabled = true;
 			guiDetection.guiIsHidden = false;
 
 			gameSelectionIcon.show ();
@@ -58,18 +58,18 @@ namespace Game
 
 		void OnLevelWasLoaded (int level)
 		{
-			visible = false;
-			Color tmp = gameSelectionIcon.renderer.material.color;
-			tmp.a = 0.01f;
-			gameSelectionIcon.renderer.material.color = tmp;
-			restartIcon.renderer.material.color = tmp;
-			brainIcon.renderer.material.color = tmp;
-			if(gameSelectionIcon.gameObject.activeSelf)
-				gameSelectionIcon.hide ();
-			if(restartIcon.gameObject.activeSelf)
-				restartIcon.hide ();
-			if(brainIcon.gameObject.activeSelf)
-				brainIcon.hide ();
+//			visible = false;
+//			Color tmp = gameSelectionIcon.thisImage.color;
+//			tmp.a = 0.01f;
+//			gameSelectionIcon.thisImage.color = tmp;
+//			restartIcon.thisImage.color = tmp;
+//			brainIcon.thisImage.color = tmp;
+//			if(gameSelectionIcon.gameObject.activeSelf)
+//				gameSelectionIcon.hide ();
+//			if(restartIcon.gameObject.activeSelf)
+//				restartIcon.hide ();
+//			if(brainIcon.gameObject.activeSelf)
+//				brainIcon.hide ();
 		}
     }
 
