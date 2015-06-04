@@ -1,50 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
+using UnityEngine.UI;
 
 namespace Game
 {
-
-
-    public class MinigamesGUIIconsActions : MonoBehaviour
+	public class MinigamesGUIIconsActions : MonoBehaviour
     {
 		public string action;
-		public Texture2D texture_normal;
-		public Texture2D texture_hover;
+		public bool defaultDisabled = true;
+		public bool useGSIIcons;	//TODO
+		//public Texture2D texture_normal;
+		//public Texture2D texture_hover;
 		public Texture2D texture_normalGSI;
 		public Texture2D texture_hoverGSI;
 		
 		internal Color startColor;
 		internal Color targetColor;
+		internal Image thisImage;
+		internal Button thisButton;
 
 		void Start()
 		{
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+			thisImage = GetComponent<Image> ();
+			thisButton = GetComponent<Button> ();
+			startColor = thisImage.color;
+			targetColor = thisImage.color;
+			if (defaultDisabled)
+				thisButton.enabled = false;
+			else
+				thisButton.enabled = true;
 		}
         
-		public void resetState()
-        {
-			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
-				renderer.material.mainTexture = texture_normalGSI;
-			else
-	            renderer.material.mainTexture = texture_normal;
-        }
+//		public void resetState()
+//        {
+//			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
+//				renderer.material.mainTexture = texture_normalGSI;
+//			else
+//	            renderer.material.mainTexture = texture_normal;
+//        }
 
-        void OnMouseEnter()
-		{
-			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
-          		renderer.material.mainTexture = texture_hoverGSI;
-			else
-				renderer.material.mainTexture = texture_hover;
-        }
+//        void OnMouseEnter()
+//		{
+//			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
+//          		renderer.material.mainTexture = texture_hoverGSI;
+//			else
+//				renderer.material.mainTexture = texture_hover;
+//        }
 
-        void OnMouseExit()
-        {
-            resetState();
-        }
+//        void OnMouseExit()
+//        {
+//            resetState();
+//        }
 
-        void OnMouseUp()
+        public void GUIAction()
         {
 			MinigamesGUI parent = transform.parent.GetComponent<MinigamesGUI> ();
 			parent.hide ();
@@ -58,7 +67,10 @@ namespace Game
 	                //hide GUI
 	                MGC.Instance.minigamesGUI.hide();
 
-                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
+					if(Application.loadedLevel > 3)
+	                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
+					else
+						MGC.Instance.sceneLoader.LoadScene(Application.loadedLevel);
 					break;
 	            }
 
@@ -87,7 +99,7 @@ namespace Game
 
 					break;
 	            }
-
+				
 				case "Brain":
 				{
 					//hide GUI
@@ -95,7 +107,49 @@ namespace Game
 					
 					//return to game selection scene
 					MGC.Instance.sceneLoader.LoadScene(1);
+					
+					break;
+				}
 
+				case "Back":
+				{
+					//hide GUI
+					MGC.Instance.minigamesGUI.hide();
+					
+					//return back
+					if(Application.loadedLevel > 2)
+					{
+						if(Application.loadedLevelName == "Coloring")
+						{
+							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+							if(coloringLM.painting)
+							{
+								coloringLM.backGUI.BackAction();
+							}
+							else
+								MGC.Instance.sceneLoader.LoadScene(2);
+						}
+						else
+							MGC.Instance.sceneLoader.LoadScene(2);
+					}
+					else if(Application.loadedLevel == 2)
+					{
+						MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
+						if(cm.ReadyToLeave)
+						{
+							MGC.Instance.fromMain = true;
+							MGC.Instance.sceneLoader.LoadScene(1);
+						}
+						else
+							cm.ZoomOutCamera();
+					}
+					
+					break;
+				}
+
+				case "Screenshot":
+				{
+					GetComponent<SavePictureGUI>().TakeScreenshot();
 					break;
 				}
 			}   
@@ -114,15 +168,16 @@ namespace Game
 		IEnumerator FadeInGUI()
 		{
 			float startTime = Time.time;
+			thisButton.enabled = true;
 			StopCoroutine ("FadeOutGUI");
-			collider.enabled = true;
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+	//		collider.enabled = true;
+			startColor = thisImage.color;
+			targetColor = thisImage.color;
 			targetColor.a = 1;
 			
-			while(this.renderer.material.color.a < 0.99f)
+			while(thisImage.color.a < 0.99f)
 			{
-				this.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 		}
@@ -130,20 +185,21 @@ namespace Game
 		IEnumerator FadeOutGUI()
 		{
 			float startTime = Time.time;
+			thisButton.enabled = false;
 			StopCoroutine ("FadeInGUI");
-			collider.enabled = false;
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+//			collider.enabled = false;
+			startColor = thisImage.color;
+			targetColor = thisImage.color;
 			targetColor.a = 0;
 			
-			while(this.renderer.material.color.a > 0.001f)
+			while(thisImage.color.a > 0.001f)
 			{
-				this.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				thisImage.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;
 			}
 
-			this.renderer.material.color = targetColor;
-			this.gameObject.SetActive (false);
+			thisImage.color = targetColor;
+			thisButton.enabled = false;
 		}
     }
 }

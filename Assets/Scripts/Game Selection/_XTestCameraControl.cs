@@ -67,11 +67,11 @@ namespace MinigameSelection
 				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
 				this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
 				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
-				if(GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection)
-				{
-					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
-					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection = null;
-				}
+//				if(GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection)
+//				{
+//					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
+//					GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection = null;
+//				}
 			}
 		}
 
