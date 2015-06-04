@@ -208,20 +208,14 @@ public class MGC : Singleton<MGC>
 
     void Update()
     {
+
+    #if UNITY_ANDROID
+        //if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
+        //{
+        //    touchBlockTimestamp = Time.time;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
-        }
-
-        //Hidden menu possible to show with secret gesture or with keyboard shortcut
-#if UNITY_ANDROID
-		if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
-		{
-			touchBlockTimestamp = Time.time;
-#else
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-#endif
             print("Show hidden menu.");
             if (!minigamesGUI.visible)
             {
@@ -233,18 +227,30 @@ public class MGC : Singleton<MGC>
             }
         }
 
-        //Inactivity detection
-        if (Input.anyKeyDown)
+        if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+		{
+			touchBlockTimestamp = Time.time;
+            ResetMinigamesStatistics();
+        }
+       
+    
+    //PC ...
+    #else
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            inactivityTimestamp = Time.time;
-            inactivityCounter = 0;
+            Application.Quit();
         }
 
-        if (checkInactivity)
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (Time.time - inactivityTimestamp > inactivityLenght)
+            print("Show hidden menu.");
+            if (!minigamesGUI.visible)
             {
-                InactivityReaction();
+                minigamesGUI.show();
+            }
+            else
+            {
+                minigamesGUI.hide();
             }
         }
 
@@ -261,16 +267,21 @@ public class MGC : Singleton<MGC>
             minigamesProperties.printStatisticsToFile();
         }
 
-        // reset 'gameProps satuts' - clear data saved in mini-games properties
-#if UNITY_ANDROID
-		if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
-		{
-			touchBlockTimestamp = Time.time;
-#else
-        if (Input.GetKeyDown(KeyCode.F3))
+    #endif
+        
+        //Inactivity detection
+        if (Input.anyKeyDown)
         {
-#endif
-            ResetMinigamesStatistics();
+            inactivityTimestamp = Time.time;
+            inactivityCounter = 0;
+        }
+
+        if (checkInactivity)
+        {
+            if (Time.time - inactivityTimestamp > inactivityLenght)
+            {
+                InactivityReaction();
+            }
         }
     }
 

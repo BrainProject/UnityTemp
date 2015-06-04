@@ -75,6 +75,7 @@ public class Logger : MonoBehaviour
 			catch(IOException e)
 			{
 				Debug.LogWarning("Log file creation failed!");
+                Debug.LogWarning(e);
 			}
 
             if (addCreatedEntry)
