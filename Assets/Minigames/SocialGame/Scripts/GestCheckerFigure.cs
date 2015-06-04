@@ -17,6 +17,7 @@ namespace SocialGame
 		public bool player2;
 		public bool destroy = true;
 		public bool allChecked = false;
+		public FitCounter counter;
 
 		private Vector3 temp;
 		//private List<Transform> Targets = new List<Transform>();
@@ -37,6 +38,11 @@ namespace SocialGame
 			else
 			{
 				Debug.Log("Kinect Manager not founded");
+			}
+			temp = GameObject.FindWithTag("Board");
+			if(temp != null)
+			{
+				counter = temp.GetComponent<FitCounter>();
 			}
 		}
 
@@ -109,6 +115,10 @@ namespace SocialGame
 			if (cancle) 
 			{
 				cancle.deactivate();
+			}
+			if (counter)
+			{
+				counter.nextComplete();
 			}
 			foreach(Check check in nextCheck)
 			{

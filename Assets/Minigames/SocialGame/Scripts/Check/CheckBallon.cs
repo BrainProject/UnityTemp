@@ -6,11 +6,11 @@ namespace SocialGame{
 #if UNITY_STANDALONE
 		public GameObject obj;
 		public GameObject basket;
+		public float speed = 1;
 
 		public SpriteRenderer render;
 
 		protected override void Start () {
-			Debug.Log("test");
 			transform.localScale = Vector3.one * 0.3f;
 			render = gameObject.GetComponent<SpriteRenderer>();
 			if(render)
@@ -23,7 +23,7 @@ namespace SocialGame{
 
 		public override void thisActivate()
 		{
-				transform.localScale += Vector3.one * Time.deltaTime;
+				transform.localScale += Vector3.one * Time.deltaTime* speed;
 				if(transform.localScale.x >= 1)
 				{
 					Next();

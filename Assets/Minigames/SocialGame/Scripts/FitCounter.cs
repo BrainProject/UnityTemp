@@ -16,9 +16,11 @@ namespace SocialGame{
 		public int selectedMovements;
 
 		public GameObject[] movements ;
+		public int[] numOfPose;
 		// Use this for initialization
 		void Start () {
 			selectedMovements = Random.Range(0,movements.Length);
+			max = numOfPose[selectedMovements] * max;
 			GameObject.Instantiate(movements[selectedMovements]);
 			drawCount();
 			redraw();
@@ -37,7 +39,6 @@ namespace SocialGame{
 			}
 			else
 			{
-				GameObject.Instantiate(movements[selectedMovements]);
 				redraw();
 			}
 		}
