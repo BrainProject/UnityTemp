@@ -8,7 +8,7 @@ namespace Coloring
 	{
 		public Texture brush;
 		public BackGUI backGUI;
-		public GameObject savePictureGUI;
+		//public GameObject savePictureGUI;
 		public SetColor brushColor;
 
 		internal bool painting = false;
@@ -69,9 +69,10 @@ namespace Coloring
 //			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
 //			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
 
-			savePictureGUI.SetActive (true);
-			savePictureGUI.GetComponent<SavePictureGUI> ().IconVisible (isVisible);
-			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<SavePictureGUI> ().normal;
+//			savePictureGUI.SetActive (true);
+//			savePictureGUI.GetComponent<Game.SavePictureGUI> ().IconVisible (isVisible);
+//			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<Game.SavePictureGUI> ().normal;
+			MGC.Instance.minigamesGUI.screenshotIcon.show();
 		}
 
 

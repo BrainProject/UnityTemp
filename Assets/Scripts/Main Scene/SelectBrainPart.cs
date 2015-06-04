@@ -115,7 +115,7 @@ namespace MainScene {
 			Color targetColor = icon.renderer.material.color;
 			targetColor.a = 1;
 			
-			while(icon.renderer.material.color.a < 0.99f)
+			while(icon.renderer.material.color.a < 1)
 			{
 				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
@@ -130,7 +130,7 @@ namespace MainScene {
 			Color targetColor = icon.renderer.material.color;
 			targetColor.a = 0;
 			
-			while(icon.renderer.material.color.a > 0.01f)
+			while(icon.renderer.material.color.a > 0)
 			{
 				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;

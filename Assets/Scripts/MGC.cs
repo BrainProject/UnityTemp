@@ -475,6 +475,7 @@ public class MGC : Singleton<MGC>
         if (inactivityCounter == 5)
         {
             inactivityCounter = 0;
+			ShowCustomCursor(true);
             print("Load another scene. Im getting bored here.");
             if (Application.loadedLevelName != inactivityScene)
             {

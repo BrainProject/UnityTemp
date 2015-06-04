@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 namespace Game
 {
-
-
 	public class MinigamesGUIIconsActions : MonoBehaviour
     {
 		public string action;
@@ -139,6 +137,12 @@ namespace Game
 					
 					break;
 				}
+
+				case "Screenshot":
+				{
+					GetComponent<SavePictureGUI>().TakeScreenshot();
+					break;
+				}
 			}   
         }
 
@@ -155,6 +159,7 @@ namespace Game
 		IEnumerator FadeInGUI()
 		{
 			float startTime = Time.time;
+			thisButton.enabled = true;
 			StopCoroutine ("FadeOutGUI");
 	//		collider.enabled = true;
 			startColor = thisImage.color;
@@ -171,6 +176,7 @@ namespace Game
 		IEnumerator FadeOutGUI()
 		{
 			float startTime = Time.time;
+			thisButton.enabled = false;
 			StopCoroutine ("FadeInGUI");
 //			collider.enabled = false;
 			startColor = thisImage.color;

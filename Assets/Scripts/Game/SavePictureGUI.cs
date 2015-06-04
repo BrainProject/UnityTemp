@@ -1,34 +1,37 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
-namespace Coloring
+namespace Game
 {
 	public class SavePictureGUI : MonoBehaviour {
 		public Texture normal;
 		public Texture hover;
-		public GUITexture iconCheck;
+		public Image iconSave;
+		public Image iconCheck;
 
 		void Start()
 		{
-			this.guiTexture.pixelInset = new Rect (50, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
-			iconCheck.pixelInset = new Rect (50, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
+//			this.guiTexture.pixelInset = new Rect (50, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
+			//iconCheck.pixelInset = new Rect (50, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
 		}
 		
-		void OnMouseEnter()
-		{
-			this.guiTexture.texture = hover;
-		}
+//		void OnMouseEnter()
+//		{
+//			this.guiTexture.texture = hover;
+//		}
+//		
+//		void OnMouseExit()
+//		{
+//			this.guiTexture.texture = normal;
+//		}
 		
-		void OnMouseExit()
-		{
-			this.guiTexture.texture = normal;
-		}
-		
-		void OnMouseDown()
+		public void TakeScreenshot()
 		{
 			string dateText =/* "YYYY-MM-DD";*/ String.Format ("{0:yyyy-MM-dd--HH-mm-ss}", DateTime.Now);
-			Camera.main.GetComponent<RenderCameraToFile> ().RenderToFile ("Picture-" + dateText + ".png");
+			GameObject screenshotCamera = (GameObject)Resources.Load("ScreenshotCamera") as GameObject;
+			screenshotCamera.GetComponent<RenderCameraToFile> ().RenderToFile ("Picture-" + dateText + ".png");
 			StartCoroutine (GreenCheck());
 			//MGC.Instance.logger.addEntry ("Snapshot saved into " + Application.persistentDataPath);
 		}
@@ -45,13 +48,13 @@ namespace Coloring
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeOutGUI");
-			Color startColor = this.guiTexture.color;
-			Color targetColor = this.guiTexture.color;
-			targetColor.a = 0.5f;
+			Color startColor = iconSave.color;
+			Color targetColor = iconSave.color;
+			targetColor.a = 1;
 			
-			while(this.guiTexture.color.a < 0.49f)
+			while(iconSave.color.a < 1)
 			{
-				this.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				iconSave.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 			//Time.timeScale = 0;
@@ -61,13 +64,13 @@ namespace Coloring
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeInGUI");
-			Color startColor = this.guiTexture.color;
-			Color targetColor = this.guiTexture.color;
+			Color startColor = iconSave.color;
+			Color targetColor = iconSave.color;
 			targetColor.a = 0;
 			
-			while(this.guiTexture.color.a > 0.01f)
+			while(this.guiTexture.color.a > 0)
 			{
-				this.guiTexture.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				iconSave.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				//Time.timeScale = state;
 				yield return null;
 			}
@@ -79,10 +82,10 @@ namespace Coloring
 			float startTime = Time.time;
 			Color startColor = iconCheck.color;
 			Color targetColor = iconCheck.color;
-			targetColor.a = 0.5f;
+			targetColor.a = 1;
 			iconCheck.enabled = true;
 			
-			while(iconCheck.color.a < 0.49f)
+			while(iconCheck.color.a < 1)
 			{
 				float step = (Time.time - startTime) * 4;
 				iconCheck.color = Color.Lerp (startColor, targetColor, step);

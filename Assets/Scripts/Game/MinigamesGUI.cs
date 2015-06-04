@@ -12,6 +12,7 @@ namespace Game
         public MinigamesGUIIconsActions restartIcon;
 		public MinigamesGUIIconsActions brainIcon;
 		public MinigamesGUIIconsActions backIcon;
+		public MinigamesGUIIconsActions screenshotIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
@@ -60,6 +61,7 @@ namespace Game
 
 		void OnLevelWasLoaded (int level)
 		{
+			//handle back icon visibility
 			if (Application.loadedLevel > 1)
 				backIcon.gameObject.SetActive(true);
 			else
