@@ -22,19 +22,19 @@ public class LondonTowerGameManager : MonoBehaviour {
     /// <summary>
     /// data 1,2,3 choosing in main menu
     /// </summary>
-    public static int dataSet = 1;
+   // public static int dataSet = 1;
     /// <summary>
     /// data 1,2,3,4 , random "level" from current dataset
     /// </summary>
     public static int levelSet = 1;
 
-    private bool startGameSet = false;
-    
+        
     public LondonToweSphereScript spherePrefab;
 
-    List<LondonToweGameStartWinData> data;
-    public LondonTowerCamera cameraScript;
+    public GameObject minimap;
 
+    List<LondonToweGameStartWinData> data = new List<LondonToweGameStartWinData>();
+   
     public List<LondonToweSphereScript> spheres;
     public List<LondonTowePoleScript> poles;
 
@@ -43,30 +43,13 @@ public class LondonTowerGameManager : MonoBehaviour {
 
     public List<TextAsset> xmlLevels = new List<TextAsset>();
 
-    public Texture playAgain, chooseLevel, exitGame,backToMenu;
-    public GameObject backButton, levelEnd, GoalTexture;
-
 
 	// Use this for initialization
 	void Start () {
-        StartGame();
-       
-	
+        StartGame();	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        if (!startGameSet && state == LondonTowerGameState.animationStart)
-        {
-            SetLevel(startGame);
-        }
-        if (state == LondonTowerGameState.animationEnd)
-        {
-            backButton.SetActive(true);
-            GoalTexture.SetActive(false);
-            state = LondonTowerGameState.game;
-        }
-	}
+	
 
     /// <summary>
     /// check if pole if full - then cant place any sphere on it, until at least one sphere is removed
@@ -91,7 +74,6 @@ public class LondonTowerGameManager : MonoBehaviour {
    /// <param name="startData"></param>
     public void SetLevel(LondonToweGameStartWinData startData)
     {
-       // Debug.Log(startData.ToString());
         foreach (LondonToweSphereScript sphere in spheres)
         {
             Destroy(sphere.gameObject);
@@ -103,7 +85,6 @@ public class LondonTowerGameManager : MonoBehaviour {
             {
                 if (pole.id == 1)
                 {
-                   // pole.capacity = startData.Pole1Size;
                     pole.SetCapacity(startData.Pole1Size);
                 }
                 else if (pole.id == 2)
@@ -120,7 +101,6 @@ public class LondonTowerGameManager : MonoBehaviour {
                 foreach (string s in startData.pole1)
                 {
                     counter--;
-                  //  Debug.Log((0.5f + counter - 1) + "spawn");
                     LondonToweSphereScript createdSphere = (LondonToweSphereScript)Instantiate(spherePrefab, new Vector3(0,0.5f+ counter, 0), new Quaternion());
                     spheres.Add(createdSphere);
                     createdSphere.start = true;
@@ -131,7 +111,6 @@ public class LondonTowerGameManager : MonoBehaviour {
                 counter = startData.pole2.Count;
                 foreach (string s in startData.pole2)
                 {
-                    //Debug.Log((0.5f + counter - 1) + "spawn");
                     counter--;
                     LondonToweSphereScript createdSphere = (LondonToweSphereScript)Instantiate(spherePrefab, new Vector3(4, 0.5f + counter, 0), new Quaternion());
                     spheres.Add(createdSphere);
@@ -143,8 +122,7 @@ public class LondonTowerGameManager : MonoBehaviour {
                 counter = startData.pole3.Count;
                 foreach (string s in startData.pole3)
                 {
-                    //Debug.Log((0.5f + counter - 1) + "spawn");
-                    counter--;
+                   counter--;
                     LondonToweSphereScript createdSphere = (LondonToweSphereScript)Instantiate(spherePrefab, new Vector3(8, 0.5f + counter, 0), new Quaternion());
                     spheres.Add(createdSphere);
                     createdSphere.start = true;
@@ -157,16 +135,19 @@ public class LondonTowerGameManager : MonoBehaviour {
                 {
                     sp.rigidbody.useGravity = true;
                 }
-            
+                minimap.SetActive(true);
+                string path = "GoalsPictures/" + startGame.GameID ;
+                Texture minimapSprite = (Resources.Load<Texture>(path) as Texture);
+                if (minimapSprite == null)
+                {
+                    Debug.Log("cannot load");
+                }
+                minimap.renderer.material.mainTexture = minimapSprite;
+                
+       
     }
 
-    /// <summary>
-    /// allow camera script to take a screen
-    /// </summary>
-    public void TakeScreen()
-    {
-        cameraScript.takeScreen = true;
-    }
+   
 
     /// <summary>
     /// check if player win, after each sphere move
@@ -282,14 +263,35 @@ public class LondonTowerGameManager : MonoBehaviour {
     /// </summary>
     public void StartGame()
     {
+        MGC.Instance.getMinigameStates().SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+        
         LondonToweXMLGameLoader loader = new LondonToweXMLGameLoader();
 
-       // dataSet = Random.Range(0, 4);
+        Debug.Log(MGC.Instance.selectedMiniGameName);
+          
+        foreach (TextAsset gameData in xmlLevels)
+        {
+            data.AddRange(loader.ParseXmlTextAsset(gameData));
+        }
        
-        data = loader.ParseXmlTextAsset(xmlLevels[dataSet]);
-        //data = loader.ParseXmlTextAsset(xmlLevels[1]);
-        levelSet = Random.Range(1, data.Count/2+1);
+        // numbers 0, 1,2 ; 0 easier - only 3 spheres on poles
        
+        int numberOfSpehre =  MGC.Instance.selectedMiniGameDiff +3;
+      
+        
+        List<LondonToweGameStartWinData> filteredDificulty = new List<LondonToweGameStartWinData>();
+        foreach (LondonToweGameStartWinData game in data)
+        {
+            if((game.pole1.Count + game.pole2.Count + game.pole3.Count)== numberOfSpehre) {
+                filteredDificulty.Add(game);
+            }
+        }
+
+        
+       
+
+       levelSet = filteredDificulty[Random.Range(0, filteredDificulty.Count-1)].GameID;
+
         foreach (LondonToweGameStartWinData level in data)
         {
             if (level.GameID == levelSet)
@@ -297,6 +299,7 @@ public class LondonTowerGameManager : MonoBehaviour {
                 if (level.IsStart())
                 {
                     startGame = level;
+                    
                 }
                 else
                 {
@@ -304,12 +307,9 @@ public class LondonTowerGameManager : MonoBehaviour {
                 }
             }
         }
-        if (startGame == null || endGame == null)
-        {
-            Debug.Log("set" + dataSet + "++ level" + levelSet);
-        }
+       
         poles = new List<LondonTowePoleScript>(FindObjectsOfType<LondonTowePoleScript>());
-        SetLevel(endGame);
+        SetLevel(startGame);
 
 
         foreach (LondonToweSphereScript sphere in spheres)
@@ -321,13 +321,8 @@ public class LondonTowerGameManager : MonoBehaviour {
         {
             pole.gameManager = this;
         }
-        TakeScreen();
-        state = LondonTowerGameState.animationPrepare;
-
-        //  LondondToweXMLGameLoader xx = new LondondToweXMLGameLoader();
-        // xx.ParseXmlFile("set1.xml");
-        // xx.ParseXmlTextAsset(xmltest);
-
+        state = LondonTowerGameState.game;
+    
     }
 
 
@@ -335,32 +330,10 @@ public class LondonTowerGameManager : MonoBehaviour {
     public void GameEnd()
     {
         LondonTowerGameManager.state = LondonTowerGameState.winGUI;
-        backButton.SetActive(false);
-        levelEnd.SetActive(true);
+        minimap.SetActive(false);
+        MGC.Instance.WinMinigame();
     }
 
-    //gui
-
-    public void BackToMenu()
-    {
-        state = LondonTowerGameState.start;
-        Application.LoadLevel("LondonTowerGUIMenu");
-    }
-
-    public void BackToGameChoose()
-    {
-        // pak upravit na výber hry
-        state = LondonTowerGameState.start;
-        Application.LoadLevel("Main");
-      
-    }
-
-    public void PlayAgain()
-    {
-        state = LondonTowerGameState.start;
-        Application.LoadLevel(Application.loadedLevel);
-        
-    }
    
 }
 
@@ -370,4 +343,4 @@ public class LondonTowerGameManager : MonoBehaviour {
 /// <summary>
 /// game state enum
 /// </summary>
-public enum LondonTowerGameState {  start = 0, animationPrepare = 1,animationStart =2,animationEnd =3, game = 4, winGUI =5 };
+public enum LondonTowerGameState {  start = 0, game = 4, winGUI =5 };

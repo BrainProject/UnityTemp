@@ -42,7 +42,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             this.transform.position = new Vector3(this.transform.position.x, heightY, this.transform.position.z);
             Vector3 mosePosition = Camera.main.ScreenToWorldPoint(new Vector3( Input.mousePosition.x,Input.mousePosition.y, 9));
 
-            this.transform.position = new Vector3(Mathf.Min(Mathf.Max(LondonTowerCamera.LeftBound, mosePosition.x), LondonTowerCamera.RightBound), this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(Mathf.Min(Mathf.Max(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9)).x, mosePosition.x), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)).x), this.transform.position.y, this.transform.position.z);
            /* Vector3 distance = Input.mousePosition - lastPosition;
 
             if (moveX)
