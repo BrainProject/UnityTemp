@@ -267,8 +267,7 @@ public class LondonTowerGameManager : MonoBehaviour {
         
         LondonToweXMLGameLoader loader = new LondonToweXMLGameLoader();
 
-        Debug.Log(MGC.Instance.selectedMiniGameName);
-          
+         
         foreach (TextAsset gameData in xmlLevels)
         {
             data.AddRange(loader.ParseXmlTextAsset(gameData));

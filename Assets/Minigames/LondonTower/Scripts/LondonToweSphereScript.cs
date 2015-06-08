@@ -7,6 +7,8 @@ using System.Collections;
 public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript> {
 
     public static bool someSphereMove = false;
+    public float spehrePlaceWaitTime = 0.5f;
+    private float waitAfterClicked = 0;
     private bool clicked = false;
     private bool lastClicked = false;
     private bool moveX = true;
@@ -29,6 +31,10 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
 		
 	// Update is called once per frame
 	void Update () {
+        if (waitAfterClicked > 0)
+        {
+            waitAfterClicked -= Time.deltaTime;
+        }
         if (transform.rigidbody.velocity.y > 0)
         {
             transform.rigidbody.velocity = new Vector3();
@@ -43,21 +49,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             Vector3 mosePosition = Camera.main.ScreenToWorldPoint(new Vector3( Input.mousePosition.x,Input.mousePosition.y, 9));
 
             this.transform.position = new Vector3(Mathf.Min(Mathf.Max(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9)).x, mosePosition.x), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)).x), this.transform.position.y, this.transform.position.z);
-           /* Vector3 distance = Input.mousePosition - lastPosition;
-
-            if (moveX)
-            {
-                //9,-1 are bordes when sphere can be moved
-               
-                this.transform.position = new Vector3(Mathf.Min(9, Mathf.Max(-1, this.transform.position.x + distance.x / moveConstantX)),Mathf.Min(maxY,this.transform.position.y + distance.y / moveConstantY), this.transform.position.z);
-            }
-            else
-            {
-                //9,-1 are bordes when sphere can be moved + nax can only move down/up becaus id on the pole
-                //spehre is on stick
-                this.transform.position = new Vector3(this.transform.position.x,Mathf.Min(maxY,Mathf.Max(this.transform.position.y + distance.y / moveConstantY, polePosition.y)), this.transform.position.z);
-            }
-            lastPosition = Input.mousePosition;*/
+          
             if (lastClicked)
             {
                 lastClicked = !lastClicked;
@@ -65,7 +57,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             }
             else
             {
-                if (Input.GetMouseButtonDown(0))
+                if ((Input.GetMouseButtonDown(0) ||(Input.touchCount >0  && Input.GetTouch(0).phase == TouchPhase.Began)) && waitAfterClicked <= 0 )
                 {
                     clicked = false;
                     this.rigidbody.useGravity = true;
@@ -114,11 +106,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             {
                 clicked = true;
                 someSphereMove = true;
-                //if (!moveX)
-               // {
-               // polePosition = this.transform.position;
-               // }
-              //  lastPosition = Input.mousePosition;
+                waitAfterClicked = spehrePlaceWaitTime;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;
             }
