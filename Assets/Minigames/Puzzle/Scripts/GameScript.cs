@@ -45,6 +45,11 @@ namespace Puzzle
 
 		bool gameWon = false;
 
+        /// <summary>
+        /// The background sprite
+        /// </summary>
+        public GameObject backgroundSprite = null;
+
         /**
          * Unity Engine method for initialisation
          * 
@@ -94,6 +99,13 @@ namespace Puzzle
             //  loading number of pieces
             int dim = (MGC.Instance.selectedMiniGameDiff + 2);
             numberPieces = dim * dim;
+
+            if(backgroundSprite)
+            {
+                Vector3 pos = backgroundSprite.transform.position;
+                pos.z = numberPieces + 1;
+                backgroundSprite.transform.position = pos;
+            }
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
             pieces = new Dictionary<string, PuzzlePiece>();
