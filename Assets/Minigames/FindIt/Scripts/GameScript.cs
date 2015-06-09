@@ -16,36 +16,53 @@ namespace FindIt
      */
     public class GameScript : MonoBehaviour
     {
+        // Limits for the game. It does not support more or less pieces. 
         const int MIN_PIECES = 8;
         const int MAX_PIECES = 44;
 
+        // This is a good count
         const int PIECES_RECOMMENDED = 20;
 
+        // ortographic camera size according to the number of pieces. 
         const float CAMERA_SIZE_LESS_28 = 11.5f;
         const float CAMERA_SIZE_MORE_28 = 15.5f;
 
-
+        // textures of images with which is the game played
         private Texture2D[] images;
+
+
+        // name of the resource pack
         private string resourcePackName = "";
-        public int numberPieces = MIN_PIECES;
-        public int numberTurns = 50;
+
         private bool customPackChosen = false;
 
-        private List<int> usedIndices = new List<int>();
+        private Dictionary<int, bool> usedIndices;
+        //private List<int> usedIndices = new List<int>();
 
         private int selectedImage = 0;
 
-		public GameObject clona;
+        // whether game is won. Property is public because ClickImageScript needs access to read it. 
+        public bool gameWon
+        {
+            get;
+            private set;
+        }
 
+        // number of pieces of this game
+        public int numberPieces = MIN_PIECES;
+
+        // activates when the game is won. Semitransparent.
+        public GameObject clona;
+
+        // UI visible elements
         public UnityEngine.UI.Text textProgress;
         public UnityEngine.UI.Image progressBar;
 
+        // image in the middle. 
         public GameObject targetImage;
 
-		private bool gameWon = false;
-
         /**
-         * Loads resource pack to the scene
+         * Loads resource pack in the scene
          */
         private void LoadResourcePack()
         {
@@ -54,6 +71,7 @@ namespace FindIt
                 customPackChosen = PlayerPrefs.GetInt("custom") == 1;
                 resourcePackName = PlayerPrefs.GetString("resourcePackName");
                 Debug.Log("Resource pack name found as " + resourcePackName);
+                
                 if (customPackChosen)
                 {
                     Debug.Log("Loading custom packs ");
@@ -89,9 +107,7 @@ namespace FindIt
             }
             FindItStatistics.resourcePackName = resourcePackName;
 
-            FindItStatistics.expectedGameTurnsTotal = numberTurns;
-
-            // loading number of pieces
+            // loading number of pieces according to the set difficulty
             switch(MGC.Instance.selectedMiniGameDiff)
             {
                 case 0:
@@ -105,6 +121,8 @@ namespace FindIt
                     break;
             }
             FindItStatistics.numberPieces = numberPieces;
+
+            FindItStatistics.expectedGameTurnsTotal = numberPieces;
         }
 
 
@@ -114,6 +132,8 @@ namespace FindIt
          */
         private void SetUpSprites(int numPictures)
         {
+            usedIndices = new Dictionary<int, bool>();
+
             System.Random random = new System.Random();
 
             usedIndices.Clear();
@@ -121,12 +141,13 @@ namespace FindIt
             for (int i = 1; i <= numPictures; i++)
             {
                 int index = random.Next(images.Length);
-                while (usedIndices.Contains(index))
+                //while (usedIndices.Contains(index))
+                while (usedIndices.ContainsKey(index))
                 {
                     index++;
                     if (index == images.Length) index = 0;
                 }
-                usedIndices.Add(index);
+                usedIndices.Add(index,false);
 
                 GameObject o = GameObject.Find(i.ToString());
                 o.SetActive(true);
@@ -151,17 +172,25 @@ namespace FindIt
          */
         public void newTargetImage()
         {
-            System.Random r = new System.Random();
+            CheckEndGame();
+            UpdateGreenBarAndText();
+            if(!gameWon)
+            { 
+                System.Random r = new System.Random();
 
-            int chosen = r.Next(0, numberPieces);
-            if (usedIndices[chosen] == selectedImage)
-            {
-                chosen++;
-                if (chosen == numberPieces) chosen = 0;
+                int chosen = r.Next(0, numberPieces);
+
+                while (usedIndices.ElementAt(chosen).Value)
+                {
+                    chosen++;
+                    if (chosen == numberPieces) chosen = 0;
+                }
+                int key = usedIndices.ElementAt(chosen).Key;
+                usedIndices.Remove(key);
+                usedIndices.Add(key, true);
+                selectedImage = key;
+                targetImage.renderer.material.mainTexture = images[selectedImage];
             }
-            selectedImage = usedIndices[chosen];
-            targetImage.renderer.material.mainTexture = images[selectedImage];
-
         }
 
         /**
@@ -188,15 +217,15 @@ namespace FindIt
          */
         void CheckEndGame()
         {
-            if(FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal && !gameWon)
+            if (FindItStatistics.turnsPassed == FindItStatistics.expectedGameTurnsTotal/* && !gameWon*/)
             {
-				gameWon = true;
-				FindItStatistics.StopMeasuringTime();
-				clona.SetActive(true);
+                gameWon = true;
+                FindItStatistics.StopMeasuringTime();
+                clona.SetActive(true);
 
                 // Cannot use MGC.Instance.FinishMinigame(). It would load FindItGame, which may cause crash,
                 // when different difficulty is selected and current resource pack does not contain enough pictures
-               
+
                 GameObject Neuron = MGC.Instance.neuronHelp;
                 if (Neuron)
                 {
@@ -222,10 +251,10 @@ namespace FindIt
         /**
          * UnityEngine Update() function
          */
-        void Update()
+        /*void Update()
         {
             UpdateGreenBarAndText();
             CheckEndGame();
-        }
+        }*/
     }
 }
