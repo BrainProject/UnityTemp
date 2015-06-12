@@ -134,6 +134,7 @@ namespace Coloring
                                   root["colours"][i]["G"].AsFloat,
                                   root["colours"][i]["B"].AsFloat),
                                   X_MIN_COORD + i * X_SIZE, brush, lmc));
+                    Debug.Log("Loaded colour: " + blobsList[blobsList.Count-1].ToString());
                 }
                 return true;
             }
