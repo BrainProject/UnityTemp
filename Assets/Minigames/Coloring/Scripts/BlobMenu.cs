@@ -29,9 +29,13 @@ namespace Coloring
         static Quaternion ROTATION = Quaternion.Euler(90, 180, 0);
         static Vector3 SCALE = new Vector3(0.02f, 0.02f, 0.02f);
 
+        // prefab for ordinary color blobs
         public Object BlobPrefab;
 
-        private List<GameObject> blobsList;
+        // prefab for adding new colors blob
+        public Object BlobAddPrefab;
+
+        private List<Blob> blobsList;
 
         public GameObject BlobsHolder;
 
@@ -46,7 +50,6 @@ namespace Coloring
                             Color.blue,
                             Color.yellow };
 
-            //Transform parent = gameObject.transform.FindChild("Blobs");
             GameObject parent = BlobsHolder;
             LevelManagerColoring lmc = GameObject.FindObjectOfType<LevelManagerColoring>();
             GameObject brush = GameObject.Find("Brush");
@@ -56,35 +59,31 @@ namespace Coloring
                 throw new MissingComponentException("Components missing! Unable to continue!");
             }
 
-            blobsList = new List<GameObject>();
+            if(blobsList != null)
+            {
+                blobsList.Clear();
+            }
+            else blobsList = new List<Blob>();
 
             for (int i = 0; i < pom.Length; i++)
             {
-                blobsList.Add(CreateBlob(parent.transform, pom[i], X_MIN_COORD + i * X_SIZE, brush, lmc));
+                GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, parent.transform);
+                blobsList.Add(new Blob(go, pom[i], brush, lmc));
             }
             saveBlobs();
+            AddBlobAdd(ref blobsList, X_MIN_COORD + pom.Length * X_SIZE, parent.transform, ref lmc);
+
         }
 
-        GameObject CreateBlob(Transform parent, Color colour, float xCoord, GameObject brush, LevelManagerColoring levelManager)
+        private GameObject buildBlobGameObjectWithTransform(float x, Transform parent)
         {
-            GameObject obj = GameObject.Instantiate(BlobPrefab) as GameObject;
+            GameObject gameObject = GameObject.Instantiate(BlobPrefab) as GameObject;
 
-            obj.name = "blob_" + colour.ToString();
-            obj.transform.parent = parent;
-
-            obj.transform.rotation = ROTATION;
-            obj.transform.localScale = SCALE;
-            obj.transform.localPosition = new Vector3(xCoord, Y_COORD, Z_COORD);
-
-            obj.renderer.material.color = colour;
-
-            SelectColor sc = obj.GetComponent<SelectColor>();
-            sc.Brush = brush;
-            sc.thisLevelManager = levelManager;
-
-            obj.tag = "ColoringBlob";
-
-            return obj;
+            gameObject.transform.parent = parent;
+            gameObject.transform.rotation = ROTATION;
+            gameObject.transform.localScale = SCALE;
+            gameObject.transform.localPosition = new Vector3(x, Y_COORD, Z_COORD);
+            return gameObject;
         }
 
         void saveBlobs()
@@ -95,9 +94,9 @@ namespace Coloring
             for(int i=0;i<blobsList.Count;i++)
             {
                 JSONClass colour = new JSONClass();
-                colour.Add("R", new JSONData(blobsList[i].renderer.material.color.r));
-                colour.Add("G", new JSONData(blobsList[i].renderer.material.color.g));
-                colour.Add("B", new JSONData(blobsList[i].renderer.material.color.b));
+                colour.Add("R", new JSONData(blobsList[i].blobGameObject.renderer.material.color.r));
+                colour.Add("G", new JSONData(blobsList[i].blobGameObject.renderer.material.color.g));
+                colour.Add("B", new JSONData(blobsList[i].blobGameObject.renderer.material.color.b));
                 colours.Add(colour);
             }
             file.Add("colours", colours);
@@ -123,22 +122,38 @@ namespace Coloring
                     throw new MissingComponentException("Components missing! Unable to continue!");
                 }
 
-                blobsList = new List<GameObject>();
-
+                if (blobsList != null)
+                {
+                    blobsList.Clear();
+                }
+                else blobsList = new List<Blob>();
 
                 for(int i=0;i< root["count"].AsInt;i++)
                 {
-                    //Debug.Log("R: " + root["colours"][i]["R"].AsFloat + ", G: " + root["colours"][i]["G"].AsFloat + ", B: " + root["colours"][i]["B"].AsFloat);
-                    blobsList.Add(CreateBlob(parent.transform,
+                    GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, parent.transform);
+                    blobsList.Add(new Blob(go, 
                         new Color(root["colours"][i]["R"].AsFloat,
-                                  root["colours"][i]["G"].AsFloat,
-                                  root["colours"][i]["B"].AsFloat),
-                                  X_MIN_COORD + i * X_SIZE, brush, lmc));
-                    Debug.Log("Loaded colour: " + blobsList[blobsList.Count-1].ToString());
+                            root["colours"][i]["G"].AsFloat,
+                            root["colours"][i]["B"].AsFloat),
+                        brush, 
+                        lmc));
+                    Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
                 }
+                AddBlobAdd(ref blobsList, X_MIN_COORD + root["count"].AsInt * X_SIZE, parent.transform, ref lmc);
                 return true;
             }
             return false;
+        }
+
+        private void AddBlobAdd(ref List<Blob> blobList, float xCoord, Transform parent, ref LevelManagerColoring lmc)
+        {
+            GameObject gameObject = GameObject.Instantiate(BlobAddPrefab) as GameObject;
+
+            gameObject.transform.parent = parent.transform;
+            gameObject.transform.rotation = ROTATION;
+            gameObject.transform.localScale = SCALE;
+            gameObject.transform.localPosition = new Vector3(xCoord, Y_COORD, Z_COORD);
+            blobsList.Add(new BlobAdd(gameObject, lmc));
         }
 
 
@@ -150,7 +165,7 @@ namespace Coloring
                 CreateBasic();
             }
 
-            float xMax = blobsList[blobsList.Count - 1].transform.localPosition.x;
+            float xMax = blobsList[blobsList.Count - 1].blobGameObject.transform.localPosition.x;
             Debug.Log("XMax is " + xMax);
 
             if (xMax < X_MAX_COORD)
@@ -161,12 +176,6 @@ namespace Coloring
                                 BlobsHolder.transform.position.y,
                                 BlobsHolder.transform.position.z);
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         void OnMouseOver()
