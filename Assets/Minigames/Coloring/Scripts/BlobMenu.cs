@@ -12,6 +12,8 @@ namespace Coloring
 
     public class BlobMenu : MonoBehaviour
     {
+        const string filePathSuffix = "/Coloring_Blobs.json";
+
         // constants determined from editor according to Tom Pouzar's scene model
         const float X_MAX_COORD = -0.2f;
         const float X_MIN_COORD = -2.3f;
@@ -68,7 +70,7 @@ namespace Coloring
             for (int i = 0; i < pom.Length; i++)
             {
                 GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, parent.transform);
-                blobsList.Add(new Blob(go, pom[i], brush, lmc));
+                blobsList.Add(new Blob(go, pom[i], brush, lmc, this));
             }
             saveBlobs();
             AddBlobAdd(ref blobsList, X_MIN_COORD + pom.Length * X_SIZE, parent.transform, ref lmc);
@@ -88,11 +90,15 @@ namespace Coloring
 
         void saveBlobs()
         {
+            string filePath = Application.persistentDataPath + filePathSuffix;
+
             JSONClass file = new JSONClass();
             file.Add("count", new JSONData(blobsList.Count));
             JSONArray colours = new JSONArray();
             for(int i=0;i<blobsList.Count;i++)
             {
+                if (blobsList[i] is BlobAdd) continue;
+
                 JSONClass colour = new JSONClass();
                 colour.Add("R", new JSONData(blobsList[i].blobGameObject.renderer.material.color.r));
                 colour.Add("G", new JSONData(blobsList[i].blobGameObject.renderer.material.color.g));
@@ -101,17 +107,17 @@ namespace Coloring
             }
             file.Add("colours", colours);
 
-            File.WriteAllText(Application.persistentDataPath + "/Coloring_Blobs.json", file.ToString());
+            File.WriteAllText(filePath, file.ToString());
         }
 
         bool loadBlobs()
         {
-            string path = Application.persistentDataPath + "/Coloring_Blobs.json";
+            string filePath = Application.persistentDataPath + filePathSuffix;
 
             // This text is added only once to the file. 
-            if (File.Exists(path))
+            if (File.Exists(filePath))
             {
-                JSONNode root = JSON.Parse(File.ReadAllText(path));
+                JSONNode root = JSON.Parse(File.ReadAllText(filePath));
 
                 GameObject parent = BlobsHolder;
                 LevelManagerColoring lmc = GameObject.FindObjectOfType<LevelManagerColoring>();
@@ -136,7 +142,8 @@ namespace Coloring
                             root["colours"][i]["G"].AsFloat,
                             root["colours"][i]["B"].AsFloat),
                         brush, 
-                        lmc));
+                        lmc, 
+                        this));
                     Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
                 }
                 AddBlobAdd(ref blobsList, X_MIN_COORD + root["count"].AsInt * X_SIZE, parent.transform, ref lmc);
@@ -157,8 +164,7 @@ namespace Coloring
         }
 
 
-        // Use this for initialization
-        void Start()
+        public void Reset()
         {
             if (!loadBlobs() || blobsList.Count == 0)
             {
@@ -171,11 +177,43 @@ namespace Coloring
             if (xMax < X_MAX_COORD)
             {
                 Debug.Log("Shifting blobs");
-                BlobsHolder.transform.position = 
+                BlobsHolder.transform.position =
                     new Vector3(BlobsHolder.transform.position.x + (X_MAX_COORD - xMax) / 2.0f,
                                 BlobsHolder.transform.position.y,
                                 BlobsHolder.transform.position.z);
             }
+        }
+
+        public void RemoveBlob(Blob blob)
+        {
+            blobsList.Remove(blob);
+            saveBlobs();
+            destroyBlobs();
+            Reset();
+        }
+
+        public void AddColor(Color color)
+        {
+            GameObject gameObject = GameObject.Instantiate(BlobPrefab) as GameObject;
+
+            blobsList.Add(new Blob(gameObject,color,null, null,null));
+            saveBlobs();
+            destroyBlobs();
+            Reset();
+
+        }
+
+        private void destroyBlobs()
+        {
+            for (int i = 0; i < blobsList.Count; i++)
+            {
+                Destroy(blobsList[i].blobGameObject);
+            }
+        }
+
+        void Start()
+        {
+            Reset();
         }
 
         void OnMouseOver()
