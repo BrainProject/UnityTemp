@@ -7,8 +7,9 @@ using System.Collections;
 public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonToweSphereScript> {
 
     public static bool someSphereMove = false;
-    public float spehrePlaceWaitTime = 0.5f;
+   // public float spehrePlaceWaitTime = 0.5f;
     private float waitAfterClicked = 0;
+    private bool animatedUp = false;
     private bool clicked = false;
     private bool lastClicked = false;
     private bool moveX = true;
@@ -45,22 +46,36 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         }
         if (clicked)
         {
-            this.transform.position = new Vector3(this.transform.position.x, heightY, this.transform.position.z);
-            Vector3 mosePosition = Camera.main.ScreenToWorldPoint(new Vector3( Input.mousePosition.x,Input.mousePosition.y, 9));
-
-            this.transform.position = new Vector3(Mathf.Min(Mathf.Max(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9)).x, mosePosition.x), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)).x), this.transform.position.y, this.transform.position.z);
-          
-            if (lastClicked)
+            if (animatedUp)
             {
-                lastClicked = !lastClicked;
+                if (transform.position.y >= 5.2f)
+                {
+                    animatedUp = false;
+                }
+                else
+                {
+                    transform.Translate(Vector3.up * Time.deltaTime * 8);
+                }
 
             }
             else
             {
-                if ((Input.GetMouseButtonDown(0) ||(Input.touchCount >0  && Input.GetTouch(0).phase == TouchPhase.Began)) && waitAfterClicked <= 0 )
+                this.transform.position = new Vector3(this.transform.position.x, heightY, this.transform.position.z);
+                Vector3 mosePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9));
+                this.transform.position = new Vector3(Mathf.Min(Mathf.Max(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9)).x, mosePosition.x), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 9)).x), this.transform.position.y, this.transform.position.z);
+
+                if (lastClicked)
                 {
-                    clicked = false;
-                    this.rigidbody.useGravity = true;
+                    lastClicked = !lastClicked;
+
+                }
+                else
+                {
+                    if ((Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) && waitAfterClicked <= 0)
+                    {
+                        clicked = false;
+                        this.rigidbody.useGravity = true;
+                    }
                 }
             }
            
@@ -106,9 +121,9 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             {
                 clicked = true;
                 someSphereMove = true;
-                waitAfterClicked = spehrePlaceWaitTime;
                 this.rigidbody.useGravity = false;
                 lastClicked = true;
+                animatedUp = true;
             }
            
         }

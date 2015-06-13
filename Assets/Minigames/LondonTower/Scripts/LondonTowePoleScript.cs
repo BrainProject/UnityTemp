@@ -27,8 +27,6 @@ public class LondonTowePoleScript : MonoBehaviour {
                     gameManager.GameEnd();
                 }
             }
-               
-           
            
         }
     }
