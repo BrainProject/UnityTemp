@@ -93,11 +93,18 @@ namespace Coloring
             string filePath = Application.persistentDataPath + filePathSuffix;
 
             JSONClass file = new JSONClass();
-            file.Add("count", new JSONData(blobsList.Count));
+            file.Add("count", new JSONData(blobsList.Count-1));
             JSONArray colours = new JSONArray();
             for(int i=0;i<blobsList.Count;i++)
             {
-                if (blobsList[i] is BlobAdd) continue;
+                BlobAdd form = blobsList[i] as BlobAdd;
+                if (form != null)
+                   
+                //if (blobsList[i].GetType() == typeof(BlobAdd))
+                {
+                    Debug.Log("BlobAdd.");
+                    continue;
+                }
 
                 JSONClass colour = new JSONClass();
                 colour.Add("R", new JSONData(blobsList[i].blobGameObject.renderer.material.color.r));
@@ -106,13 +113,14 @@ namespace Coloring
                 colours.Add(colour);
             }
             file.Add("colours", colours);
-
+            Debug.Log(file.ToString());
             File.WriteAllText(filePath, file.ToString());
         }
 
         bool loadBlobs()
         {
             string filePath = Application.persistentDataPath + filePathSuffix;
+            Debug.Log(filePath);
 
             // This text is added only once to the file. 
             if (File.Exists(filePath))
@@ -186,7 +194,10 @@ namespace Coloring
 
         public void RemoveBlob(Blob blob)
         {
-            blobsList.Remove(blob);
+            bool b = blobsList.Remove(blob);
+            if (b) Debug.Log("REMOVE TRUE. Count: " + blobsList.Count);
+            else Debug.Log("REMOVE FALSE.  Count: " + blobsList.Count);
+            Destroy(blob.blobGameObject);
             saveBlobs();
             destroyBlobs();
             Reset();

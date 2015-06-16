@@ -1,4 +1,10 @@
 ﻿#pragma warning disable 0414
+
+/**
+ * @file LevelManagerColoring.cs
+ * @authors Tomáš Pouzar, Ján Bella
+ */
+
 using UnityEngine;
 using System.Collections;
 
@@ -17,6 +23,9 @@ namespace Coloring
         public GameObject deleteColorGUI; // for colour deleting
 
 		internal bool painting = false;
+        internal bool mixing = true;
+
+
 		internal bool hiddenGUIwhilePainting = false;
 		internal float timestamp;
 
