@@ -20,8 +20,6 @@ namespace Coloring
 		public GameObject backGUI;
 		public GameObject savePictureGUI;
 
-        public GameObject deleteColorGUI; // for colour deleting
-
 		internal bool painting = false;
         internal bool mixing = true;
 

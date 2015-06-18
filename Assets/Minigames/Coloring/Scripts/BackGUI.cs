@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/**
+ *@author Tomáš Pouzar
+ */
+using UnityEngine;
 using System.Collections;
 
 namespace Coloring
@@ -12,8 +15,8 @@ namespace Coloring
 		public LevelManagerColoring thisLevelManager;
 
 		void Start()
-		{
-			this.guiTexture.pixelInset = new Rect (50, Screen.height - Screen.height/9*3, Screen.width / 16 * 2, Screen.height / 9 * 2);
+		{                                         // 50
+			this.guiTexture.pixelInset = new Rect (15, Screen.height - Screen.height/9*3, Screen.width / 16 * 2, Screen.height / 9 * 2);
 		}
 
 		void OnMouseEnter()

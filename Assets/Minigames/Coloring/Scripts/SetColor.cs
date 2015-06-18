@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/**
+ *@author Tomáš Pouzar
+ */
+using UnityEngine;
 using System.Collections;
 
 

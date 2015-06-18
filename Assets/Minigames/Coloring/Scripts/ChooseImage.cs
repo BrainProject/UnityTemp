@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/**
+ *@author Tomáš Pouzar
+ */
+using UnityEngine;
 using System.Collections;
 
 // pick image for coloring and prepare painting
@@ -13,6 +16,7 @@ namespace Coloring
 
 		void Start()
 		{
+            // This is used to get animator for the desk
 			deskAnimator = transform.parent.transform.parent.GetComponent<Animator> ();
 		}
 
@@ -26,6 +30,7 @@ namespace Coloring
 				deskAnimator.SetBool("painting", true);
 				deskAnimator.SetTrigger("animate");
 				thisLevelManager.painting = true;
+                thisLevelManager.mixing = false;
 				thisLevelManager.ShowColoringGUI(true);
 				if(!thisLevelManager.hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);

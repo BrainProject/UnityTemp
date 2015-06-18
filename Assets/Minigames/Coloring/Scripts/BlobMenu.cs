@@ -16,7 +16,7 @@ namespace Coloring
 
         // constants determined from editor according to Tom Pouzar's scene model
         const float X_MAX_COORD = -0.2f;
-        const float X_MIN_COORD = -2.3f;
+        const float X_MIN_COORD = -2.25f; // -2.3
 
         const float Y_COORD = 0.5f;
         const float Z_COORD = -4.1f;
@@ -41,6 +41,20 @@ namespace Coloring
 
         public GameObject BlobsHolder;
 
+        public GameObject brush;
+
+        public LevelManagerColoring levelManagerController;
+        
+        void Start()
+        {
+            if (BlobsHolder == null || levelManagerController == null || brush == null)
+            {
+                throw new MissingComponentException("Components missing! Unable to continue!");
+            }
+
+            Reset();
+        }
+
         void CreateBasic()
         {
             Color[] pom = { new Color(0.5f, 0, 0.9f), 
@@ -51,30 +65,20 @@ namespace Coloring
                             Color.green,
                             Color.blue,
                             Color.yellow };
-
-            GameObject parent = BlobsHolder;
-            LevelManagerColoring lmc = GameObject.FindObjectOfType<LevelManagerColoring>();
-            GameObject brush = GameObject.Find("Brush");
-
-            if (parent == null || lmc == null || brush == null)
-            {
-                throw new MissingComponentException("Components missing! Unable to continue!");
-            }
-
+           
             if(blobsList != null)
             {
                 blobsList.Clear();
             }
             else blobsList = new List<Blob>();
 
-            for (int i = 0; i < pom.Length; i++)
-            {
-                GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, parent.transform);
-                blobsList.Add(new Blob(go, pom[i], brush, lmc, this));
-            }
-            saveBlobs();
-            AddBlobAdd(ref blobsList, X_MIN_COORD + pom.Length * X_SIZE, parent.transform, ref lmc);
+            AddBlobAdd(ref blobsList, X_MIN_COORD, BlobsHolder.transform);
 
+            for (int i = 1; i <= pom.Length; i++)
+            {
+                GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, BlobsHolder.transform);
+                blobsList.Add(new Blob(go, pom[i-1], brush, levelManagerController, this));
+            }
         }
 
         private GameObject buildBlobGameObjectWithTransform(float x, Transform parent)
@@ -95,16 +99,14 @@ namespace Coloring
             JSONClass file = new JSONClass();
             file.Add("count", new JSONData(blobsList.Count-1));
             JSONArray colours = new JSONArray();
-            for(int i=0;i<blobsList.Count;i++)
+            for(int i=1;i<blobsList.Count;i++)
             {
-                BlobAdd form = blobsList[i] as BlobAdd;
+               /* BlobAdd form = blobsList[i] as BlobAdd;
                 if (form != null)
-                   
-                //if (blobsList[i].GetType() == typeof(BlobAdd))
                 {
-                    Debug.Log("BlobAdd.");
-                    continue;
-                }
+                    Debug.Log("BlobAdd found.");
+                    continue; // blobadd
+                }*/
 
                 JSONClass colour = new JSONClass();
                 colour.Add("R", new JSONData(blobsList[i].blobGameObject.renderer.material.color.r));
@@ -113,28 +115,18 @@ namespace Coloring
                 colours.Add(colour);
             }
             file.Add("colours", colours);
-            Debug.Log(file.ToString());
             File.WriteAllText(filePath, file.ToString());
         }
 
         bool loadBlobs()
         {
             string filePath = Application.persistentDataPath + filePathSuffix;
-            Debug.Log(filePath);
+            //Debug.Log(filePath);
 
             // This text is added only once to the file. 
             if (File.Exists(filePath))
             {
                 JSONNode root = JSON.Parse(File.ReadAllText(filePath));
-
-                GameObject parent = BlobsHolder;
-                LevelManagerColoring lmc = GameObject.FindObjectOfType<LevelManagerColoring>();
-                GameObject brush = GameObject.Find("Brush");
-
-                if (parent == null || lmc == null || brush == null)
-                {
-                    throw new MissingComponentException("Components missing! Unable to continue!");
-                }
 
                 if (blobsList != null)
                 {
@@ -142,25 +134,26 @@ namespace Coloring
                 }
                 else blobsList = new List<Blob>();
 
-                for(int i=0;i< root["count"].AsInt;i++)
+                AddBlobAdd(ref blobsList, X_MIN_COORD, BlobsHolder.transform);
+
+                for(int i=1;i<= root["count"].AsInt;i++)
                 {
-                    GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, parent.transform);
+                    GameObject go = buildBlobGameObjectWithTransform(X_MIN_COORD + i * X_SIZE, BlobsHolder.transform);
                     blobsList.Add(new Blob(go, 
-                        new Color(root["colours"][i]["R"].AsFloat,
-                            root["colours"][i]["G"].AsFloat,
-                            root["colours"][i]["B"].AsFloat),
+                        new Color(root["colours"][i - 1]["R"].AsFloat,
+                            root["colours"][i - 1]["G"].AsFloat,
+                            root["colours"][i - 1]["B"].AsFloat),
                         brush, 
-                        lmc, 
+                        levelManagerController, 
                         this));
-                    Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
+                    //Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
                 }
-                AddBlobAdd(ref blobsList, X_MIN_COORD + root["count"].AsInt * X_SIZE, parent.transform, ref lmc);
                 return true;
             }
-            return false;
+            else return false;
         }
 
-        private void AddBlobAdd(ref List<Blob> blobList, float xCoord, Transform parent, ref LevelManagerColoring lmc)
+        private void AddBlobAdd(ref List<Blob> blobList, float xCoord, Transform parent)
         {
             GameObject gameObject = GameObject.Instantiate(BlobAddPrefab) as GameObject;
 
@@ -168,35 +161,58 @@ namespace Coloring
             gameObject.transform.rotation = ROTATION;
             gameObject.transform.localScale = SCALE;
             gameObject.transform.localPosition = new Vector3(xCoord, Y_COORD, Z_COORD);
-            blobsList.Add(new BlobAdd(gameObject, lmc));
+            blobsList.Add(new BlobAdd(gameObject, ref brush, ref levelManagerController));
         }
 
 
         public void Reset()
         {
-            if (!loadBlobs() || blobsList.Count == 0)
+            if (!loadBlobs() || blobsList.Count <= 1)
             {
                 CreateBasic();
+                saveBlobs();
             }
 
             float xMax = blobsList[blobsList.Count - 1].blobGameObject.transform.localPosition.x;
-            Debug.Log("XMax is " + xMax);
+            float xMin = blobsList[0].blobGameObject.transform.position.x;
 
-            if (xMax < X_MAX_COORD)
+            if (xMin < X_MIN_COORD)
             {
                 Debug.Log("Shifting blobs");
                 BlobsHolder.transform.position =
-                    new Vector3(BlobsHolder.transform.position.x + (X_MAX_COORD - xMax) / 2.0f,
-                                BlobsHolder.transform.position.y,
-                                BlobsHolder.transform.position.z);
+                    new Vector3(X_MIN_COORD,
+                                BlobsHolder.transform.localPosition.y,
+                                BlobsHolder.transform.localPosition.z);
             }
         }
 
-        public void RemoveBlob(Blob blob)
+        public void RemoveBlob(ref Blob blob)
         {
+            for (int i = 0; i < blobsList.Count;i++ )
+            {
+                if(blobsList[i].blobGameObject.name == blob.blobGameObject.name)
+                {
+                    blobsList.RemoveAt(i);
+                    break;
+                }
+            }
+                /*foreach (Blob a in blobsList)
+                {
+                    Debug.LogError(a.blobGameObject.renderer.material.color.ToString());
+                }
+            Debug.LogWarning("Removing blob " + blob.blobGameObject.renderer.material.color.ToString());
+
+
+
             bool b = blobsList.Remove(blob);
-            if (b) Debug.Log("REMOVE TRUE. Count: " + blobsList.Count);
-            else Debug.Log("REMOVE FALSE.  Count: " + blobsList.Count);
+
+            Debug.LogWarning("Return value is " + (b ? "true": "false"));
+
+            foreach (Blob a in blobsList)
+            {
+                Debug.LogError(a.blobGameObject.renderer.material.color.ToString());
+            }*/
+
             Destroy(blob.blobGameObject);
             saveBlobs();
             destroyBlobs();
@@ -220,11 +236,6 @@ namespace Coloring
             {
                 Destroy(blobsList[i].blobGameObject);
             }
-        }
-
-        void Start()
-        {
-            Reset();
         }
 
         void OnMouseOver()

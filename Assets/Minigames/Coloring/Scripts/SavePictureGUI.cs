@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/**
+ *@author Tomáš Pouzar
+ */
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -10,8 +13,8 @@ namespace Coloring
 		public Texture hover;
 
 		void Start()
-		{
-			this.guiTexture.pixelInset = new Rect (50, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
+		{                                       // 50
+			this.guiTexture.pixelInset = new Rect (15, Screen.height - Screen.height/9*5, Screen.width / 16 * 2, Screen.height / 9 * 2);
 		}
 		
 		void OnMouseEnter()

@@ -1,5 +1,5 @@
 ﻿/**
- *@author Tomáš Pouzar & Ján Bella
+ *@author Ján Bella
  */
 
 using UnityEngine;
@@ -34,6 +34,7 @@ namespace Coloring
             SelectColour b = blobGameObject.AddComponent<SelectColour>();
             b.Brush = brush;
             b.thisLevelManager = levelManager;
+            b.color = blobGameObject.renderer.material.color;
 
             DeleteColour d = blobGameObject.AddComponent<DeleteColour>();
             d.thisLevelManager = levelManager;
@@ -41,7 +42,6 @@ namespace Coloring
             this.menu = menu;
             d.menu = menu;
             d.blob = this;
-
         } 
     }
 
@@ -49,6 +49,7 @@ namespace Coloring
     {
         public GameObject Brush;
         public LevelManagerColoring thisLevelManager;
+        public Color color;
 
 #if UNITY_ANDROID
         private Material neuronMaterial;
@@ -63,22 +64,19 @@ namespace Coloring
         {
             if (thisLevelManager.painting)
             {
-                Transform selected;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    selected = hit.transform;
-                    if (selected.tag == "ColoringBlob")
-                    {
-                        Brush.renderer.material.color = selected.renderer.material.color;
-                        thisLevelManager.brushColor = selected.renderer.material.color;
-                    }
-                }
+                Brush.renderer.material.color = color;
+                thisLevelManager.brushColor = color;
 
 #if UNITY_ANDROID
                 neuronMaterial.color = Brush.renderer.material.color;
 #endif
+            }
+            else if(thisLevelManager.mixing)
+            {
+                GameObject machine = GameObject.Find("ColorMixingMachine");
+                ColorMixingMachine script = machine.GetComponent<ColorMixingMachine>();
+
+                script.SetToColor(color);
             }
         }
 
@@ -90,9 +88,10 @@ namespace Coloring
         public BlobMenu menu;
         public Blob blob;
 
-        private GameObject selectedColour = null;
         private Vector3 originalObjPosition = Vector3.zero;
         private Vector3 mouseDownPosition = Vector3.zero;
+
+        private bool moving = false;
 
 #if UNITY_ANDROID
         private Material neuronMaterial;
@@ -110,80 +109,46 @@ namespace Coloring
         {
             if (thisLevelManager.painting)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Transform selected = hit.transform;
-                    if (selected.tag == "ColoringBlob")
-                    {
-                        selectedColour = selected.gameObject;
-                        originalObjPosition = selected.position;
-
-                        screenPoint = Camera.main.WorldToScreenPoint(originalObjPosition);
-                        offset = originalObjPosition - Camera.main.ScreenToWorldPoint(
-                        new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-
-                    }
-                }
+                originalObjPosition = transform.position;
+                screenPoint = Camera.main.WorldToScreenPoint(originalObjPosition);
+                offset = originalObjPosition - Camera.main.ScreenToWorldPoint(
+                new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+                moving = true;
             }
         }
 
         void OnMouseDrag()
         {
-            if (selectedColour != null && thisLevelManager.painting)
+            if (moving && thisLevelManager.painting)
             {
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
                 Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
 
                 transform.position = curPosition;
-                Debug.Log(curPosition - originalObjPosition);
+                //Debug.Log(curPosition - originalObjPosition);
             }
         }
 
         void OnMouseUp()
         {
-            /*if (selectedColour != null && thisLevelManager.painting)
+            if (moving && thisLevelManager.painting)
             {
-                Ray ray = Camera.main.ScreenPointToRay(mouseDownPosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit) )
+                Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+                Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+
+                if (Math.Abs(curPosition.y - originalObjPosition.y) > 0.2)
                 {
-                    Transform selected = hit.transform;
-                    if ((selected.tag == "ColoringBlob" && selected != gameObject) || selected.tag == "ColoringPallete")
-                    {
-                        Debug.Log("Position restored. Tag: " + selected.tag);
-                        selected.position = originalObjPosition;
-                    }
-                    else
-                    {
-                        Debug.Log("Deleted. Tag: " + selected.tag);
-                    }
+                    Debug.Log("delete");
+
+                    menu.RemoveBlob(ref blob);
                 }
                 else
                 {
-                    Debug.Log("Deleted.");
+                    Debug.Log("Position restored. Tag: ");
+                    transform.position = originalObjPosition;
                 }
-            }*/
-
-            Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-            Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-
-            if (Math.Abs(curPosition.y - originalObjPosition.y) > 0.2)
-            {
-                Debug.Log("delete");
-
-                menu.RemoveBlob(blob);
             }
-            else
-            {
-                Debug.Log("Position restored. Tag: ");
-                selectedColour.transform.position = originalObjPosition;
-            }
-
-            selectedColour = null;
-
+            moving = false;
         }
-
     }
 }

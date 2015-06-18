@@ -10,7 +10,7 @@ namespace Coloring
 {
     public class BlobAdd : Blob
     {
-        public BlobAdd(GameObject gameObject, LevelManagerColoring levelManager)
+        public BlobAdd(GameObject gameObject, ref GameObject brush, ref LevelManagerColoring levelManagerr)
         {
             blobGameObject = gameObject;
 
@@ -21,6 +21,8 @@ namespace Coloring
             blobGameObject.tag = "ColoringBlob";
 
             TransformToLab b = blobGameObject.AddComponent<TransformToLab>();
+            b.thisLevelManager = levelManagerr;
+            b.Brush = brush;
         }
     }
 
@@ -28,6 +30,8 @@ namespace Coloring
     {
         public GameObject Brush;
         public LevelManagerColoring thisLevelManager;
+
+        public Animator mixingAnimator;
 
 #if UNITY_ANDROID
         private Material neuronMaterial;
@@ -42,6 +46,17 @@ namespace Coloring
         {
             if (thisLevelManager.painting)
             {
+                GameObject machine = GameObject.Find("ColorMixingMachine");
+                ColorMixingMachine script = machine.GetComponent<ColorMixingMachine>();
+
+                script.SetToColor(Brush.renderer.material.color);
+
+                GameObject camera = GameObject.Find("MainCamera");
+                Animator cameraAnimator = camera.GetComponent<Animator>();
+
+                GameObject pallete = GameObject.Find("Pallete");
+                Animator palleteAnimator = pallete.GetComponent<Animator>();
+
                 Transform selected;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -50,7 +65,15 @@ namespace Coloring
                     selected = hit.transform;
                     if (selected.tag == "ColoringBlob")
                     {
-                        // spustit animaciu
+                        cameraAnimator.SetBool("mixing", true);
+                        cameraAnimator.SetTrigger("animate");
+
+                        palleteAnimator.SetBool("visible", true);
+                        palleteAnimator.SetBool("mixing", true);
+                        palleteAnimator.SetTrigger("animateLab");
+
+                        thisLevelManager.painting = false;
+                        thisLevelManager.mixing = true;
                     }
                 }
 
