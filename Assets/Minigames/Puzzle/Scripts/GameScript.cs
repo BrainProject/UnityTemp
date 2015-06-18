@@ -102,9 +102,9 @@ namespace Puzzle
 
             if(backgroundSprite)
             {
-                Vector3 pos = backgroundSprite.transform.position;
-                pos.z = numberPieces + 1;
-                backgroundSprite.transform.position = pos;
+                // super weird, but works
+                backgroundSprite.transform.position = new Vector3(backgroundSprite.transform.position.x, 6 + (dim - 2) * 9, numberPieces + 1);
+                backgroundSprite.transform.localScale = new Vector3(dim, dim, 1);
             }
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
