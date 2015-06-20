@@ -16,6 +16,8 @@ namespace Puzzle
     /// </summary>
     public class GameScript : MonoBehaviour
     {
+
+        public Shader shader;
 		/// <summary>
         /// number of puzzle pieces
 		/// </summary>
@@ -103,8 +105,8 @@ namespace Puzzle
             if(backgroundSprite)
             {
                 // super weird, but works
-                backgroundSprite.transform.position = new Vector3(backgroundSprite.transform.position.x, 6 + (dim - 2) * 9, numberPieces + 1);
-                backgroundSprite.transform.localScale = new Vector3(dim, dim, 1);
+                backgroundSprite.transform.position = new Vector3(backgroundSprite.transform.position.x, 6 + (dim - 2) * 9 * 1.3f, numberPieces + 1);
+                backgroundSprite.transform.localScale = new Vector3(dim * 1.3f, dim * 1.3f, 1);
             }
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
@@ -120,7 +122,8 @@ namespace Puzzle
             for (int i = 0; i < numberPieces; i++)
             {
             
-                PuzzlePiece piece = new PuzzlePiece(puzzleImage,i,dim,dim);
+                PuzzlePiece piece = new PuzzlePiece(puzzleImage,i,dim,dim, shader);
+
                 pieces.Add(piece.gameObject.name, piece);
 
                 // add a connected component
@@ -206,6 +209,7 @@ namespace Puzzle
         {
             // distance, in which two pieces will be connected.
             const int diff = 5;
+            const float offset = 1.8f; // this is caused by partial overlapping of transparent parts
 
             HashSet<GameObject> my_component = null;
             foreach (HashSet<GameObject> component in connectedComponents)
@@ -267,7 +271,7 @@ namespace Puzzle
                 {
                   	Vector3 newPosition = new Vector3(
 						topPiece.gameObject.transform.position.x,
-						topPiece.gameObject.transform.position.y - topPiece.gameObject.renderer.bounds.size.y,
+                        topPiece.gameObject.transform.position.y - topPiece.gameObject.renderer.bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -296,7 +300,7 @@ namespace Puzzle
 				{
 					Vector3 newPosition = new Vector3(
 						bottomPiece.gameObject.transform.position.x,
-						bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.renderer.bounds.size.y,
+                        bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.renderer.bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 					
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -324,7 +328,7 @@ namespace Puzzle
 				    Math.Abs(my_piece.gameObject.transform.position.y - leftPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-						leftPiece.gameObject.transform.position.x + leftPiece.gameObject.renderer.bounds.size.x,
+                        leftPiece.gameObject.transform.position.x + leftPiece.gameObject.renderer.bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
 						leftPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
@@ -353,7 +357,7 @@ namespace Puzzle
 				    Math.Abs(my_piece.gameObject.transform.position.y - rightPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-						rightPiece.gameObject.transform.position.x - rightPiece.gameObject.renderer.bounds.size.x,
+                        rightPiece.gameObject.transform.position.x - rightPiece.gameObject.renderer.bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
 						rightPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
