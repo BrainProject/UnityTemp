@@ -76,19 +76,14 @@ namespace SocialGame{
 		/// </summary>
 		void redraw()
 		{
-			if(points < max)
+			for(int i = 0; i < max;i++)
 			{
-				for(int i = 0; i < max;i++)
-				{
-					pointsGraf[i].AddThis(i < points);
-				}
-				//transform.localScale = new Vector3 (step * points,transform.localScale.y,transform.localScale.z);
+				pointsGraf[i].AddThis(i < points);
 			}
-			else
+			if(points >= max)
 			{
 
 				LevelManager.win();
-				/*transform.localScale = new Vector3 (step * max,transform.localScale.y,transform.localScale.z);*/
 				checkShooter check = (checkShooter) FindObjectOfType(typeof(checkShooter));
 				if(check)
 				{
