@@ -274,6 +274,12 @@ public class MGC : Singleton<MGC>
             //TODO test only...
             minigamesProperties.printStatisticsToFile();
         }
+		if(Input.GetKeyDown(KeyCode.F8))
+		{
+			minigamesProperties.ResetStatistics();
+			if(Application.loadedLevelName == "GameSelection")
+				Application.LoadLevel("GameSelection");
+		}
 
     #endif
         
@@ -305,10 +311,27 @@ public class MGC : Singleton<MGC>
         {
             MGC.Instance.sceneLoader.FadeIn();
         }
-        else
-        {
+
+		if (minigamesProperties.GetPlayed (Application.loadedLevelName))
+		{
+			Debug.Log ("The minigame was already visited, don't show help.");
+		}
+		else
+		{
+			if(minigamesProperties.GetMinigame(Application.loadedLevelName))
+			{
+				if(minigamesProperties.IsWithHelp(Application.loadedLevelName))
+				{
+	//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
+					neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+					minigamesProperties.SetPlayedWithHelp(Application.loadedLevelName);
+				}
+			}
+		}
+//        else
+//        {
 //            gameObject.guiTexture.enabled = false;
-        }
+//        }
     }
 
     /// <summary>

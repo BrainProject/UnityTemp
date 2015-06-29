@@ -78,9 +78,27 @@ namespace Game
             MGC.Instance.SaveMinigamesStatisticsToFile();
         }
 
-        public void SetSuccessfullyPlayed(string minigameName, int diff = 0)
-        {
-            foreach (MinigameProperties game in minigames)
+		/// <summary>
+		/// Sets the "played" flag to true in order the minigame help doesn't show up on startup anymore.
+		/// </summary>
+		/// <param name="minigameName">Minigame name.</param>
+		public void SetPlayedWithHelp(string minigameName)
+		{
+			foreach (MinigameProperties gameProps in minigames)
+			{
+				if (gameProps.mainScene == minigameName || gameProps.initialScene == minigameName)
+				{
+					gameProps.stats.played = true;
+					break;
+				}
+			}
+			
+			MGC.Instance.SaveMinigamesStatisticsToFile();
+		}
+		
+		public void SetSuccessfullyPlayed(string minigameName, int diff = 0)
+		{
+			foreach (MinigameProperties game in minigames)
             {
                 if (game.mainScene == minigameName || game.initialScene == minigameName)
                 {
@@ -121,9 +139,36 @@ namespace Game
             }
 
             return minigamesWithHelp;
-        }
+		}
 
-        public void printStatisticsToFile()
+		public bool IsWithHelp(string minigameName)
+		{
+			foreach (MinigameProperties game in minigames)
+			{
+				//print("checking mini-game: '" + game.readableName + "'");
+				if (game.mainScene == minigameName)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+		
+		public void ResetStatistics()
+		{
+			foreach (MinigameProperties game in minigames)
+			{
+				for (int i = 0; i < game.stats.playedCount.Length; i++)
+				{
+					game.stats.playedCount[i] = 0;
+				}
+				game.stats.played = false;
+			}
+			MGC.Instance.SaveMinigamesStatisticsToFile();
+		}
+		
+		public void printStatisticsToFile()
         {
             //TODO proper implementation
 
@@ -143,12 +188,12 @@ namespace Game
                 Debug.LogError("Not implemented, yet");
             #endif
         }
-
-
-
-        internal void loadConfigurationsfromFile()
-        {
-            print("Loading mini-games configurations from file...");
+		
+		
+		
+		internal void loadConfigurationsfromFile()
+		{
+			print("Loading mini-games configurations from file...");
             //get instance of prefab
             GameObject mgParent = Instantiate(Resources.Load("mini-games-configuration")) as GameObject;
 

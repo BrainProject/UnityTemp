@@ -143,7 +143,7 @@ namespace Game
 
 		public void ShowSmile(Texture smileTexture)
 		{
-			animator.SetBool ("smile", true);
+			animator.SetTrigger ("smile");
 			collider.enabled = false;
 			pictureInHands.renderer.material.mainTexture = smileTexture;
 		}

@@ -8,13 +8,13 @@ AnimatorController:
   m_Name: Neuron
   serializedVersion: 2
   m_AnimatorParameters:
-  - m_Name: smile
-    m_Type: 4
+  - m_Name: wave
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: wave
+  - m_Name: smile
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -375,6 +375,10 @@ StateMachine:
       - {fileID: 110190922}
       - {fileID: 110152624}
     data:
+      first: {fileID: 110298095}
+      second:
+      - {fileID: 110137677}
+    data:
       first: {fileID: 110298800}
       second:
       - {fileID: 110132489}
@@ -390,10 +394,6 @@ StateMachine:
       first: {fileID: 110203904}
       second:
       - {fileID: 110100000}
-    data:
-      first: {fileID: 110298095}
-      second:
-      - {fileID: 110137677}
     data:
       first: {fileID: 110258034}
       second:
