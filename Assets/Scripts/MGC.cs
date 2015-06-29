@@ -104,6 +104,7 @@ public class MGC : Singleton<MGC>
     internal string pathtoCustomImageSets;
 
     internal string inactivityScene = "Figure";
+	internal string alternativeInteractionScene = "HanoiTowers";
     internal bool checkInactivity = true;
 
     private float inactivityTimestamp;
@@ -269,16 +270,16 @@ public class MGC : Singleton<MGC>
         }
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            Application.LoadLevel("GameSelection");
+            Application.LoadLevel(gameSelectionSceneName);
 
             //TODO test only...
             minigamesProperties.printStatisticsToFile();
         }
 		if(Input.GetKeyDown(KeyCode.F8))
 		{
-			minigamesProperties.ResetStatistics();
-			if(Application.loadedLevelName == "GameSelection")
-				Application.LoadLevel("GameSelection");
+			ResetMinigamesStatistics();
+			if(Application.loadedLevelName == gameSelectionSceneName)
+				Application.LoadLevel(gameSelectionSceneName);
 		}
 
     #endif
@@ -390,11 +391,11 @@ public class MGC : Singleton<MGC>
             ResetMinigamesStatistics();
         }
 
-        if (Application.loadedLevelName == "GameSelection")
-        {
-            sceneLoader.LoadScene("GameSelection");
-        }
-#endif
+		if (Application.loadedLevelName == gameSelectionSceneName)
+		{
+			sceneLoader.LoadScene(gameSelectionSceneName);
+		}
+		#endif
     }
 
 
@@ -506,7 +507,10 @@ public class MGC : Singleton<MGC>
             if (Application.loadedLevelName != inactivityScene)
             {
                 //load inactivityMinigame
-                Application.LoadLevel(inactivityScene);
+				if(kinectManagerObject.activeSelf)
+	                Application.LoadLevel(inactivityScene);
+				else
+					Application.LoadLevel(alternativeInteractionScene);
             }
             else
             {
