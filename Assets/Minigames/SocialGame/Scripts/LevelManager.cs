@@ -23,7 +23,6 @@ namespace SocialGame{
 		{
 			HelpListener.Instance.StopAll(true);
 			KinectManagerSwitcher.deactivateThisLevelKManager();
-			MGC.Instance.minigamesGUI.show(true);
 			//Debug.LogError("finito");
 		}
 		#endif
