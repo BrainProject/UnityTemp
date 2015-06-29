@@ -119,10 +119,10 @@ namespace MinigameSelection
 //						Kinect.KinectInterop.changeAngle = false;
 					}
 
-                    if (MGC.Instance.neuronHelp)
-                    {
-                        MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab = minigameHelp;
-                    }
+      //              if (MGC.Instance.neuronHelp)
+    //                {
+//                        MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab = minigameHelp;
+  //                  }
 
                     MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;
 	                

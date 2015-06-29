@@ -94,6 +94,11 @@ namespace Game
 		/// </summary>
 		public GameObject helpPrefab;
 
+		/// <summary>
+		/// The duration of the help animation.
+		/// </summary>
+		public float helpDuration = 3;
+
 
         public MinigameStatistics stats;
     }

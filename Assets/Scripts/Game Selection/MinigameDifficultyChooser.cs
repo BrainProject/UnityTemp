@@ -91,11 +91,6 @@ public class MinigameDifficultyChooser : MonoBehaviour
         //store difficulty into MGC property
         MGC.Instance.selectedMiniGameDiff = (int)diffSlider.value;
         MGC.Instance.getSelectedMinigameProperties().stats.DifficutlyLastPlayed = (int)diffSlider.value;
-		if(MGC.Instance.getSelectedMinigameProperties ().helpPrefab)
-		{
-			MGC.Instance.neuronHelp.GetComponent<Game.NEWBrainHelp> ().helpObject.helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
-			GameObject helpObj = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
-		}
 
         MGC.Instance.sceneLoader.LoadScene(MGC.Instance.getSelectedMinigameName());
     }

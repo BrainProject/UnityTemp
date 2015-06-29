@@ -27,9 +27,15 @@ namespace Game
 			startColor = thisImage.color;
 			targetColor = thisImage.color;
 			if (defaultDisabled)
+			{
 				thisButton.enabled = false;
+				this.gameObject.SetActive (false);
+			}
 			else
+			{
+				this.gameObject.SetActive (true);
 				thisButton.enabled = true;
+			}
 		}
         
 //		public void resetState()
@@ -173,11 +179,13 @@ namespace Game
 
 		public void show()
 		{
+			this.gameObject.SetActive (true);
 			StartCoroutine ("FadeInGUI");
 		}
 
 		public void hide()
 		{
+			this.gameObject.SetActive (true);
 			StartCoroutine ("FadeOutGUI");
 		}
 
@@ -216,6 +224,7 @@ namespace Game
 
 			thisImage.color = targetColor;
 			thisButton.enabled = false;
+			this.gameObject.SetActive (false);
 		}
     }
 }
