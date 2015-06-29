@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &358537700
 GameObject:
@@ -244,8 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -444,9 +443,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cd730a3676204eb57c023b368043a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberPieces: 4
+  shader: {fileID: 4800000, guid: 851dafaa80c20474ba2d445bb718d7b2, type: 3}
+  numberPieces: 9
   puzzleImage: {fileID: 0}
   targetImage: {fileID: 358537701}
+  backgroundSprite: {fileID: 1126558271}
 --- !u!81 &1911045095
 AudioListener:
   m_ObjectHideFlags: 0

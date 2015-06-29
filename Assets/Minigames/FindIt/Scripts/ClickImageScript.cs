@@ -13,30 +13,59 @@ namespace FindIt
      */
     public class ClickImageScript : MonoBehaviour
     {
-        void OnMouseDown()
+        public GameObject gameScriptHolder;
+
+        public GameObject targetImage;
+
+        private GameScript gameScript;
+
+        void Start()
         {
-            if(this.gameObject.renderer.material.mainTexture.Equals(GameObject.Find("TargetImage").renderer.material.mainTexture))
+            if (gameScriptHolder == null)
             {
-                if (this.gameObject.tag == "Left")
-                {
-                    FindItStatistics.RecordLeftGoodClick();
-                }
-                else if (this.gameObject.tag == "Right")
-                {
-                    FindItStatistics.RecordRightGoodClick();
-                }
-                // else unexpected error
-                Camera.main.GetComponent<GameScript>().newTargetImage();
+                Debug.LogError("GameScriptHolder in some ClickImageScript instance is not set! ");
             }
             else
             {
-                if (this.gameObject.tag == "Left")
+                gameScript = gameScriptHolder.GetComponent<GameScript>();
+                if(gameScript == null)
                 {
-                    FindItStatistics.RecordLeftWrongClick();
+                    Debug.LogError("GameScript is not assigned to some GameScriptHolder! ");
                 }
-                else if (this.gameObject.tag == "Right")
+            }
+            if(targetImage == null)
+            {
+                Debug.LogError("TargetImage in some ClickImageScript instance is not set!");
+            }
+        }
+
+        void OnMouseDown()
+        {
+            if (!gameScript.gameWon)
+            {
+                if (this.gameObject.renderer.material.mainTexture.Equals(targetImage.renderer.material.mainTexture))
                 {
-                    FindItStatistics.RecordRightWrongClick();
+                    if (this.gameObject.tag == "Left")
+                    {
+                        FindItStatistics.RecordLeftGoodClick();
+                    }
+                    else if (this.gameObject.tag == "Right")
+                    {
+                        FindItStatistics.RecordRightGoodClick();
+                    }
+                    // else unexpected error
+                    gameScript.newTargetImage();
+                }
+                else
+                {
+                    if (this.gameObject.tag == "Left")
+                    {
+                        FindItStatistics.RecordLeftWrongClick();
+                    }
+                    else if (this.gameObject.tag == "Right")
+                    {
+                        FindItStatistics.RecordRightWrongClick();
+                    }
                 }
             }
         }
