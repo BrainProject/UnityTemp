@@ -17,6 +17,7 @@ namespace Game
 		public Texture helpTexture;
 		public bool helpExists;
 		public GameObject pictureInHands;
+		public GameObject confetti;
 
 		internal Animator animator;
 
@@ -97,6 +98,14 @@ namespace Game
 					//       + Application.loadedLevelName + ", ");
 					this.GetComponent<Animator>().SetBool("wave", true);
 				}
+			}
+		}
+
+		public void LaunchConfetties ()
+		{
+			if(confetti)
+			{
+				Instantiate(confetti);
 			}
 		}
 

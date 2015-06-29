@@ -4,17 +4,22 @@ using System.Collections;
 
 public class ConfetControl : MonoBehaviour {
 	public ParticleEmitter[] emit;
+	public float StartDelay;
 	public float EmitTime;
 	public RocketLauncher launcher;
+	public bool AutoLaunch = false;
 	// Use this for initialization
 
 	void Start () {
-	
+		if(AutoLaunch)
+		{
+			Fire();
+		}
 	}
 	
 	// Update is called once per frame
 
-	[ContextMenu("gdfg")]
+	[ContextMenu("fire")]
 	public void Fire()
 	{
 
@@ -25,6 +30,7 @@ public class ConfetControl : MonoBehaviour {
 
 	IEnumerator snow()
 	{
+		yield return new WaitForSeconds(StartDelay);
 		foreach(ParticleEmitter emiter in emit)
 		{
 			emiter.emit = true;
@@ -33,14 +39,6 @@ public class ConfetControl : MonoBehaviour {
 		foreach(ParticleEmitter emiter in emit)
 		{
 			emiter.emit = false;
-		}
-	}
-
-	void OnGUI()
-	{
-		if(GUI.Button(new Rect(0,0,90,40),"lop"))
-		{
-			Fire();
 		}
 	}
 }

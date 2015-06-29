@@ -70,7 +70,7 @@ public class MGC : Singleton<MGC>
     public BrainPartName currentBrainPart;
     public Vector3 currentCameraDefaultPosition;
     public string gameSelectionSceneName = "GameSelection";
-
+	public GameObject confetti;
     /// <summary>
     /// Logs players actions
     /// </summary>
@@ -537,11 +537,12 @@ public class MGC : Singleton<MGC>
         print("Minigame successffully finished");
 
         //TODO Add "Celebration phase" stuff here
-
         //animate Neuron character
         if (neuronHelp)
         {
-            neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+			Game.BrainHelp neuron = neuronHelp.GetComponent<Game.BrainHelp>();
+			neuron.ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+			neuron.LaunchConfetties();
         }
 
         minigamesProperties.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);

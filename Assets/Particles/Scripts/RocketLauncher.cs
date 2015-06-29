@@ -4,6 +4,7 @@ using System.Collections;
 public class RocketLauncher : MonoBehaviour {
 	public GameObject Rocket;
 	public float RocketDelay;
+	public float StartDelay;
 	public Vector3[] PositionsOfLaunchersRight;
 	public Vector3[] PositionsOfLaunchersLeft;
 
@@ -29,6 +30,7 @@ public class RocketLauncher : MonoBehaviour {
 		int leftLaunched =0;
 		int rightLaunched=0;
 		int sum = PositionsOfLaunchersLeft.Length + PositionsOfLaunchersRight.Length;
+		yield return new WaitForSeconds (StartDelay);
 		for(int i =0;i<sum; i++)
 		{
 			if(right)
