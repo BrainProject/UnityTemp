@@ -502,6 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rocket: {fileID: 100000, guid: df320b2cd77b74d4299b439ef3992dea, type: 2}
   RocketDelay: 1.29999995
+  StartDelay: 0
   PositionsOfLaunchersRight:
   - {x: 2, y: -3, z: 1}
   - {x: 4, y: -3, z: 1}
@@ -525,8 +526,10 @@ MonoBehaviour:
   - {fileID: 1500002}
   - {fileID: 1500004}
   - {fileID: 1500000}
+  StartDelay: 0
   EmitTime: 3
   launcher: {fileID: 11400000}
+  AutoLaunch: 1
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

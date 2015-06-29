@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &19940869
 GameObject:
@@ -484,6 +485,14 @@ Prefab:
       propertyPath: ObjToPause.Array.data[0]
       value: 
       objectReference: {fileID: 2026263285}
+    - target: {fileID: 2000000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: m_Depth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
   m_RootGameObject: {fileID: 1506254175}
@@ -733,7 +742,7 @@ MonoBehaviour:
   space: .100000001
   line: {fileID: 100000, guid: c7526279264ba3840aa5c021af55add8, type: 2}
   lines: []
-  startGUI: {x: -2, y: 2.5, z: 3}
+  startGUI: {x: -2, y: .25, z: 3}
   selectedMovements: 0
   movements:
   - {fileID: 100108, guid: 229b883e344edc243addcf3edd6f9fda, type: 2}
@@ -1080,7 +1089,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 1.44606757
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1560,6 +1569,10 @@ Prefab:
     - target: {fileID: 400000, guid: b96d1679ec02c7147bb1e74aaba1b515, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b96d1679ec02c7147bb1e74aaba1b515, type: 2}
+      propertyPath: startGUI.y
+      value: .25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b96d1679ec02c7147bb1e74aaba1b515, type: 2}

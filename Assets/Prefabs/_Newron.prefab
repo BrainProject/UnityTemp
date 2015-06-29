@@ -1784,14 +1784,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100110}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d18b79a36b8f424bb3f64aacb5f347b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpTexture: {fileID: 0}
-  helpExists: 0
   pictureInHands: {fileID: 100100}
+  confetti: {fileID: 100006, guid: 13a9f232ed3db2b438b643e9c2d9db93, type: 2}
 --- !u!114 &11410214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1805,6 +1804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisAnimator: {fileID: 9510216}
   helpPrefab: {fileID: 0}
+  helpDuration: 3
   neuronAnimator: {fileID: 9500004}
 --- !u!114 &11410216
 MonoBehaviour:
