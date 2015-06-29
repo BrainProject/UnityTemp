@@ -12,11 +12,7 @@ namespace SocialGame{
 		/// </summary>
 		public static void win()
 		{
-			GameObject Neuronek = MGC.Instance.neuronHelp;
-			if (Neuronek)
-			{
-				Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-			}
+			MGC.Instance.WinMinigame ();
 			finish ();
 		}
 
