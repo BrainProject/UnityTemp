@@ -464,6 +464,8 @@ namespace Kinect
 					{
 						SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
 						gestureData.progress = 0.3f;
+						//Debug.Log(gestureData.timestamp);
+						//MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.circleImage.fillAmount = gestureData.progress;
 						
 						// set screen position at the start, because this is the most accurate click position
 						SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
@@ -474,6 +476,8 @@ namespace Kinect
 						SetGestureJoint(ref gestureData, timestamp, leftHandIndex, jointsPos[leftHandIndex]);
 						gestureData.progress = 0.3f;
 						
+						//MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.circleImage.fillAmount = gestureData.progress;
+
 						// set screen position at the start, because this is the most accurate click position
 						SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
 					}
@@ -514,11 +518,15 @@ namespace Kinect
 						// check for stay-in-place
 						Vector3 distVector = jointsPos[gestureData.joint] - gestureData.jointPos;
 						bool isInPose = distVector.magnitude < 0.05f;
-						
+
+						MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress;
+
 						Vector3 jointPos = jointsPos[gestureData.joint];
 						CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.ClickStayDuration);
 						if(gestureData.complete)
 						{
+							//Debug.Log(gestureData.timestamp);
+							//MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.circleImage.fillAmount = gestureData.progress;
 							MouseControl.MouseClick();
 						}
 						//							SetGestureCancelled(gestureData);

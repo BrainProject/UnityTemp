@@ -12,6 +12,7 @@ namespace Game
 	public class CursorUI : MonoBehaviour {
 		public Sprite cursorNormal;
 		public Sprite cursorDrag;
+		public CursorCircle cursorCircle;
 
 //		private Sprite currentCursor;
 		
