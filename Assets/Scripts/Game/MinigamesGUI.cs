@@ -13,6 +13,8 @@ namespace Game
 		public MinigamesGUIIconsActions brainIcon;
 		public MinigamesGUIIconsActions backIcon;
 		public MinigamesGUIIconsActions screenshotIcon;
+		public MinigamesGUIIconsActions replayHelpIcon;
+		public MinigamesGUIIconsActions hideHelpIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;

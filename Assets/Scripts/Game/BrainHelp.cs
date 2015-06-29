@@ -14,8 +14,8 @@ namespace Game
 /// \author: Milan Doležal
 /// </summary>
 	public class BrainHelp : MonoBehaviour{
-		public Texture helpTexture;
-		public bool helpExists;
+		//public Texture helpTexture;
+		//public bool helpExists;
 		public GameObject pictureInHands;
 		public GameObject confetti;
 
@@ -26,7 +26,7 @@ namespace Game
 		void Start()
 		{
 			animator = this.GetComponent<Animator> ();
-			helpExists = false;
+//			helpExists = false;
 			MGC.Instance.neuronHelp = this.gameObject;
 			MGC.Instance.ShowCustomCursor (true);
 
@@ -46,60 +46,60 @@ namespace Game
 			transform.localPosition = tmp;
 		}
 
-		void LateUpdate()
-		{
-			if(animator.GetBool("wave"))
-				animator.SetBool("wave", false);
-			if(animator.GetBool("smile"))
-				animator.SetBool("smile", false);
-		}
+//		void LateUpdate()
+//		{
+//			if(animator.GetBool("wave"))
+//				animator.SetBool("wave", false);
+//			if(animator.GetBool("smile"))
+//				animator.SetBool("smile", false);
+//		}
 
 		//Attach GUI texture to make this function working
-		public void ShowHelpBubble (bool initialHelp = false) {
-			
-			if(initialHelp)
-			{
-				if(MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
-				{
-					MinigameProperties thisMinigame = MGC.Instance.minigamesProperties.GetMinigame(Application.loadedLevelName);
-					Debug.Log ("Help shown in this minigame " + thisMinigame.stats.initialShowHelpCounter + " times.");
-					++thisMinigame.stats.initialShowHelpCounter;
-					if(thisMinigame.stats.initialShowHelpCounter < 3)
-					{
-						if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
-						{
-							helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
-							helpObject.guiTexture.texture = helpTexture;
-							//helpObject.transform.parent = this.transform;
-							//helpObject.layer = this.gameObject.layer;
-							helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
-						}
-						else
-						{
-							this.GetComponent<Animator>().SetBool("wave", true);
-						}
-					}
-				}
-			}
-			else
-			{
-				if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
-				{
-					helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
-					helpObject.guiTexture.texture = helpTexture;
-					//helpObject.transform.parent = this.transform;
-					//helpObject.layer = this.gameObject.layer;
-					helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
-					MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
-				}
-				else
-				{
-				//print ("here " + helpExists + ", '" + MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
-					//       + Application.loadedLevelName + ", ");
-					this.GetComponent<Animator>().SetBool("wave", true);
-				}
-			}
-		}
+//		public void ShowHelpBubble (bool initialHelp = false) {
+//			
+//			if(initialHelp)
+//			{
+//				if(MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+//				{
+//					MinigameProperties thisMinigame = MGC.Instance.minigamesProperties.GetMinigame(Application.loadedLevelName);
+//					Debug.Log ("Help shown in this minigame " + thisMinigame.stats.initialShowHelpCounter + " times.");
+//					++thisMinigame.stats.initialShowHelpCounter;
+//					if(thisMinigame.stats.initialShowHelpCounter < 3)
+//					{
+//						if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+//						{
+//							helpObject = (GameObject)Instantiate (Resources.Load ("Help"));
+//							helpObject.guiTexture.texture = helpTexture;
+//							//helpObject.transform.parent = this.transform;
+//							//helpObject.layer = this.gameObject.layer;
+//							helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
+//						}
+//						else
+//						{
+//							this.GetComponent<Animator>().SetBool("wave", true);
+//						}
+//					}
+//				}
+//			}
+//			else
+//			{
+//				if(helpTexture && !helpExists && MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName))
+//				{
+//					helpObject = (GameObject)Instantiate ((Resources.Load ("Help")));
+//					helpObject.guiTexture.texture = helpTexture;
+//					//helpObject.transform.parent = this.transform;
+//					//helpObject.layer = this.gameObject.layer;
+//					helpObject.GetComponent<BrainHelpSettings>().neuronHelp = this.gameObject;
+//					MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
+//				}
+//				else
+//				{
+//				//print ("here " + helpExists + ", '" + MGC.Instance.minigamesProperties.GetMinigamesWithHelp().Contains(Application.loadedLevelName) + "', "
+//					//       + Application.loadedLevelName + ", ");
+//					this.GetComponent<Animator>().SetBool("wave", true);
+//				}
+//			}
+//		}
 
 		public void LaunchConfetties ()
 		{
@@ -109,36 +109,36 @@ namespace Game
 			}
 		}
 
-		void OnMouseDown()
-		{
-			ShowHelpBubble ();
-		}
+//		void OnMouseDown()
+//		{
+//			ShowHelpBubble ();
+//		}
 
 		void OnLevelWasLoaded(int level)
 		{
-			helpExists = false;
+//			helpExists = false;
 			if(helpObject)
 			{
 				Destroy(helpObject);
 			}
 			
-			if(level == 2)
-			{
-				helpTexture = (Texture)(Resources.Load("Textures/HelpText"));
-				ShowHelpBubble(true);
-			}
-			else if(level > 2)
-			{
-				//if(!MGC.Instance.minigamesProperties.GetPlayed(Application.loadedLevelName))
-				//{
-					ShowHelpBubble(true);
-				//}
-			}
-			else
-			{
-				helpExists = false;
-				helpTexture = null;
-			}
+//			if(level == 2)
+//			{
+//				helpTexture = (Texture)(Resources.Load("Textures/HelpText"));
+//				ShowHelpBubble(true);
+//			}
+//			else if(level > 2)
+//			{
+//				//if(!MGC.Instance.minigamesProperties.GetPlayed(Application.loadedLevelName))
+//				//{
+//					ShowHelpBubble(true);
+//				//}
+//			}
+//			else
+//			{
+//				helpExists = false;
+//				helpTexture = null;
+//			}
 		}
 
 		public void ShowSmile(Texture smileTexture)

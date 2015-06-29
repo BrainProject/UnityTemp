@@ -14,7 +14,7 @@ namespace MinigameSelection
 		public string minigameName;
 		public float cameraDistance = 5;
 		public Texture minigameIcon;
-		public Texture minigameHelp;
+		public GameObject minigameHelp;
 		public bool kinectRequired = false;
 		public LevelManagerSelection levelManager;
 
@@ -121,7 +121,7 @@ namespace MinigameSelection
 
                     if (MGC.Instance.neuronHelp)
                     {
-                        MGC.Instance.neuronHelp.GetComponent<BrainHelp>().helpTexture = minigameHelp;
+                        MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab = minigameHelp;
                     }
 
                     MGC.Instance.currentBrainPart = this.transform.parent.GetComponent<BrainPart>().brainPart;

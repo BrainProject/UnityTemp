@@ -77,7 +77,7 @@ namespace Game
         /// <summary>
         /// mini-game help. So far, simple texture
         /// </summary>
-        public Texture helpTexture;
+        //public Texture helpTexture;
 
         /// <summary>
         /// Image symbolizing low difficulty
@@ -88,6 +88,11 @@ namespace Game
         /// Image symbolizing high difficulty
         /// </summary>
         public Sprite IconDifficultyHigh;
+
+		/// <summary>
+		/// The prefab with help.
+		/// </summary>
+		public GameObject helpPrefab;
 
 
         public MinigameStatistics stats;

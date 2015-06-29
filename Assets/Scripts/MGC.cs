@@ -462,13 +462,13 @@ public class MGC : Singleton<MGC>
         //}
     }
 
-//    public void ShowHelpBubble()
-//    {
-//        if (neuronHelp)
-//        {
-//            //neuronHelp.GetComponent<BrainHelp>().ShowHelpBubble();
-//        }
-//    }
+    public void ShowHelpBubble()
+    {
+        if (neuronHelp)
+        {
+			neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+        }
+    }
 
 
     void InactivityReaction()

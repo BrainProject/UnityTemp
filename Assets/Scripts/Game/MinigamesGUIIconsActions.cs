@@ -152,6 +152,22 @@ namespace Game
 					GetComponent<SavePictureGUI>().TakeScreenshot();
 					break;
 				}
+
+				case "ReplayHelp":
+				{
+					MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ReplayHelpAnimation();
+					this.hide();
+					MGC.Instance.minigamesGUI.hideHelpIcon.hide();
+					break;
+				}
+
+				case "HideHelp":
+				{
+					MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.HideHelpAnimation();
+					this.hide();
+					MGC.Instance.minigamesGUI.replayHelpIcon.hide();
+					break;
+				}
 			}   
         }
 

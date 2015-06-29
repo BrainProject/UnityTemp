@@ -108,10 +108,10 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: _HideHelp
-  m_Speed: -1
+  m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: bca40456873471549b97675411575c87, type: 2}
+  - {fileID: 7400000, guid: 67a0fbdf8cc4e6c469dd5215333a3cc1, type: 2}
   m_ParentStateMachine: {fileID: 110714502}
   m_Position: {x: 240, y: 84, z: 0}
   m_IKOnFeet: 0
@@ -133,16 +133,19 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
+      first: {fileID: 0}
+      second: []
+    data:
       first: {fileID: 110204542}
       second:
       - {fileID: 110152480}
     data:
-      first: {fileID: 110269320}
-      second: []
-    data:
       first: {fileID: 110265300}
       second:
       - {fileID: 110141244}
+    data:
+      first: {fileID: 110269320}
+      second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 240, y: 0, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

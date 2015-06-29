@@ -24,7 +24,7 @@ namespace Game
 		void Start () 
         {
 			blockBorderClone = (GameObject)Instantiate (blockBorder);
-			neuronHelp.GetComponent<Game.BrainHelp> ().helpExists = true;
+			//neuronHelp.GetComponent<BrainHelp> ().helpExists = true;
 			canControl = true;
 			originalColor = this.guiTexture.color;
 			targetColor = this.guiTexture.color;
@@ -44,7 +44,7 @@ namespace Game
 			if(Input.GetButtonDown("Horizontal") && canControl)
 			#endif
 			{
-				neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
+//				neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 				if((Input.GetAxis("Horizontal") < 0) || (Input.GetKeyDown (KeyCode.J) && Input.GetMouseButton(0)))
 					StartCoroutine (MoveAway(-1.0f));
 				if((Input.GetAxis("Horizontal") > 0) || (Input.GetKeyDown (KeyCode.L) && Input.GetMouseButton(0)))
@@ -57,7 +57,7 @@ namespace Game
 
 		void OnMouseUp()
 		{
-			neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
+//			neuronHelp.GetComponent<BrainHelp> ().helpExists = false;
 			canControl = false;
 			StopCoroutine ("FadeIn");
 			StartCoroutine ("FadeOut");
