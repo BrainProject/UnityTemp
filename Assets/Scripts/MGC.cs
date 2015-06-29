@@ -128,6 +128,9 @@ public class MGC : Singleton<MGC>
 #endif
         print("Master Game Controller Awake()...");
 
+		//Show custom cursor
+		ShowCustomCursor (true);
+
         //Initiate Logger
         logger = this.gameObject.AddComponent<Logger>();
         logger.Initialize(Application.persistentDataPath + "/Logs", "PlayerActions.txt");
@@ -148,7 +151,7 @@ public class MGC : Singleton<MGC>
         }
 
         //make GUI a child of MGC 
-		minigamesGUIObject.transform.parent = this.transform;
+		minigamesGUIObject.transform.SetParent(this.transform);
 
         minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
         if (minigamesGUI == null)
@@ -459,13 +462,13 @@ public class MGC : Singleton<MGC>
         //}
     }
 
-    public void ShowHelpBubble()
-    {
-        if (neuronHelp)
-        {
-            neuronHelp.GetComponent<BrainHelp>().ShowHelpBubble();
-        }
-    }
+//    public void ShowHelpBubble()
+//    {
+//        if (neuronHelp)
+//        {
+//            //neuronHelp.GetComponent<BrainHelp>().ShowHelpBubble();
+//        }
+//    }
 
 
     void InactivityReaction()
