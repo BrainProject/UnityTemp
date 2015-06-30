@@ -54,7 +54,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
                     //set position and scale
                     icon.transform.localPosition = new Vector3(x, 370, 0);
-                    //icon.transform.localScale = new Vector3(1, 1, 1);
+                    icon.transform.localScale = new Vector3(1, 1, 1);
 
                     //TODO better solution, independent on resolution
                 }
