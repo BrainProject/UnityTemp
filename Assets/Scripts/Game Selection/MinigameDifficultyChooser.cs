@@ -17,6 +17,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
     // Set up scene according to minigameProps
     void Start()
     {
+
         diffSlider = diffSliderGO.GetComponent<Slider>();
 
         Game.MinigameProperties props = MGC.Instance.getSelectedMinigameProperties();
@@ -30,11 +31,13 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
         else
         {
+			print("Setting difficulty choosing screen for mini-game: '" + props.readableName + "'");
+
             int maxDiff = props.MaxDifficulty;
             diffSlider.minValue = 0;
             diffSlider.maxValue = maxDiff;
             diffSlider.value = props.stats.DifficutlyLastPlayed;
-            print("Max diff value: " + maxDiff);
+			print("Mini-game offers " + (maxDiff+1)+ " difficulties." );
 
             int x;
             int shiftX = 2160 / maxDiff;
@@ -44,8 +47,6 @@ public class MinigameDifficultyChooser : MonoBehaviour
             {
                 if (props.stats.finishedCount[i] > 0)
                 {
-                    x = i * shiftX - 1050;
-
                     //instantiate
                     GameObject icon = (GameObject)Instantiate(Resources.Load("CheckedIcon") as GameObject);
 
@@ -53,8 +54,10 @@ public class MinigameDifficultyChooser : MonoBehaviour
                     icon.transform.SetParent(diffSliderGO.transform);
 
                     //set position and scale
+					x = i * shiftX - 1050;
                     icon.transform.localPosition = new Vector3(x, 370, 0);
                     icon.transform.localScale = new Vector3(1, 1, 1);
+
 
                     //TODO better solution, independent on resolution
                 }
