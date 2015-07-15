@@ -78,7 +78,7 @@ public class MGC : Singleton<MGC>
     internal SceneLoader sceneLoader;
     internal Minigames minigamesProperties;
     internal GameObject kinectManagerObject;
-    internal Kinect.KinectManager kinectManagerInstance;
+    internal KinectManager kinectManagerInstance;
     internal GameObject mouseCursor;
     internal GameObject neuronHelp;
 

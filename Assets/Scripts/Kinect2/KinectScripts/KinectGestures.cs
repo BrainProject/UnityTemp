@@ -519,7 +519,7 @@ namespace Kinect
 						Vector3 distVector = jointsPos[gestureData.joint] - gestureData.jointPos;
 						bool isInPose = distVector.magnitude < 0.05f;
 
-						MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress;
+						MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress + 0.1f;
 
 						Vector3 jointPos = jointsPos[gestureData.joint];
 						CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.ClickStayDuration);
