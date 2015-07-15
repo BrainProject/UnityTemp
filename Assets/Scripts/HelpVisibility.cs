@@ -7,13 +7,15 @@ public class HelpVisibility : MonoBehaviour {
 	public float helpDuration;
 	public Animator neuronAnimator;
 
-	private GameObject helpClone;
+	internal GameObject helpClone;
 
 	public void ShowHelpAnimation()
 	{
 		if(!helpClone)
 		{
-			if(MGC.Instance.getSelectedMinigameProperties () && MGC.Instance.getSelectedMinigameProperties ().helpPrefab)
+			if(MGC.Instance.getSelectedMinigameProperties () &&
+			   MGC.Instance.getSelectedMinigameProperties ().helpPrefab &&
+			   MGC.Instance.getSelectedMinigameProperties().mainScene == Application.loadedLevelName)
 			{
 				helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
 				helpDuration = MGC.Instance.getSelectedMinigameProperties().helpDuration;
@@ -28,19 +30,21 @@ public class HelpVisibility : MonoBehaviour {
 			else
 				neuronAnimator.SetTrigger ("wave");
 		}
+		else
+			neuronAnimator.SetTrigger ("wave");
 	}
 	
 	public void StartHelpAnimation()
 	{
 		helpClone.GetComponent<Animator> ().SetTrigger ("AnimateHelp");
-		StartCoroutine(ShowButtons());
+		StartCoroutine("ShowButtons");
 	}
 	
 	public void ReplayHelpAnimation()
 	{
 		helpClone.GetComponent<Animator> ().SetTrigger ("ReplayHelp");
 		helpClone.GetComponent<Animator> ().SetTrigger ("AnimateHelp");
-		StartCoroutine(ShowButtons());
+		StartCoroutine("ShowButtons");
 	}
 
 	public void HideHelpAnimation()
@@ -48,6 +52,11 @@ public class HelpVisibility : MonoBehaviour {
 		thisAnimator.SetTrigger ("HideHelp");
 		Destroy (helpClone, 1.5f);
 		helpClone = null;
+	}
+
+	public void StopShowingButtons()
+	{
+		StopCoroutine("ShowButtons");
 	}
 
 	private IEnumerator ShowButtons()

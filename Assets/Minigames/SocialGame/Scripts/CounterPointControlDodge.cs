@@ -7,8 +7,8 @@ namespace SocialGame
 		public SpriteRenderer render;
 		public bool activated;
 
-		public Sprite active;
-		public Sprite deactive;
+		public Sprite activeSprite;
+		public Sprite inactiveSprite;
 
 		public void AddThis(bool add)
 		{
@@ -18,14 +18,14 @@ namespace SocialGame
 				Color col = render.color;
 				if(add)
 				{
-					if(active)
-						render.sprite = active;
+					if(activeSprite)
+						render.sprite = activeSprite;
 					col.a = 1;
 				}
 				else
 				{
-					if(deactive)
-						render.sprite = deactive;
+					if(inactiveSprite)
+						render.sprite = inactiveSprite;
 					col.a = 0.3f;
 				}
 				render.color = col;
