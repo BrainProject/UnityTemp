@@ -66,6 +66,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			{
 				MGC.Instance.ShowCustomCursor (true);
 				MGC.Instance.kinectManagerInstance.Start();
+				MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
 			}
 		}
 
