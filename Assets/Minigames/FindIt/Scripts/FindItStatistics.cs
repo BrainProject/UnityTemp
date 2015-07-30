@@ -110,11 +110,11 @@ namespace FindIt
          */
         public static void Clear()
         {
-            FindItStatistics.turnsPassed = 0;
-            FindItStatistics.goodClicksLeft = 0;
-            FindItStatistics.goodClicksRight = 0;
-            FindItStatistics.wrongClicksLeft = 0;
-            FindItStatistics.wrongClicksRight = 0;
+            turnsPassed = 0;
+            goodClicksLeft = 0;
+            goodClicksRight = 0;
+            wrongClicksLeft = 0;
+            wrongClicksRight = 0;
             findTimesLeft.Clear();
             findTimesRight.Clear();
             gameStopwatch.Stop();

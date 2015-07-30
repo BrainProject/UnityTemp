@@ -200,16 +200,14 @@ namespace FindIt
         {
 			clona.SetActive(false);
 			gameWon = false;
-            Debug.Log("Load sprites");
+            FindItStatistics.Clear();
+            FindItStatistics.StartMeasuringTime();
             LoadResourcePack();
             SetUpSprites(numberPieces);
             UpdateCameraSize();
             newTargetImage();
-            FindItStatistics.Clear();
-			FindItStatistics.StartMeasuringTime();
+            
 			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
-
-			//MGC.Instance.SaveMinigamesPropertiesToFile ();
         }
 
         /**
@@ -223,20 +221,7 @@ namespace FindIt
                 FindItStatistics.StopMeasuringTime();
                 clona.SetActive(true);
 
-                // Cannot use MGC.Instance.FinishMinigame(). It would load FindItGame, which may cause crash,
-                // when different difficulty is selected and current resource pack does not contain enough pictures
-
-                /*GameObject Neuron = MGC.Instance.neuronHelp;
-                if (Neuron)
-                {
-                    Neuron.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-                }*/
-
 				MGC.Instance.WinMinigame();
-                //MGC.Instance.minigamesProperties.SetSuccessfullyPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
-                MGC.Instance.SaveMinigamesStatisticsToFile();
-
-                MGC.Instance.minigamesGUI.show(false, true, "FindIt");
             }
         }
 
@@ -248,14 +233,5 @@ namespace FindIt
             progressBar.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
             textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();            
         }
-
-        /**
-         * UnityEngine Update() function
-         */
-        /*void Update()
-        {
-            UpdateGreenBarAndText();
-            CheckEndGame();
-        }*/
     }
 }

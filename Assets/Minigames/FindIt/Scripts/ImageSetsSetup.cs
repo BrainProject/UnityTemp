@@ -234,7 +234,7 @@ namespace FindIt
                 WWW www = new WWW("file:///" + file);
                 g.renderer.material.mainTexture = www.texture;
 
-                ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
+                ChooseImageSet chis = g.GetComponent<ChooseImageSet>();
                 chis.custom = true;
                 chis.resourcePackName = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
                 //chis.name = customResPacks[(menuRows - 1 - i) * menuColumns + j - defResPacks.Count];
