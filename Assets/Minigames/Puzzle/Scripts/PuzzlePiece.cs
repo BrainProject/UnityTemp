@@ -87,10 +87,10 @@ namespace Puzzle
                     new Vector2((float)( (p1 * 5 + 1 )        ) / (float)(puzzle_width * 5), (float)(p2                    ) / (float)(puzzle_height))};
 
             Vector2[] alpha = { 
-                    new Vector2( 1f, 0),
-                    new Vector2( 0, 0),
-                    new Vector2(0, 1f),
-                    new Vector2(1f, 1f)};
+                    new Vector2( 0.99f, 0.01f),
+                    new Vector2( 0.01f, 0.01f),
+                    new Vector2(0.01f, 0.99f),
+                    new Vector2(0.99f, 0.99f)};
 
 
             int[] Triangles = new int[] { 0, 1, 2, 0, 2, 3 };
@@ -119,7 +119,8 @@ namespace Puzzle
             // 4 5 6
             // 7 8 9
 
-            m.SetTexture("_AlphaTex", Resources.Load<Texture>("TextureMasks/puzzle" +
+            //m.SetTexture("_AlphaTex", Resources.Load<Texture>("TextureMasks/puzzle" +
+            m.SetTexture("_AlphaTex", Resources.Load<Texture>("TextureMasks/tileScaled" +
                 (  (left == -1)  ? (top == -1 ? 1 : (bottom == -1 ? 7 : 4)) :
                    (right == -1) ? (top == -1 ? 3 : (bottom == -1 ? 9 : 6)) :
                    (top == -1) ? 2 : (bottom == -1 ? 8 : 5))   ));
