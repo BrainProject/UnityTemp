@@ -68,9 +68,9 @@ namespace Coloring
                         cameraAnimator.SetBool("mixing", true);
                         cameraAnimator.SetTrigger("animate");
 
-                        palleteAnimator.SetBool("visible", true);
+                        palleteAnimator.SetBool("visible", false);
                         palleteAnimator.SetBool("mixing", true);
-                        palleteAnimator.SetTrigger("animateLab");
+                        palleteAnimator.SetTrigger("animate");
 
                         thisLevelManager.painting = false;
                         thisLevelManager.mixing = true;

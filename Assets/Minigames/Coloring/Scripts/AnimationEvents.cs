@@ -27,5 +27,24 @@ namespace Coloring
 			paletteAnimator.SetBool("visible", true);
 			paletteAnimator.SetTrigger ("animate");
 		}
+
+        public void OnPalleteHidden()
+        {
+            if(paletteAnimator.GetBool("mixing"))
+            {
+                paletteAnimator.SetTrigger("animate");
+            }
+        }
+
+        public void OnPalleteMovedInLab()
+        {
+            paletteAnimator.SetBool("visible",true);
+            paletteAnimator.SetTrigger("animate");
+        }
+
+        public void SetAnimateTrigger()
+        {
+            paletteAnimator.SetTrigger("animate");
+        }
 	}
 }
