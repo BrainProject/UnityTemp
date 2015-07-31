@@ -16,13 +16,6 @@ namespace Puzzle
      */
     public class ChoosePictureSetup : MonoBehaviour
     {
-        // constants deremine the number of images needed, also defines a difficulty
-        const int BIG_SIZE = 44;
-        const int SMALL_SIZE = 20;
-
-        // one of BIG_SIZE or SMALL_SIZE. Number of images needed for current game
-        private int numberPieces;
-
         // custom resource packs path 
         private string customResPackPath;
         
@@ -131,7 +124,7 @@ namespace Puzzle
     {
         // defines borders in the scene
         /*const*/ float minx = -5.7f; // -6.5f;
-        /*const*/ float maxx = 5.7f; // 6.5f;
+        /*const*/ float maxx = 4.5f; // 5.7f; // 6.5f;
         const float miny = -2.75f;
         const float maxy = 2.75f;
 
@@ -154,12 +147,13 @@ namespace Puzzle
                 GameObject g = Instantiate(TilePrefab) as GameObject;
 
                 g.transform.localPosition = new Vector3(
-                     menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns - 1)) * j + minx,
-                     menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows - 1)) * i + miny,
+                     (menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns + 0.5f * (menuColumns + 1))) * (2 * j + 0.5f) + minx),
+                     (menuRows - 1 == 0 ? 0 : ((maxy - miny)    / (menuRows    + 0.5f * ( menuRows   + 1))) * (2 * i + 0.5f) + miny),
                      0.0f);
                 if (menuRows > 2)
                     g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+                //else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+                else g.transform.localScale = new Vector3(0.30f, 0.30f, 0.30f);
 
                 g.GetComponent<MeshRenderer>().material.mainTexture = defaultPics[(menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j)];
                 
@@ -184,12 +178,13 @@ namespace Puzzle
                 GameObject g = Instantiate(TilePrefab) as GameObject;
 
                 g.transform.localPosition = new Vector3(
-                    ((maxx - minx)/(menuColumns-1))*j + minx,
-                    ((maxy - miny)/(menuRows-1))*i + miny,
+                     (menuColumns - 1 == 0 ? 0 : ((maxx - minx) / (menuColumns + 0.5f * (menuColumns + 1))) * (2 * j + 0.5f) + minx),
+                     (menuRows - 1 == 0 ? 0 : ((maxy - miny) / (menuRows + 0.5f * (menuRows + 1))) * (2 * i + 0.5f) + miny),
                      0.0f);
                 if (menuRows > 2)
                     g.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+                //else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+                else g.transform.localScale = new Vector3(0.30f, 0.30f, 0.30f);
 
                 g.GetComponent<MeshRenderer>().material.mainTexture = www.texture;
                 
