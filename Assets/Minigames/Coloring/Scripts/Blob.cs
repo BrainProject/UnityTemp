@@ -89,7 +89,6 @@ namespace Coloring
         public Blob blob;
 
         private Vector3 originalObjPosition = Vector3.zero;
-        private Vector3 mouseDownPosition = Vector3.zero;
 
         private bool moving = false;
 

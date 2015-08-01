@@ -167,18 +167,6 @@ namespace Coloring
                 CreateBasic();
                 saveBlobs();
             }
-
-            float xMax = blobsList[blobsList.Count - 1].blobGameObject.transform.localPosition.x;
-            float xMin = blobsList[0].blobGameObject.transform.position.x;
-
-            if (xMin < X_MIN_COORD)
-            {
-                Debug.Log("Shifting blobs");
-                BlobsHolder.transform.position =
-                    new Vector3(X_MIN_COORD,
-                                BlobsHolder.transform.localPosition.y,
-                                BlobsHolder.transform.localPosition.z);
-            }
         }
 
         public void RemoveBlob(ref Blob blob)
@@ -219,8 +207,6 @@ namespace Coloring
 
         void OnMouseOver()
         {
-            Vector3 firstBlobPosition = blobsList[0].blobGameObject.transform.localPosition;
-            Vector3 lastBlobPosition = blobsList[blobsList.Count - 1].blobGameObject.transform.localPosition;
             Vector3 pos = Input.mousePosition;
             if (pos.x < Screen.width * 0.04 
                 && BlobsHolder.transform.localPosition.x < 0.422f)
@@ -246,7 +232,6 @@ namespace Coloring
         {
             if(colorPreview)
             {
-                Debug.LogError(colorPreview.renderer.material.color);
                 AddColor(colorPreview.renderer.material.color);
             }
         }

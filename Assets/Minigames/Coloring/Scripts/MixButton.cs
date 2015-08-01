@@ -37,6 +37,7 @@ namespace Coloring
 
             levelManager.mixing = false;
             levelManager.painting = true;
+            levelManager.brushColor = colorPreview.renderer.material.color;
 
             GameObject pallete = GameObject.Find("Pallete");
             Animator anim = pallete.GetComponent<Animator>();
@@ -49,10 +50,5 @@ namespace Coloring
             anim.SetBool("mixing", false);
             anim.SetTrigger("animate");
         }
-
-        //void OnParticleCollision(GameObject other)
-        //{
-        //    Debug.Log(other.ToString());
-        //}
     }
 }
