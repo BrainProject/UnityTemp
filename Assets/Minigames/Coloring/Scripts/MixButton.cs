@@ -49,6 +49,8 @@ namespace Coloring
             anim = cam.GetComponent<Animator>();
             anim.SetBool("mixing", false);
             anim.SetTrigger("animate");
+
+            MGC.Instance.ShowCustomCursor(false);
         }
     }
 }

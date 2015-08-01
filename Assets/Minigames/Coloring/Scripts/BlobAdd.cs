@@ -74,6 +74,8 @@ namespace Coloring
 
                         thisLevelManager.painting = false;
                         thisLevelManager.mixing = true;
+
+                        MGC.Instance.ShowCustomCursor(true);
                     }
                 }
 

@@ -54,7 +54,7 @@ namespace Coloring
 
 				if(painting && hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(true);
-				if(painting && !hiddenGUIwhilePainting)
+				if((painting && !hiddenGUIwhilePainting))
 					MGC.Instance.ShowCustomCursor(false);
 			}
 		}
