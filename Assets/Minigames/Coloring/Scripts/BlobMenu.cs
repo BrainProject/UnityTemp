@@ -200,11 +200,9 @@ namespace Coloring
 
         public void AddColor(Color color)
         {
-            Debug.LogError("AddColor");
-            Debug.LogError(color);
+            GameObject gameObject = GameObject.Instantiate(BlobPrefab) as GameObject;
 
-            blobsList.Add(new Blob(new GameObject(), color, null, null, null));
-            Debug.LogError(blobsList[blobsList.Count-1].blobGameObject.renderer.material.color);
+            blobsList.Add(new Blob(gameObject, color, null, null, null));
             saveBlobs();
             destroyBlobs();
             Reset();
@@ -221,20 +219,31 @@ namespace Coloring
 
         void OnMouseOver()
         {
+            Vector3 firstBlobPosition = blobsList[0].blobGameObject.transform.localPosition;
+            Vector3 lastBlobPosition = blobsList[blobsList.Count - 1].blobGameObject.transform.localPosition;
             Vector3 pos = Input.mousePosition;
-            if(pos.x < Screen.width * 0.04)
+            if (pos.x < Screen.width * 0.04 
+                && BlobsHolder.transform.localPosition.x < 0.422f)
             {
-                Debug.Log("Move right");
+                BlobsHolder.transform.localPosition =
+                    new Vector3(BlobsHolder.transform.localPosition.x + 0.005f,
+                        BlobsHolder.transform.localPosition.y,
+                        BlobsHolder.transform.localPosition.z);
+                Debug.Log("Move right, camera moves left");
             }
-            else if(pos.x > Screen.width * 0.96)
+            else if (pos.x > Screen.width * 0.96 
+                     && BlobsHolder.transform.localPosition.x > 0.422f - System.Math.Max(0, blobsList.Count-9) * 0.1f)
             {
-                Debug.Log("Move left");
+                BlobsHolder.transform.localPosition =
+                    new Vector3(BlobsHolder.transform.localPosition.x - 0.005f,
+                        BlobsHolder.transform.localPosition.y,
+                        BlobsHolder.transform.localPosition.z);
+                Debug.Log("Move left, camera moves right");
             }
         }
 
         public void AddMixedColor()
         {
-            Debug.LogError("AddMixedColor");
             if(colorPreview)
             {
                 Debug.LogError(colorPreview.renderer.material.color);
