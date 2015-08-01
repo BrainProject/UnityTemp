@@ -10,7 +10,7 @@ using System;
 
 namespace Coloring
 {
-    public class Blob 
+    public class Blob
     {
         public GameObject blobGameObject;
 

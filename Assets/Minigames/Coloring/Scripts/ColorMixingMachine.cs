@@ -23,6 +23,7 @@ namespace Coloring
         public GameObject blueBar;
         public GameObject blueDisplayText;
 
+        public GameObject colorPreview;
 
         // in global
         const float MIN_Y = 0.93f;//0.83f;//-0.14f;
@@ -96,6 +97,9 @@ namespace Coloring
             blueBar.transform.localPosition = new Vector3(blueBar.transform.localPosition.x,
                                                          (MAX_Y_BAR - MIN_Y_BAR) * color.b + MIN_Y_BAR,
                                                          BAR_Z);
+
+
+            colorPreview.renderer.material.color = color;
         }
 
     }

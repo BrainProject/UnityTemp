@@ -44,6 +44,8 @@ namespace Coloring
         public GameObject brush;
 
         public LevelManagerColoring levelManagerController;
+
+        public GameObject colorPreview;
         
         void Start()
         {
@@ -101,13 +103,6 @@ namespace Coloring
             JSONArray colours = new JSONArray();
             for(int i=1;i<blobsList.Count;i++)
             {
-               /* BlobAdd form = blobsList[i] as BlobAdd;
-                if (form != null)
-                {
-                    Debug.Log("BlobAdd found.");
-                    continue; // blobadd
-                }*/
-
                 JSONClass colour = new JSONClass();
                 colour.Add("R", new JSONData(blobsList[i].blobGameObject.renderer.material.color.r));
                 colour.Add("G", new JSONData(blobsList[i].blobGameObject.renderer.material.color.g));
@@ -146,7 +141,7 @@ namespace Coloring
                         brush, 
                         levelManagerController, 
                         this));
-                    //Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
+                    Debug.Log("Loaded colour: " + blobsList[blobsList.Count - 1].ToString());
                 }
                 return true;
             }
@@ -196,22 +191,6 @@ namespace Coloring
                     break;
                 }
             }
-                /*foreach (Blob a in blobsList)
-                {
-                    Debug.LogError(a.blobGameObject.renderer.material.color.ToString());
-                }
-            Debug.LogWarning("Removing blob " + blob.blobGameObject.renderer.material.color.ToString());
-
-
-
-            bool b = blobsList.Remove(blob);
-
-            Debug.LogWarning("Return value is " + (b ? "true": "false"));
-
-            foreach (Blob a in blobsList)
-            {
-                Debug.LogError(a.blobGameObject.renderer.material.color.ToString());
-            }*/
 
             Destroy(blob.blobGameObject);
             saveBlobs();
@@ -221,9 +200,11 @@ namespace Coloring
 
         public void AddColor(Color color)
         {
-            GameObject gameObject = GameObject.Instantiate(BlobPrefab) as GameObject;
+            Debug.LogError("AddColor");
+            Debug.LogError(color);
 
-            blobsList.Add(new Blob(gameObject,color,null, null,null));
+            blobsList.Add(new Blob(new GameObject(), color, null, null, null));
+            Debug.LogError(blobsList[blobsList.Count-1].blobGameObject.renderer.material.color);
             saveBlobs();
             destroyBlobs();
             Reset();
@@ -248,6 +229,16 @@ namespace Coloring
             else if(pos.x > Screen.width * 0.96)
             {
                 Debug.Log("Move left");
+            }
+        }
+
+        public void AddMixedColor()
+        {
+            Debug.LogError("AddMixedColor");
+            if(colorPreview)
+            {
+                Debug.LogError(colorPreview.renderer.material.color);
+                AddColor(colorPreview.renderer.material.color);
             }
         }
     }

@@ -230,9 +230,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 1474961233}
+  colorPreview: {fileID: 554154196}
   redDisplayNumber: {fileID: 791234188}
   greenDisplayNumber: {fileID: 1290220811}
   blueDisplayNumber: {fileID: 546309900}
+  levelManager: {fileID: 1371562514}
 --- !u!1 &32237274
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &60102628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1994,6 +1996,7 @@ MonoBehaviour:
   BlobsHolder: {fileID: 1171028346}
   brush: {fileID: 598424730}
   levelManagerController: {fileID: 1371562514}
+  colorPreview: {fileID: 554154196}
 --- !u!114 &272874704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,6 +2583,8 @@ MonoBehaviour:
   handle: {fileID: 1651914816}
   displayText: {fileID: 546309900}
   stripe: {fileID: 2097463920}
+  colorPreview: {fileID: 554154196}
+  type: 2
   levelManager: {fileID: 1371562514}
 --- !u!1 &380907741
 GameObject:
@@ -3609,6 +3614,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1976640416}
   m_RootOrder: 0
+--- !u!1 &554154196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 554154197}
+  - 65: {fileID: 554154200}
+  - 23: {fileID: 554154199}
+  - 33: {fileID: 554154198}
+  m_Layer: 0
+  m_Name: ColorPreview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &554154197
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554154196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -.0199999996}
+  m_LocalScale: {x: .350000024, y: .200000018, z: .0700000003}
+  m_Children: []
+  m_Father: {fileID: 1470632069}
+  m_RootOrder: 17
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: .750999987, y: .460000008}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
+--- !u!33 &554154198
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554154196}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &554154199
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554154196}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 6a3351ffe9d8d7f4ab7380393a809c89, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!65 &554154200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554154196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &564188388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5311,6 +5390,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: .0199999996
       objectReference: {fileID: 0}
+    - target: {fileID: 109700, guid: d380e6d448e1a864995fb3d500d125e3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6509700, guid: d380e6d448e1a864995fb3d500d125e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d380e6d448e1a864995fb3d500d125e3, type: 2}
@@ -6786,6 +6869,8 @@ MonoBehaviour:
   handle: {fileID: 1798507994}
   displayText: {fileID: 791234188}
   stripe: {fileID: 1717417648}
+  colorPreview: {fileID: 554154196}
+  type: 0
   levelManager: {fileID: 1371562514}
 --- !u!1 &1177610792
 GameObject:
@@ -8843,6 +8928,7 @@ Transform:
   - {fileID: 1839977667}
   - {fileID: 60102632}
   - {fileID: 1474961235}
+  - {fileID: 554154197}
   m_Father: {fileID: 0}
   m_RootOrder: 10
 --- !u!114 &1470632070
@@ -8865,6 +8951,7 @@ MonoBehaviour:
   blueHandle: {fileID: 1651914816}
   blueBar: {fileID: 2097463920}
   blueDisplayText: {fileID: 546309900}
+  colorPreview: {fileID: 554154196}
 --- !u!1 &1474961231
 GameObject:
   m_ObjectHideFlags: 0
@@ -8920,7 +9007,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1474961231}
-  lengthInSec: 1.5
+  lengthInSec: 5
   startDelay: 0
   speed: 1
   randomSeed: 0
@@ -8931,7 +9018,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8964,16 +9051,11 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: .00999999978
+      scalar: .0299999993
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        - time: 1
           value: 1
           inSlope: 0
           outSlope: 0
@@ -9156,8 +9238,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: .00999999978
-    inheritVelocity: .00999999978
+    gravityModifier: .0350000001
+    inheritVelocity: 1
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
@@ -9176,7 +9258,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 60
+      scalar: 200
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9255,7 +9337,7 @@ ParticleSystem:
   RotationModule:
     enabled: 0
     curve:
-      scalar: .785398185
+      scalar: .785398126
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9973,7 +10055,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1474961231}
   m_LocalRotation: {x: .710024893, y: 0, z: 0, w: .704176605}
-  m_LocalPosition: {x: .759000063, y: -.0839999914, z: -.143000007}
+  m_LocalPosition: {x: .759000003, y: -.165999994, z: -.150000006}
   m_LocalScale: {x: .100000001, y: .100000009, z: .200000018}
   m_Children: []
   m_Father: {fileID: 1470632069}
@@ -13041,6 +13123,8 @@ MonoBehaviour:
   handle: {fileID: 1559639759}
   displayText: {fileID: 1290220811}
   stripe: {fileID: 1509197132}
+  colorPreview: {fileID: 554154196}
+  type: 1
   levelManager: {fileID: 1371562514}
 --- !u!1 &1880645570
 GameObject:

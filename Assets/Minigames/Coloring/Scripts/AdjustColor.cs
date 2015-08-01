@@ -14,6 +14,12 @@ namespace Coloring
         public GameObject displayText;
         public GameObject stripe;
 
+        public GameObject colorPreview;
+        public enum ColorPart {
+	        red, green, blue};
+
+        public ColorPart type;
+
         // in global
         const float MIN_Y = 0.93f;//0.83f;//-0.14f;
         const float MAX_Y = 1.15f;//1.05f;// 0.1f;
@@ -70,8 +76,27 @@ namespace Coloring
 
                 handle.transform.rotation = Quaternion.AngleAxis((MAX_ROT - MIN_ROT) * percentage + MIN_ROT, new Vector3(1, 0, 0));
 
-
                 displayText.GetComponent<TextMesh>().text = Math.Round(255 * percentage, 0).ToString();
+
+                switch(type)
+                {
+                    case ColorPart.red:
+                        colorPreview.renderer.material.color = new Color(percentage,
+                                colorPreview.renderer.material.color.g,
+                                colorPreview.renderer.material.color.b);
+                        break;
+                    case ColorPart.blue:
+                        colorPreview.renderer.material.color = new Color(colorPreview.renderer.material.color.r,
+                                colorPreview.renderer.material.color.g,
+                                percentage);
+                        break;
+                    case ColorPart.green:
+                        colorPreview.renderer.material.color = new Color(colorPreview.renderer.material.color.r,
+                                percentage,
+                                colorPreview.renderer.material.color.b);
+                        break;
+                }
+
 
                 stripe.transform.localScale = new Vector3(stripe.transform.localScale.x,
                                                           (MAX_Y_BAR - MIN_Y_BAR) / 2.0f * percentage,
