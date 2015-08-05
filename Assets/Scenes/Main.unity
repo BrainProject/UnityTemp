@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &10238949
 GameObject:
@@ -820,7 +821,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 6.5
-  m_Depth: 0
+  m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 131072
@@ -1756,7 +1757,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294936575
+    m_Bits: 4294805503
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -2890,6 +2891,10 @@ Prefab:
     - target: {fileID: 400074, guid: fac94cbf44903f24e97807dc7b53f26a, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010216, guid: fac94cbf44903f24e97807dc7b53f26a, type: 2}
+      propertyPath: m_Depth
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fac94cbf44903f24e97807dc7b53f26a, type: 2}
