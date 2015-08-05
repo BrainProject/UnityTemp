@@ -139,6 +139,9 @@ namespace Puzzle
             maxx -= 2;
         }
 
+        float offX = (maxx - minx) / menuColumns / 2.0f;
+        float offY = (maxy - miny) / menuRows / 2.0f;
+
         for (i = menuRows - 1; i >= 0 && (menuRows - 2 - i) * menuColumns + (menuColumns - 1 - j) < defaultPics.Length; i--)
         {
             for (j = menuColumns - 1; j >= 0 && (menuRows - 1 - i) * menuColumns + (menuColumns - 1 - j) < defaultPics.Length; j--)
