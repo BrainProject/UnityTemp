@@ -8,7 +8,6 @@ namespace Coloring
 	{
 		public Texture brush;
 		public BackGUI backGUI;
-		//public GameObject savePictureGUI;
 		public SetColor brushColor;
 
 		internal bool painting = false;
@@ -25,10 +24,6 @@ namespace Coloring
 		internal Color neuronOriginalColor;
 #endif
 
-//		void Awake()
-//		{
-//			MGC.Instance.ShowCustomCursor (true);
-//		}
 
 		void Start()
 		{
@@ -64,14 +59,6 @@ namespace Coloring
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-//			print (isVisible);
-//			backGUI.SetActive (true);
-//			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
-//			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
-
-//			savePictureGUI.SetActive (true);
-//			savePictureGUI.GetComponent<Game.SavePictureGUI> ().IconVisible (isVisible);
-//			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<Game.SavePictureGUI> ().normal;
 			MGC.Instance.minigamesGUI.screenshotIcon.show();
 		}
 
@@ -79,8 +66,11 @@ namespace Coloring
 #if UNITY_STANDALONE
 		void OnGUI()
 		{
-			if(painting && !hiddenGUIwhilePainting)
-				GUI.DrawTexture (new Rect (Input.mousePosition.x - x*2, Screen.height - Input.mousePosition.y - y*2, w*2, h*2), brush);
+            // drawing a brush cursor
+            if (painting && !hiddenGUIwhilePainting)
+            {
+                GUI.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brush);
+            }
 		}
 #endif
 	}
