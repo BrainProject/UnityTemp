@@ -69,7 +69,7 @@ namespace Kinect
 		private GameObject offsetNode;
 		
 		// Variable to hold all them bones. It will initialize the same size as initialRotations.
-		private Transform[] bones;
+		protected Transform[] bones;
 		
 		// Rotations of the bones when the Kinect tracking starts.
 	    private Quaternion[] initialRotations;
@@ -91,7 +91,7 @@ namespace Kinect
 		internal Int64 LastUserID;
 		
 		// private instance of the KinectManager
-		private KinectManager kinectManager;
+		protected KinectManager kinectManager;
 
 
 		// transform caching gives performance boost since Unity calls GetComponent<Transform>() each time you call transform 
@@ -139,7 +139,7 @@ namespace Kinect
 		}
 		
 		// Update the avatar each frame.
-	    public void UpdateAvatar(Int64 UserID)
+	    public virtual void UpdateAvatar(Int64 UserID)
 	    {	
 			LastUserID = UserID;
 
@@ -288,7 +288,7 @@ namespace Kinect
 		}
 		
 		// Apply the rotations tracked by kinect to the joints.
-		void TransformBone(Int64 userId, KinectInterop.JointType joint, int boneIndex, bool flip)
+		protected void TransformBone(Int64 userId, KinectInterop.JointType joint, int boneIndex, bool flip)
 	    {
 			Transform boneTransform = bones[boneIndex];
 			if(boneTransform == null || kinectManager == null)
@@ -313,7 +313,7 @@ namespace Kinect
 		}
 		
 		// Apply the rotations tracked by kinect to a special joint
-		void TransformSpecialBone(Int64 userId, KinectInterop.JointType joint, KinectInterop.JointType jointParent, int boneIndex, Vector3 baseDir, bool flip)
+		protected void TransformSpecialBone(Int64 userId, KinectInterop.JointType joint, KinectInterop.JointType jointParent, int boneIndex, Vector3 baseDir, bool flip)
 		{
 			Transform boneTransform = bones[boneIndex];
 			if(boneTransform == null || kinectManager == null)
@@ -349,9 +349,9 @@ namespace Kinect
 			}
 			
 		}
-		
+
 		// Moves the avatar in 3D space - pulls the tracked position of the user and applies it to root.
-		void MoveAvatar(Int64 UserID)
+		protected void MoveAvatar(Int64 UserID)
 		{
 			if(!kinectManager || !kinectManager.IsJointTracked(UserID, (int)KinectInterop.JointType.SpineBase))
 				return;
@@ -546,7 +546,7 @@ namespace Kinect
 			{26, HumanBodyBones.RightShoulder},
 		};
 		
-		private readonly Dictionary<int, KinectInterop.JointType> boneIndex2JointMap = new Dictionary<int, KinectInterop.JointType>
+		protected readonly Dictionary<int, KinectInterop.JointType> boneIndex2JointMap = new Dictionary<int, KinectInterop.JointType>
 		{
 			{0, KinectInterop.JointType.SpineBase},
 			{1, KinectInterop.JointType.SpineMid},
@@ -581,13 +581,13 @@ namespace Kinect
 			{24, KinectInterop.JointType.FootRight},
 		};
 		
-		private readonly Dictionary<int, List<KinectInterop.JointType>> specIndex2JointMap = new Dictionary<int, List<KinectInterop.JointType>>
+		protected readonly Dictionary<int, List<KinectInterop.JointType>> specIndex2JointMap = new Dictionary<int, List<KinectInterop.JointType>>
 		{
 			{25, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderLeft, KinectInterop.JointType.SpineShoulder} },
 			{26, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderRight, KinectInterop.JointType.SpineShoulder} },
 		};
 		
-		private readonly Dictionary<int, KinectInterop.JointType> boneIndex2MirrorJointMap = new Dictionary<int, KinectInterop.JointType>
+		protected readonly Dictionary<int, KinectInterop.JointType> boneIndex2MirrorJointMap = new Dictionary<int, KinectInterop.JointType>
 		{
 			{0, KinectInterop.JointType.SpineBase},
 			{1, KinectInterop.JointType.SpineMid},
@@ -622,7 +622,7 @@ namespace Kinect
 			{24, KinectInterop.JointType.FootLeft},
 		};
 		
-		private readonly Dictionary<int, List<KinectInterop.JointType>> specIndex2MirrorJointMap = new Dictionary<int, List<KinectInterop.JointType>>
+		protected readonly Dictionary<int, List<KinectInterop.JointType>> specIndex2MirrorJointMap = new Dictionary<int, List<KinectInterop.JointType>>
 		{
 			{25, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderRight, KinectInterop.JointType.SpineShoulder} },
 			{26, new List<KinectInterop.JointType> {KinectInterop.JointType.ShoulderLeft, KinectInterop.JointType.SpineShoulder} },

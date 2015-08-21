@@ -10,6 +10,9 @@ namespace Kinect
 	public class KinectManager : MonoBehaviour 
 	{
 #if UNITY_STANDALONE
+		//Is default kinect manager
+		public bool isDefaultKM = true;
+
 		// How high off the ground is the sensor (in meters).
 		public float sensorHeight = 1.0f;
 

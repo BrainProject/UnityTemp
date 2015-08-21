@@ -13,18 +13,18 @@ namespace SocialGame{
 		public static void win()
 		{
 			MGC.Instance.WinMinigame ();
-			finish ();
+			//finish ();
 		}
 
 		/// <summary>
 		/// Finish this level.
 		/// </summary>
-		public static void finish()
+		/*public static void finish()
 		{
 			HelpListener.Instance.StopAll(true);
 			KinectManagerSwitcher.deactivateThisLevelKManager();
 			//Debug.LogError("finito");
-		}
+		}*/
 		#endif
 	}
 }

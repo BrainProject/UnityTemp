@@ -26,7 +26,12 @@ public class HelpVisibility : MonoBehaviour {
 			}
 			
 			if (helpClone)
+			{
+				// For the future selves - you can send this event even though you already took control for GUI by showing the hidden GUI...
+				MGC.Instance.TakeControlForGUIAction(true);
+				MGC.Instance.minigamesGUI.hide();
 				thisAnimator.SetTrigger ("ShowHelp");
+			}
 			else
 				neuronAnimator.SetTrigger ("wave");
 		}
@@ -52,6 +57,7 @@ public class HelpVisibility : MonoBehaviour {
 		thisAnimator.SetTrigger ("HideHelp");
 		Destroy (helpClone, 1.5f);
 		helpClone = null;
+		MGC.Instance.TakeControlForGUIAction (false);
 	}
 
 	public void StopShowingButtons()

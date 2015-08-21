@@ -4,46 +4,55 @@ using System.Collections;
 namespace SocialGame{
 	public class HelpListener : MonoBehaviour {
 		#if UNITY_STANDALONE
-		public static HelpListener Instance;
-		public  bool activated = false;
+		//public static HelpListener Instance;
+		public  bool activatedGUI = false;
 		public  GameObject[] ObjToPause;
 
 
 		void Awake()
 		{
-			if (Instance) 
+			/*if (Instance) 
 			{
 				Destroy(this);
 			}
 			else
 			{
 				Instance = this;
+			}*/
+		}
+
+		void OnEnable()
+		{
+			MGC.TakeControlForGUIEvent += GiveControl;
+		}
+		
+		void OnDisable()
+		{
+			MGC.TakeControlForGUIEvent -= GiveControl;
+			/*if(!activatedGUI)
+			{
+				KinectManagerSwitcher.deactivateThisLevelKManager();
+			}*/
+		}
+
+		void GiveControl(bool taken)
+		{
+			Debug.Log ("Control taken: " + taken);
+			activatedGUI = taken; 
+			if(taken)
+			{
+				KinectManagerSwitcher.deactivateThisLevelKManager();
 			}
+			else
+			{
+				KinectManagerSwitcher.activateThisLevelKManager();
+			}
+			StopAll(taken);
 		}
 
 		void Start()
 		{
 			StartCoroutine (SetThisMinigamePlayed ());
-		}
-
-		/// <summary>
-		/// Wait to acvtivate secret menu
-		/// </summary>
-		void Update () {
-		if(Input.GetKeyDown(KeyCode.I))
-			{
-				if(!activated)
-				{
-					KinectManagerSwitcher.deactivateThisLevelKManager();
-				}
-				else
-				{
-					KinectManagerSwitcher.activateThisLevelKManager();
-				}
-				StopAll(!activated);
-				activated = !activated;
-
-			}
 		}
 
 		/// <summary>

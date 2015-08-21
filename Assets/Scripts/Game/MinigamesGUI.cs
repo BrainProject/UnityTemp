@@ -15,6 +15,7 @@ namespace Game
 		public MinigamesGUIIconsActions screenshotIcon;
 		public MinigamesGUIIconsActions replayHelpIcon;
 		public MinigamesGUIIconsActions hideHelpIcon;
+		public MinigamesGUIIconsActions showHelpIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
@@ -49,6 +50,14 @@ namespace Game
 			restartIcon.show ();
 			if(!gsiStandalone)
 				brainIcon.show ();
+
+			if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
+			{
+				if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+					showHelpIcon.show ();
+			}
+
+			MGC.Instance.TakeControlForGUIAction(true);
         }
 
         public void hide()
@@ -59,6 +68,16 @@ namespace Game
 			if(!gsiStandalone)
 				brainIcon.hide ();
 			guiDetection.guiIsHidden = true;
+			showHelpIcon.hide ();
+
+			
+			if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
+			{
+				if(!MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+				{
+					MGC.Instance.TakeControlForGUIAction(false);
+				}
+			}
         }
 
 		void OnLevelWasLoaded (int level)

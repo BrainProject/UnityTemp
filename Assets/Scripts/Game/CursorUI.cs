@@ -27,14 +27,24 @@ namespace Game
 		{
 			GetComponent<RectTransform> ().position = Input.mousePosition;
 
-			if(Input.GetMouseButtonDown(0))
-				GetComponent<Image>().sprite = cursorDrag;
+			if (Input.GetMouseButtonDown (0))
+				CursorToDrag ();
 			
-			if(Input.GetMouseButtonUp(0))
-				GetComponent<Image>().sprite = cursorNormal;
+			if (Input.GetMouseButtonUp (0))
+				CursorToNormal ();
 		}
 		
 		void OnLevelWasLoaded(int level)
+		{
+			GetComponent<Image>().sprite = cursorNormal;
+		}
+
+		public void CursorToDrag()
+		{
+			GetComponent<Image>().sprite = cursorDrag;
+		}
+
+		public void CursorToNormal()
 		{
 			GetComponent<Image>().sprite = cursorNormal;
 		}

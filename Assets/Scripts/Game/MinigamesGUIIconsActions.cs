@@ -174,6 +174,13 @@ namespace Game
 					MGC.Instance.minigamesGUI.replayHelpIcon.hide();
 					break;
 				}
+
+				case "ShowHelp":
+				{
+					MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+					MGC.Instance.minigamesGUI.hide();
+					break;
+				}
 			}   
         }
 

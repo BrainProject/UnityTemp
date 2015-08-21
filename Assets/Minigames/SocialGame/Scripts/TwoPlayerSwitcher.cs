@@ -81,16 +81,6 @@ namespace SocialGame{
 			{
 				player2.enabled = false;
 			}
-			if(animPlayer2)
-				animPlayer2.SetBool("TwoPlayers",false);
-			if(LevelManager.gameSelected == 0 && button)
-			{
-				button.deactivate();
-			}
-			if(LevelManager.gameSelected == 2)
-			{
-				LevelManager.finish();
-			}
 		}
 		#endif
 	}

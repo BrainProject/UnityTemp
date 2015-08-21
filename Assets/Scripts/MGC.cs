@@ -86,6 +86,7 @@ public class MGC : Singleton<MGC>
     internal MinigamesGUI minigamesGUI;
     internal bool fromMain;
     internal bool fromSelection;
+	internal bool isControlTakenForGUI;
 
     // name of MiniGame scene to be loaded
     internal string selectedMiniGameName;
@@ -176,6 +177,9 @@ public class MGC : Singleton<MGC>
 		//create UI event system
 		GameObject eventSystem = (GameObject)Instantiate (Resources.Load ("EventSystem") as GameObject);
 		eventSystem.transform.parent = this.transform;
+
+		
+		isControlTakenForGUI = false;
     }
 
     void Start()
@@ -333,6 +337,25 @@ public class MGC : Singleton<MGC>
 //        {
 //            gameObject.guiTexture.enabled = false;
 //        }
+
+		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
+		{
+			if(!kinectManagerObject.activeSelf)
+			{
+				kinectManagerObject.SetActive(true);
+				kinectManagerInstance.ClearKinectUsers();
+				kinectManagerInstance.Start();
+				kinectManagerInstance.avatarControllers.Clear();
+			}
+			
+			
+			if(!mouseCursor.activeSelf)
+			{
+				ShowCustomCursor(true);
+			}
+
+			isControlTakenForGUI = false;
+		}
     }
 
     /// <summary>
@@ -415,6 +438,7 @@ public class MGC : Singleton<MGC>
             else
             {
                 mouseCursor.SetActive(true);
+				mouseCursor.GetComponent<CursorReference>().cursorReference.CursorToNormal();
             }
         }
         else
@@ -493,6 +517,29 @@ public class MGC : Singleton<MGC>
 			neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
         }
     }
+
+	public delegate void TakeControlForGUI(bool isShown);
+
+	public static event TakeControlForGUI TakeControlForGUIEvent;
+
+	public void TakeControlForGUIAction(bool isShown)
+	{
+		if(!isShown)
+		{
+			isControlTakenForGUI = false;
+			if(TakeControlForGUIEvent != null)
+				TakeControlForGUIEvent(isShown);
+		}
+		else
+		{
+			if(!isControlTakenForGUI)
+			{
+				isControlTakenForGUI = true;
+				if(TakeControlForGUIEvent != null)
+					TakeControlForGUIEvent(isShown);
+			}
+		}
+	}
 
 
     void InactivityReaction()
