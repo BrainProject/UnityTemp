@@ -1088,8 +1088,8 @@ Transform:
   m_PrefabInternal: {fileID: 1595804179}
   m_GameObject: {fileID: 565554036}
   m_LocalRotation: {x: .65328151, y: .270598084, z: -.270598084, w: .65328151}
-  m_LocalPosition: {x: 1, y: .900000274, z: -2.30000019}
-  m_LocalScale: {x: 1, y: 1, z: .5}
+  m_LocalPosition: {x: 1, y: .900000334, z: -2.30000019}
+  m_LocalScale: {x: .99999994, y: .99999994, z: .5}
   m_Children: []
   m_Father: {fileID: 1909443271}
   m_RootOrder: 2
@@ -1283,6 +1283,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2106612171}
   - {fileID: 1909443271}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -4099,7 +4100,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
       propertyPath: m_LocalScale.x
@@ -4164,6 +4165,18 @@ Prefab:
     - target: {fileID: 400008, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
       propertyPath: m_LocalScale.z
       value: .300031185
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .900000334
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: .99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .99999994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19214c4504db5c340ae739f2e9fd259b, type: 2}
@@ -5072,7 +5085,7 @@ Animator:
   m_GameObject: {fileID: 1909443269}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94edcd7c1bdd65f46a5fdc9455401fcc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 00a7190fdecd4a746bf3748a74a48967, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -5092,7 +5105,7 @@ Transform:
   - {fileID: 1711611040}
   - {fileID: 565554037}
   m_Father: {fileID: 664209175}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1961255877
 GameObject:
   m_ObjectHideFlags: 0
@@ -5437,3 +5450,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1198485088}
   m_RootOrder: 0
+--- !u!1 &2106612170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2106612171}
+  - 108: {fileID: 2106612172}
+  m_Layer: 0
+  m_Name: Directional light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2106612171
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2106612170}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 664209175}
+  m_RootOrder: 0
+--- !u!108 &2106612172
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2106612170}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 1
+  m_Color: {r: .742647052, g: .742647052, b: .742647052, a: 1}
+  m_Intensity: .5
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
