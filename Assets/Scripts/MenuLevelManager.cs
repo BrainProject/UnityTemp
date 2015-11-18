@@ -24,6 +24,10 @@ namespace MinigameSelection
 		void Start()
 		{
 			Debug.Log ("Creating " + MGC.Instance);
+			MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive (false);
+			Color tmp = MGC.Instance.minigamesGUI.backIcon.thisImage.color;
+			tmp.a = 0;
+			MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
 		}
 
 		public void SwitchMenu(int sectionIndex)

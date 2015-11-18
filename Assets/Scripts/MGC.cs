@@ -68,8 +68,9 @@ public class MGC : Singleton<MGC>
     }
 
     public BrainPartName currentBrainPart;
-    public Vector3 currentCameraDefaultPosition;
-    public string gameSelectionSceneName = "GameSelection";
+	public Vector3 currentCameraDefaultPosition;
+	public string mainSceneName = "Main";
+	public string gameSelectionSceneName = "GameSelection";
 	public GameObject confetti;
     /// <summary>
     /// Logs players actions

@@ -133,13 +133,15 @@ namespace Game
 								coloringLM.backGUI.BackAction();
 							}
 							else
-								MGC.Instance.sceneLoader.LoadScene(2);
+								MGC.Instance.sceneLoader.LoadScene("Crossroad");
 						}
 						else
-							MGC.Instance.sceneLoader.LoadScene(2);
+							MGC.Instance.sceneLoader.LoadScene("Crossroad");
 					}
 					else if(Application.loadedLevel == 2)
 					{
+						//Zoom out in selection scene if zoomed to some minigame.
+						//Go to brain scene if not zoomed.
 						MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
 						if(cm.ReadyToLeave)
 						{
@@ -149,6 +151,12 @@ namespace Game
 						else
 							cm.ZoomOutCamera();
 					}
+					else if(Application.loadedLevel == 4)
+					{
+						hide();
+						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);
+					}
+
 					
 					break;
 				}

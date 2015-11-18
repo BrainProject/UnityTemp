@@ -10,8 +10,10 @@ public class MenuCrossroad : MonoBehaviour {
 	{
 #if UNITY_ANDROID
 		Application.LoadLevel(androidMenuScene);
+		MGC.Instance.mainSceneName = androidMenuScene;
 #elif UNITY_STANDALONE
 		Application.LoadLevel(kinectMenuScene);
+		MGC.Instance.mainSceneName = kinectMenuScene;
 #endif
 	}
 }
