@@ -23,10 +23,10 @@ namespace Game
 
 		void Awake()
 		{
-			if (Application.loadedLevel > 1)
-				backIcon.gameObject.SetActive(true);
-			else
-				backIcon.gameObject.SetActive(false);
+//			if (Application.loadedLevel > 1)
+//				backIcon.gameObject.SetActive(true);
+//			else
+//				backIcon.gameObject.SetActive(false);
 		}
 
 

@@ -72,12 +72,22 @@ namespace Game
         /// </summary>
         /// Range of diff is: {0, MaxDifficulty}. So if You set MaxDifficulty to value 2, there will be three different difficulties
         /// If mini-game has no difficulty setting (e. g. Coloring mini-game), set value to 0.
-        public int MaxDifficulty;
-
-        /// <summary>
-        /// mini-game help. So far, simple texture
-        /// </summary>
-        //public Texture helpTexture;
+		public int MaxDifficulty;
+		
+		/// <summary>
+		/// Icon of this minigame.
+		/// </summary>
+		//public Texture menuIcon;
+		
+		/// <summary>
+		/// Is Kinect required for this minigame?
+		/// </summary>
+		public bool isKinectRequired = false;
+		
+		/// <summary>
+		/// mini-game help. So far, simple texture
+		/// </summary>
+		//public Texture helpTexture;
 
         /// <summary>
         /// Image symbolizing low difficulty
@@ -100,7 +110,7 @@ namespace Game
 		public float helpDuration = 3;
 
 
-        public MinigameStatistics stats;
+        internal MinigameStatistics stats;
     }
 
 

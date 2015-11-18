@@ -63,7 +63,7 @@ namespace Game
             MGC.Instance.sceneLoader.doFade = true;
 
             //load main scene
-			Application.LoadLevel(Application.loadedLevel+1);
+			Application.LoadLevel("Crossroad");
 		}
 	}
 }
