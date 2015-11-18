@@ -71,7 +71,6 @@ public class MGC : Singleton<MGC>
 	public Vector3 currentCameraDefaultPosition;
 	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";
-	public MenuType menuType;
 	public GameObject confetti;
     /// <summary>
     /// Logs players actions
@@ -82,7 +81,8 @@ public class MGC : Singleton<MGC>
     internal GameObject kinectManagerObject;
     internal KinectManager kinectManagerInstance;
     internal GameObject mouseCursor;
-    internal GameObject neuronHelp;
+	internal GameObject neuronHelp;
+	internal MenuType menuType = MenuType.None;
 
     internal GameObject minigamesGUIObject;
     internal MinigamesGUI minigamesGUI;
@@ -287,6 +287,29 @@ public class MGC : Singleton<MGC>
 			ResetMinigamesStatistics();
 			if(Application.loadedLevelName == gameSelectionSceneName)
 				Application.LoadLevel(gameSelectionSceneName);
+		}
+
+		
+		//Change of menu types
+		if(Input.GetKeyDown(KeyCode.Keypad0))
+		{
+			menuType = MenuType.None;
+			Debug.Log("Changed menu type to default.");
+		}
+		if(Input.GetKeyDown(KeyCode.Keypad1))
+		{
+			menuType = MenuType.Brain;
+			Debug.Log("Changed menu type to brain.");
+		}
+		if(Input.GetKeyDown(KeyCode.Keypad2))
+		{
+			menuType = MenuType.Tiles;
+			Debug.Log("Changed menu type to tiles.");
+		}
+		if(Input.GetKeyDown(KeyCode.Keypad3))
+		{
+			menuType = MenuType.GSI;
+			Debug.Log("Changed menu type to gsi.");
 		}
 
     #endif
