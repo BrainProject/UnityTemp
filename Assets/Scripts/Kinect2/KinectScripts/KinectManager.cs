@@ -1215,7 +1215,7 @@ namespace Kinect
 	        alUserIds = new List<Int64>();
 	        dictUserIdToIndex = new Dictionary<Int64, int>();
 		
-			DontDestroyOnLoad(gameObject);
+			//DontDestroyOnLoad(gameObject);
 			
 			// GUI Text.
 			if(calibrationText != null)

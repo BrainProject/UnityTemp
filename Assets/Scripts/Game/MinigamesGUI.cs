@@ -16,6 +16,7 @@ namespace Game
 		public MinigamesGUIIconsActions replayHelpIcon;
 		public MinigamesGUIIconsActions hideHelpIcon;
 		public MinigamesGUIIconsActions showHelpIcon;
+		public MinigamesGUIIconsActions menuIcon;
 		public MinigamesGUIDetection guiDetection;
 		public bool visible;
 		public bool gsiStandalone;
@@ -40,16 +41,35 @@ namespace Game
 		{
 			visible = true;
 
-			gameSelectionIcon.thisButton.enabled = true;
-			restartIcon.thisButton.enabled = true;
-			if(!gsiStandalone)
-				brainIcon.thisButton.enabled = true;
-			guiDetection.guiIsHidden = false;
 
-			gameSelectionIcon.show ();
+			switch (MGC.Instance.menuType) 
+			{
+			case MenuType.Brain:
+				{
+					gameSelectionIcon.thisButton.enabled = true;
+					gameSelectionIcon.show ();
+					brainIcon.thisButton.enabled = true;
+					brainIcon.show ();
+					break;
+				}
+			case MenuType.GSI:
+				{
+					gameSelectionIcon.thisButton.enabled = true;
+					gameSelectionIcon.show ();
+					break;
+				}
+			case MenuType.Tiles:
+				{
+					menuIcon.thisButton.enabled = true;
+					menuIcon.show ();
+					break;
+				}
+			}
+
+			restartIcon.thisButton.enabled = true;
 			restartIcon.show ();
-			if(!gsiStandalone)
-				brainIcon.show ();
+				
+			guiDetection.guiIsHidden = false;
 
 			if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
 			{
@@ -65,8 +85,8 @@ namespace Game
 			visible = false;
 			gameSelectionIcon.hide ();
 			restartIcon.hide ();
-			if(!gsiStandalone)
-				brainIcon.hide ();
+			brainIcon.hide ();
+			menuIcon.hide ();
 			guiDetection.guiIsHidden = true;
 			showHelpIcon.hide ();
 

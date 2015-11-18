@@ -71,6 +71,7 @@ public class MGC : Singleton<MGC>
 	public Vector3 currentCameraDefaultPosition;
 	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";
+	public MenuType menuType;
 	public GameObject confetti;
     /// <summary>
     /// Logs players actions

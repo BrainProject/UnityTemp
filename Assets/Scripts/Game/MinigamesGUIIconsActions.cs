@@ -112,7 +112,7 @@ namespace Game
 					MGC.Instance.minigamesGUI.hide();
 					
 					//return to game selection scene
-					MGC.Instance.sceneLoader.LoadScene(1);
+					MGC.Instance.sceneLoader.LoadScene("Crossroad");
 					
 					break;
 				}
