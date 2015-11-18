@@ -39,7 +39,7 @@ namespace Game
 			if(Input.GetMouseButtonDown(0))
 			{
 				//Screen.showCursor = true;
-                Application.LoadLevel(Application.loadedLevel + 1);
+                MGC.Instance.sceneLoader.LoadScene("Crossroad");
 			}
 		}
 

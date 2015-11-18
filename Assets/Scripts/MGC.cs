@@ -114,6 +114,7 @@ public class MGC : Singleton<MGC>
     private float inactivityLenght = 60f;
     private int inactivityCounter = 1;
     private GameObject controlsGUI;
+	private bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
 #if UNITY_ANDROID
 	private float touchBlockTimestamp;
 #endif
@@ -325,13 +326,16 @@ public class MGC : Singleton<MGC>
 		}
 		else
 		{
-			if(minigamesProperties.GetMinigame(Application.loadedLevelName))
+			if(level > 4)
 			{
-				if(minigamesProperties.IsWithHelp(Application.loadedLevelName))
+				if(minigamesProperties.GetMinigame(Application.loadedLevelName))
 				{
-	//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
-					neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
-					minigamesProperties.SetPlayedWithHelp(Application.loadedLevelName);
+					if(minigamesProperties.IsWithHelp(Application.loadedLevelName))
+					{
+		//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
+						neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+						minigamesProperties.SetPlayedWithHelp(Application.loadedLevelName);
+					}
 				}
 			}
 		}
@@ -342,7 +346,7 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
 		{
-			if(!kinectManagerObject.activeSelf)
+			if(isKinectUsed && !kinectManagerObject.activeSelf)
 			{
 				kinectManagerObject.SetActive(true);
 				kinectManagerInstance.ClearKinectUsers();
@@ -678,7 +682,8 @@ public class MGC : Singleton<MGC>
         if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
         {
             Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
-            im.smoothFactor = 5;
+			im.smoothFactor = 5;
+			isKinectUsed = true;
         }
 
         kinectManagerInstance = KinectManager.Instance;
@@ -696,17 +701,23 @@ public class MGC : Singleton<MGC>
                 yield return new WaitForSeconds(1);
                 Debug.Log("First Kinect 2 initialization failed. Trying to recreate KinectManager again.");
                 kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
-                kinectManagerObject.transform.parent = this.transform;
+				kinectManagerObject.transform.parent = this.transform;
+				isKinectUsed = false;
             }
+			else
+			{
+				isKinectUsed = true;
+				yield return null;
+			}
             // sensorsCount == 0 means no sensor is currently connected
         }
 
         if ((Kinect.KinectInterop.GetSensorType() == "Kinect1Interface" && sensorsCount == 0) || (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount == 1))
         {
             kinectManagerObject.SetActive(false);
-            Debug.Log("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
+			Debug.Log("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
+			isKinectUsed = false;
         }
-
 #else
 		yield return null;
 #endif
