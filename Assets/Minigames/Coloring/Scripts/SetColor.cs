@@ -24,7 +24,7 @@ namespace Coloring
 				if(selected.tag == "Board")
 				{
 					//selected.renderer.guiTexture.color = gameObject.renderer.material.color;
-					selected.renderer.material.color = gameObject.renderer.material.color;
+					selected.GetComponent<Renderer>().material.color = gameObject.GetComponent<Renderer>().material.color;
 				}
 			}
 		}

@@ -20,28 +20,28 @@ namespace Coloring
 				switch(name)
 				{
 					case "White":
-						Brush.renderer.material.color = Color.white;
+						Brush.GetComponent<Renderer>().material.color = Color.white;
 						break;
 					case "Black":
-						Brush.renderer.material.color = Color.black;
+						Brush.GetComponent<Renderer>().material.color = Color.black;
 						break;
 					case "Red":
-						Brush.renderer.material.color = Color.red;
+						Brush.GetComponent<Renderer>().material.color = Color.red;
 						break;
 					case "Green":
-						Brush.renderer.material.color = Color.green;
+						Brush.GetComponent<Renderer>().material.color = Color.green;
 						break;
 					case "Blue":
-						Brush.renderer.material.color = Color.blue;
+						Brush.GetComponent<Renderer>().material.color = Color.blue;
 						break;
 					case "Yellow":
-						Brush.renderer.material.color = Color.yellow;
+						Brush.GetComponent<Renderer>().material.color = Color.yellow;
 						break;
 					case "Purple":
-						Brush.renderer.material.color = purple;
+						Brush.GetComponent<Renderer>().material.color = purple;
 						break;
 					case "Orange":
-						Brush.renderer.material.color = orange;
+						Brush.GetComponent<Renderer>().material.color = orange;
 						break;
 				}
 

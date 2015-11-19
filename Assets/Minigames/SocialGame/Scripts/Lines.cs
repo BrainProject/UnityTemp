@@ -12,7 +12,7 @@ namespace SocialGame{
 		/// </summary>
 		void Start () {
 			set = transform.root.GetComponentInChildren<LineSet>();
-			renderLine = gameObject.AddComponent("LineRenderer") as LineRenderer;
+			renderLine = gameObject.AddComponent<LineRenderer>() as LineRenderer;
 			if(set != null)
 			{
 				renderLine.SetWidth(set.widthStart, set.widthEnd);

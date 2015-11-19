@@ -28,7 +28,7 @@ namespace Puzzle
             PlayerPrefs.SetString("Image", imageName);
             PlayerPrefs.SetInt("custom", custom ? 1 : 0);
 
-            PuzzleStatistics.pictureName = gameObject.renderer.material.mainTexture.name;
+            PuzzleStatistics.pictureName = gameObject.GetComponent<Renderer>().material.mainTexture.name;
             MGC.Instance.sceneLoader.LoadScene("PuzzleGame", true);
         }
     }

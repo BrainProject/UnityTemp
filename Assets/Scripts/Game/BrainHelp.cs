@@ -39,7 +39,7 @@ namespace Game
 			//5:4, 4:3, 3:2, 16:10, 16:9
 			Vector3 tmp;
 
-			tmp = transform.parent.camera.ScreenToViewportPoint(new Vector3 (transform.parent.camera.WorldToScreenPoint(transform.localPosition).x, 0, 0));
+			tmp = transform.parent.GetComponent<Camera>().ScreenToViewportPoint(new Vector3 (transform.parent.GetComponent<Camera>().WorldToScreenPoint(transform.localPosition).x, 0, 0));
 			//tmp.x = tmp.x - transform.parent.camera.aspect / 2;
 			tmp.x = 1.45f * transform.localPosition.x - (tmp.x - tmp.x/16)/Camera.main.aspect;
 			tmp.y = transform.localPosition.y;
@@ -176,13 +176,13 @@ namespace Game
 		public void ShowSmile(Texture smileTexture)
 		{
 			animator.SetTrigger ("smile");
-			collider.enabled = false;
-			pictureInHands.renderer.material.mainTexture = smileTexture;
+			GetComponent<Collider>().enabled = false;
+			pictureInHands.GetComponent<Renderer>().material.mainTexture = smileTexture;
 		}
 
 		void ActivateCollider()
 		{
-			collider.enabled = true;
+			GetComponent<Collider>().enabled = true;
 		}
 	}
 }

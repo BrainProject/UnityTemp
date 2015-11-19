@@ -159,8 +159,8 @@ namespace Puzzle
 			{
 				foreach (GameObject piece in pieceComponent)
 				{
-					Vector3 piece_min = piece.renderer.bounds.min;
-					Vector3 piece_max = piece.renderer.bounds.max;
+					Vector3 piece_min = piece.GetComponent<Renderer>().bounds.min;
+					Vector3 piece_max = piece.GetComponent<Renderer>().bounds.max;
 					
 					if (piece_min.x < min_x) min_x = piece_min.x;
 					if (piece_min.y < min_y) min_y = piece_min.y;
@@ -265,13 +265,13 @@ namespace Puzzle
             if (topPiece != null && my_component!=top_component)
             {
                 // CHECK DISTANCE
-               if (my_piece.gameObject.renderer.bounds.min.y < topPiece.gameObject.renderer.bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(topPiece.gameObject.renderer.bounds.min.y - my_piece.gameObject.renderer.bounds.max.y) < diff &&    // pieces are close vertically
+               if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y < topPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+				    Math.Abs(topPiece.gameObject.GetComponent<Renderer>().bounds.min.y - my_piece.gameObject.GetComponent<Renderer>().bounds.max.y) < diff &&    // pieces are close vertically
                     Math.Abs(my_piece.gameObject.transform.position.x - topPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
                 {
                   	Vector3 newPosition = new Vector3(
 						topPiece.gameObject.transform.position.x,
-                        topPiece.gameObject.transform.position.y - topPiece.gameObject.renderer.bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
+                        topPiece.gameObject.transform.position.y - topPiece.gameObject.GetComponent<Renderer>().bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -294,13 +294,13 @@ namespace Puzzle
 			if (bottomPiece != null && my_component!=bottom_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.y > bottomPiece.gameObject.renderer.bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(bottomPiece.gameObject.renderer.bounds.max.y - my_piece.gameObject.renderer.bounds.min.y) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y > bottomPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+				    Math.Abs(bottomPiece.gameObject.GetComponent<Renderer>().bounds.max.y - my_piece.gameObject.GetComponent<Renderer>().bounds.min.y) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.x - bottomPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
 						bottomPiece.gameObject.transform.position.x,
-                        bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.renderer.bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
+                        bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.GetComponent<Renderer>().bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 					
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -323,12 +323,12 @@ namespace Puzzle
 			if (leftPiece != null && my_component!=left_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.x > leftPiece.gameObject.renderer.bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(leftPiece.gameObject.renderer.bounds.max.x - my_piece.gameObject.renderer.bounds.min.x) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x > leftPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+				    Math.Abs(leftPiece.gameObject.GetComponent<Renderer>().bounds.max.x - my_piece.gameObject.GetComponent<Renderer>().bounds.min.x) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.y - leftPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-                        leftPiece.gameObject.transform.position.x + leftPiece.gameObject.renderer.bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
+                        leftPiece.gameObject.transform.position.x + leftPiece.gameObject.GetComponent<Renderer>().bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
 						leftPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
@@ -352,12 +352,12 @@ namespace Puzzle
 			if (rightPiece != null && my_component!=right_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.x < rightPiece.gameObject.renderer.bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(rightPiece.gameObject.renderer.bounds.min.x - my_piece.gameObject.renderer.bounds.max.x) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x < rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+				    Math.Abs(rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x - my_piece.gameObject.GetComponent<Renderer>().bounds.max.x) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.y - rightPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-                        rightPiece.gameObject.transform.position.x - rightPiece.gameObject.renderer.bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
+                        rightPiece.gameObject.transform.position.x - rightPiece.gameObject.GetComponent<Renderer>().bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
 						rightPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
@@ -424,7 +424,7 @@ namespace Puzzle
                     }
                 }
                 occupied[pos] = true;
-				float pieceSize = (float)Math.Ceiling(piece.gameObject.renderer.bounds.size.magnitude / 2.0f);
+				float pieceSize = (float)Math.Ceiling(piece.gameObject.GetComponent<Renderer>().bounds.size.magnitude / 2.0f);
 				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,
 				                                                  2 * (pos % dim) * pieceSize,
 				                                                  1);

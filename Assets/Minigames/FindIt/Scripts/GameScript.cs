@@ -151,7 +151,7 @@ namespace FindIt
 
                 GameObject o = GameObject.Find(i.ToString());
                 o.SetActive(true);
-                o.renderer.material.mainTexture = images[index];
+                o.GetComponent<Renderer>().material.mainTexture = images[index];
             }
             for(int i=numPictures+1;i<=MAX_PIECES;i++)
             {
@@ -189,7 +189,7 @@ namespace FindIt
                 usedIndices.Remove(key);
                 usedIndices.Add(key, true);
                 selectedImage = key;
-                targetImage.renderer.material.mainTexture = images[selectedImage];
+                targetImage.GetComponent<Renderer>().material.mainTexture = images[selectedImage];
             }
         }
 

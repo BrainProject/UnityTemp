@@ -19,24 +19,24 @@ namespace Game
 
 		void Start()
 		{
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+			startColor = this.GetComponent<Renderer>().material.color;
+			targetColor = this.GetComponent<Renderer>().material.color;
 		}
         
 		public void resetState()
         {
 			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
-				renderer.material.mainTexture = texture_normalGSI;
+				GetComponent<Renderer>().material.mainTexture = texture_normalGSI;
 			else
-	            renderer.material.mainTexture = texture_normal;
+	            GetComponent<Renderer>().material.mainTexture = texture_normal;
         }
 
         void OnMouseEnter()
 		{
 			if(transform.parent.GetComponent<MinigamesGUI>().gsiStandalone)
-          		renderer.material.mainTexture = texture_hoverGSI;
+          		GetComponent<Renderer>().material.mainTexture = texture_hoverGSI;
 			else
-				renderer.material.mainTexture = texture_hover;
+				GetComponent<Renderer>().material.mainTexture = texture_hover;
         }
 
         void OnMouseExit()
@@ -115,14 +115,14 @@ namespace Game
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeOutGUI");
-			collider.enabled = true;
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+			GetComponent<Collider>().enabled = true;
+			startColor = this.GetComponent<Renderer>().material.color;
+			targetColor = this.GetComponent<Renderer>().material.color;
 			targetColor.a = 1;
 			
-			while(this.renderer.material.color.a < 0.99f)
+			while(this.GetComponent<Renderer>().material.color.a < 0.99f)
 			{
-				this.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				this.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 		}
@@ -131,18 +131,18 @@ namespace Game
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeInGUI");
-			collider.enabled = false;
-			startColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+			GetComponent<Collider>().enabled = false;
+			startColor = this.GetComponent<Renderer>().material.color;
+			targetColor = this.GetComponent<Renderer>().material.color;
 			targetColor.a = 0;
 			
-			while(this.renderer.material.color.a > 0.001f)
+			while(this.GetComponent<Renderer>().material.color.a > 0.001f)
 			{
-				this.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				this.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;
 			}
 
-			this.renderer.material.color = targetColor;
+			this.GetComponent<Renderer>().material.color = targetColor;
 			this.gameObject.SetActive (false);
 		}
     }

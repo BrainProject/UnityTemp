@@ -19,14 +19,14 @@ namespace Game
 
 		void Awake()
 		{
-			this.guiTexture.pixelInset = new Rect(Screen.width/2, Screen.height/2, 1, 1);
+			this.GetComponent<GUITexture>().pixelInset = new Rect(Screen.width/2, Screen.height/2, 1, 1);
 		}
 
 		void Start()
 		{
-			originalColor = this.guiTexture.color;
-			targetColor = this.guiTexture.color;
-			Screen.showCursor = false;
+			originalColor = this.GetComponent<GUITexture>().color;
+			targetColor = this.GetComponent<GUITexture>().color;
+			Cursor.visible = false;
 			StartCoroutine (LoadMainLevel());
 
             //following line not only print something, but also create instance of MGC (if this is the first call...)
@@ -50,9 +50,9 @@ namespace Game
 
 			originalColor.a = 0;
 			targetColor.a = 1.0f;
-			while(this.guiTexture.color.a < 0.99f)
+			while(this.GetComponent<GUITexture>().color.a < 0.99f)
 			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
+				this.GetComponent<GUITexture>().color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
 				yield return null;
 			}
 			

@@ -43,7 +43,7 @@ namespace FindIt
         {
             if (!gameScript.gameWon)
             {
-                if (this.gameObject.renderer.material.mainTexture.Equals(targetImage.renderer.material.mainTexture))
+                if (this.gameObject.GetComponent<Renderer>().material.mainTexture.Equals(targetImage.GetComponent<Renderer>().material.mainTexture))
                 {
                     if (this.gameObject.tag == "Left")
                     {

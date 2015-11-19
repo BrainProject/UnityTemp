@@ -52,30 +52,30 @@ namespace MainScene {
 			{
 			case Side.Left:
 				rotatingAxis = Vector3.up;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width/8, Screen.height + 4);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width/8, Screen.height + 4);
 				break;
 			case Side.Right:
 				rotatingAxis = Vector3.down;
-				this.guiTexture.pixelInset = new Rect(Screen.width/2 - Screen.width/8, - Screen.height/2, Screen.width/8, Screen.height + 4);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(Screen.width/2 - Screen.width/8, - Screen.height/2, Screen.width/8, Screen.height + 4);
 				break;
 			case Side.Forward:
 				rotatingAxis = Vector3.forward;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, Screen.height/2 - Screen.height/8, Screen.width + 4, Screen.height / 8);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(-Screen.width/2, Screen.height/2 - Screen.height/8, Screen.width + 4, Screen.height / 8);
 				break;
 			case Side.Backward:
 				rotatingAxis = Vector3.back;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2 - 1, Screen.width + 4, Screen.height / 8);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(-Screen.width/2, -Screen.height/2 - 1, Screen.width + 4, Screen.height / 8);
 				break;
 			case Side.Up:
 				rotatingAxis = Vector3.left;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, Screen.height/2 - 128, Screen.width, Screen.height / 8);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(-Screen.width/2, Screen.height/2 - 128, Screen.width, Screen.height / 8);
 				break;
 			case Side.Down:
 				rotatingAxis = Vector3.right;
-				this.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width, Screen.height / 8);
+				this.GetComponent<GUITexture>().pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width, Screen.height / 8);
 				break;
 			}
-			this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0);
+			this.GetComponent<GUITexture>().color = new Color (this.GetComponent<GUITexture>().color.r, this.GetComponent<GUITexture>().color.g, this.GetComponent<GUITexture>().color.b, 0);
 #endif
 		}
 
@@ -109,7 +109,7 @@ namespace MainScene {
 		{
 			if(CanRotate)
 			{
-				this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0.5f);
+				this.GetComponent<GUITexture>().color = new Color (this.GetComponent<GUITexture>().color.r, this.GetComponent<GUITexture>().color.g, this.GetComponent<GUITexture>().color.b, 0.5f);
 			}
 		}
 
@@ -117,7 +117,7 @@ namespace MainScene {
 		{
 			if(CanRotate)
 			{
-				this.guiTexture.color = new Color (this.guiTexture.color.r, this.guiTexture.color.g, this.guiTexture.color.b, 0);
+				this.GetComponent<GUITexture>().color = new Color (this.GetComponent<GUITexture>().color.r, this.GetComponent<GUITexture>().color.g, this.GetComponent<GUITexture>().color.b, 0);
 			}
 		}
 

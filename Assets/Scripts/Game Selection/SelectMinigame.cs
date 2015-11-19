@@ -1,5 +1,5 @@
 /*
- * Created by: Milan Doležal
+ * Created by: Milan DoleÅ¾al
  */ 
 
 using UnityEngine;
@@ -33,9 +33,9 @@ namespace MinigameSelection
 
 			if(minigameName == "")
 			{
-				this.renderer.material.color = Color.gray;
+				this.GetComponent<Renderer>().material.color = Color.gray;
 				this.GetComponent<SelectMinigame>().enabled = false;
-				this.collider.enabled = false;
+				this.GetComponent<Collider>().enabled = false;
 			}
 
 #if !UNITY_STANDALONE
@@ -49,14 +49,14 @@ namespace MinigameSelection
 
 			if(Icon)
 			{
-				Icon.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				Icon.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 				OriginalIconScale = Icon.transform.localScale;
 			}
 
             if(MGC.Instance.minigamesProperties.GetPlayed(minigameName))
             {
                 (this.GetComponent("Halo") as Behaviour).enabled = true;
-				this.renderer.material.color = new Color(this.renderer.material.color.r + 1f, this.renderer.material.color.g + 1f, this.renderer.material.color.b + 1f);
+				this.GetComponent<Renderer>().material.color = new Color(this.GetComponent<Renderer>().material.color.r + 1f, this.GetComponent<Renderer>().material.color.g + 1f, this.GetComponent<Renderer>().material.color.b + 1f);
             }
 		}
 
@@ -75,8 +75,8 @@ namespace MinigameSelection
 		
 		void OnMouseEnter()
 		{
-			OriginalColor = this.renderer.material.color;
-			this.renderer.material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
+			OriginalColor = this.GetComponent<Renderer>().material.color;
+			this.GetComponent<Renderer>().material.color = new Color(OriginalColor.r + 0.4f, OriginalColor.g + 0.4f, OriginalColor.b + 0.4f);
 
             if (Icon)
             {
@@ -89,7 +89,7 @@ namespace MinigameSelection
 
 		void OnMouseExit()
 		{
-			this.renderer.material.color = OriginalColor;
+			this.GetComponent<Renderer>().material.color = OriginalColor;
 			MouseHover = false;
 
             if (Icon)

@@ -51,7 +51,7 @@ namespace HanoiTowers
 
         void Awake()
         {
-            startcolor = renderer.material.color;
+            startcolor = GetComponent<Renderer>().material.color;
         }
 
         void Start()
@@ -68,7 +68,7 @@ namespace HanoiTowers
             state = diskState.animatedUp;
 
             //adjust impulse to number of disk on the column - the more disks, the less necessary impulse
-            rigidbody.AddForce(transform.up * (10.75f - (0.375f * actualColumn.getNumberofDisks())), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.up * (10.75f - (0.375f * actualColumn.getNumberofDisks())), ForceMode.Impulse);
 
 
         }
@@ -130,8 +130,8 @@ namespace HanoiTowers
                 updatePosition(0.0f);
             }
 
-            renderer.material.color = startcolor;
-            rigidbody.isKinematic = false;
+            GetComponent<Renderer>().material.color = startcolor;
+            GetComponent<Rigidbody>().isKinematic = false;
 
         }
 
@@ -170,11 +170,11 @@ namespace HanoiTowers
 
             if (isMovable())
             {
-                renderer.material.color = gameController.greenColor;
+                GetComponent<Renderer>().material.color = gameController.greenColor;
             }
             else
             {
-                renderer.material.color = gameController.redColor;
+                GetComponent<Renderer>().material.color = gameController.redColor;
             }
 
         }
@@ -190,7 +190,7 @@ namespace HanoiTowers
         {
             if (!waitingForTarget)
             {
-                renderer.material.color = startcolor;
+                GetComponent<Renderer>().material.color = startcolor;
             }
 
         }
@@ -239,7 +239,7 @@ namespace HanoiTowers
                     state = diskState.dragged;
                     
 
-                    rigidbody.isKinematic = true;
+                    GetComponent<Rigidbody>().isKinematic = true;
 
 
                     initialDiskScreenPoint = Camera.main.WorldToScreenPoint(transform.position);

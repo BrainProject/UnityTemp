@@ -129,9 +129,9 @@ namespace MainScene {
 				{
 					if(buttons[i] != null)
 					{
-						buttons[i].rigidbody.isKinematic = false;
-						buttons[i].rigidbody.useGravity = true;
-						buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+						buttons[i].GetComponent<Rigidbody>().isKinematic = false;
+						buttons[i].GetComponent<Rigidbody>().useGravity = true;
+						buttons[i].GetComponent<Rigidbody>().AddForce(chosenButton.transform.position * (-100));
 					}
 				}
 			}
@@ -153,22 +153,22 @@ namespace MainScene {
 		{
 			float t = 0;
 			
-			Color backTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
+			Color backTextureColor = chosenButton.transform.GetChild(0).GetComponent<Renderer>().material.color;
 			backTextureColor.a = 0;
-			chosenButton.transform.GetChild(1).renderer.material.color = backTextureColor;
+			chosenButton.transform.GetChild(1).GetComponent<Renderer>().material.color = backTextureColor;
 			
 			while (t - 1f < 0)
 			{
 				t += Time.deltaTime * 2;
 				
-				Color frontTextureColor = chosenButton.transform.GetChild(0).renderer.material.color;
-				Color backColor = chosenButton.renderer.material.color;
+				Color frontTextureColor = chosenButton.transform.GetChild(0).GetComponent<Renderer>().material.color;
+				Color backColor = chosenButton.GetComponent<Renderer>().material.color;
 				
 				frontTextureColor.a = 1f - t;
 				backColor.a = 1f - t;
 				
-				chosenButton.transform.GetChild(0).renderer.material.color = frontTextureColor;
-				chosenButton.renderer.material.color = backColor;
+				chosenButton.transform.GetChild(0).GetComponent<Renderer>().material.color = frontTextureColor;
+				chosenButton.GetComponent<Renderer>().material.color = backColor;
 				yield return null;
 			}
 

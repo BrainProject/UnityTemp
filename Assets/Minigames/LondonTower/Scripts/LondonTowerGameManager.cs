@@ -133,7 +133,7 @@ public class LondonTowerGameManager : MonoBehaviour {
 
                 foreach (LondonToweSphereScript sp in spheres)
                 {
-                    sp.rigidbody.useGravity = true;
+                    sp.GetComponent<Rigidbody>().useGravity = true;
                 }
                 minimap.SetActive(true);
                 string path = "GoalsPictures/" + startGame.GameID ;
@@ -142,7 +142,7 @@ public class LondonTowerGameManager : MonoBehaviour {
                 {
                     Debug.Log("cannot load");
                 }
-                minimap.renderer.material.mainTexture = minimapSprite;
+                minimap.GetComponent<Renderer>().material.mainTexture = minimapSprite;
                 
        
     }

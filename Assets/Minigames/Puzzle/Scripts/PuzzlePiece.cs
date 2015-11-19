@@ -1,6 +1,6 @@
 /**
  *@file PuzzlePiece.cs
- *@author Ján Bella
+ *@author JÃ¡n Bella
  *
  *Contains definition of PuzzlePiece class
  */
@@ -99,7 +99,7 @@ namespace Puzzle
             mesh.vertices = Vertices;
             mesh.triangles = Triangles;
             mesh.uv2 = alpha;
-            mesh.uv1 = alpha;
+            mesh.uv2 = alpha;
 
             mesh.uv = UV;
 
@@ -136,9 +136,9 @@ namespace Puzzle
 
             
             // gameObject.renderer.material.mainTexture = texture;
-            gameObject.renderer.material = m;
+            gameObject.GetComponent<Renderer>().material = m;
 
-            gameObject.AddComponent("MouseScript");
+            gameObject.AddComponent<MouseScript>();
             Quaternion q = new Quaternion(0, 0, 0, 1);
             q.eulerAngles = new Vector3(90, 180, 0);
             gameObject.transform.rotation = q;

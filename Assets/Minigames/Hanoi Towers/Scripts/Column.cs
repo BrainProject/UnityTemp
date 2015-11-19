@@ -34,7 +34,7 @@ namespace HanoiTowers
 
         void Start()
         {
-            startcolor = renderer.material.color;
+            startcolor = GetComponent<Renderer>().material.color;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace HanoiTowers
         void OnMouseExit()
         {
             coloredLight.enabled = false;
-            renderer.material.color = startcolor;
+            GetComponent<Renderer>().material.color = startcolor;
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace Game
 			Color targetColor = iconSave.color;
 			targetColor.a = 0;
 			
-			while(this.guiTexture.color.a > 0)
+			while(this.GetComponent<GUITexture>().color.a > 0)
 			{
 				iconSave.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				//Time.timeScale = state;

@@ -165,11 +165,11 @@ namespace MinigamePexeso
                     if (currentGame == GameType.Pexeso)
                     {
                         gameTiles[rows * i + o].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                        gameTiles[rows * i + o].AddComponent("Flipper");
+                        gameTiles[rows * i + o].AddComponent<Flipper>();
                     }
                     else
                     {
-                        gameTiles[rows * i + o].AddComponent("Mover");
+                        gameTiles[rows * i + o].AddComponent<Mover>();
                     }
                 }
             }
@@ -347,7 +347,7 @@ namespace MinigamePexeso
             {
                 AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
                 musicPlayer.Stop();
-                this.gameObject.audio.Play();
+                this.gameObject.GetComponent<AudioSource>().Play();
             }
 
             //game ends here, show scoreboard...
@@ -367,14 +367,14 @@ namespace MinigamePexeso
         {
             if (currentGame == GameType.Pexeso)
             {
-                if (first.transform.GetChild(0).renderer.material.mainTexture.name == second.transform.GetChild(0).renderer.material.mainTexture.name)
+                if (first.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name == second.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name)
                 {
                     return true;
                 }
             }
             else
             {
-                if (first.transform.GetChild(0).renderer.material.mainTexture.name + "a" == second.transform.GetChild(0).renderer.material.mainTexture.name || second.transform.GetChild(0).renderer.material.mainTexture.name + "a" == first.transform.GetChild(0).renderer.material.mainTexture.name)
+                if (first.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name + "a" == second.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name || second.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name + "a" == first.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture.name)
                 {
                     return true;
                 }
@@ -425,13 +425,13 @@ namespace MinigamePexeso
             }
 
             //set up physics to animate fall of tiles
-            first.rigidbody.useGravity = true;
-            first.rigidbody.isKinematic = false;
-            second.rigidbody.useGravity = true;
-            second.rigidbody.isKinematic = false;
+            first.GetComponent<Rigidbody>().useGravity = true;
+            first.GetComponent<Rigidbody>().isKinematic = false;
+            second.GetComponent<Rigidbody>().useGravity = true;
+            second.GetComponent<Rigidbody>().isKinematic = false;
 
-            first.rigidbody.AddForce(new Vector3(0, 1, -5) * 100);
-            second.rigidbody.AddForce(new Vector3(0, 1, -5) * 100);
+            first.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, -5) * 100);
+            second.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, -5) * 100);
 
             //wait until tiles are out of view, then destroy them
             yield return new WaitForSeconds(1.3f);
@@ -481,13 +481,13 @@ namespace MinigamePexeso
                 yield return new WaitForSeconds(0.1f);
             }
 
-            first.rigidbody.useGravity = true;
-            first.rigidbody.isKinematic = false;
-            second.rigidbody.useGravity = true;
-            second.rigidbody.isKinematic = false;
+            first.GetComponent<Rigidbody>().useGravity = true;
+            first.GetComponent<Rigidbody>().isKinematic = false;
+            second.GetComponent<Rigidbody>().useGravity = true;
+            second.GetComponent<Rigidbody>().isKinematic = false;
 
-            first.rigidbody.AddForce(second.transform.position * 100);
-            second.rigidbody.AddForce(first.transform.position * 100);
+            first.GetComponent<Rigidbody>().AddForce(second.transform.position * 100);
+            second.GetComponent<Rigidbody>().AddForce(first.transform.position * 100);
 
             yield return new WaitForSeconds(1.3f);
 
@@ -571,7 +571,7 @@ namespace MinigamePexeso
                         gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
                     }
 
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
+                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = chosen[num];
                     chosen.RemoveAt(num);
                 }
             }
@@ -670,7 +670,7 @@ namespace MinigamePexeso
                         gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
                     }
 
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
+                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = chosen[num];
                     chosen.RemoveAt(num);
                 }
             }
@@ -745,7 +745,7 @@ namespace MinigamePexeso
                 for (int i = 0; i < (rows * columns); i++)
                 {
                     num = random.Next(0, chosen.Count);
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
+                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = chosen[num];
 
                     float height = chosen[num].height;
                     float width = chosen[num].width;
@@ -826,7 +826,7 @@ namespace MinigamePexeso
                         gameTiles[i].transform.GetChild(0).transform.localScale = new Vector3(gameTiles[i].transform.GetChild(0).transform.localScale.x, gameTiles[i].transform.GetChild(0).transform.localScale.y, tileSize);
                     }
 
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = chosen[num];
+                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = chosen[num];
                     chosen.RemoveAt(num);
                 }
             }

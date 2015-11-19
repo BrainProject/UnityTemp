@@ -19,7 +19,7 @@ namespace Game
 #if !UNITY_ANDROID
 		void Start ()
 		{
-			Screen.showCursor = false;
+			Cursor.visible = false;
 		}
 #endif
 

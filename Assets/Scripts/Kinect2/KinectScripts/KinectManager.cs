@@ -1039,7 +1039,7 @@ namespace Kinect
 				
 				if(calibrationText != null)
 				{
-					calibrationText.guiText.text = ex.Message;
+					calibrationText.GetComponent<GUIText>().text = ex.Message;
 				}
 			}
 		}
@@ -1087,7 +1087,7 @@ namespace Kinect
 				
 				if(calibrationText != null)
 				{
-					calibrationText.guiText.text = message;
+					calibrationText.GetComponent<GUIText>().text = message;
 				}
 				
 				return;
@@ -1101,7 +1101,7 @@ namespace Kinect
 				
 				if(calibrationText != null)
 				{
-					calibrationText.guiText.text = message;
+					calibrationText.GetComponent<GUIText>().text = message;
 				}
 
 				//MGC.Instance.kinectManagerObject.SetActive(false);
@@ -1220,7 +1220,7 @@ namespace Kinect
 			// GUI Text.
 			if(calibrationText != null)
 			{
-				calibrationText.guiText.text = "WAITING FOR USERS";
+				calibrationText.GetComponent<GUIText>().text = "WAITING FOR USERS";
 			}
 
 			Debug.Log("Waiting for users.");
@@ -1866,9 +1866,9 @@ namespace Kinect
 						
 						if(liPrimaryUserId != 0)
 						{
-							if(calibrationText != null && calibrationText.guiText.text != "")
+							if(calibrationText != null && calibrationText.GetComponent<GUIText>().text != "")
 							{
-								calibrationText.guiText.text = "";
+								calibrationText.GetComponent<GUIText>().text = "";
 							}
 						}
 					}
@@ -1978,7 +1978,7 @@ namespace Kinect
 				
 				if(calibrationText != null)
 				{
-					calibrationText.guiText.text = "WAITING FOR USERS";
+					calibrationText.GetComponent<GUIText>().text = "WAITING FOR USERS";
 				}
 			}
 		}

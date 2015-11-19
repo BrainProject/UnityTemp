@@ -133,7 +133,7 @@ namespace MinigamePexeso
 					Debug.Log ("file:///" + customResourcePacks[i] + "/00.png");
 					WWW www = new WWW ("file:///" + customResourcePacks[i] + "/00.png");
 					yield return www;
-					gameTiles[i + resPacksNames.Length].transform.GetChild(0).renderer.material.mainTexture = www.texture;
+					gameTiles[i + resPacksNames.Length].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = www.texture;
 
 					if (www.error != null)
 					{
@@ -211,7 +211,7 @@ namespace MinigamePexeso
                     gameTiles[i].name = resPacksNames[i];
 
                     //use first image in pack as tile texture
-                    gameTiles[i].transform.GetChild(0).renderer.material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
+                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
                 }
             }
 
@@ -249,9 +249,9 @@ namespace MinigamePexeso
 	            {
                     if(buttons[i] != null)
 					{
-						buttons[i].rigidbody.isKinematic = false;
-		                buttons[i].rigidbody.useGravity = true;
-		                buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+						buttons[i].GetComponent<Rigidbody>().isKinematic = false;
+		                buttons[i].GetComponent<Rigidbody>().useGravity = true;
+		                buttons[i].GetComponent<Rigidbody>().AddForce(chosenButton.transform.position * (-100));
 					}
 	            }
 	        }

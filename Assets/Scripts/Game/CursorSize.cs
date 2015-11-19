@@ -27,7 +27,7 @@ namespace Game
 			//this.guiTexture.pixelInset = new Rect (x, y, w, h);
 			currentCursor = cursorNormal;
 #if !UNITY_ANDROID
-			Screen.showCursor = false;
+			Cursor.visible = false;
 #endif
 			//Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
 			//Screen.showCursor = false;

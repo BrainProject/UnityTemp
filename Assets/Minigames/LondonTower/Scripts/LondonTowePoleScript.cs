@@ -16,7 +16,7 @@ public class LondonTowePoleScript : MonoBehaviour {
             if (sphere != null)
             {
                 sphere.EnableXMove(false);
-                sphere.rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+                sphere.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
                 sphere.transform.position = new Vector3(this.transform.position.x, sphere.transform.position.y, sphere.transform.position.z);
                 sphere.SetLastPolePosition(this.transform.position.x);
                 sphere.SetPoleData(id, capacity, LondonTowerGameState.game == LondonTowerGameManager.state);
@@ -38,7 +38,7 @@ public class LondonTowePoleScript : MonoBehaviour {
            LondonToweSphereScript sphere = other.gameObject.GetComponent<LondonToweSphereScript>();
             if (sphere != null)
             {
-                sphere.rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+                sphere.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
                 sphere.EnableXMove(true);
                 capacity++;
             }

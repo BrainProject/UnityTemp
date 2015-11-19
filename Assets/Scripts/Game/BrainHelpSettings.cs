@@ -26,12 +26,12 @@ namespace Game
 			blockBorderClone = (GameObject)Instantiate (blockBorder);
 			//neuronHelp.GetComponent<BrainHelp> ().helpExists = true;
 			canControl = true;
-			originalColor = this.guiTexture.color;
-			targetColor = this.guiTexture.color;
+			originalColor = this.GetComponent<GUITexture>().color;
+			targetColor = this.GetComponent<GUITexture>().color;
 			originalColor.a = 0;
 			targetColor.a = 1;
-			this.guiTexture.color = originalColor;
-            this.guiTexture.pixelInset = new Rect(Screen.width * (0.5f * (1.0f - helpSize)), Screen.height * (0.5f * (1.0f - helpSize)), Screen.width * helpSize, Screen.height * helpSize);
+			this.GetComponent<GUITexture>().color = originalColor;
+            this.GetComponent<GUITexture>().pixelInset = new Rect(Screen.width * (0.5f * (1.0f - helpSize)), Screen.height * (0.5f * (1.0f - helpSize)), Screen.width * helpSize, Screen.height * helpSize);
 			this.transform.position = new Vector2(0, 0);
 			StartCoroutine("FadeIn");
 		}
@@ -67,9 +67,9 @@ namespace Game
 		{
 			float startTime = Time.time;
 
-			while(this.guiTexture.color.a < 0.5f)
+			while(this.GetComponent<GUITexture>().color.a < 0.5f)
 			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/6);
+				this.GetComponent<GUITexture>().color = Color.Lerp (originalColor, targetColor, (Time.time - startTime)/6);
 				yield return null;
 			}
 			//Time.timeScale = 0;
@@ -80,12 +80,12 @@ namespace Game
 			Destroy (blockBorderClone);
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
-			originalColor = this.guiTexture.color;
+			originalColor = this.GetComponent<GUITexture>().color;
 			targetColor.a = 0;
 
-			while(this.guiTexture.color.a > 0.001f)
+			while(this.GetComponent<GUITexture>().color.a > 0.001f)
 			{
-				this.guiTexture.color = Color.Lerp (originalColor, targetColor, Time.time - startTime);
+				this.GetComponent<GUITexture>().color = Color.Lerp (originalColor, targetColor, Time.time - startTime);
 				//Time.timeScale = state;
 				yield return null;
 			}

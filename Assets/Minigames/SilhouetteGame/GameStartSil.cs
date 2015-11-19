@@ -41,7 +41,7 @@ namespace MinigameSilhouette {
 					buttonCubes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
 					buttonCubes[menuRows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
 					buttonCubes[menuRows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(menuColumns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(menuRows, 2)),-1);//move them
-					buttonCubes[menuRows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
+					buttonCubes[menuRows*i + o].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
 					
 					buttonPlanes[menuRows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
 					buttonPlanes[menuRows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
@@ -52,10 +52,10 @@ namespace MinigameSilhouette {
 					
 					buttonCubes[menuRows*i + o].transform.parent = buttonPlanes[menuRows*i + o].transform;//make plane parent of cube
 					
-					buttonPlanes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-					buttonCubes[menuRows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+					buttonPlanes[menuRows*i + o].GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+					buttonCubes[menuRows*i + o].GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");//set shader
 					
-					Destroy(buttonPlanes[menuRows*i + o].collider);
+					Destroy(buttonPlanes[menuRows*i + o].GetComponent<Collider>());
 					buttonPlanes[menuRows*i + o].AddComponent<BoxCollider>();
 					Rigidbody gameObjectsRigidBody = buttonPlanes[menuRows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
 					gameObjectsRigidBody.mass = 5;//set weight
@@ -65,13 +65,13 @@ namespace MinigameSilhouette {
 				}
 			}
 			buttonPlanes [0].name = "2x2";
-			buttonPlanes [0].renderer.material.mainTexture = Resources.Load("Textures/Menu/2x2") as Texture2D;
+			buttonPlanes [0].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/Menu/2x2") as Texture2D;
 			buttonPlanes [1].name = "2x3";
-			buttonPlanes [1].renderer.material.mainTexture = Resources.Load("Textures/Menu/2x3") as Texture2D;
+			buttonPlanes [1].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/Menu/2x3") as Texture2D;
 			buttonPlanes [2].name = "3x4";
-			buttonPlanes [2].renderer.material.mainTexture = Resources.Load("Textures/Menu/3x4") as Texture2D;
+			buttonPlanes [2].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/Menu/3x4") as Texture2D;
 			buttonPlanes [3].name = "4x4";
-			buttonPlanes [3].renderer.material.mainTexture = Resources.Load("Textures/Menu/4x4") as Texture2D;
+			buttonPlanes [3].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/Menu/4x4") as Texture2D;
 		}
 		
 		private Ray ray;
@@ -104,8 +104,8 @@ namespace MinigameSilhouette {
 			{
 				if(chosenButton != buttons[i])
 				{
-					buttons[i].rigidbody.useGravity = true;
-					buttons[i].rigidbody.AddForce(chosenButton.transform.position * (-100));
+					buttons[i].GetComponent<Rigidbody>().useGravity = true;
+					buttons[i].GetComponent<Rigidbody>().AddForce(chosenButton.transform.position * (-100));
 				}
 			}
 			

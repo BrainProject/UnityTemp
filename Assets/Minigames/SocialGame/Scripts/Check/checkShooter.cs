@@ -50,9 +50,9 @@ namespace SocialGame{
 				{
 					checker.addCheck(shoot.transform);
 				}
-				if(shoot.rigidbody)
+				if(shoot.GetComponent<Rigidbody>())
 				{
-					shoot.rigidbody.AddForce(Vector3.down * power,ForceMode.Impulse);
+					shoot.GetComponent<Rigidbody>().AddForce(Vector3.down * power,ForceMode.Impulse);
 				}
 			}
 		}

@@ -36,9 +36,9 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
         {
             waitAfterClicked -= Time.deltaTime;
         }
-        if (transform.rigidbody.velocity.y > 0)
+        if (transform.GetComponent<Rigidbody>().velocity.y > 0)
         {
-            transform.rigidbody.velocity = new Vector3();
+            transform.GetComponent<Rigidbody>().velocity = new Vector3();
         }
         if (transform.position.y <= 0)
         {
@@ -74,7 +74,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
                     if ((Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) && waitAfterClicked <= 0)
                     {
                         clicked = false;
-                        this.rigidbody.useGravity = true;
+                        this.GetComponent<Rigidbody>().useGravity = true;
                     }
                 }
             }
@@ -121,7 +121,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             {
                 clicked = true;
                 someSphereMove = true;
-                this.rigidbody.useGravity = false;
+                this.GetComponent<Rigidbody>().useGravity = false;
                 lastClicked = true;
                 animatedUp = true;
             }
@@ -182,7 +182,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
     public void setIdColor(string id, Color color)
     {
         this.idColor = id;
-        renderer.material.color = color;
+        GetComponent<Renderer>().material.color = color;
     }
 
 
@@ -203,7 +203,7 @@ public class LondonToweSphereScript : MonoBehaviour, System.IComparable<LondonTo
             if (clicked)
             {
                 clicked = false;
-                this.rigidbody.useGravity = true;
+                this.GetComponent<Rigidbody>().useGravity = true;
             }
         }
     }

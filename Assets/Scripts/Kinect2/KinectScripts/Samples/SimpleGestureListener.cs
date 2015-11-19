@@ -29,7 +29,7 @@ namespace Kinect
 			
 			if(GestureInfo != null)
 			{
-				GestureInfo.guiText.text = "SwipeLeft, SwipeRight, Squat, Push or Pull.";
+				GestureInfo.GetComponent<GUIText>().text = "SwipeLeft, SwipeRight, Squat, Push or Pull.";
 			}
 		}
 		
@@ -37,7 +37,7 @@ namespace Kinect
 		{
 			if(GestureInfo != null)
 			{
-				GestureInfo.guiText.text = string.Empty;
+				GestureInfo.GetComponent<GUIText>().text = string.Empty;
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace Kinect
 			{
 				string sGestureText = string.Format ("{0} detected, zoom={1:F1}%", gesture, screenPos.z * 100);
 				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
+					GestureInfo.GetComponent<GUIText>().text = sGestureText;
 				
 				progressDisplayed = true;
 			}
@@ -66,7 +66,7 @@ namespace Kinect
 			{
 				string sGestureText = string.Format ("{0} detected, angle={1:F1} deg", gesture, screenPos.z);
 				if(GestureInfo != null)
-					GestureInfo.guiText.text = sGestureText;
+					GestureInfo.GetComponent<GUIText>().text = sGestureText;
 				
 				progressDisplayed = true;
 			}
@@ -80,7 +80,7 @@ namespace Kinect
 	//			sGestureText += string.Format(" at ({0:F1}, {1:F1})", screenPos.x, screenPos.y);
 			
 			if(GestureInfo != null)
-				GestureInfo.guiText.text = sGestureText;
+				GestureInfo.GetComponent<GUIText>().text = sGestureText;
 			
 			progressDisplayed = false;
 			
@@ -94,7 +94,7 @@ namespace Kinect
 			{
 				// clear the progress info
 				if(GestureInfo != null)
-					GestureInfo.guiText.text = String.Empty;
+					GestureInfo.GetComponent<GUIText>().text = String.Empty;
 				
 				progressDisplayed = false;
 			}

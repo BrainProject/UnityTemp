@@ -26,9 +26,9 @@ namespace MainScene {
 		void Start()
 		{
 			CanSelect = false;
-			icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+			icon.GetComponent<Renderer>().material.color = new Color(icon.GetComponent<Renderer>().material.color.r, icon.GetComponent<Renderer>().material.color.g, icon.GetComponent<Renderer>().material.color.b, 0);
 			icon.transform.position = this.transform.parent.transform.position;
-			originalColor = this.renderer.material.color;
+			originalColor = this.GetComponent<Renderer>().material.color;
 			initialMouseOver = true;
 		}
 
@@ -44,7 +44,7 @@ namespace MainScene {
 				StartCoroutine("FadeIn");
 
                 //highlight material
-                this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
+                this.GetComponent<Renderer>().material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 				initialMouseOver = false;
 			}
 		}
@@ -58,7 +58,7 @@ namespace MainScene {
 			   )
 				StartCoroutine("FadeOut");
 
-			this.renderer.material.color = originalColor;
+			this.GetComponent<Renderer>().material.color = originalColor;
 		}
 #endif
 		void OnMouseOver()
@@ -72,7 +72,7 @@ namespace MainScene {
 				if(Input.GetButtonDown ("Fire1"))
 				{
 					//highlight material
-					this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
+					this.GetComponent<Renderer>().material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 
                     print("Going into brain part: '" + brainPartToLoad + "'");
                     MGC mgc = MGC.Instance;
@@ -111,13 +111,13 @@ namespace MainScene {
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeOut");
-			Color startColor = icon.renderer.material.color;
-			Color targetColor = icon.renderer.material.color;
+			Color startColor = icon.GetComponent<Renderer>().material.color;
+			Color targetColor = icon.GetComponent<Renderer>().material.color;
 			targetColor.a = 1;
 			
-			while(icon.renderer.material.color.a < 1)
+			while(icon.GetComponent<Renderer>().material.color.a < 1)
 			{
-				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				icon.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 		}
@@ -126,17 +126,17 @@ namespace MainScene {
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
-			Color startColor = icon.renderer.material.color;
-			Color targetColor = icon.renderer.material.color;
+			Color startColor = icon.GetComponent<Renderer>().material.color;
+			Color targetColor = icon.GetComponent<Renderer>().material.color;
 			targetColor.a = 0;
 			
-			while(icon.renderer.material.color.a > 0)
+			while(icon.GetComponent<Renderer>().material.color.a > 0)
 			{
-				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				icon.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;
 			}
 
-			icon.renderer.material.color = targetColor;
+			icon.GetComponent<Renderer>().material.color = targetColor;
 		}
 	}
 }

@@ -207,7 +207,10 @@ public class MGC : Singleton<MGC>
         //should the KinectManager be active?
         //Debug.Log ("Windows version: " + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor);
 
+
         StartCoroutine(CheckKinect());
+        
+        
         /*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
         {
             if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
@@ -711,6 +714,17 @@ public class MGC : Singleton<MGC>
 
         kinectManagerInstance = KinectManager.Instance;
         int sensorsCount = 0;
+
+
+        try
+        {
+            Debug.Log("Is kinect initialized: " + KinectManager.Instance.IsInitialized());
+        }
+        catch (NullReferenceException)
+        {
+            yield break;
+        }
+
 
         if (KinectManager.Instance.IsInitialized())
         {

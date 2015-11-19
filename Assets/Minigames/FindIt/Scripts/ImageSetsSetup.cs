@@ -201,7 +201,7 @@ namespace FindIt
                 //else g.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
                 else g.transform.localScale = new Vector3(0.30f, 0.30f, 0.30f);
 
-                g.renderer.material.mainTexture = Resources.LoadAll<Texture2D>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[0];
+                g.GetComponent<Renderer>().material.mainTexture = Resources.LoadAll<Texture2D>(defResPacks[(menuRows - 1 - i) * menuColumns + j])[0];
 
                 ChooseImageSet chis = g.AddComponent<ChooseImageSet>();
                 chis.custom = false;
@@ -234,7 +234,7 @@ namespace FindIt
                 else g.transform.localScale = new Vector3(0.30f, 0.30f, 0.30f);
 
                 WWW www = new WWW("file:///" + file);
-                g.renderer.material.mainTexture = www.texture;
+                g.GetComponent<Renderer>().material.mainTexture = www.texture;
 
                 ChooseImageSet chis = g.GetComponent<ChooseImageSet>();
                 chis.custom = true;

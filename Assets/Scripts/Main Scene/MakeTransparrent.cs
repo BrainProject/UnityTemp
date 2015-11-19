@@ -25,18 +25,18 @@ namespace MainScene
 #endif
 			clicked = false;
 			fading = false;
-			originalColor = this.renderer.material.color;
-			targetColor = this.renderer.material.color;
+			originalColor = this.GetComponent<Renderer>().material.color;
+			targetColor = this.GetComponent<Renderer>().material.color;
 			targetColor.a = alpha;
             if (MGC.Instance.fromSelection)
 			{
-				this.renderer.material.color = targetColor;
+				this.GetComponent<Renderer>().material.color = targetColor;
 				originalColor = targetColor;
 			}
 			else
 			{
 				originalColor.a = 1.0f;
-				this.renderer.material.color = originalColor;
+				this.GetComponent<Renderer>().material.color = originalColor;
 			}
 		}
 		
@@ -59,7 +59,7 @@ namespace MainScene
 
             if (fading)
             {
-                this.renderer.material.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) / 4);
+                this.GetComponent<Renderer>().material.color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) / 4);
             }
 		}
 	}

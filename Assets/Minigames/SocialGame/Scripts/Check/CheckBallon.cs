@@ -44,7 +44,7 @@ namespace SocialGame{
 				{
 					if(render)
 						ballon.setColor(render.color);
-					ballon.setJoint(basket.rigidbody2D);
+					ballon.setJoint(basket.GetComponent<Rigidbody2D>());
 				}
 			}
 			GameObject.Destroy(gameObject);
