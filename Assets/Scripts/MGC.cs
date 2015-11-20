@@ -722,6 +722,8 @@ public class MGC : Singleton<MGC>
         }
         catch (NullReferenceException)
         {
+            kinectManagerObject.SetActive(false);
+            isKinectUsed = false;
             yield break;
         }
 
