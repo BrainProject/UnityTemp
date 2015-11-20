@@ -123,7 +123,7 @@ namespace Game
 					MGC.Instance.minigamesGUI.hide();
 					
 					//return back
-					if(Application.loadedLevel > 4)	//TODO: Update minimal minigame level index
+					if(Application.loadedLevel > 5)	//TODO: Update minimal minigame level index
 					{
 						if(Application.loadedLevelName == "Coloring")
 						{
@@ -133,12 +133,16 @@ namespace Game
 								coloringLM.backGUI.BackAction();
 							}
 							else
-								MGC.Instance.sceneLoader.LoadScene("Crossroad");
+								MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
 						}
 						else
-							MGC.Instance.sceneLoader.LoadScene("Crossroad");
+							MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
 					}
-					else if(Application.loadedLevel == 2)
+                    else if(Application.loadedLevelName == "DifficultyChooser")
+                    {
+                        MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                    }
+					else if(Application.loadedLevelName == "GameSelection")
 					{
 						//Zoom out in selection scene if zoomed to some minigame.
 						//Go to brain scene if not zoomed.
@@ -151,7 +155,7 @@ namespace Game
 						else
 							cm.ZoomOutCamera();
 					}
-					else if(Application.loadedLevel == 4)
+					else if(Application.loadedLevelName == "TiledMenu")
 					{
 						hide();
 						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);

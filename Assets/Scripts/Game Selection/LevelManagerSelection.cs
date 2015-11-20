@@ -51,7 +51,9 @@ namespace MinigameSelection
 			Camera.main.transform.position = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.position;
 			Camera.main.transform.rotation = Camera.main.GetComponent<CameraControl> ().currentWaypoint.transform.rotation;
 			MGC.Instance.fromMain = false;
-		}
+            MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive(true);
+            MGC.Instance.minigamesGUI.backIcon.show();
+        }
 
 		public void FadeInOutKinectIcon()
 		{
