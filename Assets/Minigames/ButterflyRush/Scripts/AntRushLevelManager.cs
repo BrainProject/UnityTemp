@@ -43,7 +43,8 @@ public class AntRushLevelManager : MonoBehaviour {
 
 	void SpawnCacoon()
 	{
-		Vector2 spawnPos = Camera.main.ScreenToWorldPoint (new Vector2 (Random.Range (0, Screen.width), Random.Range (0, Screen.height)));
+		Vector2 spawnPos = Camera.main.ScreenToWorldPoint (new Vector2 (Random.Range (Screen.width / 5, Screen.width - Screen.width / 5),
+                                                                        Random.Range (Screen.height / 4, Screen.height - Screen.height / 4)));
 		Instantiate (cocoonPrefab, spawnPos, Quaternion.identity);
 		++cocoonCount;
 	}

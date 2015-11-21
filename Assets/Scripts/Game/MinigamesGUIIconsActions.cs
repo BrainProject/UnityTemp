@@ -125,18 +125,29 @@ namespace Game
 					//return back
 					if(Application.loadedLevel > 5)	//TODO: Update minimal minigame level index
 					{
-						if(Application.loadedLevelName == "Coloring")
-						{
-							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
-							if(coloringLM.painting)
-							{
-								coloringLM.backGUI.BackAction();
-							}
-							else
-								MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
-						}
-						else
-							MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+                        if (Application.loadedLevelName == "Coloring")
+                        {
+                            Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+                            if (coloringLM.painting)
+                            {
+                                coloringLM.backGUI.BackAction();
+                            }
+                            else
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                            }
+                        }
+                        else
+                        {
+                            if (MGC.Instance.getSelectedMinigameProperties().MaxDifficulty > 0)
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+                            }
+                            else
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                            }
+                        }
 					}
                     else if(Application.loadedLevelName == "DifficultyChooser")
                     {

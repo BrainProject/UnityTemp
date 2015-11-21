@@ -74,7 +74,7 @@ namespace MainScene {
 					//highlight material
 					this.GetComponent<Renderer>().material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 
-                    print("Going into brain part: '" + brainPartToLoad + "'");
+                    //print("Going into brain part: '" + brainPartToLoad + "'");
                     MGC mgc = MGC.Instance;
 					
                     mgc.currentBrainPart = brainPartToLoad;
@@ -92,7 +92,7 @@ namespace MainScene {
 #if UNITY_STANDALONE
 				OnMouseEnter();
 #endif
-				print ("Mouse over from initial animation.");
+				//print ("Mouse over from initial animation.");
 			}
 		}
 
