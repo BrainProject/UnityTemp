@@ -297,9 +297,9 @@ public class MGC : Singleton<MGC>
 			touchBlockTimestamp = Time.time;
             ResetMinigamesStatistics();
         }
-       
-    
-    //PC ...
+
+
+        //PC ...
 #else
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -337,10 +337,11 @@ public class MGC : Singleton<MGC>
 			if(Application.loadedLevelName == gameSelectionSceneName)
 				Application.LoadLevel(gameSelectionSceneName);
 		}
+    
+#endif
 
-		
-		//Change of menu types
-		if(Input.GetKeyDown(KeyCode.Keypad0))
+        //Change of menu types
+        if (Input.GetKeyDown(KeyCode.Keypad0))
 		{
 			menuType = MenuType.None;
 			Debug.Log("Changed menu type to default.");
@@ -361,7 +362,6 @@ public class MGC : Singleton<MGC>
 			Debug.Log("Changed menu type to gsi.");
 		}
 
-    #endif
         
         //Inactivity detection
         if (Input.anyKeyDown)
