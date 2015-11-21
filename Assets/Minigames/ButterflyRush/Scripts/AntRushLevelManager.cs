@@ -11,6 +11,7 @@ public class AntRushLevelManager : MonoBehaviour {
 	public GameObject butterflyPrefab;
 
     private float timestamp;
+    private bool isGameFinished;
 
 	void Awake()
 	{
@@ -32,7 +33,7 @@ public class AntRushLevelManager : MonoBehaviour {
 	{
 		if(Time.time - timestamp > durationBetweenSpawn)
 		{
-			if(!MGC.Instance.minigamesGUI.visible)
+			if(!isGameFinished)
             {
 				SpawnCacoon();
                 timestamp = Time.time;
@@ -50,7 +51,8 @@ public class AntRushLevelManager : MonoBehaviour {
 	public void CheckVictory()
 	{
 		if(cocoonCount == 0)
-		{
+        {
+            isGameFinished = true;
             MGC.Instance.WinMinigame();
 		}
 	}
