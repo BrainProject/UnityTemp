@@ -248,25 +248,24 @@ public class MGC : Singleton<MGC>
             {
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_D);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_D);
-                Debug.Log("d");
             }
             else if (((initialTouchPosition.x - Input.mousePosition.x) > swipeDistance.x))
             {
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_A);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_A);
-                Debug.Log("a");
             }
+        }
+        if (Input.GetMouseButtonUp(0) && (initialTouchPosition.y != 0))
+        {
             if (((initialTouchPosition.y - Input.mousePosition.y) < -swipeDistance.y))
             {
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_W);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_W);
-                Debug.Log("w");
             }
             else if (((initialTouchPosition.y - Input.mousePosition.y) > swipeDistance.y))
             {
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_S);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_S);
-                Debug.Log("S");
             }
             initialTouchPosition = Vector2.zero;
         }
