@@ -37,7 +37,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
             diffSlider.minValue = 0;
             diffSlider.maxValue = maxDiff;
             diffSlider.value = props.stats.DifficutlyLastPlayed;
-			print("Mini-game offers " + (maxDiff+1)+ " difficulties." );
+			print("Mini-game '" + props.readableName + "' offers " + (maxDiff+1)+ " difficulties." );
 
             int x;
             int shiftX = 2160 / maxDiff;

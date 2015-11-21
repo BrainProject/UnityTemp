@@ -125,19 +125,37 @@ namespace Game
 					//return back
 					if(Application.loadedLevel > 5)	//TODO: Update minimal minigame level index
 					{
-						if(Application.loadedLevelName == "Coloring")
-						{
-							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
-							if(coloringLM.painting)
-							{
-								coloringLM.backGUI.BackAction();
-							}
-							else
-								MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
-						}
-						else
-							MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+                        // Coloring mini-game se special treatment...
+                        if (Application.loadedLevelName == "Coloring")
+                        {
+                            Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+                            if (coloringLM.painting)
+                            {
+                                coloringLM.backGUI.BackAction();
+                            }
+                            else
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                            }
+                        }
+
+                        //back button in other mini-games
+                        else
+                        {
+                            int maxDiff = MGC.Instance.getSelectedMinigameProperties().MaxDifficulty;
+                            print("game has maxDiff: " + maxDiff);
+                            if(maxDiff == 0)
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                            }
+                            else
+                            {
+                                MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+                            }
+                            
+                        }
 					}
+
                     else if(Application.loadedLevelName == "DifficultyChooser")
                     {
                         MGC.Instance.sceneLoader.LoadScene("Crossroad");

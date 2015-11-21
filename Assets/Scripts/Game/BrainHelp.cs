@@ -119,7 +119,9 @@ namespace Game
 
 		void OnLevelWasLoaded(int level)
 		{
-			if(MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == Application.loadedLevelName)
+            //help appears only in mini-games, not in initial menu scenes
+            
+			if((Application.loadedLevel > 5) && MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == Application.loadedLevelName)
 			{
 				newHelp.helpObject.helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
 				questionMark.SetActive (MGC.Instance.getSelectedMinigameProperties().helpPrefab);
@@ -144,33 +146,6 @@ namespace Game
 				newHelp.helpObject.helpPrefab = null;
 				questionMark.SetActive (false);
 			}
-
-
-
-
-//			helpExists = false;
-//			if(helpObject)
-//			{
-//				Destroy(helpObject);
-//			}
-//			
-//			if(level == 2)
-//			{
-//				helpTexture = (Texture)(Resources.Load("Textures/HelpText"));
-//				ShowHelpBubble(true);
-//			}
-//			else if(level > 2)
-//			{
-//				//if(!MGC.Instance.minigamesProperties.GetPlayed(Application.loadedLevelName))
-//				//{
-//					ShowHelpBubble(true);
-//				//}
-//			}
-//			else
-//			{
-//				helpExists = false;
-//				helpTexture = null;
-//			}
 		}
 
 		public void ShowSmile(Texture smileTexture)

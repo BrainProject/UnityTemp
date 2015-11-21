@@ -72,11 +72,13 @@ public class MGC : Singleton<MGC>
 	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";
 	public GameObject confetti;
+
     /// <summary>
     /// Logs players actions
     /// </summary>
     internal Logger logger;
     internal SceneLoader sceneLoader;
+
     internal Minigames minigamesProperties;
     internal GameObject kinectManagerObject;
     internal KinectManager kinectManagerInstance;

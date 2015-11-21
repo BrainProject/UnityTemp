@@ -23,35 +23,7 @@ namespace Game
 
         public void Start()
         {
-            //TODO following comments are used just as reference for poor-memory humans, to see the names and difficulties...
-            //MinigameProperties hanoi = new MinigameProperties("HanoiTowers", 4);
-            //minigames.Add(hanoi);
-            //MinigameProperties london = new MinigameProperties("LondonTowerGUIMenu", 3, "LondonTowerGame");
-            //minigames.Add(london);
-            //MinigameProperties pexeso = new MinigameProperties("Pexeso", 3);
-            //minigames.Add(pexeso);
-            //MinigameProperties similarities = new MinigameProperties("Similarities", 3);
-            //minigames.Add(similarities);
-            //MinigameProperties silhouette = new MinigameProperties("Silhouettes", 3);
-            //minigames.Add(silhouette);
-            //MinigameProperties puzzle = new MinigameProperties("PuzzleChoosePicture", 2, "PuzzleGame");
-            //minigames.Add(puzzle);
-            //MinigameProperties coloring = new MinigameProperties("Coloring");
-            //minigames.Add(coloring);
-            //MinigameProperties findIt = new MinigameProperties("FindIt", 2, "FindItGame");
-            //minigames.Add(findIt);
-            //MinigameProperties socialGame = new MinigameProperties("_XSocialGame");
-            //minigames.Add(socialGame);
-            //MinigameProperties dodge = new MinigameProperties("Dodge");
-            //minigames.Add(dodge);
-            //MinigameProperties figure = new MinigameProperties("Figure");
-            //minigames.Add(figure);
-            //MinigameProperties interaction = new MinigameProperties("Interaction");
-            //minigames.Add(interaction);
-            //MinigameProperties repeat = new MinigameProperties("Repeat");
-            //minigames.Add(repeat);
-            //MinigameProperties cooperative = new MinigameProperties("Cooperative");
-            //minigames.Add(cooperative);
+
         }
 
         /// <summary>
