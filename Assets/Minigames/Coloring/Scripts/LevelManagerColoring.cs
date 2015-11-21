@@ -30,7 +30,7 @@ namespace Coloring
 			timestamp = -2;
 
 #if UNITY_ANDROID
-			neuronMaterial = GameObject.Find("Neuron_body").renderer.material;
+			neuronMaterial = GameObject.Find("Neuron_body").GetComponent<Renderer>().material;
 			neuronOriginalColor = neuronMaterial.color;
 #endif
 		}

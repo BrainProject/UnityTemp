@@ -114,9 +114,10 @@ public class MGC : Singleton<MGC>
     private float inactivityLenght = 60f;
     private int inactivityCounter = 1;
     private GameObject controlsGUI;
-	private bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
-#if UNITY_ANDROID
-	private float touchBlockTimestamp;
+#if UNITY_STANDALONE
+    private bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
+#elif UNITY_ANDROID
+    private float touchBlockTimestamp;
 #endif
 
 
@@ -415,16 +416,18 @@ public class MGC : Singleton<MGC>
 
 		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
 		{
-			if(isKinectUsed && !kinectManagerObject.activeSelf)
+#if UNITY_STANDALONE
+            if(isKinectUsed && !kinectManagerObject.activeSelf)
 			{
 				kinectManagerObject.SetActive(true);
 				kinectManagerInstance.ClearKinectUsers();
 				kinectManagerInstance.Start();
 				kinectManagerInstance.avatarControllers.Clear();
 			}
-			
-			
-			if(!mouseCursor.activeSelf)
+#endif
+
+
+            if (!mouseCursor.activeSelf)
 			{
 				ShowCustomCursor(true);
 			}
@@ -493,13 +496,13 @@ public class MGC : Singleton<MGC>
 		{
 			sceneLoader.LoadScene(gameSelectionSceneName);
 		}
-		#endif
+#endif
     }
 
 
     public void ShowCustomCursor(bool isShown)
     {
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 		Debug.Log("No cursor on Android is needed.");
 #else
         if (isShown)

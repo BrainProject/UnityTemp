@@ -21,7 +21,7 @@ namespace MainScene
 		void Start () 
         {
 #if UNITY_ANDROID
-			this.renderer.material.shader = Shader.Find("Transparent/Diffuse");
+			this.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
 #endif
 			clicked = false;
 			fading = false;

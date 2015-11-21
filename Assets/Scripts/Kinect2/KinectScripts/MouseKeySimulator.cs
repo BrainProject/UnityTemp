@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace Kinect.Win32{
 	public class MouseKeySimulator{
-		#if UNITY_STANDALONE
 		//Import cursor set method
 		[DllImport("user32.dll",CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int SetCursorPos(int x, int y);
@@ -783,6 +782,5 @@ namespace Kinect.Win32{
 		/// Up arrow key
 		/// </summary>
 		UP = 0x26,
-		#endif	
 	}
 }

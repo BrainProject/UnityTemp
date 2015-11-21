@@ -47,7 +47,7 @@ namespace Coloring
 
 				
 #if UNITY_ANDROID
-				thisLevelManager.neuronMaterial.color = Brush.renderer.material.color;
+				thisLevelManager.neuronMaterial.color = Brush.GetComponent<Renderer>().material.color;
 #endif
 				thisLevelManager.brush = cursorTexture;
 			}

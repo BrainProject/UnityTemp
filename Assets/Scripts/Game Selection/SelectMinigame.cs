@@ -1,5 +1,5 @@
 /*
- * Created by: Milan DoleÅ¾al
+ * Created by: Milan DoleĂ…Âľal
  */ 
 
 using UnityEngine;
@@ -41,9 +41,9 @@ namespace MinigameSelection
 #if !UNITY_STANDALONE
 			if(kinectRequired)
 			{
-				this.renderer.material.color = Color.gray;
+				this.GetComponent<Renderer>().material.color = Color.gray;
 				this.GetComponent<SelectMinigame>().enabled = false;
-				this.collider.enabled = false;
+				this.GetComponent<Collider>().enabled = false;
 			}
 #endif
 
