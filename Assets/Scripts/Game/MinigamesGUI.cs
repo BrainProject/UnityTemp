@@ -52,13 +52,7 @@ namespace Game
 					brainIcon.show ();
 					break;
 				}
-			case MenuType.GSI:
-				{
-					gameSelectionIcon.thisButton.enabled = true;
-					gameSelectionIcon.show ();
-					break;
-				}
-			case MenuType.Tiles:
+			default:
 				{
 					menuIcon.thisButton.enabled = true;
 					menuIcon.show ();
@@ -71,11 +65,14 @@ namespace Game
 				
 			guiDetection.guiIsHidden = false;
 
-			if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
-			{
-				if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
-					showHelpIcon.show ();
-			}
+            if(MGC.Instance.neuronHelp)
+            { 
+			    if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
+			    {
+				    if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+					    showHelpIcon.show ();
+			    }
+            }
 
 			MGC.Instance.TakeControlForGUIAction(true);
         }
@@ -90,14 +87,17 @@ namespace Game
 			guiDetection.guiIsHidden = true;
 			showHelpIcon.hide ();
 
-			
-			if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
-			{
-				if(!MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
-				{
-					MGC.Instance.TakeControlForGUIAction(false);
-				}
-			}
+
+            if (MGC.Instance.neuronHelp)
+            {
+                if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
+                {
+                    if (!MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+                    {
+                        MGC.Instance.TakeControlForGUIAction(false);
+                    }
+                }
+            }
         }
 
 		void OnLevelWasLoaded (int level)

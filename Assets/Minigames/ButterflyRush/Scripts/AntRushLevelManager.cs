@@ -6,9 +6,11 @@ public class AntRushLevelManager : MonoBehaviour {
 	
 	public int cocoonCount;
 	public int startCount = 10;
+    public float durationBetweenSpawn = 5;
 	public GameObject cocoonPrefab;
 	public GameObject butterflyPrefab;
-	public GameObject victoryGUI;
+
+    private float timestamp;
 
 	void Awake()
 	{
@@ -21,13 +23,19 @@ public class AntRushLevelManager : MonoBehaviour {
 		}
 	}
 
+    void Start()
+    {
+        timestamp = Time.time;
+    }
+
 	void Update()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(Time.time - timestamp > durationBetweenSpawn)
 		{
-			if(!victoryGUI.activeSelf)
-			{
+			if(!MGC.Instance.minigamesGUI.visible)
+            {
 				SpawnCacoon();
+                timestamp = Time.time;
 			}
 		}
 	}
@@ -41,10 +49,9 @@ public class AntRushLevelManager : MonoBehaviour {
 
 	public void CheckVictory()
 	{
-		if(cocoonCount <= 0)
+		if(cocoonCount == 0)
 		{
-			victoryGUI.SetActive(true);
-			Debug.Log("VICTORY");
+            MGC.Instance.WinMinigame();
 		}
 	}
 

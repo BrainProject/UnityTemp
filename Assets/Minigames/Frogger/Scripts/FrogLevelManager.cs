@@ -12,7 +12,6 @@ public class FrogLevelManager : MonoBehaviour {
     public GameObject waterSplashPrefab;
     public Transform lakeBorder;
     public Transform frogSpawn;
-    public GameObject winScreen;
 
     public List<FrogGoal> frogGoals;
 
@@ -33,10 +32,10 @@ public class FrogLevelManager : MonoBehaviour {
         return true;
     }
 
-    public void RestartLevel()
-    {
-        Application.LoadLevel(Application.loadedLevel);
-    }
+    //public void RestartLevel()
+    //{
+    //    Application.LoadLevel(Application.loadedLevel);
+    //}
 
     public GameObject GetRandomBoatPrefab()
     {

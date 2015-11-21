@@ -10,7 +10,7 @@ public enum VehicleType
 public class VehicleSpawner : MonoBehaviour {
     //public int roadIndex = 0;
     public int minimalSpawnDelay;
-    public int roadLineSpeed;
+    public float roadLineSpeed;
     public VehicleType type;
 
 
@@ -21,6 +21,8 @@ public class VehicleSpawner : MonoBehaviour {
 
     void Start()
     {
+
+        roadLineSpeed += (1.5f * MGC.Instance.selectedMiniGameDiff);
         thisLevelManager = FrogLevelManager.Instance;
         randomer = Random.Range(0, minimalSpawnDelay * 2);
         lastSpawnTime = Time.time;

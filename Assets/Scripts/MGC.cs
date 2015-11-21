@@ -119,6 +119,12 @@ public class MGC : Singleton<MGC>
 	private float touchBlockTimestamp;
 #endif
 
+
+
+
+    private Vector2 initialTouchPosition = Vector2.zero;
+    private Vector2 swipeDistance = Vector2.zero;
+
     void Awake()
     {
 #if UNITY_EDITOR
@@ -209,8 +215,8 @@ public class MGC : Singleton<MGC>
 
 
         StartCoroutine(CheckKinect());
-        
-        
+
+
         /*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
         {
             if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
@@ -223,12 +229,50 @@ public class MGC : Singleton<MGC>
 #else
 		kinectManagerObject.SetActive(false);
 #endif
+        swipeDistance = new Vector2(Screen.width / 4, Screen.width / 3);
     }
 
     void Update()
     {
 
-    #if UNITY_ANDROID
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            initialTouchPosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0) && (initialTouchPosition.x != 0))
+        {
+            if (((initialTouchPosition.x - Input.mousePosition.x) < -swipeDistance.x))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_D);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_D);
+                Debug.Log("d");
+            }
+            else if (((initialTouchPosition.x - Input.mousePosition.x) > swipeDistance.x))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_A);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_A);
+                Debug.Log("a");
+            }
+            if (((initialTouchPosition.y - Input.mousePosition.y) < -swipeDistance.y))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_W);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_W);
+                Debug.Log("w");
+            }
+            else if (((initialTouchPosition.y - Input.mousePosition.y) > swipeDistance.y))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_S);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_S);
+                Debug.Log("S");
+            }
+            initialTouchPosition = Vector2.zero;
+        }
+
+
+#if UNITY_ANDROID
         //if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
         //{
         //    touchBlockTimestamp = Time.time;
@@ -254,7 +298,7 @@ public class MGC : Singleton<MGC>
        
     
     //PC ...
-    #else
+#else
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();

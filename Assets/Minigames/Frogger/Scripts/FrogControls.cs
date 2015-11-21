@@ -166,7 +166,7 @@ public class FrogControls : MonoBehaviour {
                 MoveToParentsPosition();
                 if (thisLevelManager.IsGoalComplete())
                 {
-                    thisLevelManager.winScreen.SetActive(true);
+                    MGC.Instance.WinMinigame();
                 }
                 else
                 {
