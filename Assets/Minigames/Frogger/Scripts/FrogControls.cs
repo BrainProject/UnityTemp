@@ -30,7 +30,53 @@ namespace Frogger
                     RespawnFrog();
                 }
             }
+#if UNITY_ANDROID
+            if (canControl)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    MGC.Instance.initialTouchPosition = Input.mousePosition;
+                }
 
+                if (Input.GetMouseButtonUp(0) && (MGC.Instance.initialTouchPosition.x != 0))
+                {
+                    if (((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && transform.position.x < 10)
+                    {
+                        CheckBoat(transform.right);
+                        transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
+                        MoveToParentsPosition();
+                    }
+                    else if (((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && transform.position.x > -10)
+                    {
+                        CheckBoat(-transform.right);
+                        transform.position = new Vector3(transform.position.x - 2, transform.position.y, transform.position.z);
+                        MoveToParentsPosition();
+                    }
+                    CheckDrowned();
+                    MGC.Instance.initialTouchPosition.x = 0;
+                }
+                if (Input.GetMouseButtonUp(0) && (MGC.Instance.initialTouchPosition.y != 0))
+                {
+                    if (((MGC.Instance.initialTouchPosition.y - Input.mousePosition.y) < -MGC.Instance.swipeDistance.y))
+                    {
+                        CheckBoat(transform.forward);
+                        if (!isSafe)
+                        {
+                            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 3);
+                            MoveToParentsPosition();
+                        }
+                    }
+                    else if (((MGC.Instance.initialTouchPosition.y - Input.mousePosition.y) > MGC.Instance.swipeDistance.y) && transform.position.z > -7)
+                    {
+                        CheckBoat(-transform.forward);
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 3);
+                        MoveToParentsPosition();
+                    }
+                    CheckDrowned();
+                    MGC.Instance.initialTouchPosition.y = 0;
+                }
+            }
+#else
             // Input handling
             if (canControl)
             {
@@ -70,6 +116,7 @@ namespace Frogger
                     CheckDrowned();
                 }
             }
+#endif
         }
 
         void OnTriggerEnter(Collider other)

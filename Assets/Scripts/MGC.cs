@@ -125,8 +125,8 @@ public class MGC : Singleton<MGC>
 
 
 
-    private Vector2 initialTouchPosition = Vector2.zero;
-    private Vector2 swipeDistance = Vector2.zero;
+    internal Vector2 initialTouchPosition = Vector2.zero;
+    internal Vector2 swipeDistance = Vector2.zero;
 
     void Awake()
     {

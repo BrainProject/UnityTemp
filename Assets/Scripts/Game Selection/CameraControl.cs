@@ -37,7 +37,7 @@ namespace MinigameSelection
 			this.transform.rotation = currentWaypoint.transform.rotation;
 			this.transform.position = currentWaypoint.transform.position;
 //#if UNITY_ANDROID
-//			swipeDistance = Screen.width/4;
+			//swipeDistance = Screen.width/4;
 //#endif
 		}
 		
@@ -51,16 +51,16 @@ namespace MinigameSelection
 
 			//print (currentWaypoint.name);
 			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
-            /*
+            
 #if UNITY_ANDROID
 			if(Input.GetMouseButtonDown(0))
 			{
-				initialTouchPosition = Input.mousePosition.x;
+				MGC.Instance.initialTouchPosition.x = Input.mousePosition.x;
 			}
 
-			if(Input.GetMouseButtonUp(0) && (initialTouchPosition != 0))
+			if(Input.GetMouseButtonUp(0) && (MGC.Instance.initialTouchPosition.x != 0))
 			{
-				if(((initialTouchPosition - Input.mousePosition.x) < -swipeDistance) && !movingLeft)
+				if(((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
@@ -76,7 +76,7 @@ namespace MinigameSelection
 					movingRight = false;
 					SetNewTarget();
 				}
-				else if(((initialTouchPosition - Input.mousePosition.x) > swipeDistance) && !movingRight)
+				else if(((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
@@ -92,9 +92,9 @@ namespace MinigameSelection
 					movingRight = true;
 					SetNewTarget();
 				}
-				initialTouchPosition = 0;
+                MGC.Instance.initialTouchPosition = Vector2.zero;
 			}
-#else*/
+#else
 				if(Input.GetButtonDown("Horizontal") || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
 				{
 					if((Input.GetAxis("Horizontal") < 0 || Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
@@ -130,7 +130,7 @@ namespace MinigameSelection
 						SetNewTarget();
 					}
 				}
-//#endif
+#endif
 
 
 			if(movingLeft || movingRight)
