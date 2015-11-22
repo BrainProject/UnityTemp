@@ -239,7 +239,7 @@ public class MGC : Singleton<MGC>
     {
 
 
-
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             initialTouchPosition = Input.mousePosition;
@@ -257,6 +257,7 @@ public class MGC : Singleton<MGC>
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_A);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_A);
             }
+            initialTouchPosition.x = 0;
         }
         if (Input.GetMouseButtonUp(0) && (initialTouchPosition.y != 0))
         {
@@ -270,8 +271,8 @@ public class MGC : Singleton<MGC>
                 Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_S);
                 Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_S);
             }
-            initialTouchPosition = Vector2.zero;
-        }
+            initialTouchPosition.y = 0;
+        }*/
 
 
 #if UNITY_ANDROID
@@ -292,10 +293,22 @@ public class MGC : Singleton<MGC>
             }
         }
 
-        if(Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+        if(Input.touchCount == 10 && ((Time.time - touchBlockTimestamp) > 2))
 		{
 			touchBlockTimestamp = Time.time;
             ResetMinigamesStatistics();
+        }
+
+
+        if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+        {
+            menuType = MenuType.Brain;
+            touchBlockTimestamp = Time.time;
+        }
+        if (Input.touchCount == 5 && ((Time.time - touchBlockTimestamp) > 2))
+        {
+            menuType = MenuType.Tiles;
+            touchBlockTimestamp = Time.time;
         }
 
 
@@ -619,8 +632,7 @@ public class MGC : Singleton<MGC>
 					TakeControlForGUIEvent(isShown);
 			}
 		}
-	}
-
+    }
 
     void InactivityReaction()
     {

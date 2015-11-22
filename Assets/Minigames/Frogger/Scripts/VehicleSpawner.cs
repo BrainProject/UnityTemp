@@ -1,66 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum VehicleType
+namespace Frogger
 {
-    Car,
-    Boat
-}
-
-public class VehicleSpawner : MonoBehaviour {
-    //public int roadIndex = 0;
-    public int minimalSpawnDelay;
-    public float roadLineSpeed;
-    public VehicleType type;
-
-
-
-    FrogLevelManager thisLevelManager;
-    int randomer;
-    float lastSpawnTime;
-
-    void Start()
+    public enum VehicleType
     {
-
-        roadLineSpeed += (1.5f * MGC.Instance.selectedMiniGameDiff);
-        thisLevelManager = FrogLevelManager.Instance;
-        randomer = Random.Range(0, minimalSpawnDelay * 2);
-        lastSpawnTime = Time.time;
-        SpawnNewVehicle();
+        Car,
+        Boat
     }
 
-    void Update()
+    public class VehicleSpawner : MonoBehaviour
     {
-        if ((Time.time - (lastSpawnTime + randomer + minimalSpawnDelay)) > 0)
+        //public int roadIndex = 0;
+        public int minimalSpawnDelay;
+        public float roadLineSpeed;
+        public VehicleType type;
+
+
+
+        FrogLevelManager thisLevelManager;
+        int randomer;
+        float lastSpawnTime;
+
+        void Start()
         {
-            lastSpawnTime = Time.time;
+
+            roadLineSpeed += (1.5f * MGC.Instance.selectedMiniGameDiff);
+            thisLevelManager = FrogLevelManager.Instance;
             randomer = Random.Range(0, minimalSpawnDelay * 2);
+            lastSpawnTime = Time.time;
             SpawnNewVehicle();
         }
-    }
 
-    void SpawnNewVehicle()
-    {
-        switch (type)
+        void Update()
         {
-            case VehicleType.Car:
-                {
-                    if (thisLevelManager.carPrefabs.Count > 0)
+            if ((Time.time - (lastSpawnTime + randomer + minimalSpawnDelay)) > 0)
+            {
+                lastSpawnTime = Time.time;
+                randomer = Random.Range(0, minimalSpawnDelay * 2);
+                SpawnNewVehicle();
+            }
+        }
+
+        void SpawnNewVehicle()
+        {
+            switch (type)
+            {
+                case VehicleType.Car:
                     {
-                        GameObject newCar = Instantiate(thisLevelManager.GetRandomCarPrefab(), this.transform.position, this.transform.rotation) as GameObject;
-                        newCar.GetComponent<Rigidbody>().velocity = transform.right * roadLineSpeed;
+                        if (thisLevelManager.carPrefabs.Count > 0)
+                        {
+                            GameObject newCar = Instantiate(thisLevelManager.GetRandomCarPrefab(), this.transform.position, this.transform.rotation) as GameObject;
+                            newCar.GetComponent<Rigidbody>().velocity = transform.right * roadLineSpeed;
+                        }
+                        break;
                     }
-                    break;
-                }
-            case VehicleType.Boat:
-                {
-                    if (thisLevelManager.boatPrefabs.Count > 0)
+                case VehicleType.Boat:
                     {
-                        GameObject newBoat = Instantiate(thisLevelManager.GetRandomBoatPrefab(), this.transform.position, this.transform.rotation) as GameObject;
-                        newBoat.GetComponent<Rigidbody>().velocity = transform.right * roadLineSpeed;
+                        if (thisLevelManager.boatPrefabs.Count > 0)
+                        {
+                            GameObject newBoat = Instantiate(thisLevelManager.GetRandomBoatPrefab(), this.transform.position, this.transform.rotation) as GameObject;
+                            newBoat.GetComponent<Rigidbody>().velocity = transform.right * roadLineSpeed;
+                        }
+                        break;
                     }
-                    break;
-                }
+            }
         }
     }
 }
