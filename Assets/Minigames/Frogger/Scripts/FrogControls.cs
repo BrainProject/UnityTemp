@@ -13,6 +13,7 @@ namespace Frogger
 
         private FrogLevelManager thisLevelManager;
         private bool canControl = true;
+        private float tapTimestamp;
 
         void Start()
         {
@@ -33,9 +34,26 @@ namespace Frogger
 #if UNITY_ANDROID
             if (canControl)
             {
+                
                 if (Input.GetMouseButtonDown(0))
                 {
+                    tapTimestamp = Time.time;
                     MGC.Instance.initialTouchPosition = Input.mousePosition;
+                }
+
+                if(Input.GetMouseButtonUp(0))
+                {
+                    Debug.Log("Tap duration: " + (Time.time - tapTimestamp));
+                    if(Time.time - tapTimestamp < 0.2f)
+                    {
+                        CheckBoat(transform.forward);
+                        if (!isSafe)
+                        {
+                            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 3);
+                            MoveToParentsPosition();
+                        }
+                        CheckDrowned();
+                    }
                 }
 
                 if (Input.GetMouseButtonUp(0) && (MGC.Instance.initialTouchPosition.x != 0))

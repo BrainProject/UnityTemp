@@ -11,13 +11,13 @@ namespace Game
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 0.5f;
+        public float fadeSpeed = 1f;
 
         private float speed;
         private Color transparentColor;
 		private Color opaqueColor;
 		private float startTime;
-		private string levelName;
+		internal string levelName;
 
         private Image fadePanel;
 

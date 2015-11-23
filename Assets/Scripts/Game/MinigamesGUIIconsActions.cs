@@ -82,11 +82,11 @@ namespace Game
 
 				case "GameSelection":
 	            {
-	                //hide GUI
-	                MGC.Instance.minigamesGUI.hide();
-
 	                //return to game selection scene
-	                MGC.Instance.sceneLoader.LoadScene(2);
+                    MGC.Instance.sceneLoader.LoadScene(2);
+
+                    //hide GUI
+                    MGC.Instance.minigamesGUI.hide();
 
 					break;
 	            }

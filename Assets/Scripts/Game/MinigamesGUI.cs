@@ -87,7 +87,8 @@ namespace Game
 			guiDetection.guiIsHidden = true;
 			showHelpIcon.hide ();
 
-
+            screenshotIcon.hide();
+            
             if (MGC.Instance.neuronHelp)
             {
                 if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
