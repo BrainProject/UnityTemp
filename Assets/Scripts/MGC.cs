@@ -775,7 +775,7 @@ public class MGC : Singleton<MGC>
         kinectManagerInstance = KinectManager.Instance;
         int sensorsCount = 0;
 
-
+        /*
         try
         {
             Debug.Log("Is kinect initialized: " + KinectManager.Instance.IsInitialized());
@@ -816,7 +816,7 @@ public class MGC : Singleton<MGC>
             kinectManagerObject.SetActive(false);
 			Debug.Log("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
 			isKinectUsed = false;
-        }
+        }*/
 #else
 		yield return null;
 #endif

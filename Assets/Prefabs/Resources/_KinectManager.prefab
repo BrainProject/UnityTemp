@@ -99,8 +99,10 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400000
@@ -111,11 +113,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b531f336dfee5f438f94ed501caefc7, type: 3}
+  m_Script: {fileID: 11500000, guid: ee5a24a3f04a7814e91144b681bd2241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDefaultKM: 1
   sensorHeight: 1
   sensorAngle: 0
+  autoHeightAngle: 0
   computeUserMap: 0
   computeColorMap: 0
   computeInfraredMap: 0
@@ -126,16 +130,21 @@ MonoBehaviour:
   useMultiSourceReader: 0
   minUserDistance: .5
   maxUserDistance: 0
+  maxTrackedUsers: 6
   detectClosestUser: 1
   ignoreInferredJoints: 1
+  lateUpdateAvatars: 0
   smoothing: 1
   useBoneOrientationConstraints: 1
+  allowTurnArounds: 0
+  allowedHandRotations: 1
   avatarControllers: []
   playerCalibrationPose: 0
-  playerCommonGestures: 070000000a0000000b000000080000000900000015000000
+  playerCommonGestures: 070000000a0000000b00000008000000090000001b000000
   minTimeBetweenGestures: .699999988
   gestureListeners: []
   calibrationText: {fileID: 0}
+  gesturesDebugText: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,17 +153,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a669d15f0035bbf4889c8092b5bcd201, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cfb044c3a9fa2f49a6a299bc4e20263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   useHandCursor: 1
   gripHandTexture: {fileID: 0}
   releaseHandTexture: {fileID: 0}
   normalHandTexture: {fileID: 0}
-  smoothFactor: 5
+  smoothFactor: 3
+  allowHandClicks: 1
   controlMouseCursor: 1
   controlMouseDrag: 1
-  convertMouseToFullScreen: 0
   debugText: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
@@ -194,9 +204,60 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: autoHeightAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: controlMouseCursor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ignoreInferredJoints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: useBoneOrientationConstraints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[0]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[2]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[3]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[4]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerCommonGestures.Array.data[5]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: controlMouseDrag
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

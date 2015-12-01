@@ -21,7 +21,7 @@ namespace SocialGame{
 		// Update the avatar each frame.
 		public override void UpdateAvatar(Int64 UserID)
 		{	
-			LastUserID = UserID;
+			playerId = UserID;
 			
 			if(!transform.gameObject.activeInHierarchy) 
 				return;
@@ -64,8 +64,8 @@ namespace SocialGame{
 			if(realPosition && kinectManager && (UserID != 0) && run)
 			{
 				newPos = this.transform.position;
-				Debug.Log(" pos:" + kinectManager.GetUserPosition(LastUserID).x + "id: " + LastUserID);
-				newPos.x = kinectManager.GetUserPosition(LastUserID).x;
+				Debug.Log(" pos:" + kinectManager.GetUserPosition(playerId).x + "id: " + playerId);
+				newPos.x = kinectManager.GetUserPosition(playerId).x;
 				this.transform.position = newPos;
 			}
 		}
