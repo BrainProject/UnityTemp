@@ -37,11 +37,6 @@ public class MenuCrossroad : MonoBehaviour {
 
 		switch (menuType) 
 		{
-		case MenuType.None:
-		{
-			errorPanel.gameObject.SetActive(true);
-			break;
-		}
 		case MenuType.Brain:
 		{
 			Application.LoadLevel (brainMenuScene);
@@ -59,8 +54,13 @@ public class MenuCrossroad : MonoBehaviour {
 			Application.LoadLevel (GSIMenuScene);
 			MGC.Instance.mainSceneName = GSIMenuScene;
 			break;
-		}
-		}
+        }
+        default:
+        {
+            errorPanel.gameObject.SetActive(true);
+            break;
+        }
+        }
 	}
 
 

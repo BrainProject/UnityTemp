@@ -18,7 +18,7 @@ namespace MinigameSelection
 			OnSelection = false;
 			print ("this is game selection scene...");
 
-			kinectRequiredIcon.guiTexture.pixelInset = new Rect (0, 0, Screen.width / 16 * 2, Screen.height / 9 * 2);
+			kinectRequiredIcon.GetComponent<GUITexture>().pixelInset = new Rect (0, 0, Screen.width / 16 * 2, Screen.height / 9 * 2);
 
 			switch (MGC.Instance.currentBrainPart) {
 			case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;
@@ -64,30 +64,30 @@ namespace MinigameSelection
 		IEnumerator FadeInOutKinect()
 		{
 			float startTime = Time.time;
-			Color startColor = kinectRequiredIcon.guiTexture.color;
-			Color targetColor = kinectRequiredIcon.guiTexture.color;
+			Color startColor = kinectRequiredIcon.GetComponent<GUITexture>().color;
+			Color targetColor = kinectRequiredIcon.GetComponent<GUITexture>().color;
 			targetColor.a = 1;
 			
-			while(kinectRequiredIcon.guiTexture.color.a < 0.51f)
+			while(kinectRequiredIcon.GetComponent<GUITexture>().color.a < 0.51f)
 			{
-				kinectRequiredIcon.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.GetComponent<GUITexture>().color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 
 			yield return new WaitForSeconds (1);
 
 			startTime = Time.time;
-			startColor = kinectRequiredIcon.guiTexture.color;
-			targetColor = kinectRequiredIcon.guiTexture.color;
+			startColor = kinectRequiredIcon.GetComponent<GUITexture>().color;
+			targetColor = kinectRequiredIcon.GetComponent<GUITexture>().color;
 			targetColor.a = 0;
 			
-			while(kinectRequiredIcon.guiTexture.color.a > 0.01f)
+			while(kinectRequiredIcon.GetComponent<GUITexture>().color.a > 0.01f)
 			{
-				kinectRequiredIcon.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.GetComponent<GUITexture>().color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
 
-			kinectRequiredIcon.guiTexture.color = targetColor;
+			kinectRequiredIcon.GetComponent<GUITexture>().color = targetColor;
 		}
 	}
 }

@@ -3430,6 +3430,7 @@ namespace Kinect
             bool[] playerJointsTracked = new bool[iAllJointsCount];
             Vector3[] playerJointsPos = new Vector3[iAllJointsCount];
 
+
             int[] aiNeededJointIndexes = KinectGestures.GetNeededJointIndexes(instance);
             int iNeededJointsCount = aiNeededJointIndexes.Length;
 

@@ -484,7 +484,7 @@ namespace Kinect
                                 sensorInt = null;
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             //Debug.Log(ex);
 

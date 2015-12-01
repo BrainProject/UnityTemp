@@ -103,13 +103,20 @@ namespace Game
 
         public MinigameProperties GetMinigame(string minigameName)
         {
-            foreach (MinigameProperties game in minigames)
+            try
             {
-                //print("checking mini-game: '" + game.readableName + "'");
-                if (game.mainScene == minigameName || game.initialScene == minigameName)
+                foreach (MinigameProperties game in minigames)
                 {
-                    return game;
+                    //print("checking mini-game: '" + game.readableName + "'");
+                    if (game.mainScene == minigameName || game.initialScene == minigameName)
+                    {
+                        return game;
+                    }
                 }
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.LogWarning("Minigame properties get failed.\n" + ex);
             }
 
             Debug.LogWarning("properties of mini-game: '" + minigameName + "' not found!"); 

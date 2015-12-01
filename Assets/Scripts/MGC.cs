@@ -688,20 +688,27 @@ public class MGC : Singleton<MGC>
 
     public void startMiniGame(string name)
     {
-        //store the name of selected minigame
-        selectedMiniGameName = name;
-
-        // check, if difficulty is applicable for this mini-game
-        // if not, run it directly
-        if (getSelectedMinigameProperties().MaxDifficulty == 0)
+        try
         {
-            sceneLoader.LoadScene(selectedMiniGameName);
+            //store the name of selected minigame
+            selectedMiniGameName = name;
+
+            // check, if difficulty is applicable for this mini-game
+            // if not, run it directly
+            if (getSelectedMinigameProperties().MaxDifficulty == 0)
+            {
+                sceneLoader.LoadScene(selectedMiniGameName);
+            }
+
+            // first, load difficulty chooser scene, mini-game will be loaded from that scene
+            else
+            {
+                sceneLoader.LoadScene("DifficultyChooser");
+            }
         }
-
-        // first, load difficulty chooser scene, mini-game will be loaded from that scene
-        else
+        catch(NullReferenceException ex)
         {
-            sceneLoader.LoadScene("DifficultyChooser");
+            Debug.LogWarning("Minigame not did not start correctly.\n" + ex);
         }
     }
 
