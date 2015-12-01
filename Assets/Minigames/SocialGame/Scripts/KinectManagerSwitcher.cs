@@ -45,7 +45,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 				KinectManager thisManager = thisLevelKManager.GetComponent<KinectManager>();
 				thisManager.ClearKinectUsers();
 
-				thisManager.Start();
+				//thisManager.Start();
 			}
 			else
 			{
@@ -69,8 +69,9 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			else if (active) 
 			{
 				MGC.Instance.ShowCustomCursor (true);
-				MGC.Instance.kinectManagerInstance.ClearKinectUsers();
-				MGC.Instance.kinectManagerInstance.Start();
+                //MGC.Instance.kinectManagerInstance.StartKinect();
+                MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+				//MGC.Instance.kinectManagerInstance.Start();
 				MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
 			}
 		}
