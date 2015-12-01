@@ -57,7 +57,7 @@ namespace SocialGame{
 					multi= -1;
 
 				Counter countSrcipt = counter.GetComponent<Counter>();
-				Debug.Log(countSrcipt);
+				//Debug.Log(countSrcipt);
 				if(countSrcipt)
 				{
 					countSrcipt.addPoints(points * multi);

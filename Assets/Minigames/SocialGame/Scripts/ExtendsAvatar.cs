@@ -64,7 +64,7 @@ namespace SocialGame{
 			if(realPosition && kinectManager && (UserID != 0) && run)
 			{
 				newPos = this.transform.position;
-				Debug.Log(" pos:" + kinectManager.GetUserPosition(playerId).x + "id: " + playerId);
+				//Debug.Log(" pos:" + kinectManager.GetUserPosition(playerId).x + "id: " + playerId);
 				newPos.x = kinectManager.GetUserPosition(playerId).x;
 				this.transform.position = newPos;
 			}
