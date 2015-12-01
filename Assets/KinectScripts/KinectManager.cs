@@ -1663,7 +1663,7 @@ namespace Kinect
         // KinectManager's Internal Methods
 
 
-        void Awake()
+        public void Awake()
         {
             try
             {
@@ -1711,12 +1711,7 @@ namespace Kinect
 
         }
 
-        public void Start()
-        {
-            //StartKinect();
-        }
-
-        void StartKinect()
+        public void StartKinect()
         {
             try
             {

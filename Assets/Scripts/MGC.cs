@@ -436,7 +436,7 @@ public class MGC : Singleton<MGC>
 			{
 				kinectManagerObject.SetActive(true);
 				kinectManagerInstance.ClearKinectUsers();
-				kinectManagerInstance.Start();
+				//kinectManagerInstance.StartKinect();
 				kinectManagerInstance.avatarControllers.Clear();
 			}
 #endif
@@ -480,37 +480,44 @@ public class MGC : Singleton<MGC>
     public void LoadMinigamesStatisticsFromFile()
     {
 #if !UNITY_WEBPLAYER
-        if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
+        try
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/mini-games.stats", FileMode.Open);
-            FileInfo info = new FileInfo(file.Name);
-            if (info.Length > 0)
+            if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
             {
-                for (int i = 0; i < minigamesProperties.minigames.Count; ++i)
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/mini-games.stats", FileMode.Open);
+                FileInfo info = new FileInfo(file.Name);
+                if (info.Length > 0)
                 {
-                    minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
-                }
+                    for (int i = 0; i < minigamesProperties.minigames.Count; ++i)
+                    {
+                        minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
+                    }
 
-                print("Saved mini-games statistics was loaded.");
+                    print("Saved mini-games statistics was loaded.");
+                }
+                else
+                {
+                    Debug.LogError("Saved mini-games statistics was NOT loaded.");
+                }
+                file.Close();
             }
+
+            // if file doesn't exists, allocate new statistics and save initial version of file
             else
             {
-                Debug.LogError("Saved mini-games statistics was NOT loaded.");
+                ResetMinigamesStatistics();
             }
-            file.Close();
-        }
 
-        // if file doesn't exists, allocate new statistics and save initial version of file
-        else
+		    if (Application.loadedLevelName == gameSelectionSceneName)
+		    {
+			    sceneLoader.LoadScene(gameSelectionSceneName);
+		    }
+        }
+        catch (EndOfStreamException ex)
         {
-            ResetMinigamesStatistics();
+            Debug.LogWarning("Minigame statistics not loaded because of EndOfStreamException!\n" + ex);
         }
-
-		if (Application.loadedLevelName == gameSelectionSceneName)
-		{
-			sceneLoader.LoadScene(gameSelectionSceneName);
-		}
 #endif
     }
 
@@ -773,9 +780,14 @@ public class MGC : Singleton<MGC>
         }
 
         kinectManagerInstance = KinectManager.Instance;
-        int sensorsCount = 0;
 
-        /*
+        if(!kinectManagerInstance.IsInitialized())
+        {
+            kinectManagerObject.SetActive(false);
+        }
+        /*int sensorsCount = 0;
+
+        
         try
         {
             Debug.Log("Is kinect initialized: " + KinectManager.Instance.IsInitialized());

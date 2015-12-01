@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 namespace Game
 {
@@ -50,9 +51,9 @@ namespace Game
 
                 MGC.Instance.SaveMinigamesStatisticsToFile();
             }
-            catch(NullReferenceException)
+            catch(NullReferenceException ex)
             {
-                Debug.LogWarning("Played property of the current minigame is not set beacuse of the NullReferenceException.");
+                Debug.LogWarning("Played property of the current minigame is not set beacuse of the NullReferenceException.\n" + ex);
             }
         }
 
@@ -86,9 +87,9 @@ namespace Game
                     }
                 }
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
-                Debug.LogWarning("Played successfully property of the current minigame is not set beacuse of the NullReferenceException.");
+                Debug.LogWarning("Played successfully property of the current minigame is not set beacuse of the NullReferenceException.\n" + ex);
             }
         }
 
@@ -178,27 +179,33 @@ namespace Game
 		
 		internal void loadConfigurationsfromFile()
 		{
-			print("Loading mini-games configurations from file...");
-            //get instance of prefab
-            GameObject mgParent = Instantiate(Resources.Load("mini-games-configuration")) as GameObject;
-
-            mgParent.transform.parent = this.transform; 
-
-            //for each mini-game
-            foreach (Transform child in mgParent.transform)
+            try
             {
-                //TODO checks...
+                print("Loading mini-games configurations from file...");
+                //get instance of prefab
+                GameObject mgParent = Instantiate(Resources.Load("mini-games-configuration")) as GameObject;
+
+                mgParent.transform.parent = this.transform;
+
+                //for each mini-game
+                foreach (Transform child in mgParent.transform)
+                {
+                    //TODO checks...
                     // if there is scene with such name
-                MinigameProperties props = child.GetComponent<MinigameProperties>();
-                print("   loading mini-game: '" + props.readableName + "'");
-                minigames.Add(props);
+                    MinigameProperties props = child.GetComponent<MinigameProperties>();
+                    print("   loading mini-game: '" + props.readableName + "'");
+                    minigames.Add(props);
+                }
+
+                print("   Mini-games configurations loaded: " + minigames.Count);
+
+                //get rid of prefab instance
+                //Destroy(mgParent);
             }
-
-            print("   Mini-games configurations loaded: " + minigames.Count);
-
-            //get rid of prefab instance
-            //Destroy(mgParent);
-
+            catch (EndOfStreamException ex)
+            {
+                Debug.LogWarning("Minigame configurations not loaded because of EndOfStreamException!\n" + ex);
+            }
         }
     }
 }
