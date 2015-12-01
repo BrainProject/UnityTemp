@@ -103,7 +103,7 @@ namespace Game
 		void OnLevelWasLoaded (int level)
 		{
 			//handle back icon visibility
-			if (Application.loadedLevel > 1)
+			if (Application.loadedLevel > 0)
 				backIcon.gameObject.SetActive(true);
 			else
 				backIcon.gameObject.SetActive(false);
