@@ -41,8 +41,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400004}
-  - 131: {fileID: 13100000}
-  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: MouseCursor
   m_TagString: Untagged
@@ -157,47 +155,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
-  useHandCursor: 1
+  useHandCursor: 0
   gripHandTexture: {fileID: 0}
   releaseHandTexture: {fileID: 0}
   normalHandTexture: {fileID: 0}
-  smoothFactor: 3
+  smoothFactor: 5
   allowHandClicks: 1
   controlMouseCursor: 1
   controlMouseDrag: 1
   debugText: {fileID: 0}
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56d5fdd38a86eb4a9ea82816f0af233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursorNormal: {fileID: 2800000, guid: e7ce4c73cd4503343ac3a8b050224a7e, type: 3}
-  cursorDrag: {fileID: 2800000, guid: 1f5092c753e725643a02c6322ec846b5, type: 3}
---- !u!131 &13100000
-GUITexture:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: e7ce4c73cd4503343ac3a8b050224a7e, type: 3}
-  m_Color: {r: .5, g: .5, b: .5, a: .5}
-  m_PixelInset:
-    serializedVersion: 2
-    x: -16
-    y: -20
-    width: 32
-    height: 40
-  m_LeftBorder: 0
-  m_RightBorder: 0
-  m_TopBorder: 0
-  m_BottomBorder: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -205,6 +171,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: avatarControllers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: playerCommonGestures.Array.size
       value: 6
@@ -256,6 +226,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: controlMouseDrag
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: avatarControllers.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: useHandCursor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: smoothFactor
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

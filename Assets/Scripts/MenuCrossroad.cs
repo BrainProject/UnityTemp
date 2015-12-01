@@ -14,10 +14,11 @@ public class MenuCrossroad : MonoBehaviour {
 	public GameObject errorPanel;
 	public MenuType menuType;
 	public string brainMenuScene;
-	public string tilesMenuScene;
+    public string tilesMenuScene;
+    public string GSIMenuScene;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
 	{
 		// override menuType if MGC has already set some (from splash screen)
 		// if returning from some other scene, the menuType will just get rewritten
@@ -55,8 +56,8 @@ public class MenuCrossroad : MonoBehaviour {
 		}
 		case MenuType.GSI:
 		{
-			Application.LoadLevel (brainMenuScene);	// GSI specific menu is missing, used brain menu instead
-			MGC.Instance.mainSceneName = brainMenuScene;
+			Application.LoadLevel (GSIMenuScene);
+			MGC.Instance.mainSceneName = GSIMenuScene;
 			break;
 		}
 		}

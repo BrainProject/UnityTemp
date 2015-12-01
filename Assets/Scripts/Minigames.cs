@@ -1,8 +1,7 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace Game
 {
@@ -36,18 +35,25 @@ namespace Game
         {
             print("Now playing minigame: '" + minigameName + "', with diff: " + diff);
 
-            foreach (MinigameProperties gameProps in minigames)
+            try
             {
-                if (gameProps.mainScene == minigameName || gameProps.initialScene == minigameName)
+                foreach (MinigameProperties gameProps in minigames)
                 {
-                    gameProps.stats.played = true;
-                    gameProps.stats.playedCount[diff] += 1;
-                    gameProps.stats.DifficutlyLastPlayed = diff;
-                    break;
+                    if (gameProps.mainScene == minigameName || gameProps.initialScene == minigameName)
+                    {
+                        gameProps.stats.played = true;
+                        gameProps.stats.playedCount[diff] += 1;
+                        gameProps.stats.DifficutlyLastPlayed = diff;
+                        break;
+                    }
                 }
-            }
 
-            MGC.Instance.SaveMinigamesStatisticsToFile();
+                MGC.Instance.SaveMinigamesStatisticsToFile();
+            }
+            catch(NullReferenceException)
+            {
+                Debug.LogWarning("Played property of the current minigame is not set beacuse of the NullReferenceException.");
+            }
         }
 
 		/// <summary>
@@ -70,12 +76,19 @@ namespace Game
 		
 		public void SetSuccessfullyPlayed(string minigameName, int diff = 0)
 		{
-			foreach (MinigameProperties game in minigames)
+            try
             {
-                if (game.mainScene == minigameName || game.initialScene == minigameName)
+                foreach (MinigameProperties game in minigames)
                 {
-                    game.stats.finishedCount[diff] += 1;
+                    if (game.mainScene == minigameName || game.initialScene == minigameName)
+                    {
+                        game.stats.finishedCount[diff] += 1;
+                    }
                 }
+            }
+            catch (NullReferenceException)
+            {
+                Debug.LogWarning("Played successfully property of the current minigame is not set beacuse of the NullReferenceException.");
             }
         }
 
