@@ -82,11 +82,11 @@ namespace Game
 
 				case "GameSelection":
 	            {
-	                //return to game selection scene
-                    MGC.Instance.sceneLoader.LoadScene(2);
+	                //hide GUI
+	                MGC.Instance.minigamesGUI.hide();
 
-                    //hide GUI
-                    MGC.Instance.minigamesGUI.hide();
+	                //return to game selection scene
+	                MGC.Instance.sceneLoader.LoadScene(2);
 
 					break;
 	            }
@@ -125,41 +125,41 @@ namespace Game
 					//return back
 					if(Application.loadedLevel > 5)	//TODO: Update minimal minigame level index
 					{
-                        // Coloring mini-game se special treatment...
-                        if (Application.loadedLevelName == "Coloring")
-                        {
-                            Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
-                            if (coloringLM.painting)
-                            {
-                                coloringLM.backGUI.BackAction();
-                            }
-                            else
-                            {
-                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
-                            }
-                        }
-
-                        //back button in other mini-games
-                        else
-                        {
-                            int maxDiff = MGC.Instance.getSelectedMinigameProperties().MaxDifficulty;
-                            print("game has maxDiff: " + maxDiff);
-                            if(maxDiff == 0)
-                            {
-                                MGC.Instance.sceneLoader.LoadScene("Crossroad");
-                            }
-                            else
-                            {
-                                MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
-                            }
-                            
-                        }
+						// Coloring mini-game se special treatment...
+						if (Application.loadedLevelName == "Coloring")
+						{
+							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+							if (coloringLM.painting)
+							{
+								coloringLM.backGUI.BackAction();
+							}
+							else
+							{
+								MGC.Instance.sceneLoader.LoadScene("Crossroad");
+							}
+						}
+						
+						//back button in other mini-games
+						else
+						{
+							int maxDiff = MGC.Instance.getSelectedMinigameProperties().MaxDifficulty;
+							print("game has maxDiff: " + maxDiff);
+							if(maxDiff == 0)
+							{
+								MGC.Instance.sceneLoader.LoadScene("Crossroad");
+							}
+							else
+							{
+								MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+							}
+							
+						}
 					}
-
-                    else if(Application.loadedLevelName == "DifficultyChooser")
-                    {
-                        MGC.Instance.sceneLoader.LoadScene("Crossroad");
-                    }
+					
+					else if(Application.loadedLevelName == "DifficultyChooser")
+					{
+						MGC.Instance.sceneLoader.LoadScene("Crossroad");
+					}
 					else if(Application.loadedLevelName == "GameSelection")
 					{
 						//Zoom out in selection scene if zoomed to some minigame.
@@ -178,7 +178,7 @@ namespace Game
 						hide();
 						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);
 					}
-
+					
 					
 					break;
 				}

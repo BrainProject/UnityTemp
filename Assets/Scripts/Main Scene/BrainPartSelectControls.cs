@@ -32,6 +32,10 @@ namespace MainScene
 				cameraAnimation.SetBool("start", true);
 				cameraAnimation.speed = 100;
 			}
+			MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive (false);
+			Color tmp = MGC.Instance.minigamesGUI.backIcon.thisImage.color;
+			tmp.a = 0;
+			MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
 		}
 		
 		void Update()
