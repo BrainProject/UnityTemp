@@ -32,34 +32,45 @@ public class MenuCrossroad : MonoBehaviour {
 			MGC.Instance.menuType = menuType;
 		}
 
-
-		
-
-		switch (menuType) 
-		{
-		case MenuType.Brain:
-		{
-			Application.LoadLevel (brainMenuScene);
-			MGC.Instance.mainSceneName = brainMenuScene;
-			break;
-		}
-		case MenuType.Tiles:
-		{
-			Application.LoadLevel (tilesMenuScene);
-			MGC.Instance.mainSceneName = tilesMenuScene;
-			break;
-		}
-		case MenuType.GSI:
-		{
-			Application.LoadLevel (GSIMenuScene);
-			MGC.Instance.mainSceneName = GSIMenuScene;
-			break;
-        }
-        default:
+#if UNITY_STANDALONE
+        // clear KinectManager
+        if (MGC.Instance.isKinectUsed && !MGC.Instance.kinectManagerObject.activeSelf)
         {
-            errorPanel.gameObject.SetActive(true);
-            break;
+            bool bNeedRestart = false;
+            Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+            MGC.Instance.kinectManagerObject.SetActive(true);
+            MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+            MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
+            MGC.Instance.kinectManagerInstance.StartKinect();
         }
+#endif
+        MGC.Instance.sceneLoader.doFade = true;
+
+        switch (menuType)
+        {
+            case MenuType.Brain:
+                {
+                    MGC.Instance.mainSceneName = brainMenuScene;
+                    Application.LoadLevel(brainMenuScene);
+                    break;
+                }
+            case MenuType.Tiles:
+                {
+                    MGC.Instance.mainSceneName = tilesMenuScene;
+                    Application.LoadLevel(tilesMenuScene);
+                    break;
+                }
+            case MenuType.GSI:
+                {
+                    MGC.Instance.mainSceneName = GSIMenuScene;
+                    Application.LoadLevel(GSIMenuScene);
+                    break;
+                }
+            default:
+                {
+                    errorPanel.gameObject.SetActive(true);
+                    break;
+                }
         }
 	}
 

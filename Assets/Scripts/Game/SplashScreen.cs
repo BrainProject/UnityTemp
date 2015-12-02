@@ -31,7 +31,8 @@ namespace Game
 
             //following line not only print something, but also create instance of MGC (if this is the first call...)
             print("Initialization of master game controller: " + MGC.Instance);
-		}
+            MGC.Instance.ShowCustomCursor(false);
+        }
 
 		void Update()
 		{

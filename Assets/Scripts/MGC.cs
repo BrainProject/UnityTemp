@@ -116,8 +116,9 @@ public class MGC : Singleton<MGC>
     private float inactivityLenght = 60f;
     private int inactivityCounter = 1;
     private GameObject controlsGUI;
+
 #if UNITY_STANDALONE
-    private bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
+    internal bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
 #elif UNITY_ANDROID
     private float touchBlockTimestamp;
 #endif
@@ -397,12 +398,12 @@ public class MGC : Singleton<MGC>
         inactivityTimestamp = Time.time;
         inactivityCounter = 0;
         print("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
-        MGC.Instance.logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
+        logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
 
         //perform fade in?
-        if (MGC.Instance.sceneLoader.doFade)
+        if (sceneLoader.doFade)
         {
-            MGC.Instance.sceneLoader.FadeIn();
+            sceneLoader.FadeIn();
         }
 
 		if (minigamesProperties.GetPlayed (Application.loadedLevelName))
@@ -429,26 +430,31 @@ public class MGC : Singleton<MGC>
 //            gameObject.guiTexture.enabled = false;
 //        }
 
-		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
-		{
-#if UNITY_STANDALONE
-            if(isKinectUsed && !kinectManagerObject.activeSelf)
-			{
-				kinectManagerObject.SetActive(true);
-				kinectManagerInstance.ClearKinectUsers();
-				//kinectManagerInstance.StartKinect();
-				kinectManagerInstance.avatarControllers.Clear();
-			}
-#endif
+//		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
+//		{
+//#if UNITY_STANDALONE
+//            if(isKinectUsed && !kinectManagerObject.activeSelf)
+//			{
+//				kinectManagerObject.SetActive(true);
+//				kinectManagerInstance.ClearKinectUsers();
+//				//kinectManagerInstance.StartKinect();
+//				kinectManagerInstance.avatarControllers.Clear();
+//			}
+//#endif
 
 
-            if (!mouseCursor.activeSelf)
-			{
-				ShowCustomCursor(true);
-			}
+            //if (!mouseCursor.activeSelf)
+			//{
+				//ShowCustomCursor(true);
+			//}
 
-			isControlTakenForGUI = false;
-		}
+		//	isControlTakenForGUI = false;
+		//}
+
+        if(Application.loadedLevelName == "Crossroad")
+        {
+            ShowCustomCursor(true);
+        }
     }
 
     /// <summary>

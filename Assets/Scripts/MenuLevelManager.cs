@@ -16,18 +16,21 @@ namespace MinigameSelection
 		private int currentlySelectedSectionIndex;
 		private int previouslySelectedSectionIndex;
 
-		void Awake()
-		{
-			Instance = this;
+        void Awake()
+        {
+            Instance = this;
 			Debug.Log ("Creating " + MGC.Instance);
 		}
 
-		void Start()
-		{
-			MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive (false);
-			Color tmp = MGC.Instance.minigamesGUI.backIcon.thisImage.color;
-			tmp.a = 0;
-			MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
+        void Start()
+        {
+            if (MGC.Instance.minigamesGUI.backIcon.thisImage)
+            {
+                MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive(false);
+                Color tmp = MGC.Instance.minigamesGUI.backIcon.thisImage.color;
+                tmp.a = 0;
+                MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
+            }
 			blockPanel.SetActive (false);
 		}
 
