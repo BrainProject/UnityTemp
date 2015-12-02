@@ -616,6 +616,27 @@ public class MGC : Singleton<MGC>
         //}
     }
 
+    /// <summary>
+    /// Resets Kinect to the default state.
+    /// </summary>
+    public void ResetKinect()
+    {
+        if (kinectManagerObject.activeSelf)
+        {
+            Debug.Log("Kinect settings are being reset.");
+            bool bNeedRestart = false;
+            Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+            kinectManagerObject.SetActive(true);
+            kinectManagerInstance.ClearKinectUsers();
+            kinectManagerInstance.avatarControllers.Clear();
+            kinectManagerInstance.StartKinect();
+            InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
+            im.controlMouseCursor = true;
+            im.controlMouseDrag = true;
+            im.allowHandClicks = true;
+        }
+    }
+
     public void ShowHelpBubble()
     {
         if (neuronHelp)

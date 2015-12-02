@@ -34,15 +34,7 @@ public class MenuCrossroad : MonoBehaviour {
 
 #if UNITY_STANDALONE
         // clear KinectManager
-        if (MGC.Instance.isKinectUsed && !MGC.Instance.kinectManagerObject.activeSelf)
-        {
-            bool bNeedRestart = false;
-            Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-            MGC.Instance.kinectManagerObject.SetActive(true);
-            MGC.Instance.kinectManagerInstance.ClearKinectUsers();
-            MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
-            MGC.Instance.kinectManagerInstance.StartKinect();
-        }
+        MGC.Instance.ResetKinect();
 #endif
         MGC.Instance.sceneLoader.doFade = true;
 
