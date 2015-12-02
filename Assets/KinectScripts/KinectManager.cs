@@ -1689,6 +1689,7 @@ namespace Kinect
 
                 if (bNeedRestart)
                 {
+                    Debug.Log("Restart kinect");
                     System.IO.File.WriteAllText("KMrestart.txt", "Restarting level...");
                     KinectInterop.RestartLevel(gameObject, "KM");
                     return;

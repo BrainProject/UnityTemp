@@ -17,23 +17,23 @@ namespace SocialGame
 		public bool destroy = true;
 		public bool finish = true;
 		public bool allChecked = false;
-		private Vector3 temp;
-		private List<Transform> Targets = new List<Transform>();
+		//private Vector3 temp;
+		public List<Transform> Targets = new List<Transform>();
 
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
-			}
-			if(KManager)
+			//GameObject temp = GameObject.FindWithTag("GameController");
+			KManager = MGC.Instance.kinectManagerInstance;
+            Debug.Log(MGC.Instance.kinectManagerInstance.avatarControllers.Count);
+            if (KManager)
 			{
 				if(handMode)
 				{
-					foreach(Kinect.AvatarController avatar in KManager.avatarControllers)
+                    
+                    foreach (Kinect.AvatarController avatar in KManager.avatarControllers)
 					{
+                        
 						if((player1 && avatar.playerIndex == 0)||(player2 && avatar.playerIndex == 1))
 						{
 							ExtendsAvatar avatarEx = avatar as ExtendsAvatar;

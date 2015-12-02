@@ -7,12 +7,17 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		#if UNITY_STANDALONE
 		public static GameObject thisLevelKManager;
 		public static GameObject defaultKManager;
+        public AvatarController player1;
+        public AvatarController player2;
 
-		// Use this for initialization
-		void Awake () {
-			setThisLevelManager();
-			defaultKManager = MGC.Instance.kinectManagerObject;
-			activateThisLevelKManager();
+        // Use this for initialization
+        void Awake () {
+            defaultKManager = MGC.Instance.kinectManagerObject;
+            setThisLevelManager();
+			
+			//activateThisLevelKManager();
+
+
 		}
 
 		/// <summary>
@@ -20,17 +25,28 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		/// </summary>
 		void setThisLevelManager()
 		{
-			GameObject kinectObj = GameObject.FindGameObjectWithTag("GameController");
+            /*GameObject kinectObj = GameObject.FindGameObjectWithTag("GameController");
 			if(kinectObj)
 			{
 				thisLevelKManager = kinectObj;
-				/*KinectManager kinectMan = kinectObj.GetComponentInChildren<KinectManager>();
+				KinectManager kinectMan = kinectObj.GetComponentInChildren<KinectManager>();
 				if(kinectMan)
 				{
 					thisLevelKManager = kinectMan;
-				}*/
-			}
-		}
+				}
+			}*/
+            if(player1)
+                MGC.Instance.kinectManagerInstance.avatarControllers.Add(player1);
+
+            if (player2)
+                MGC.Instance.kinectManagerInstance.avatarControllers.Add(player2);
+
+            //MGC.Instance.kinectManagerInstance.Awake();
+            bool bNeedRestart = false;
+            KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+            MGC.Instance.kinectManagerInstance.StartKinect();
+
+        }
 
 		/// <summary>
 		/// Activates the this level K manager.

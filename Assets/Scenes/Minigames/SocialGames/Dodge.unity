@@ -452,9 +452,27 @@ Prefab:
       propertyPath: avatarP1
       value: 
       objectReference: {fileID: 1301740524}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1160074026 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100006, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
+  m_PrefabInternal: {fileID: 1160074025}
+--- !u!114 &1160074027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1160074026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b17af6a6c3492f48815e4306df22105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 1301740524}
+  player2: {fileID: 0}
 --- !u!1 &1287491111
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1287491112
 Transform:
   m_ObjectHideFlags: 0

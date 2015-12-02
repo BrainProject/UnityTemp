@@ -20,7 +20,8 @@ namespace SocialGame{
 	
 		// Update the avatar each frame.
 		public override void UpdateAvatar(Int64 UserID)
-		{	
+		{
+            base.UpdateAvatar(UserID);
 			playerId = UserID;
 			
 			if(!transform.gameObject.activeInHierarchy) 
