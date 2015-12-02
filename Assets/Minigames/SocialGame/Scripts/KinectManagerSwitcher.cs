@@ -11,13 +11,12 @@ public class KinectManagerSwitcher : MonoBehaviour {
         public AvatarController player2;
 
         // Use this for initialization
-        void Awake () {
+        void Awake ()
+        {
             defaultKManager = MGC.Instance.kinectManagerObject;
             setThisLevelManager();
 			
-			//activateThisLevelKManager();
-
-
+			activateThisLevelKManager();
 		}
 
 		/// <summary>
@@ -45,15 +44,19 @@ public class KinectManagerSwitcher : MonoBehaviour {
             bool bNeedRestart = false;
             KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
             MGC.Instance.kinectManagerInstance.StartKinect();
-
         }
 
 		/// <summary>
 		/// Activates the this level K manager.
 		/// </summary>
 		public static void activateThisLevelKManager()
-		{
-			setActiveMGC(false);
+        {
+            MGC.Instance.ShowCustomCursor(false);
+            InteractionManager im = MGC.Instance.kinectManagerInstance.GetComponent<InteractionManager>();
+            im.controlMouseCursor = false;
+            im.controlMouseDrag = false;
+            im.allowHandClicks = false;
+            /*setActiveMGC(false);
 			
 			if(thisLevelKManager)
 			{
@@ -66,8 +69,8 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			else
 			{
 				setActiveMGC(true);
-			}
-		}
+			}*/
+        }
 
 		/// <summary>
 		/// Sets the active MGC.
@@ -75,6 +78,21 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		/// <param name="active">If set to <c>true</c> active.</param>
 		public static void setActiveMGC(bool active)
 		{
+            if(active)
+            {
+                MGC.Instance.ShowCustomCursor(true);
+                MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+                MGC.Instance.kinectManagerInstance.StartKinect();
+                MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
+            }
+            else
+            {
+                if(MGC.Instance.mouseCursor)
+				    MGC.Instance.ShowCustomCursor(false);
+            }
+
+
+            /*
 			if(defaultKManager)
 			{
 				MGC.Instance.checkInactivity = active;
@@ -85,11 +103,11 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			else if (active) 
 			{
 				MGC.Instance.ShowCustomCursor (true);
-                MGC.Instance.kinectManagerInstance.StartKinect();
                 MGC.Instance.kinectManagerInstance.ClearKinectUsers();
-				//MGC.Instance.kinectManagerInstance.Start();
-				MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
-			}
+                MGC.Instance.kinectManagerInstance.StartKinect();
+                //MGC.Instance.kinectManagerInstance.Start();
+                MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
+			}*/
 		}
 
 
@@ -97,12 +115,17 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		/// Deactivates the this level K manager.
 		/// </summary>
 		public static void deactivateThisLevelKManager()
-		{
-			if(thisLevelKManager)
-			{
-				thisLevelKManager.SetActive(false);
-			}
-			setActiveMGC(true);
+        {
+            MGC.Instance.ShowCustomCursor(true);
+            InteractionManager im = MGC.Instance.kinectManagerInstance.GetComponent<InteractionManager>();
+            im.controlMouseCursor = true;
+            im.controlMouseDrag = true;
+            im.allowHandClicks = true;
+            //if(thisLevelKManager)
+            //{
+            //	thisLevelKManager.SetActive(false);
+            //}
+            setActiveMGC(true);
 		}
 		#endif
 	}

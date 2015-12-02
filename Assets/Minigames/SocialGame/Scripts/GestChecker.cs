@@ -23,9 +23,10 @@ namespace SocialGame
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
+
 			//GameObject temp = GameObject.FindWithTag("GameController");
 			KManager = MGC.Instance.kinectManagerInstance;
-            Debug.Log(MGC.Instance.kinectManagerInstance.avatarControllers.Count);
+            //Debug.Log(MGC.Instance.kinectManagerInstance.avatarControllers.Count);
             if (KManager)
 			{
 				if(handMode)

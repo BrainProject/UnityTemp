@@ -22,7 +22,7 @@ namespace SocialGame{
 		public override void UpdateAvatar(Int64 UserID)
 		{
             base.UpdateAvatar(UserID);
-			playerId = UserID;
+			/*playerId = UserID;
 			
 			if(!transform.gameObject.activeInHierarchy) 
 				return;
@@ -60,7 +60,7 @@ namespace SocialGame{
 						TransformSpecialBone(UserID, alJoints[0], alJoints[1], boneIndex, baseDir, !mirroredMovement);
 					}
 				}
-			}
+			}*/
 
 			if(realPosition && kinectManager && (UserID != 0) && run)
 			{

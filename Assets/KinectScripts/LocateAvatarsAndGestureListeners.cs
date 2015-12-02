@@ -5,7 +5,7 @@ namespace Kinect
 {
     public class LocateAvatarsAndGestureListeners : MonoBehaviour
     {
-
+        /*
         void Start()
         {
             Debug.Log(MGC.Instance);
@@ -45,7 +45,7 @@ namespace Kinect
                 }
 
             }
-        }
+        }*/
 
         //void Update()
         //{
