@@ -123,7 +123,7 @@ namespace Game
 					MGC.Instance.minigamesGUI.hide();
 					
 					//return back
-					if(Application.loadedLevel > 5)	//TODO: Update minimal minigame level index
+					if(Application.loadedLevel > 6)	//NOTE: Update minimal minigame level index here
 					{
 						// Coloring mini-game se special treatment...
 						if (Application.loadedLevelName == "Coloring")

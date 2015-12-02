@@ -34,16 +34,22 @@ public class KinectManagerSwitcher : MonoBehaviour {
 					thisLevelKManager = kinectMan;
 				}
 			}*/
-            if(player1)
-                MGC.Instance.kinectManagerInstance.avatarControllers.Add(player1);
+            if (MGC.Instance)
+            {
+                if (KinectManager.Instance)
+                {
+                    if (player1)
+                        KinectManager.Instance.avatarControllers.Add(player1);
 
-            if (player2)
-                MGC.Instance.kinectManagerInstance.avatarControllers.Add(player2);
+                    if (player2)
+                        KinectManager.Instance.avatarControllers.Add(player2);
 
-            //MGC.Instance.kinectManagerInstance.Awake();
-            bool bNeedRestart = false;
-            KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-            MGC.Instance.kinectManagerInstance.StartKinect();
+                    //MGC.Instance.kinectManagerInstance.Awake();
+                    bool bNeedRestart = false;
+                    KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+                    KinectManager.Instance.StartKinect();
+                }
+            }
         }
 
 		/// <summary>
@@ -52,7 +58,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		public static void activateThisLevelKManager()
         {
             MGC.Instance.ShowCustomCursor(false);
-            InteractionManager im = MGC.Instance.kinectManagerInstance.GetComponent<InteractionManager>();
+            InteractionManager im = KinectManager.Instance.GetComponent<InteractionManager>();
             im.controlMouseCursor = false;
             im.controlMouseDrag = false;
             im.allowHandClicks = false;

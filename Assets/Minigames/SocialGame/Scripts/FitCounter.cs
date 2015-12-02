@@ -21,7 +21,9 @@ namespace SocialGame{
 		void Start () {
 			selectedMovements = Random.Range(0,movements.Length);
 			max = numOfPose[selectedMovements] * max;
-			GameObject.Instantiate(movements[selectedMovements]);
+			GameObject clone = GameObject.Instantiate(movements[selectedMovements]) as GameObject;
+            //Debug.Log(clone + " created");
+            clone.GetComponent<GestCheckerFigure>().counter = this;
 			drawCount();
 			redraw();
 		}

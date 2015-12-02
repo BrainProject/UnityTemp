@@ -1709,7 +1709,6 @@ namespace Kinect
                     calibrationText.GetComponent<GUIText>().text = ex.Message;
                 }
             }
-
         }
 
         public void StartKinect()

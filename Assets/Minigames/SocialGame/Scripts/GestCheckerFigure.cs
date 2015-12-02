@@ -24,12 +24,10 @@ namespace SocialGame
 		private bool runningcorutine;
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
-		void Start () {
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
-			}
+		void Start ()
+        {
+            KManager = MGC.Instance.kinectManagerInstance;
+
 			if(KManager)
 			{
 				findTartgetByCheckName();
@@ -39,11 +37,11 @@ namespace SocialGame
 			{
 				Debug.Log("Kinect Manager not founded");
 			}
-			temp = GameObject.FindWithTag("Board");
-			if(temp != null)
-			{
-				counter = temp.GetComponent<FitCounter>();
-			}
+			//temp = GameObject.FindWithTag("Board");
+			//if(temp != null)
+			//{
+			//	counter = temp.GetComponent<FitCounter>();
+			//}
 		}
 
 	
