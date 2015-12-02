@@ -546,7 +546,7 @@ namespace Kinect
                     }
                     break;
 
-                    // Check for custom click
+                // Check for custom click
                 case Gestures.Click:
                     switch (gestureData.state)
                     {
@@ -556,7 +556,7 @@ namespace Kinect
                             {
                                 SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
                                 gestureData.progress = 0.3f;
-                                
+
                                 // set screen position at the start, because this is the most accurate click position
                                 SetScreenPos(userId, ref gestureData, ref jointsPos, ref jointsTracked);
                             }
@@ -577,13 +577,15 @@ namespace Kinect
                                 Vector3 distVector = jointsPos[gestureData.joint] - gestureData.jointPos;
                                 bool isInPose = distVector.magnitude < 0.05f;
 
-                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress + 0.1f;
-
                                 Vector3 jointPos = jointsPos[gestureData.joint];
                                 CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.ClickStayDuration);
-                                if (gestureData.complete)
+                                //							SetGestureCancelled(gestureData);
+                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress + 0.1f;
+
+                                if(gestureData.progress >= 1)
                                 {
-                                    MouseControl.MouseClick();
+                                    MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = 0;
+                                    //MouseControl.MouseClick();
                                 }
                             }
                             break;
@@ -1681,7 +1683,8 @@ namespace Kinect
                                (jointsPos[hipsIndex].y - jointsPos[rightHandIndex].y) > 0f &&
                                (jointsPos[rightHandIndex].x - jointsPos[hipsIndex].x) > 0.5f)
                             {
-                                Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.NUMPAD7);
+                                Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.NUMPAD7);
+                                //Debug.LogError("Pressed 7? Why?");
                                 SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
                             }
                             break;
@@ -1692,7 +1695,7 @@ namespace Kinect
                                                     (jointsPos[rightHandIndex].x - jointsPos[hipsIndex].x) > 0.5f);
                             if (!gestureDetected)
                             {
-                                Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.NUMPAD9);
+                                Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.NUMPAD9);
                                 SetGestureCancelled(ref gestureData);
                             }
 
@@ -1713,14 +1716,16 @@ namespace Kinect
                                 bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[neck] &&
                                     (jointsPos[hipsIndex].y - jointsPos[rightHandIndex].y) > 0f &&
                                         (jointsPos[rightHandIndex].x - jointsPos[hipsIndex].x) > 0.5f;
-
-
+                                
                                 Vector3 jointPos = jointsPos[gestureData.joint];
                                 CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.PoseCompleteDuration);
-                                if (isInPose)
+                                //if (isInPose)
                                 {
-                                    Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.KEY_I);
-                                    Kinect.Win32.MouseKeySimulator.SendKeyPress(Kinect.Win32.KeyCode.NUMPAD9);
+                                    //Debug.LogError("Hidden gesture complete");
+                                    Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.KEY_I);
+                                    //Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.NUMPAD9);
+                                    Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.ESC);
+                                    SetGestureCancelled(ref gestureData);
                                 }
                             }
                             break;

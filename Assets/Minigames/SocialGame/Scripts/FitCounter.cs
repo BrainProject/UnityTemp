@@ -63,7 +63,7 @@ namespace SocialGame{
 						lines[i] = cloneRender;
 					else
 					{
-						Debug.LogWarning("On"+ gameObject.name +"atribut line must be sprite");
+						Debug.LogWarning("On "+ gameObject.name +" atribut line must be sprite");
 						lines = null;
 						break;
 					}

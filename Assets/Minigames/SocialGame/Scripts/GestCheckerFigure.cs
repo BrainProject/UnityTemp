@@ -17,7 +17,7 @@ namespace SocialGame
 		public bool player2;
 		public bool destroy = true;
 		public bool allChecked = false;
-		public FitCounter counter;
+        public FitCounter counter;
 
 		private Vector3 temp;
 		//private List<Transform> Targets = new List<Transform>();
@@ -108,7 +108,13 @@ namespace SocialGame
 		{
 			if(next)
 			{
-				GameObject.Instantiate(this.next);
+				GameObject clone = GameObject.Instantiate(this.next);
+                if(counter)
+                {
+                    GestCheckerFigure fig = clone.GetComponent<GestCheckerFigure>();
+                    fig.counter = counter;
+                }
+
 			}
 			if (cancle) 
 			{
