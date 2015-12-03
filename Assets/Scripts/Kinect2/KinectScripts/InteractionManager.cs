@@ -610,7 +610,6 @@ namespace Kinect
                     }
                 }
             }
-            Cursor.visible = true;
         }
 
 
