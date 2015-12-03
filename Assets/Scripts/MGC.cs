@@ -623,6 +623,7 @@ public class MGC : Singleton<MGC>
     {
         if (kinectManagerObject.activeSelf)
         {
+            kinectManagerInstance = KinectManager.Instance;
             Debug.Log("Kinect settings are being reset.");
             bool bNeedRestart = false;
             Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
@@ -802,7 +803,9 @@ public class MGC : Singleton<MGC>
     {
 #if UNITY_STANDALONE
         kinectManagerInstance = KinectManager.Instance;
+        yield return null;
         // Wait until all is initialized.
+        
         yield return new WaitForSeconds(1);
 
         // Set more aggressive smoothing for cursor if Kinect1 is connected.
@@ -815,10 +818,15 @@ public class MGC : Singleton<MGC>
 
         kinectManagerInstance = KinectManager.Instance;
 
-        if(!kinectManagerInstance.IsInitialized())
+        if (kinectManagerInstance)
         {
-            kinectManagerObject.SetActive(false);
+            if (!kinectManagerInstance.IsInitialized())
+            {
+                kinectManagerObject.SetActive(false);
+            }
         }
+
+
         /*int sensorsCount = 0;
 
         

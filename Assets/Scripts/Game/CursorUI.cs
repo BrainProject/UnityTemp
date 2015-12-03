@@ -14,18 +14,41 @@ namespace Game
 		public Sprite cursorDrag;
 		public CursorCircle cursorCircle;
 
-//		private Sprite currentCursor;
+        //		private Sprite currentCursor;
+        private RectTransform thisRectTransform;
+        private Kinect.InteractionManager interactionManager;
 		
 #if !UNITY_ANDROID
 		void Start ()
 		{
 			Cursor.visible = false;
-		}
+            thisRectTransform = GetComponent<RectTransform>();
+            interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();
+    }
 #endif
 
 		void Update()
 		{
-			GetComponent<RectTransform> ().position = Input.mousePosition;
+            if (MGC.Instance.kinectManagerObject.activeSelf)
+            {
+                if (Kinect.KinectManager.Instance.GetUsersCount() > 0)
+                {
+                    //thisRectTransform.position = new Vector2(
+                    //    interactionManager.GetCursorPosition().x * Screen.width,
+                    //    interactionManager.GetCursorPosition().y * Screen.height);
+
+                    //Kinect.Win32.MouseKeySimulator.CursorPos(interactionManager.GetCursorPosition());
+                    thisRectTransform.position = Input.mousePosition;
+                }
+                else
+                {
+                    thisRectTransform.position = Input.mousePosition;
+                }
+            }
+            else
+            {
+                thisRectTransform.position = Input.mousePosition;
+            }
 
 			if (Input.GetMouseButtonDown (0))
 				CursorToDrag ();
@@ -48,5 +71,10 @@ namespace Game
 		{
 			GetComponent<Image>().sprite = cursorNormal;
 		}
+
+        public void CursorPosition(Vector2 newPos)
+        {
+            thisRectTransform.position = newPos;
+        }
 	}
 }
