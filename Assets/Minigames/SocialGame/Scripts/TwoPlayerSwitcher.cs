@@ -15,14 +15,10 @@ namespace SocialGame{
 		public Material ghost;
 		private Material normal;
 		// Use this for initialization
-		void Start () {
-			SocialGame.LevelManager.gameSelected = 0;
+		void Start () {      
+            SocialGame.LevelManager.gameSelected = 0;
 			normal = player2.material;
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
-			}
+            KManager = MGC.Instance.kinectManagerInstance;
 		}
 		
 		/// <summary>
@@ -51,6 +47,7 @@ namespace SocialGame{
 		 public void Activate2player()
 		{
 			TwoPlayer = true;
+            Debug.Log("Player2 connect");
 			if(ghost)
 			{
 				player2.material = normal;
@@ -72,6 +69,8 @@ namespace SocialGame{
 		/// </summary>
 		public void Deactivate2player()
 		{
+            if(KManager)
+                KManager.ClearKinectUsers();
 			TwoPlayer = false;
 			if(ghost)
 			{
@@ -81,6 +80,7 @@ namespace SocialGame{
 			{
 				player2.enabled = false;
 			}
+
 		}
 		#endif
 	}

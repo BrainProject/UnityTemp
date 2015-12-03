@@ -124,7 +124,7 @@ namespace Kinect
                 return;
 
             // Set model's arms to be in T-pose, if needed
-            SetModelArmsInTpose();
+            //SetModelArmsInTpose();
 
             // inits the bones array
             bones = new Transform[27];

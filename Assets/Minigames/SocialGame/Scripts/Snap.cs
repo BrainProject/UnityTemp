@@ -64,6 +64,7 @@ namespace SocialGame{
 		/// <summary>
 		/// Snap figure.
 		/// </summary>
+        [ContextMenu("Snap")]
 		public void snap()
 		{
 			GameObject playerObj = null;
