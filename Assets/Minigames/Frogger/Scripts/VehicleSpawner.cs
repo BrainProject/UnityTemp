@@ -15,6 +15,7 @@ namespace Frogger
         public int minimalSpawnDelay;
         public float roadLineSpeed;
         public VehicleType type;
+        public float difficulty;
 
 
 
@@ -24,10 +25,10 @@ namespace Frogger
 
         void Start()
         {
-
-            roadLineSpeed += (1.5f * MGC.Instance.selectedMiniGameDiff);
+            difficulty = (1.5f * MGC.Instance.selectedMiniGameDiff);
+            roadLineSpeed += difficulty;
             thisLevelManager = FrogLevelManager.Instance;
-            randomer = Random.Range(0, minimalSpawnDelay * 2);
+            randomer = Random.Range(0, Mathf.Clamp(minimalSpawnDelay * 2 - MGC.Instance.selectedMiniGameDiff, 1, minimalSpawnDelay * 2));
             lastSpawnTime = Time.time;
             SpawnNewVehicle();
         }
@@ -37,7 +38,7 @@ namespace Frogger
             if ((Time.time - (lastSpawnTime + randomer + minimalSpawnDelay)) > 0)
             {
                 lastSpawnTime = Time.time;
-                randomer = Random.Range(0, minimalSpawnDelay * 2);
+                randomer = Random.Range(0, Mathf.Clamp(minimalSpawnDelay * 2 - MGC.Instance.selectedMiniGameDiff, 1, minimalSpawnDelay * 2));
                 SpawnNewVehicle();
             }
         }

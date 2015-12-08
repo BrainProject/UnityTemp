@@ -200,7 +200,7 @@ Terrain:
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 0
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 200
+  m_HeightmapPixelError: 1
   m_SplatMapDistance: 500
   m_HeightmapMaximumLOD: 0
   m_CastShadows: 1
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimalSpawnDelay: 3
-  roadLineSpeed: 7
+  roadLineSpeed: 3
   type: 0
 --- !u!4 &50635544
 Transform:
@@ -556,6 +556,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 168776, guid: 7ff388e8083b79f419579608878e818a, type: 2}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474970, guid: 7ff388e8083b79f419579608878e818a, type: 2}
+      propertyPath: offset
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1124,7 +1128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimalSpawnDelay: 2
-  roadLineSpeed: 9
+  roadLineSpeed: 4
   type: 0
 --- !u!4 &328425592
 Transform:
@@ -1299,7 +1303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimalSpawnDelay: 3
-  roadLineSpeed: 11
+  roadLineSpeed: 6
   type: 0
 --- !u!1 &522761125
 GameObject:
@@ -1328,7 +1332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30378fc68ac2624d9326585ab3e69b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimalSpawnDelay: 3
+  minimalSpawnDelay: 2
   roadLineSpeed: 3
   type: 1
 --- !u!4 &522761127
@@ -1869,7 +1873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimalSpawnDelay: 2
-  roadLineSpeed: 8
+  roadLineSpeed: 4
   type: 0
 --- !u!1 &1237053321
 GameObject:
@@ -2334,6 +2338,10 @@ Prefab:
     - target: {fileID: 121280, guid: 7ff388e8083b79f419579608878e818a, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474970, guid: 7ff388e8083b79f419579608878e818a, type: 2}
+      propertyPath: offset
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ff388e8083b79f419579608878e818a, type: 2}
@@ -2977,7 +2985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimalSpawnDelay: 2
-  roadLineSpeed: 5
+  roadLineSpeed: 2
   type: 1
 --- !u!4 &1867113353
 Transform:
@@ -3073,14 +3081,6 @@ Prefab:
     - target: {fileID: 121280, guid: 7ff388e8083b79f419579608878e818a, type: 2}
       propertyPath: m_Name
       value: GoalArea (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 168776, guid: 7ff388e8083b79f419579608878e818a, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 121280, guid: 7ff388e8083b79f419579608878e818a, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ff388e8083b79f419579608878e818a, type: 2}

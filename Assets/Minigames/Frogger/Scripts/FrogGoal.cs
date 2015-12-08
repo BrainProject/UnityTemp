@@ -6,6 +6,7 @@ namespace Frogger
     public class FrogGoal : MonoBehaviour
     {
         public Transform mesh;
+        public float offset = 0;
 
         internal bool occupied = false;
 
@@ -18,7 +19,7 @@ namespace Frogger
 
         void Update()
         {
-            mesh.transform.Translate(Vector3.forward * Mathf.Cos(Time.time + transform.position.x) / 200);
+            mesh.transform.Translate(Vector3.forward * Mathf.Cos(Time.time + transform.position.x * Time.deltaTime + offset) / 800);
         }
     }
 }
