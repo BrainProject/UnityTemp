@@ -20,6 +20,7 @@ namespace ButterflyRush
         {
             Instance = this;
             cocoonCount = 0;
+            startCount += 3 * MGC.Instance.selectedMiniGameDiff;
 
             for (int i = 0; i < startCount; ++i)
             {
@@ -30,6 +31,7 @@ namespace ButterflyRush
         void Start()
         {
             timestamp = Time.time;
+            durationBetweenSpawn = Mathf.Clamp(durationBetweenSpawn - (float)MGC.Instance.selectedMiniGameDiff / 4, 0.01f, 60);
         }
 
         void Update()
