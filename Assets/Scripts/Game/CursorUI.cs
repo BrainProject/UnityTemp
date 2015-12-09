@@ -23,8 +23,9 @@ namespace Game
 		{
 			Cursor.visible = false;
             thisRectTransform = GetComponent<RectTransform>();
-            interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();
-    }
+            if(MGC.Instance.kinectManagerObject.activeSelf)
+                interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();
+        }
 #endif
 
 		void Update()

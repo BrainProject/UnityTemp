@@ -17,6 +17,8 @@ public class MinigameDifficultyChooser : MonoBehaviour
     // Set up scene according to minigameProps
     void Start()
     {
+        MGC.Instance.ShowCustomCursor(true);
+        MGC.Instance.ResetKinect();
 
         diffSlider = diffSliderGO.GetComponent<Slider>();
 

@@ -1702,7 +1702,7 @@ namespace Kinect
             }
             catch (Exception ex)
             {
-                Debug.LogError(ex.ToString());
+                //Debug.LogError(ex.ToString());
 
                 if (calibrationText != null)
                 {
@@ -1732,7 +1732,11 @@ namespace Kinect
                 if (sensorData == null)
                 {
                     if (sensorInterfaces == null || sensorInterfaces.Count == 0)
-                        throw new Exception("No sensor found. Make sure you have installed the SDK and the sensor is connected.");
+                    {
+                        transform.parent.gameObject.SetActive(false);
+                        //throw new Exception("No sensor found. Make sure you have installed the SDK and the sensor is connected.");
+                        return;
+                    }
                     else
                         throw new Exception("OpenDefaultSensor failed.");
                 }
@@ -1748,7 +1752,7 @@ namespace Kinect
             {
                 string message = ex.Message + " cannot be loaded. Please check the Kinect SDK installation.";
 
-                Debug.LogError(message);
+                //Debug.LogError(message);
                 Debug.LogException(ex);
 
                 if (calibrationText != null)
@@ -1762,7 +1766,7 @@ namespace Kinect
             {
                 string message = ex.Message;
 
-                Debug.LogError(message);
+                //Debug.LogError(message);
                 Debug.LogException(ex);
 
                 if (calibrationText != null)

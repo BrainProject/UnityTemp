@@ -315,10 +315,10 @@ public class MGC : Singleton<MGC>
 
         //PC ...
 #else
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Application.Quit();
+        //}
 
         if (Input.GetKeyDown(KeyCode.I))
         {
