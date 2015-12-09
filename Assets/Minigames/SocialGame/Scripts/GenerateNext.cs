@@ -22,7 +22,6 @@ public class GenerateNext : MonoBehaviour {
 
 	void Start()
 	{
-		Debug.Log("test");
 		Next();
 	}
 }
