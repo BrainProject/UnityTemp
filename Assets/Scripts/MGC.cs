@@ -623,18 +623,26 @@ public class MGC : Singleton<MGC>
     {
         if (kinectManagerObject.activeSelf)
         {
-            kinectManagerInstance = KinectManager.Instance;
-            Debug.Log("Kinect settings are being reset.");
-            bool bNeedRestart = false;
-            Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-            kinectManagerObject.SetActive(true);
-            kinectManagerInstance.ClearKinectUsers();
-            kinectManagerInstance.avatarControllers.Clear();
-            kinectManagerInstance.StartKinect();
-            InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
-            im.controlMouseCursor = true;
-            im.controlMouseDrag = true;
-            im.allowHandClicks = true;
+            try
+            {
+                kinectManagerInstance = KinectManager.Instance;
+                Debug.Log("Kinect settings are being reset.");
+                bool bNeedRestart = false;
+                Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+                kinectManagerObject.SetActive(true);
+                kinectManagerInstance.ClearKinectUsers();
+                kinectManagerInstance.avatarControllers.Clear();
+                kinectManagerInstance.StartKinect();
+                InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
+                im.controlMouseCursor = true;
+                im.controlMouseDrag = true;
+                im.allowHandClicks = true;
+            }
+            catch(Exception e)
+            {
+                kinectManagerObject.SetActive(false);
+                Debug.LogWarning("Kinect is not initialized.");
+            }
         }
     }
 
