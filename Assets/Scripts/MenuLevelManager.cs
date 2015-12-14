@@ -32,14 +32,30 @@ namespace MinigameSelection
                 MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
             }
 			blockPanel.SetActive (false);
-		}
+
+            // Jump to section when returning from minigame.
+            if (MGC.Instance.selectedMenuSectionIndex > 0)
+            {
+                MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive(true);
+                MGC.Instance.minigamesGUI.backIcon.show();
+                menuSections[0].alpha = 0;
+                menuSections[0].gameObject.SetActive(false);
+                menuSections[MGC.Instance.selectedMenuSectionIndex].alpha = 1;
+                menuSections[MGC.Instance.selectedMenuSectionIndex].gameObject.SetActive(true);
+                previouslySelectedSectionIndex = 0;
+                currentlySelectedSectionIndex = MGC.Instance.selectedMenuSectionIndex;
+            }
+        }
 
 		public void SwitchMenu(int sectionIndex)
 		{
-			previouslySelectedSectionIndex = currentlySelectedSectionIndex;
-			currentlySelectedSectionIndex = sectionIndex;
-			StartCoroutine (Fade ());
-
+            if (currentlySelectedSectionIndex != sectionIndex)
+            {
+                previouslySelectedSectionIndex = currentlySelectedSectionIndex;
+                currentlySelectedSectionIndex = sectionIndex;
+                MGC.Instance.selectedMenuSectionIndex = sectionIndex;
+                StartCoroutine(Fade());
+            }
 			//TODO: show back button if brain is not active
 		}
 

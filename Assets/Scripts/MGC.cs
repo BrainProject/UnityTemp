@@ -69,6 +69,7 @@ public class MGC : Singleton<MGC>
     }
 
     public BrainPartName currentBrainPart;
+    public int selectedMenuSectionIndex = 0;
 	public Vector3 currentCameraDefaultPosition;
 	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";

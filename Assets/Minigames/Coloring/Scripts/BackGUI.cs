@@ -31,7 +31,7 @@ namespace Coloring
 
 		public void BackAction()
 		{
-			if((Time.time - thisLevelManager.timestamp > 2) && Images.activeSelf)
+			if(/*(Time.timeSinceLevelLoad - thisLevelManager.timestamp > 2) &&*/ Images.activeSelf)
 			{
 				thisLevelManager.timestamp = Time.time;
 				deskAnimator.SetBool("painting", false);
