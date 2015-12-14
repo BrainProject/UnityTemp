@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Game 
 {
@@ -73,7 +74,7 @@ namespace Game
             }
             else
             {
-                Application.LoadLevel(levelName);
+                SceneManager.LoadScene(levelName);
             }
         }
 
@@ -89,7 +90,7 @@ namespace Game
 			}
 			else
 			{
-				Application.LoadLevel(levelIndex);
+                SceneManager.LoadScene(levelIndex);
 			}
 		}
 
@@ -142,10 +143,10 @@ namespace Game
                     //print("barva: " + fadePanel.color);
                     yield return null;
                 }
-                
-				
-				Application.LoadLevel(levelName);
-			}
+
+
+                SceneManager.LoadScene(levelName);
+            }
 		}
 		/// <summary>
 		/// Coroutine for fading out and loading level by index
@@ -165,8 +166,8 @@ namespace Game
                 fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
-				
-			Application.LoadLevel(levelIndex);
-		}
+
+            SceneManager.LoadScene(levelIndex);
+        }
 	}
 }

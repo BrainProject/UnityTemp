@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Coloring
 {
@@ -31,7 +32,7 @@ namespace Coloring
                     MGC.Instance.ShowCustomCursor(false);
                 }
 
-				MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
+				MGC.Instance.minigamesProperties.SetPlayed(SceneManager.GetActiveScene().name);
 			}
 		}
 

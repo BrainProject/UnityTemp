@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 
 /**
  * \brief Various classes and methods available across all scenes 
@@ -121,7 +121,7 @@ namespace Game
 		{
             //help appears only in mini-games, not in initial menu scenes
             
-			if((Application.loadedLevel > 5) && MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == Application.loadedLevelName)
+			if((SceneManager.GetActiveScene().buildIndex > 5) && MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == SceneManager.GetActiveScene().name)
 			{
 				newHelp.helpObject.helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
 				questionMark.SetActive (MGC.Instance.getSelectedMinigameProperties().helpPrefab);

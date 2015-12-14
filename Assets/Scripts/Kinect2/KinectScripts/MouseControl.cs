@@ -14,9 +14,10 @@ namespace Kinect
 	    [DllImport("User32.dll")] 
 	    private static extern void mouse_event(MouseFlags dwFlags, int dx, int dy, int dwData, System.UIntPtr dwExtraInfo);
 
+        /*
 		private static float windowX = 0f;
 		private static float windowY = 0f;
-
+        */
 
 	    // Flags needed to specify the mouse action 
 	    [System.Flags]

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class HelpVisibility : MonoBehaviour {
 	public Animator thisAnimator;
@@ -15,7 +16,7 @@ public class HelpVisibility : MonoBehaviour {
 		{
 			if(MGC.Instance.getSelectedMinigameProperties () &&
 			   MGC.Instance.getSelectedMinigameProperties ().helpPrefab &&
-			   MGC.Instance.getSelectedMinigameProperties().mainScene == Application.loadedLevelName)
+			   MGC.Instance.getSelectedMinigameProperties().mainScene == SceneManager.GetActiveScene().name)
 			{
 				helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
 				helpDuration = MGC.Instance.getSelectedMinigameProperties().helpDuration;

@@ -27,6 +27,7 @@ using MainScene;
 using MinigameSelection;
 using Game;
 using Kinect;
+using UnityEngine.SceneManagement;
 
 public enum BrainPartName
 {
@@ -336,11 +337,11 @@ public class MGC : Singleton<MGC>
         //Debug actions
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            Application.LoadLevel("Main");
+            SceneManager.LoadScene("Main");
         }
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            Application.LoadLevel(gameSelectionSceneName);
+            SceneManager.LoadScene(gameSelectionSceneName);
 
             //TODO test only...
             minigamesProperties.printStatisticsToFile();
@@ -348,8 +349,8 @@ public class MGC : Singleton<MGC>
 		if(Input.GetKeyDown(KeyCode.F8))
 		{
 			ResetMinigamesStatistics();
-			if(Application.loadedLevelName == gameSelectionSceneName)
-				Application.LoadLevel(gameSelectionSceneName);
+			if(SceneManager.GetActiveScene().name == gameSelectionSceneName)
+				SceneManager.LoadScene(gameSelectionSceneName);
 		}
     
 #endif
@@ -397,8 +398,8 @@ public class MGC : Singleton<MGC>
     {
         inactivityTimestamp = Time.time;
         inactivityCounter = 0;
-        print("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
-        logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
+        print("[MGC] Scene: '" + SceneManager.GetActiveScene().name + "' loaded");
+        logger.addEntry("Scene loaded: '" + SceneManager.GetActiveScene().name + "'");
 
         //perform fade in?
         if (sceneLoader.doFade)
@@ -406,7 +407,7 @@ public class MGC : Singleton<MGC>
             sceneLoader.FadeIn();
         }
 
-		if (minigamesProperties.GetPlayed (Application.loadedLevelName))
+		if (minigamesProperties.GetPlayed (SceneManager.GetActiveScene().name))
 		{
 			Debug.Log ("The minigame was already visited, don't show help.");
 		}
@@ -414,13 +415,13 @@ public class MGC : Singleton<MGC>
 		{
 			if(level > 4)
 			{
-				if(minigamesProperties.GetMinigame(Application.loadedLevelName))
+				if(minigamesProperties.GetMinigame(SceneManager.GetActiveScene().name))
 				{
-					if(minigamesProperties.IsWithHelp(Application.loadedLevelName))
+					if(minigamesProperties.IsWithHelp(SceneManager.GetActiveScene().name))
 					{
 		//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
 						neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
-						minigamesProperties.SetPlayedWithHelp(Application.loadedLevelName);
+						minigamesProperties.SetPlayedWithHelp(SceneManager.GetActiveScene().name);
 					}
 				}
 			}
@@ -451,7 +452,7 @@ public class MGC : Singleton<MGC>
 		//	isControlTakenForGUI = false;
 		//}
 
-        if(Application.loadedLevelName == "Crossroad")
+        if(SceneManager.GetActiveScene().name == "Crossroad")
         {
             ShowCustomCursor(true);
         }
@@ -515,7 +516,7 @@ public class MGC : Singleton<MGC>
                 ResetMinigamesStatistics();
             }
 
-		    if (Application.loadedLevelName == gameSelectionSceneName)
+		    if (SceneManager.GetActiveScene().name == gameSelectionSceneName)
 		    {
 			    sceneLoader.LoadScene(gameSelectionSceneName);
 		    }
@@ -638,7 +639,7 @@ public class MGC : Singleton<MGC>
                 im.controlMouseDrag = true;
                 im.allowHandClicks = true;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 kinectManagerObject.SetActive(false);
                 Debug.LogWarning("Kinect is not initialized.");
@@ -679,25 +680,25 @@ public class MGC : Singleton<MGC>
 
     void InactivityReaction()
     {
-        print("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
-        logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        print("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        logger.addEntry("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
         if (inactivityCounter == 5)
         {
             inactivityCounter = 0;
 			ShowCustomCursor(true);
             print("Load another scene. Im getting bored here.");
-            if (Application.loadedLevelName != inactivityScene)
+            if (SceneManager.GetActiveScene().name != inactivityScene)
             {
                 //load inactivityMinigame
 				if(kinectManagerObject.activeSelf)
-	                Application.LoadLevel(inactivityScene);
+	                SceneManager.LoadScene(inactivityScene);
 				else
-					Application.LoadLevel(alternativeInteractionScene);
+					SceneManager.LoadScene(alternativeInteractionScene);
             }
             else
             {
                 //load either previous scene or selection scene
-                Application.LoadLevel(1);
+                SceneManager.LoadScene(1);
             }
         }
         else

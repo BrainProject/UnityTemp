@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Diagnostics;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -104,7 +105,7 @@ namespace Game
 		void OnLevelWasLoaded (int level)
 		{
             //handle back icon visibility
-            if (Application.loadedLevel > 0)
+            if (SceneManager.GetActiveScene().buildIndex > 0)
             {
                 backIcon.gameObject.SetActive(true);
                 hide();

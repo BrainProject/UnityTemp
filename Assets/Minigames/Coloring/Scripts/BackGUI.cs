@@ -37,8 +37,9 @@ namespace Coloring
 				deskAnimator.SetBool("painting", false);
 				deskAnimator.SetTrigger("animate");
 				thisLevelManager.painting = false;
-				MGC.Instance.minigamesGUI.screenshotIcon.hide();
-				MGC.Instance.ShowCustomCursor(true);
+                MGC.Instance.minigamesGUI.screenshotIcon.hide();
+                MGC.Instance.minigamesGUI.screenshotIcon.GetComponent<Game.SavePictureGUI>().IconInstantlyVisible(false);
+                MGC.Instance.ShowCustomCursor(true);
 			}
 		}
 

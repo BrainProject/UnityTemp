@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace SocialGame{
 	public class HelpListener : MonoBehaviour {
@@ -78,7 +79,7 @@ namespace SocialGame{
 				Debug.Log(MGC.Instance);			
 				yield return new WaitForSeconds (1);
 			}
-			MGC.Instance.minigamesProperties.SetPlayed(Application.loadedLevelName);
+			MGC.Instance.minigamesProperties.SetPlayed(SceneManager.GetActiveScene().name);
 		}
 		#endif
 	}

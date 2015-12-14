@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace ButterflyRush
 {
@@ -65,7 +66,7 @@ namespace ButterflyRush
 
         public void RestartLevel()
         {
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

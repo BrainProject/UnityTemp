@@ -333,8 +333,10 @@ namespace Kinect
             float bandSize = (jointsPos[shoulderCenterIndex].y - jointsPos[hipCenterIndex].y);
             float gestureTop = jointsPos[shoulderCenterIndex].y + bandSize * 1.2f / 3f;
             float gestureBottom = jointsPos[shoulderCenterIndex].y - bandSize * 1.8f / 3f;
+            /*
             float gestureRight = jointsPos[rightHipIndex].x;
             float gestureLeft = jointsPos[leftHipIndex].x;
+            */
 
             switch (gestureData.gesture)
             {

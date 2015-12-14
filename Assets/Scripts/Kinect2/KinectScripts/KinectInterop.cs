@@ -10,6 +10,7 @@ using System.IO;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
 using OpenCvSharp;
+using UnityEngine.SceneManagement;
 
 namespace Kinect
 {
@@ -1625,7 +1626,7 @@ namespace Kinect
             }
 
             // reload the same level
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // checks if DirectX11/Direct3D-11 is turned on or not

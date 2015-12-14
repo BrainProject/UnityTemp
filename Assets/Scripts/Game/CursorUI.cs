@@ -14,17 +14,17 @@ namespace Game
 		public Sprite cursorDrag;
 		public CursorCircle cursorCircle;
 
-        //		private Sprite currentCursor;
+        //private Sprite currentCursor;
         private RectTransform thisRectTransform;
-        private Kinect.InteractionManager interactionManager;
+        //private Kinect.InteractionManager interactionManager;
 		
 #if !UNITY_ANDROID
 		void Start ()
 		{
 			Cursor.visible = false;
             thisRectTransform = GetComponent<RectTransform>();
-            if(MGC.Instance.kinectManagerObject.activeSelf)
-                interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();
+            /*if(MGC.Instance.kinectManagerObject.activeSelf)
+                interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();*/
         }
 #endif
 

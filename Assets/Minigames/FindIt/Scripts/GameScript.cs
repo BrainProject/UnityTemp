@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace FindIt
 {
@@ -207,7 +208,7 @@ namespace FindIt
             UpdateCameraSize();
             newTargetImage();
             
-			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+			MGC.Instance.minigamesProperties.SetPlayed (SceneManager.GetActiveScene().name);
         }
 
         /**

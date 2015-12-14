@@ -8,6 +8,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Puzzle
 {
@@ -68,18 +69,18 @@ namespace Puzzle
          */
         void Start()
         {
-			gameWon = false;
+            gameWon = false;
 
             // loading image texture
             try
             {
                 bool custom = PlayerPrefs.GetInt("custom") == 1;
-                if(custom)
+                if (custom)
                 {
                     WWW www = new WWW("file:///" + PlayerPrefs.GetString("Image"));
                     puzzleImage = www.texture;
                 }
-                else 
+                else
                 {
                     puzzleImage = Resources.Load(PlayerPrefs.GetString("defaultPicsPath") + "/" + PlayerPrefs.GetString("Image")) as Texture2D;
                 }
@@ -102,7 +103,7 @@ namespace Puzzle
             int dim = (MGC.Instance.selectedMiniGameDiff + 2);
             numberPieces = dim * dim;
 
-            if(backgroundSprite)
+            if (backgroundSprite)
             {
                 // super weird, but works
                 backgroundSprite.transform.position = new Vector3(backgroundSprite.transform.position.x, 6 + (dim - 2) * 9 * 1.3f, numberPieces + 1);
@@ -118,11 +119,11 @@ namespace Puzzle
             {
                 x[i] = false; y[i] = false;
             }
-            
+
             for (int i = 0; i < numberPieces; i++)
             {
-            
-                PuzzlePiece piece = new PuzzlePiece(puzzleImage,i,dim,dim, shader);
+
+                PuzzlePiece piece = new PuzzlePiece(puzzleImage, i, dim, dim, shader);
 
                 pieces.Add(piece.gameObject.name, piece);
 
@@ -138,7 +139,7 @@ namespace Puzzle
 
             PuzzleStatistics.Clear();
             PuzzleStatistics.StartMeasuringTime();
-			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+            MGC.Instance.minigamesProperties.SetPlayed(SceneManager.GetActiveScene().name);
 			
 
         }

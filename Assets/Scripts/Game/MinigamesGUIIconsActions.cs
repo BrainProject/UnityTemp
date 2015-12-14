@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -73,10 +74,10 @@ namespace Game
 	                //hide GUI
 	                MGC.Instance.minigamesGUI.hide();
 
-					if(Application.loadedLevel > 3)
+					if(SceneManager.GetActiveScene().buildIndex > 3)
 	                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
 					else
-						MGC.Instance.sceneLoader.LoadScene(Application.loadedLevel);
+						MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
 					break;
 	            }
 
@@ -123,10 +124,10 @@ namespace Game
 					MGC.Instance.minigamesGUI.hide();
 					
 					//return back
-					if(Application.loadedLevel > 6)	//NOTE: Update minimal minigame level index here
+					if(SceneManager.GetActiveScene().buildIndex > 6)	//NOTE: Update minimal minigame level index here
 					{
 						// Coloring mini-game se special treatment...
-						if (Application.loadedLevelName == "Coloring")
+						if (SceneManager.GetActiveScene().name == "Coloring")
 						{
 							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
 							if (coloringLM.painting)
@@ -156,11 +157,11 @@ namespace Game
 						}
 					}
 					
-					else if(Application.loadedLevelName == "DifficultyChooser")
+					else if(SceneManager.GetActiveScene().name == "DifficultyChooser")
 					{
 						MGC.Instance.sceneLoader.LoadScene("Crossroad");
 					}
-					else if(Application.loadedLevelName == "GameSelection")
+					else if(SceneManager.GetActiveScene().name == "GameSelection")
 					{
 						//Zoom out in selection scene if zoomed to some minigame.
 						//Go to brain scene if not zoomed.
@@ -173,7 +174,7 @@ namespace Game
 						else
 							cm.ZoomOutCamera();
 					}
-					else if(Application.loadedLevelName == "TiledMenu")
+					else if(SceneManager.GetActiveScene().name == "TiledMenu")
 					{
 						hide();
 						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);
@@ -184,8 +185,9 @@ namespace Game
 				}
 
 				case "Screenshot":
-				{
-					GetComponent<SavePictureGUI>().TakeScreenshot();
+                {
+                    GetComponent<SavePictureGUI>().TakeScreenshot();
+                    show();
 					break;
 				}
 
