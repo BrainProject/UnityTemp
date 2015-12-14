@@ -49,14 +49,12 @@ namespace MinigameSelection
 
 		public void SwitchMenu(int sectionIndex)
 		{
-            if (currentlySelectedSectionIndex != sectionIndex)
-            {
-                previouslySelectedSectionIndex = currentlySelectedSectionIndex;
-                currentlySelectedSectionIndex = sectionIndex;
-                MGC.Instance.selectedMenuSectionIndex = sectionIndex;
-                StartCoroutine(Fade());
-            }
-			//TODO: show back button if brain is not active
+            previouslySelectedSectionIndex = currentlySelectedSectionIndex;
+            currentlySelectedSectionIndex = sectionIndex;
+            MGC.Instance.selectedMenuSectionIndex = sectionIndex;
+            StartCoroutine(Fade());
+            
+            //TODO: show back button if brain is not active
 		}
 
 		IEnumerator Fade()

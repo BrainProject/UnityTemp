@@ -109,6 +109,9 @@ namespace Game
 				
 				case "Brain":
 				{
+                    //reset menu index
+                    MGC.Instance.selectedMenuSectionIndex = 0;
+
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
 					
