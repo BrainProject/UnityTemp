@@ -28,6 +28,8 @@ namespace MinigameSelection
 
 		public void SelectMinigame()
 		{
+            print("Starting: " + minigameName);
+
 			if(isKinectRequired)
 			{
 				if (!MGC.Instance.kinectManagerObject.activeSelf)
