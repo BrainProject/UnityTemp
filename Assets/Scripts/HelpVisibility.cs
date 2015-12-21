@@ -43,14 +43,14 @@ public class HelpVisibility : MonoBehaviour {
 	public void StartHelpAnimation()
 	{
 		helpClone.GetComponent<Animator> ().SetTrigger ("AnimateHelp");
-		StartCoroutine("ShowButtons");
+		//StartCoroutine("ShowButtons");
 	}
 	
 	public void ReplayHelpAnimation()
 	{
 		helpClone.GetComponent<Animator> ().SetTrigger ("ReplayHelp");
 		helpClone.GetComponent<Animator> ().SetTrigger ("AnimateHelp");
-		StartCoroutine("ShowButtons");
+        //ShowButtons();
 	}
 
 	public void HideHelpAnimation()
@@ -61,14 +61,15 @@ public class HelpVisibility : MonoBehaviour {
 		MGC.Instance.TakeControlForGUIAction (false);
 	}
 
+    /*
 	public void StopShowingButtons()
 	{
 		StopCoroutine("ShowButtons");
-	}
+	}*/
 
-	private IEnumerator ShowButtons()
+	public void ShowButtons()
 	{
-		yield return new WaitForSeconds (helpDuration);
+		//yield return new WaitForSeconds (helpDuration);
 
 		MGC.Instance.minigamesGUI.hideHelpIcon.show();
 		MGC.Instance.minigamesGUI.replayHelpIcon.show();

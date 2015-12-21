@@ -139,7 +139,7 @@ namespace Game
 					tmp.a = 0;
 					MGC.Instance.minigamesGUI.replayHelpIcon.thisImage.color = tmp;
 					MGC.Instance.minigamesGUI.replayHelpIcon.gameObject.SetActive(false);
-					newHelp.helpObject.StopShowingButtons();
+					//newHelp.helpObject.StopShowingButtons();
 					newHelp.helpObject.thisAnimator.SetTrigger("HideHelp");
 				}
 
