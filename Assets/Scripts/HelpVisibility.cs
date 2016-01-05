@@ -19,7 +19,7 @@ public class HelpVisibility : MonoBehaviour {
 			   MGC.Instance.getSelectedMinigameProperties().mainScene == SceneManager.GetActiveScene().name)
 			{
 				helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
-				helpDuration = MGC.Instance.getSelectedMinigameProperties().helpDuration;
+				//helpDuration = MGC.Instance.getSelectedMinigameProperties().helpDuration;
 				helpClone = GameObject.Instantiate(helpPrefab) as GameObject;
 				helpClone.transform.SetParent(this.transform);
 				helpClone.transform.localEulerAngles = Vector3.zero;
