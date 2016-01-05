@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine.UI;
+using SmartLocalization;
 
 
 namespace EmotionRecognition
@@ -53,14 +54,30 @@ namespace EmotionRecognition
         //Sprites of star ratings
         public Sprite[] starSprites;
 
-        //Temp
+        //Canvas of Star Rating
         public Canvas ratingCanvas;
 
+        //Stores whether rating is fully shown
+        private bool fullyShown = false;
+
+        public LocalizationScript localization;
+
+        private string angerKey = "Anger";
+        private string sadnessKey = "Sadness";
+        private string fearKey = "Fear";
+        private string disgustKey = "Disgust";
+        private string surpriseKey = "Surprise";
+        private string happinessKey = "Happiness";
 
         private Sprite ObjectToSprite(Object obj)
         {
             Texture2D temp = obj as Texture2D;
             return Sprite.Create(temp, new Rect(0, 0, temp.width, temp.height), new Vector2(0.5f, 0.5f));
+        }
+
+        private void GetLanguage()
+        {
+            LanguageManager.Instance.ChangeLanguage(localization.getLanguage());
         }
 
         private void LoadFaceImages()
@@ -70,33 +87,33 @@ namespace EmotionRecognition
             Object[] tempA = Resources.LoadAll("Faces/Anger");
             foreach (Object temp in tempA)
             {
-                faces.Add(ObjectToSprite(temp), "Anger");
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(angerKey));
             }
             Object[] tempD = Resources.LoadAll("Faces/Disgust");
             foreach (Object temp in tempD)
             {
-                faces.Add(ObjectToSprite(temp), "Disgust");
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(disgustKey));
             }
             Object[] tempF = Resources.LoadAll("Faces/Fear");
             foreach (Object temp in tempF)
             {
-                faces.Add(ObjectToSprite(temp), "Fear");
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(fearKey));
             }
             Object[] tempSu = Resources.LoadAll("Faces/Surprise");
             foreach (Object temp in tempSu)
             {
-                faces.Add(ObjectToSprite(temp), "Surprise");
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(surpriseKey));
             }
             Object[] tempSa = Resources.LoadAll("Faces/Sadness");
             foreach (Object temp in tempSa)
             {
-                faces.Add(ObjectToSprite(temp), "Sadness");
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(sadnessKey));
             }
             Object[] tempH = Resources.LoadAll("Faces/Happiness");
             foreach (Object temp in tempH)
             {
-                faces.Add(ObjectToSprite(temp), "Happiness");
-            }            
+                faces.Add(ObjectToSprite(temp), LanguageManager.Instance.GetTextValue(happinessKey));
+            }              
 
             //faceImagesPath = "C:\\Users\\Wrath\\Desktop\\faces";
             //string[] faceImages = System.IO.Directory.GetFiles(faceImagesPath, "*.jpg");
@@ -145,9 +162,15 @@ namespace EmotionRecognition
         bool CheckEndGame() 
         {
             if (faces.Count < 2)
+            {
+                Debug.Log("KONIEC");
                 return true;
+            }
             else if (faces.Count == 2 && (string.Equals(faces.ElementAt(0).Value, faces.ElementAt(1).Value)))
+            {
+                Debug.Log("KONIEC");
                 return true;
+            }
             else return false;
         }
 
@@ -169,6 +192,8 @@ namespace EmotionRecognition
                 switch (faces.ElementAt(number).Value)
                 {
                     case "Anger":
+                    case "Hnev":
+                    case "Hněv":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -177,6 +202,7 @@ namespace EmotionRecognition
                             break;
                         }
                     case "Fear":
+                    case "Strach":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -185,6 +211,8 @@ namespace EmotionRecognition
                             break;
                         }
                     case "Happiness":
+                    case "Šťastie":
+                    case "Štestí":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -193,6 +221,8 @@ namespace EmotionRecognition
                             break;
                         }
                     case "Sadness":
+                    case "Smútok":
+                    case "Smutek":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -201,6 +231,8 @@ namespace EmotionRecognition
                             break;
                         }
                     case "Surprise":
+                    case "Prekvapenie":
+                    case "Překvapení":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -209,6 +241,8 @@ namespace EmotionRecognition
                             break;
                         }
                     case "Disgust":
+                    case "Znechutenie":
+                    case "Znechucení":
                         {
                             if (img.name == "PictogramImage")
                             {
@@ -230,31 +264,42 @@ namespace EmotionRecognition
                     switch (faces.ElementAt(number).Value)
                     {
                         case "Anger":
+                        case "Hnev":
+                        case "Hněv":
                             {
                                 img.color = new Color32(185, 20, 20, 255);
                                 break;
                             }
                         case "Fear":
+                        case "Strach":
                             {
                                 img.color = new Color32(0, 23, 175, 255);
                                 break;
                             }
                         case "Happiness":
+                        case "Šťastie":
+                        case "Štestí":
                             {
                                 img.color = new Color32(253, 201, 120, 255);
                                 break;
                             }
                         case "Sadness":
+                        case "Smútok":
+                        case "Smutek":
                             {
                                 img.color = Color.black;
                                 break;
                             }
                         case "Surprise":
+                        case "Prekvapenie":
+                        case "Překvapení":
                             {
                                 img.color = new Color32(175, 141, 217, 255);
                                 break;
                             }
                         case "Disgust":
+                        case "Znechutenie":
+                        case "Znechucení":
                             {
                                 img.color = new Color32(126, 75, 28, 255);
                                 break;
@@ -273,7 +318,8 @@ namespace EmotionRecognition
                 img.sprite = starSprites[i];
                 yield return new WaitForSeconds(0.1f);
             }
-            GameStatistics.CorrectGameTurns = 0;  
+            GameStatistics.CorrectGameTurns = 0;
+            fullyShown = true;
         }
         
         public void GameTurn()
@@ -328,8 +374,17 @@ namespace EmotionRecognition
 
                     used.Add(faces.ElementAt(chosenone).Key, faces.ElementAt(chosenone).Value);
                     used.Add(faces.ElementAt(chosentwo).Key, faces.ElementAt(chosentwo).Value);
-                    faces.Remove(faces.ElementAt(chosenone).Key);
-                    faces.Remove(faces.ElementAt(chosentwo).Key);
+                    if (chosenone > chosentwo)
+                    {
+                        faces.Remove(faces.ElementAt(chosenone).Key);
+                        faces.Remove(faces.ElementAt(chosentwo).Key);
+                    }
+                    else
+                    {
+                        faces.Remove(faces.ElementAt(chosentwo).Key);
+                        faces.Remove(faces.ElementAt(chosenone).Key);
+                    }
+
                     if (GameStatistics.GameTurns % 10 == 0 && GameStatistics.GameTurns > 0)
                     {
                         StartCoroutine(ShowRating(ratingCanvas.GetComponentInChildren<Image>(), GameStatistics.CorrectGameTurns));
@@ -359,11 +414,12 @@ namespace EmotionRecognition
         void Awake()
         {
            //StartCoroutine(LoadFaceImages());
-           LoadFaceImages();
         }
       
         void Start()
         {
+            GetLanguage();
+            LoadFaceImages();
             ShuffleDictionary();
             SelectedPhase();
             GameTurn();
@@ -416,10 +472,11 @@ namespace EmotionRecognition
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if(ratingCanvas.enabled == true)
+                if(ratingCanvas.enabled == true && fullyShown)
                 {
                     ratingCanvas.enabled = false;
                     gameCanvas.enabled = true;
+                    fullyShown = false;
                 }
             }
         }
