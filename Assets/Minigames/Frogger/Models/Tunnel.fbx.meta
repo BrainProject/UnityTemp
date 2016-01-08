@@ -3,7 +3,7 @@ guid: 28f3ad28c9891e442b96b37a869b5edb
 timeCreated: 1446070938
 licenseType: Free
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 19
   fileIDToRecycleName:
     100000: Caution
     100002: Railing
@@ -50,6 +50,7 @@ ModelImporter:
     2300020: Step_2
     2300022: Terrain
     2300024: Tunnel
+    2300026: //RootNode
     3300000: Caution
     3300002: Railing_2_MeshPart0
     3300004: Railing_2_MeshPart1
@@ -63,6 +64,7 @@ ModelImporter:
     3300020: Step_2
     3300022: Terrain
     3300024: Tunnel
+    3300026: //RootNode
     4300000: Terrain
     4300002: Railway
     4300004: Railway_1
@@ -77,6 +79,24 @@ ModelImporter:
     4300022: Railing_2_MeshPart1
     4300024: Railing_2_MeshPart2
     7400000: Take 001
+    7400002: Tunnel|Caution|Take 001|BaseLayer
+    7400004: Tunnel|Railing_2|Take 001|BaseLayer
+    7400006: Tunnel|Railing|Take 001|BaseLayer
+    7400008: Tunnel|Railway_1|Take 001|BaseLayer
+    7400010: Tunnel|Railway|Take 001|BaseLayer
+    7400012: Tunnel|Step_2|Take 001|BaseLayer
+    7400014: Tunnel|Step|Take 001|BaseLayer
+    7400016: Tunnel|Terrain|Take 001|BaseLayer
+    7400018: Tunnel|Tunnel|Take 001|BaseLayer
+    7400020: Caution|Caution|Take 001|BaseLayer
+    7400022: Caution|Railing_2|Take 001|BaseLayer
+    7400024: Caution|Railing|Take 001|BaseLayer
+    7400026: Caution|Railway_1|Take 001|BaseLayer
+    7400028: Caution|Railway|Take 001|BaseLayer
+    7400030: Caution|Step_2|Take 001|BaseLayer
+    7400032: Caution|Step|Take 001|BaseLayer
+    7400034: Caution|Terrain|Take 001|BaseLayer
+    7400036: Caution|Tunnel|Take 001|BaseLayer
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -85,6 +105,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -92,16 +113,16 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 2.5
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -118,20 +139,19 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
