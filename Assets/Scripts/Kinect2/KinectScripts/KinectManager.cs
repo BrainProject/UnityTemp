@@ -15,6 +15,7 @@ namespace Kinect
     /// </summary>
     public class KinectManager : MonoBehaviour
     {
+#if UNITY_STANDALONE
         //Is default kinect manager
         public bool isDefaultKM = true;
 
@@ -3467,6 +3468,6 @@ namespace Kinect
 
             return false;
         }
-
+#endif
     }
 }

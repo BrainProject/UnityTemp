@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System;
 using System.IO;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     public class OpenNI2Interface : DepthSensorInterface
@@ -1028,3 +1029,4 @@ namespace Kinect
         }
     }
 }
+#endif

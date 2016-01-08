@@ -29,7 +29,8 @@ namespace Game
 #endif
 
 		void Update()
-		{
+        {
+#if UNITY_STANDALONE
             if (MGC.Instance.kinectManagerObject.activeSelf)
             {
                 if (Kinect.KinectManager.Instance.GetUsersCount() > 0)
@@ -50,6 +51,7 @@ namespace Game
             {
                 thisRectTransform.position = Input.mousePosition;
             }
+#endif
 
 			if (Input.GetMouseButtonDown (0))
 				CursorToDrag ();

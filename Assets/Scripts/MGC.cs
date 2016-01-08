@@ -625,6 +625,7 @@ public class MGC : Singleton<MGC>
     {
         if (kinectManagerObject.activeSelf)
         {
+#if UNITY_STANDALONE
             try
             {
                 kinectManagerInstance = KinectManager.Instance;
@@ -645,6 +646,10 @@ public class MGC : Singleton<MGC>
                 kinectManagerObject.SetActive(false);
                 Debug.LogWarning("Kinect is not initialized.");
             }
+#else
+            kinectManagerObject.SetActive(false);
+            Debug.LogWarning("Kinect is not initialized.");
+#endif
         }
     }
 

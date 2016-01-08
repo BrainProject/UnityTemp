@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System;
 using System.IO;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -751,3 +752,4 @@ namespace Kinect
         }
     }
 }
+#endif

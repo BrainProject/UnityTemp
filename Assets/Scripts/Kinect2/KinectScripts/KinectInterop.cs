@@ -12,6 +12,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using OpenCvSharp;
 using UnityEngine.SceneManagement;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -2093,3 +2094,4 @@ namespace Kinect
         }
     }
 }
+#endif
