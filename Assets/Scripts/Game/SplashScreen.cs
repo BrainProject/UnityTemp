@@ -12,11 +12,6 @@ namespace Game
 	public class SplashScreen: MonoBehaviour 
     {
         public float timeBeforeFade = 2.5f;
-		
-        private Color originalColor;
-		private Color targetColor;
-        
-        private float startTime;
 
 		void Awake()
 		{
@@ -25,8 +20,6 @@ namespace Game
 
 		void Start()
 		{
-			originalColor = this.GetComponent<GUITexture>().color;
-			targetColor = this.GetComponent<GUITexture>().color;
 			Cursor.visible = false;
 			StartCoroutine (LoadMainLevel());
 

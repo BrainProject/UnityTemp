@@ -15,6 +15,7 @@ namespace Game
 		public CursorCircle cursorCircle;
 
         //private Sprite currentCursor;
+
         private RectTransform thisRectTransform;
         //private Kinect.InteractionManager interactionManager;
 		

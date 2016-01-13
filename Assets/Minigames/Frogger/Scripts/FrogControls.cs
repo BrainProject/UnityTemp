@@ -43,7 +43,7 @@ namespace Frogger
 
                 if(Input.GetMouseButtonUp(0))
                 {
-                    Debug.Log("Tap duration: " + (Time.time - tapTimestamp));
+                    //Debug.Log("Tap duration: " + (Time.time - tapTimestamp));
                     if(Time.time - tapTimestamp < 0.2f)
                     {
                         CheckBoat(transform.forward);
