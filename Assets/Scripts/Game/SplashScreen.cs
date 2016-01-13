@@ -48,24 +48,7 @@ namespace Game
         public IEnumerator LoadMainLevel()
         {
             yield return new WaitForSeconds(timeBeforeFade);
-            startTime = Time.time;
-
-            originalColor.a = 0;
-            targetColor.a = 1.0f;
-            while (this.GetComponent<GUITexture>().color.a < 0.99f)
-            {
-                this.GetComponent<GUITexture>().color = Color.Lerp(originalColor, targetColor, (Time.time - startTime) / 2);
-                yield return null;
-            }
-
-            //Screen.showCursor = true;
-            //MGC.Instance.ShowCustomCursor();
-
-            //we want 'fade-in' effect for main scene
-            MGC.Instance.sceneLoader.doFade = true;
-
-            //load main scene
-            SceneManager.LoadScene("Crossroad");
-		}
+            MGC.Instance.sceneLoader.LoadScene("Crossroad");
+        }
 	}
 }

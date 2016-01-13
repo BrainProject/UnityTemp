@@ -23,13 +23,13 @@ namespace Game
 		public bool gsiStandalone;
 		public bool clicked = false;
 
-		void Awake()
-		{
+//		void Awake()
+//		{
 //			if (Application.loadedLevel > 1)
 //				backIcon.gameObject.SetActive(true);
 //			else
 //				backIcon.gameObject.SetActive(false);
-		}
+//		}
 
 
 		/// <summary>
@@ -86,7 +86,7 @@ namespace Game
 			brainIcon.hide ();
 			menuIcon.hide ();
 			guiDetection.guiIsHidden = true;
-			showHelpIcon.hide ();
+			//showHelpIcon.hide ();
 
             screenshotIcon.hide();
             
