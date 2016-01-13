@@ -125,6 +125,14 @@ namespace Game
 				{
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
+
+                    //if help is shown, disable it
+                    NEWBrainHelp neuronHelp = MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>();
+                    if(neuronHelp.helpObject.helpClone)
+                    {
+                        neuronHelp.helpObject.HideHelpAnimation();
+                        break;
+                    }
 					
 					//return back
 					if(SceneManager.GetActiveScene().buildIndex > 6)	//NOTE: Update minimal minigame level index here
