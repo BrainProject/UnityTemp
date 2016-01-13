@@ -70,8 +70,8 @@ namespace Game
             { 
 			    if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
 			    {
-				    if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
-					    showHelpIcon.show ();
+				    //if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+					    //showHelpIcon.show ();
 			    }
             }
 
