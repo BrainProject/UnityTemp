@@ -51,6 +51,11 @@ namespace Game
         public Sprite difficultyLowIcon;
 
         /// <summary>
+        /// Image symbolizing medium difficulty
+        /// </summary>
+        public Sprite difficultyMediumIcon;
+
+        /// <summary>
         /// Image symbolizing high difficulty
         /// </summary>
         public Sprite difficultyHighIcon;
