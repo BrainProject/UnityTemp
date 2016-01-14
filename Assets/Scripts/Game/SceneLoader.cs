@@ -22,6 +22,8 @@ namespace Game
 
         private Image fadePanel;
 
+        private bool fadeInProgress = false;
+
         /// <summary>
         /// Set it up, mainly UI panel used for fading
         /// </summary>
@@ -70,7 +72,8 @@ namespace Game
 
             if (doFade)
             {
-                StartCoroutine(LoadWithFadeOut(levelName));
+                if(!fadeInProgress)
+                    StartCoroutine(LoadWithFadeOut(levelName));
             }
             else
             {
@@ -85,8 +88,9 @@ namespace Game
 			doFade = doFadeInOut;
 			
 			if (doFade)
-			{
-				StartCoroutine(LoadByIndexWithFadeOut(levelIndex));
+            {
+                if (!fadeInProgress)
+                    StartCoroutine(LoadByIndexWithFadeOut(levelIndex));
 			}
 			else
 			{
@@ -124,6 +128,7 @@ namespace Game
 		/// <returns></returns>
 		private IEnumerator LoadWithFadeOut(string levelName)
 		{
+            fadeInProgress = true;
 			Instantiate (Resources.Load ("BlockBorder"));
 
 			//print("fading out coroutine...");
@@ -137,36 +142,38 @@ namespace Game
 				float startTime = Time.time;              
                 fadePanel.enabled = true;
 
-                while (fadePanel.color.a < 0.99f)
+                while (fadePanel.color.a < 1)
                 {
                     fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                     //print("barva: " + fadePanel.color);
                     yield return null;
                 }
-
-
+                
+                fadeInProgress = false;
                 SceneManager.LoadScene(levelName);
             }
-		}
+        }
 		/// <summary>
 		/// Coroutine for fading out and loading level by index
 		/// </summary>
 		/// <param index="levelIndex"></param>
 		/// <returns></returns>
 		private IEnumerator LoadByIndexWithFadeOut(int levelIndex)
-		{
-			Instantiate (Resources.Load ("BlockBorder"));
+        {
+            fadeInProgress = true;
+            Instantiate (Resources.Load ("BlockBorder"));
 			print("fading out coroutine...");
 
 			float startTime = Time.time;
             fadePanel.enabled = true;
 
-            while (fadePanel.color.a < 0.99f)
+            while (fadePanel.color.a < 1)
             {
                 fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 
+            fadeInProgress = false;
             SceneManager.LoadScene(levelIndex);
         }
 	}
