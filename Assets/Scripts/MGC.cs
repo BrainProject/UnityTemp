@@ -827,7 +827,7 @@ public class MGC : Singleton<MGC>
         if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
         {
             Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
-			im.smoothFactor = 5;
+			im.smoothFactor = 10;
 			isKinectUsed = true;
         }
 

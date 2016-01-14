@@ -83,7 +83,7 @@ namespace Game
             // difficulty icons should be setted if difficulty is > 0
 
             // find parent object
-            minigamesParent = GameObject.Find("Mini-games");
+            minigamesParent = GameObject.Find("mini-games-configurations");
 
             //set parent and name of gameProps object
             newgameGO.transform.SetParent(minigamesParent.transform);
@@ -114,7 +114,7 @@ namespace Game
         {
             print("Saving configuration of mini-games into prefab");
 
-            minigamesParent = GameObject.Find("Mini-games");
+            minigamesParent = GameObject.Find("mini-games-configurations");
 
             if (minigamesParent == null)
             {
