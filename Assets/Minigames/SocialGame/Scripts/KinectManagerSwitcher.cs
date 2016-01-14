@@ -6,17 +6,18 @@ namespace SocialGame{
 public class KinectManagerSwitcher : MonoBehaviour {
 		#if UNITY_STANDALONE
 		public static GameObject thisLevelKManager;
-		public static GameObject defaultKManager;
+		public static KinectManagerSwitcher instance {
+            get; private set;
+        }
         public AvatarController player1;
         public AvatarController player2;
 
         // Use this for initialization
         void Awake ()
         {
-            defaultKManager = MGC.Instance.kinectManagerObject;
+            instance = this;
             setThisLevelManager();
-			
-			activateThisLevelKManager();
+            activateThisLevelKManager();
 		}
 
 		/// <summary>
@@ -38,6 +39,9 @@ public class KinectManagerSwitcher : MonoBehaviour {
             {
                 if (KinectManager.Instance)
                 {
+                    MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+                    MGC.Instance.kinectManagerInstance.StartKinect();
+                    MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
                     if (player1)
                         KinectManager.Instance.avatarControllers.Add(player1);
 
@@ -48,6 +52,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
                     bool bNeedRestart = false;
                     KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
                     KinectManager.Instance.StartKinect();
+                    Debug.Log("Activate This kinect manager");
                 }
             }
         }
@@ -57,11 +62,15 @@ public class KinectManagerSwitcher : MonoBehaviour {
 		/// </summary>
 		public static void activateThisLevelKManager()
         {
+            //instance.setThisLevelManager();
             MGC.Instance.ShowCustomCursor(false);
             InteractionManager im = KinectManager.Instance.GetComponent<InteractionManager>();
             im.controlMouseCursor = false;
             im.controlMouseDrag = false;
             im.allowHandClicks = false;
+            instance.player1.enabled = true;
+            if(instance.player2)
+            instance.player2.enabled = true;
             /*setActiveMGC(false);
 			
 			if(thisLevelKManager)
@@ -131,7 +140,10 @@ public class KinectManagerSwitcher : MonoBehaviour {
             //{
             //	thisLevelKManager.SetActive(false);
             //}
-            setActiveMGC(true);
+            //setActiveMGC(true);
+            instance.player1.enabled = false;
+            if(instance.player2)
+                instance.player2.enabled = false;
 		}
 		#endif
 	}

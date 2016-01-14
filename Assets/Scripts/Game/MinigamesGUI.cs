@@ -100,6 +100,10 @@ namespace Game
                     }
                 }
             }
+            else
+            {
+                MGC.Instance.TakeControlForGUIAction(false);
+            }
         }
 
 		void OnLevelWasLoaded (int level)

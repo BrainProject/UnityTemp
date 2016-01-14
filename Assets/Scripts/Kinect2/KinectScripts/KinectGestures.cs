@@ -1727,7 +1727,9 @@ namespace Kinect
                                     //Debug.LogError("Hidden gesture complete");
                                     Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.KEY_I);
                                     //Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.NUMPAD9);
+#if UNITY_ANDROID
                                     Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.ESC);
+#endif
                                     SetGestureCancelled(ref gestureData);
                                 }
                             }
