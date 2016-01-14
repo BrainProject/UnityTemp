@@ -19,7 +19,24 @@ namespace EmotionRecognition
         public Canvas setupCanvas;
         void Start()
         {
+            int diff = MGC.Instance.selectedMiniGameDiff;
 
+            switch (diff)
+            {
+                case 0:
+                    SelectedLearning();
+                    break;
+
+                case 1:
+                    SelectedGameWithHint();
+                    break;
+
+                case 2:
+                    SelectedGameWithoutHint();
+                    break;
+
+            }
+                
         }
 
         
