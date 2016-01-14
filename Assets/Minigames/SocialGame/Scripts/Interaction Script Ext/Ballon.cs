@@ -11,6 +11,8 @@ namespace SocialGame{
 		private Transform target;
 		public float speedRope;
 		public float speed;
+		public Transform BallonJoin;
+
 
 		private int phase = 0;
 
@@ -18,6 +20,7 @@ namespace SocialGame{
 		private float journeyLength;
 		private Rigidbody2D targetRig;
 		private Rigidbody2D rig;
+
 		void Awake()
 		{
 			joint = gameObject.GetComponent<DistanceJoint2D>();
@@ -40,6 +43,7 @@ namespace SocialGame{
 		{
 			targetRig = body;
 			target = targetRig.transform;
+			joint.anchor = BallonJoin.localPosition;
 		}
 
 		public void Join()
@@ -107,13 +111,13 @@ namespace SocialGame{
 						Join();
 					}
 					Vector3 positionNext = Vector3.Lerp(transform.position, target.position, fracJourney);
-					lineRender.SetPosition(0,transform.position);
+					lineRender.SetPosition(0,BallonJoin.position);
 					lineRender.SetPosition(1,positionNext);
 				break;
 				case 2:
 					if(lineRender && target)
 					{
-						lineRender.SetPosition(0,transform.position);
+						lineRender.SetPosition(0,BallonJoin.position);
 						lineRender.SetPosition(1,target.position);
 					}
 				break;
