@@ -17,8 +17,10 @@ namespace MinigameSelection
 		{
 			OnSelection = false;
 			print ("this is game selection scene...");
+            MGC.Instance.ResetKinect();
+            MGC.Instance.ShowCustomCursor(true);
 
-			kinectRequiredIcon.GetComponent<GUITexture>().pixelInset = new Rect (0, 0, Screen.width / 8 * 2, Screen.height / 9 * 2);
+            kinectRequiredIcon.GetComponent<GUITexture>().pixelInset = new Rect (0, 0, Screen.width / 8 * 2, Screen.height / 9 * 2);
 
 			switch (MGC.Instance.currentBrainPart) {
 			case BrainPartName.FrontalLobe: //Camera.main.transform.position = GameObject.Find ("GreenPos").transform.position;

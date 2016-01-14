@@ -667,13 +667,11 @@ public class MGC : Singleton<MGC>
 
 	public void TakeControlForGUIAction(bool isShown)
 	{
-        Debug.Log("Contorl control");
 		if(!isShown)
 		{
 			isControlTakenForGUI = false;
             if (TakeControlForGUIEvent != null)
-            {
-                Debug.Log("retun control");
+            {              
                 TakeControlForGUIEvent(isShown);
             }
 		}
@@ -684,7 +682,6 @@ public class MGC : Singleton<MGC>
 				isControlTakenForGUI = true;
                 if (TakeControlForGUIEvent != null)
                 {
-                    Debug.Log("take control");
                     TakeControlForGUIEvent(isShown);
                 }
 			}
