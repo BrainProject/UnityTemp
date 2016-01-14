@@ -19,23 +19,23 @@ namespace Game
 		internal Color startColor;
 		internal Color targetColor;
 		internal Image thisImage;
-		internal Button thisButton;
+		public Button thisButton;
 
 		void Start()
 		{
 			thisImage = GetComponent<Image> ();
 			thisButton = GetComponent<Button> ();
-			startColor = thisImage.color;
+            startColor = thisImage.color;
 			targetColor = thisImage.color;
 			if (defaultDisabled)
 			{
-				thisButton.enabled = false;
+				thisButton.interactable = false;
 				this.gameObject.SetActive (false);
 			}
 			else
 			{
 				this.gameObject.SetActive (true);
-				thisButton.enabled = true;
+				thisButton.interactable = true;
 			}
 		}
         
@@ -125,6 +125,14 @@ namespace Game
 				{
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
+
+                    //if help is shown, disable it
+                    NEWBrainHelp neuronHelp = MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>();
+                    if(neuronHelp.helpObject.helpClone)
+                    {
+                        neuronHelp.helpObject.HideHelpAnimation();
+                        break;
+                    }
 					
 					//return back
 					if(SceneManager.GetActiveScene().buildIndex > 6)	//NOTE: Update minimal minigame level index here
@@ -234,7 +242,7 @@ namespace Game
 		IEnumerator FadeInGUI()
 		{
 			float startTime = Time.time;
-			thisButton.enabled = true;
+			thisButton.interactable = true;
 			StopCoroutine ("FadeOutGUI");
 	//		collider.enabled = true;
 			startColor = thisImage.color;
@@ -251,7 +259,7 @@ namespace Game
 		IEnumerator FadeOutGUI()
 		{
 			float startTime = Time.time;
-			thisButton.enabled = false;
+			thisButton.interactable = false;
 			StopCoroutine ("FadeInGUI");
 //			collider.enabled = false;
 			startColor = thisImage.color;
@@ -265,7 +273,7 @@ namespace Game
 			}
 
 			thisImage.color = targetColor;
-			thisButton.enabled = false;
+			thisButton.interactable = false;
 			this.gameObject.SetActive (false);
 		}
     }

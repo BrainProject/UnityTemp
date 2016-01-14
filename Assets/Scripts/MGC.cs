@@ -303,7 +303,7 @@ public class MGC : Singleton<MGC>
         }
 
 
-        if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+        /*if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
         {
             menuType = MenuType.Brain;
             touchBlockTimestamp = Time.time;
@@ -312,7 +312,7 @@ public class MGC : Singleton<MGC>
         {
             menuType = MenuType.Tiles;
             touchBlockTimestamp = Time.time;
-        }
+        }*/
 
 
         //PC ...

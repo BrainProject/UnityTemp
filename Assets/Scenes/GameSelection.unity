@@ -8,25 +8,25 @@ SceneSettings:
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
     smallestOccluder: 5
-    smallestHole: .25
+    smallestHole: 0.25
     backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
   m_Fog: 0
-  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: .00999999978
+  m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_AmbientEquatorColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_AmbientGroundColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  m_AmbientSkyColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_AmbientEquatorColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_AmbientGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 0}
-  m_HaloStrength: .5
+  m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -40,7 +40,7 @@ RenderSettings:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 5
+  serializedVersion: 6
   m_GIWorkflowMode: 1
   m_LightmapsMode: 1
   m_GISettings:
@@ -66,7 +66,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightmapSnapshot: {fileID: 0}
+  m_LightingDataAsset: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
 NavMeshSettings:
@@ -74,15 +74,15 @@ NavMeshSettings:
   m_ObjectHideFlags: 0
   m_BuildSettings:
     serializedVersion: 2
-    agentRadius: .5
+    agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: .400000006
+    agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     accuratePlacement: 0
     minRegionArea: 2
-    cellSize: .166666657
+    cellSize: 0.16666666
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &2905465
@@ -111,9 +111,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2905465}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -4.49165249, y: -.323753268, z: 1.8039273}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -4.4916525, y: -0.32375327, z: 1.8039273}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 5
@@ -127,7 +127,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &2905468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,8 +163,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -179,7 +181,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2905471
 MeshFilter:
@@ -214,9 +216,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 6585836}
-  m_LocalRotation: {x: .707106829, y: -2.16600142e-08, z: -2.16600125e-08, w: .707106829}
-  m_LocalPosition: {x: -5.88548803, y: .0180668235, z: 1.58456516}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953654}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000021660014, z: -0.000000021660012, w: 0.7071068}
+  m_LocalPosition: {x: -5.885488, y: 0.018066823, z: 1.5845652}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195365}
   m_Children:
   - {fileID: 615089750}
   m_Father: {fileID: 874839484}
@@ -231,7 +233,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &6585839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,8 +269,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -283,7 +287,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &6585842
 MeshFilter:
@@ -318,9 +322,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 18313071}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -4.19100904, y: .141500279, z: 1.73055422}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -4.191009, y: 0.14150028, z: 1.7305542}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 8
@@ -334,7 +338,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &18313074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,8 +374,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -386,7 +392,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &18313077
 MeshFilter:
@@ -455,8 +461,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -505,9 +513,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 28552177}
-  m_LocalRotation: {x: .707106829, y: -2.16600142e-08, z: -2.16600125e-08, w: .707106829}
-  m_LocalPosition: {x: -6.17969084, y: -.28591904, z: 2.63107705}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953654}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000021660014, z: -0.000000021660012, w: 0.7071068}
+  m_LocalPosition: {x: -6.179691, y: -0.28591904, z: 2.631077}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195365}
   m_Children:
   - {fileID: 862007711}
   m_Father: {fileID: 874839484}
@@ -522,7 +530,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &28552180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,8 +566,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -574,7 +584,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &28552183
 MeshFilter:
@@ -609,9 +619,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 48414067}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: -2.44679737, y: .960621834, z: .349825174}
-  m_LocalScale: {x: .134681568, y: .134681538, z: .134681538}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: -2.4467974, y: 0.96062183, z: 0.34982517}
+  m_LocalScale: {x: 0.13468157, y: 0.13468154, z: 0.13468154}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 2
@@ -625,7 +635,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &48414070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,8 +671,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -677,7 +689,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &48414073
 MeshFilter:
@@ -712,9 +724,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 49773203}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: .207223743, y: .799574316, z: 1.72584295}
-  m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: 0.20722374, y: 0.7995743, z: 1.725843}
+  m_LocalScale: {x: 0.15377103, y: 0.15377101, z: 0.15377101}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 6
@@ -728,7 +740,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &49773206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,8 +776,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -780,7 +794,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &49773209
 MeshFilter:
@@ -873,9 +887,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 137336770}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -.834471703, y: 1.5939939, z: -1.77242851}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -0.8344717, y: 1.5939939, z: -1.7724285}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 8
@@ -889,7 +903,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &137336773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,8 +939,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -941,7 +957,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &137336776
 MeshFilter:
@@ -1035,14 +1051,14 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: .257352948, g: .257352948, b: .257352948, a: .0196078438}
+  m_BackGroundColor: {r: 0.25735295, g: 0.25735295, b: 0.25735295, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
     height: 1
-  near clip plane: .00999999978
+  near clip plane: 0.01
   far clip plane: 30
   field of view: 35
   orthographic: 0
@@ -1058,7 +1074,7 @@ Camera:
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
-  m_StereoSeparation: .0219999999
+  m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
 --- !u!4 &201004095
 Transform:
@@ -1066,8 +1082,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5c688b9753301f34ca72225a0f292d7b, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 201004090}
-  m_LocalRotation: {x: -9.05885411e-09, y: -.966221213, z: 2.78529857e-08, w: .257714391}
-  m_LocalPosition: {x: -2.57148719, y: .646850526, z: -11.2000265}
+  m_LocalRotation: {x: -0.000000009058854, y: -0.9662212, z: 0.000000027852986, w: 0.2577144}
+  m_LocalPosition: {x: -2.5714872, y: 0.6468505, z: -11.2000265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1326432696}
@@ -1166,8 +1182,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1261,8 +1279,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1345,8 +1365,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1384,9 +1406,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 334932450}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -2.06898975, y: 2.04186463, z: -.327625275}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -2.0689898, y: 2.0418646, z: -0.32762527}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 4
@@ -1400,7 +1422,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &334932453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1436,8 +1458,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1452,7 +1476,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &334932456
 MeshFilter:
@@ -1487,9 +1511,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 343425397}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: .313819766, y: .847806334, z: 1.25786018}
-  m_LocalScale: {x: .124456182, y: .124456249, z: .124456227}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: 0.31381977, y: 0.84780633, z: 1.2578602}
+  m_LocalScale: {x: 0.12445618, y: 0.12445625, z: 0.12445623}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 1
@@ -1503,7 +1527,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &343425400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1539,8 +1563,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1555,7 +1581,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &343425403
 MeshFilter:
@@ -1624,8 +1650,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1686,8 +1714,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1702,7 +1732,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &376872277
 MeshFilter:
@@ -1717,9 +1747,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 376872274}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -2.38017559, y: -.123749852, z: 1.52774096}
-  m_LocalScale: {x: .149999946, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -2.3801756, y: -0.12374985, z: 1.527741}
+  m_LocalScale: {x: 0.14999995, y: 0.14999999, z: 0.14999995}
   m_Children: []
   m_Father: {fileID: 1393376877}
   m_RootOrder: 6
@@ -1750,7 +1780,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &388481220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,9 +1807,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388481220}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -.792382717, y: 1.99302411, z: .771066666}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -0.7923827, y: 1.9930241, z: 0.77106667}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 5
@@ -1793,7 +1823,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &388481223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1829,8 +1859,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1845,7 +1877,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &388481226
 MeshFilter:
@@ -1881,8 +1913,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 451873447}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .149197459, y: .852228761, z: 2.70988083}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.14919746, y: 0.85222876, z: 2.7098808}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 1744454526}
   m_RootOrder: 6
@@ -1921,8 +1953,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -1937,7 +1971,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &451873452
 MeshFilter:
@@ -1956,7 +1990,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &460401660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1983,9 +2017,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 460401660}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: .916207314, y: 1.90961266, z: -1.56816292}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: 0.9162073, y: 1.9096127, z: -1.5681629}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 0
@@ -1999,7 +2033,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &460401663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2035,8 +2069,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2051,7 +2087,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &460401666
 MeshFilter:
@@ -2086,9 +2122,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 478998300}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: -.311844826, y: .864288688, z: .146640271}
-  m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: -0.31184483, y: 0.8642887, z: 0.14664027}
+  m_LocalScale: {x: 0.15377103, y: 0.15377101, z: 0.15377101}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 5
@@ -2102,7 +2138,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &478998303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,8 +2174,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2154,7 +2192,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &478998306
 MeshFilter:
@@ -2234,8 +2272,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2285,8 +2325,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2301,7 +2343,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &592549117
 MeshFilter:
@@ -2316,9 +2358,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 592549114}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -1.90514851, y: -.140587032, z: -.375368595}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -1.9051485, y: -0.14058703, z: -0.3753686}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children:
   - {fileID: 349684439}
   m_Father: {fileID: 1393376877}
@@ -2350,7 +2392,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &604056976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,8 +2431,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2405,7 +2449,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &604056979
 MeshFilter:
@@ -2420,9 +2464,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 604056976}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -2.28080082, y: -.106269121, z: 1.7460351}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -2.2808008, y: -0.10626912, z: 1.7460351}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children: []
   m_Father: {fileID: 1393376877}
   m_RootOrder: 5
@@ -2453,7 +2497,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &605283429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,8 +2569,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2609,8 +2655,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2660,8 +2708,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2676,7 +2726,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &658893440
 MeshFilter:
@@ -2691,9 +2741,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 658893437}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -.00534105301, y: -.225774586, z: -1.78200531}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -0.005341053, y: -0.22577459, z: -1.7820053}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children:
   - {fileID: 249483529}
   m_Father: {fileID: 1393376877}
@@ -2725,7 +2775,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &731503017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2753,8 +2803,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 731503017}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .639766335, y: .678514242, z: -.232528687}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.63976634, y: 0.67851424, z: -0.23252869}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children:
   - {fileID: 605283430}
   m_Father: {fileID: 1744454526}
@@ -2794,8 +2844,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2810,7 +2862,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &731503022
 MeshFilter:
@@ -2829,7 +2881,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &748637420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,8 +2953,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -2940,9 +2994,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 820488495}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -.99235487, y: 1.6817286, z: -2.0339489}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -0.99235487, y: 1.6817286, z: -2.033949}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 3
@@ -2956,7 +3010,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &820488498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2992,8 +3046,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3008,7 +3064,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &820488501
 MeshFilter:
@@ -3043,9 +3099,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 834197160}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -4.1948657, y: -.324475497, z: 2.60645962}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -4.1948657, y: -0.3244755, z: 2.6064596}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children:
   - {fileID: 748637421}
   m_Father: {fileID: 874839484}
@@ -3060,7 +3116,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &834197163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3096,8 +3152,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3112,7 +3170,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &834197166
 MeshFilter:
@@ -3192,8 +3250,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3227,9 +3287,9 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 2527c8850653b564fb64b09a2aa6110d, type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 874839483}
-  m_LocalRotation: {x: -.667127132, y: .234396204, z: .23439613, w: .667126954}
-  m_LocalPosition: {x: -1.9274435, y: -.199998498, z: -18.5467014}
-  m_LocalScale: {x: .851193726, y: 6.1748085, z: .426389754}
+  m_LocalRotation: {x: -0.66712713, y: 0.2343962, z: 0.23439613, w: 0.66712695}
+  m_LocalPosition: {x: -1.9274435, y: -0.1999985, z: -18.546701}
+  m_LocalScale: {x: 0.8511937, y: 6.1748085, z: 0.42638975}
   m_Children:
   - {fileID: 834197161}
   - {fileID: 6585837}
@@ -3279,14 +3339,14 @@ GUITexture:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 892822468}
   m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: 7592fd91c33ba384aa0f4c836b03b13a, type: 3}
-  m_Color: {r: .5, g: .5, b: .5, a: 0}
+  m_Texture: {fileID: 2800000, guid: 2c64f9c925150f046965c8598f78fe05, type: 3}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0}
   m_PixelInset:
     serializedVersion: 2
-    x: 444.299988
-    y: 18.2000008
-    width: 269.100006
-    height: 192.600006
+    x: 444.3
+    y: 18.2
+    width: 485
+    height: 192.6
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0
@@ -3329,9 +3389,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 943927969}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: .275162578, y: 1.11875868, z: 1.48316813}
-  m_LocalScale: {x: .143226653, y: .143226713, z: .143226713}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: 0.27516258, y: 1.1187587, z: 1.4831681}
+  m_LocalScale: {x: 0.14322665, y: 0.14322671, z: 0.14322671}
   m_Children:
   - {fileID: 262994659}
   m_Father: {fileID: 1366205587}
@@ -3346,7 +3406,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &943927972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3382,8 +3442,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3398,7 +3460,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &943927975
 MeshFilter:
@@ -3429,9 +3491,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 984744386}
-  m_LocalRotation: {x: -.00159111444, y: .707104981, z: .7071051, w: -.00159101083}
-  m_LocalPosition: {x: -5.71835184, y: -.785503685, z: 1.98608077}
-  m_LocalScale: {x: 1.1748203, y: 2.34527135, z: .161948293}
+  m_LocalRotation: {x: -0.0015911144, y: 0.707105, z: 0.7071051, w: -0.0015910108}
+  m_LocalPosition: {x: -5.718352, y: -0.7855037, z: 1.9860808}
+  m_LocalScale: {x: 1.1748203, y: 2.3452713, z: 0.1619483}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 9
@@ -3480,7 +3542,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1051838813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3516,8 +3578,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3532,7 +3596,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1051838816
 MeshFilter:
@@ -3547,9 +3611,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1051838811}
-  m_LocalRotation: {x: .707106829, y: -2.16600142e-08, z: -2.16600125e-08, w: .707106829}
-  m_LocalPosition: {x: -6.46519136, y: -.326677948, z: 2.71727538}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953654}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000021660014, z: -0.000000021660012, w: 0.7071068}
+  m_LocalPosition: {x: -6.4651914, y: -0.32667795, z: 2.7172754}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195365}
   m_Children:
   - {fileID: 483097835}
   m_Father: {fileID: 874839484}
@@ -3576,9 +3640,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1062820895}
-  m_LocalRotation: {x: -1.60248756e-08, y: -.603895605, z: -5.08389686e-09, w: .79706347}
-  m_LocalPosition: {x: 3.26287031, y: -.21067673, z: -1.65348721}
-  m_LocalScale: {x: 5.50702143, y: 1, z: 1.38450706}
+  m_LocalRotation: {x: -0.000000016024876, y: -0.6038956, z: -0.000000005083897, w: 0.79706347}
+  m_LocalPosition: {x: 3.2628703, y: -0.21067673, z: -1.6534872}
+  m_LocalScale: {x: 5.5070214, y: 1, z: 1.3845071}
   m_Children: []
   m_Father: {fileID: 1393376877}
   m_RootOrder: 7
@@ -3624,8 +3688,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1085101862}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -.672249317, y: .742856622, z: .738435745}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: -0.6722493, y: 0.7428566, z: 0.73843575}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children:
   - {fileID: 257392271}
   m_Father: {fileID: 1744454526}
@@ -3665,8 +3729,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3681,7 +3747,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1085101867
 MeshFilter:
@@ -3700,7 +3766,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1137495738
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,9 +3793,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1137495738}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: -2.47796345, y: 1.03592277, z: .589277983}
-  m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: -2.4779634, y: 1.0359228, z: 0.589278}
+  m_LocalScale: {x: 0.15377103, y: 0.15377101, z: 0.15377101}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 4
@@ -3743,7 +3809,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1137495741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3779,8 +3845,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3795,7 +3863,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1137495744
 MeshFilter:
@@ -3842,8 +3910,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -3858,7 +3928,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1150492043
 MeshFilter:
@@ -3873,9 +3943,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1150492040}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -.536017418, y: -.299864411, z: .272257805}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -0.5360174, y: -0.2998644, z: 0.2722578}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children:
   - {fileID: 21601727}
   m_Father: {fileID: 1393376877}
@@ -3907,7 +3977,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1001 &1207451569
 Prefab:
   m_ObjectHideFlags: 0
@@ -3973,7 +4043,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254824691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.08844662, y: -1.1209774, z: -16.085535}
+  m_LocalPosition: {x: 7.0884466, y: -1.1209774, z: -16.085535}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 460401661}
@@ -4037,8 +4107,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4058,7 +4130,7 @@ Transform:
   m_GameObject: {fileID: 1312414720}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 100, y: 100, z: 100}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 172555794}
   m_RootOrder: 0
@@ -4089,8 +4161,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1323279524}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .384680629, y: .910899639, z: 2.67503738}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.38468063, y: 0.91089964, z: 2.6750374}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 1744454526}
   m_RootOrder: 7
@@ -4129,8 +4201,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4145,7 +4219,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1323279529
 MeshFilter:
@@ -4164,7 +4238,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1326432694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4199,8 +4273,9 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_Strength: 1
-    m_Bias: .0500000007
-    m_NormalBias: .400000006
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -4219,8 +4294,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1326432694}
-  m_LocalRotation: {x: .139335766, y: -.85563302, z: .398988545, w: .298807472}
-  m_LocalPosition: {x: 1.28223872, y: .353149444, z: .113647439}
+  m_LocalRotation: {x: 0.13933577, y: -0.855633, z: 0.39898854, w: 0.29880747}
+  m_LocalPosition: {x: 1.2822387, y: 0.35314944, z: 0.11364744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 201004095}
@@ -4247,8 +4322,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 3a2619a5e202be54ba0a2d5b6e087154, type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366205585}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: 10.1230001, y: -.217999995, z: -4.68499994}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: 10.123, y: -0.218, z: -4.685}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 943927970}
@@ -4301,9 +4376,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1367217051}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -3.74134111, y: .150339529, z: 2.24292421}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -3.741341, y: 0.15033953, z: 2.2429242}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 6
@@ -4317,7 +4392,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1367217054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4353,8 +4428,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4369,7 +4446,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1367217057
 MeshFilter:
@@ -4408,7 +4485,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1378086104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4444,8 +4521,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4460,7 +4539,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1378086107
 MeshFilter:
@@ -4475,9 +4554,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1378086102}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -2.63864803, y: 1.71324623, z: -.457769394}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -2.638648, y: 1.7132462, z: -0.4577694}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 7
@@ -4517,7 +4596,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1393376875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.4194212, y: .857527733, z: -6.14862728}
+  m_LocalPosition: {x: -6.419421, y: 0.85752773, z: -6.1486273}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2049404698}
@@ -4556,9 +4635,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1398849974}
-  m_LocalRotation: {x: -.0131691247, y: .572524786, z: .0142325033, w: .81965816}
-  m_LocalPosition: {x: -2.49734783, y: .776112974, z: .711259127}
-  m_LocalScale: {x: .134682029, y: .134681985, z: .134682044}
+  m_LocalRotation: {x: -0.013169125, y: 0.5725248, z: 0.014232503, w: 0.81965816}
+  m_LocalPosition: {x: -2.4973478, y: 0.776113, z: 0.7112591}
+  m_LocalScale: {x: 0.13468203, y: 0.13468198, z: 0.13468204}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 3
@@ -4572,7 +4651,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1398849977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4608,8 +4687,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4624,7 +4705,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1398849980
 MeshFilter:
@@ -4655,9 +4736,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1407043127}
-  m_LocalRotation: {x: -1.11332605e-08, y: -.960487604, z: 1.0016187e-08, w: -.278322756}
-  m_LocalPosition: {x: -3.49989462, y: 1.76782823, z: 2.4382391}
-  m_LocalScale: {x: 6.95192051, y: 1, z: .179531261}
+  m_LocalRotation: {x: -0.0000000111332605, y: -0.9604876, z: 0.000000010016187, w: -0.27832276}
+  m_LocalPosition: {x: -3.4998946, y: 1.7678282, z: 2.438239}
+  m_LocalScale: {x: 6.9519205, y: 1, z: 0.17953126}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 9
@@ -4702,9 +4783,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1423108757}
-  m_LocalRotation: {x: -.0131689869, y: .572524488, z: .0142322341, w: .819658339}
-  m_LocalPosition: {x: -.217341453, y: .800445378, z: .391719311}
-  m_LocalScale: {x: .153771028, y: .153771013, z: .153771013}
+  m_LocalRotation: {x: -0.013168987, y: 0.5725245, z: 0.014232234, w: 0.81965834}
+  m_LocalPosition: {x: -0.21734145, y: 0.8004454, z: 0.3917193}
+  m_LocalScale: {x: 0.15377103, y: 0.15377101, z: 0.15377101}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 7
@@ -4718,7 +4799,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1423108760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,8 +4835,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4770,7 +4853,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1423108763
 MeshFilter:
@@ -4885,8 +4968,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -4969,8 +5054,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5019,9 +5106,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1593745942}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -4.02896786, y: .142344475, z: 2.22182655}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -4.028968, y: 0.14234447, z: 2.2218266}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 7
@@ -5035,7 +5122,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1593745945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5071,8 +5158,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5087,7 +5176,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1593745948
 MeshFilter:
@@ -5122,9 +5211,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1598160644}
-  m_LocalRotation: {x: .707106829, y: -3.09086232e-08, z: -3.09086232e-08, w: .707106829}
-  m_LocalPosition: {x: -3.93433619, y: -.320370972, z: 1.91251278}
-  m_LocalScale: {x: .168266013, y: .335906178, z: .0231953673}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000030908623, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -3.9343362, y: -0.32037097, z: 1.9125128}
+  m_LocalScale: {x: 0.16826601, y: 0.33590618, z: 0.023195367}
   m_Children: []
   m_Father: {fileID: 874839484}
   m_RootOrder: 4
@@ -5138,7 +5227,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1598160647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5174,8 +5263,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5190,7 +5281,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1598160650
 MeshFilter:
@@ -5270,8 +5361,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5306,7 +5399,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1657245234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .000786304474, y: .607497454, z: -3.00940037}
+  m_LocalPosition: {x: 0.0007863045, y: 0.60749745, z: -3.0094004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1744454526}
@@ -5364,8 +5457,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5380,7 +5475,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1657735277
 MeshFilter:
@@ -5395,9 +5490,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1657735274}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -.774728775, y: -.236375809, z: .104157448}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -0.7747288, y: -0.23637581, z: 0.10415745}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children:
   - {fileID: 1505630624}
   m_Father: {fileID: 1393376877}
@@ -5429,7 +5524,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1744454525
 GameObject:
   m_ObjectHideFlags: 0
@@ -5453,7 +5548,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1744454525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.86237347, y: -.107496262, z: .210992813}
+  m_LocalPosition: {x: 1.8623735, y: -0.10749626, z: 0.21099281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2096740293}
@@ -5528,8 +5623,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5549,7 +5646,7 @@ Transform:
   m_GameObject: {fileID: 1763131154}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 100, y: 100, z: 100}
-  m_LocalScale: {x: .0700000003, y: .0700000003, z: .0700000003}
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_Children: []
   m_Father: {fileID: 172555794}
   m_RootOrder: 1
@@ -5575,9 +5672,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1781215946}
-  m_LocalRotation: {x: 2.88628037e-08, y: -.823965967, z: 4.97896346e-09, w: .566639364}
-  m_LocalPosition: {x: 3.11764264, y: .865280926, z: 2.36476111}
-  m_LocalScale: {x: 1.17303169, y: .900118649, z: 1.26575112}
+  m_LocalRotation: {x: 0.000000028862804, y: -0.82396597, z: 0.0000000049789635, w: 0.56663936}
+  m_LocalPosition: {x: 3.1176426, y: 0.8652809, z: 2.364761}
+  m_LocalScale: {x: 1.1730317, y: 0.90011865, z: 1.2657511}
   m_Children: []
   m_Father: {fileID: 1366205587}
   m_RootOrder: 8
@@ -5622,9 +5719,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1846523995}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -2.42411137, y: 2.02275109, z: -.301168442}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -2.4241114, y: 2.022751, z: -0.30116844}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 1
@@ -5638,7 +5735,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1846523998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5674,8 +5771,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5690,7 +5789,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1846524001
 MeshFilter:
@@ -5726,8 +5825,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1849066969}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .170117497, y: .730109453, z: -.220622063}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.1701175, y: 0.73010945, z: -0.22062206}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 1744454526}
   m_RootOrder: 4
@@ -5766,8 +5865,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5782,7 +5883,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1849066974
 MeshFilter:
@@ -5801,7 +5902,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1887432108
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,8 +5930,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887432108}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .521845698, y: .6199224, z: 2.66758728}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.5218457, y: 0.6199224, z: 2.6675873}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 1744454526}
   m_RootOrder: 8
@@ -5869,8 +5970,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5885,7 +5988,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1887432113
 MeshFilter:
@@ -5904,7 +6007,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1920956870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5931,9 +6034,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1920956870}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: -.998301983, y: 1.69267797, z: .624970436}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: -0.998302, y: 1.692678, z: 0.62497044}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 2
@@ -5947,7 +6050,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1920956873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5983,8 +6086,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -5999,7 +6104,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1920956876
 MeshFilter:
@@ -6035,8 +6140,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1944336250}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.14951372, y: .822935224, z: 1.30753708}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: -1.1495137, y: 0.8229352, z: 1.3075371}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children: []
   m_Father: {fileID: 1744454526}
   m_RootOrder: 5
@@ -6075,8 +6180,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6091,7 +6198,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1944336255
 MeshFilter:
@@ -6110,7 +6217,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &1992896761
 GameObject:
   m_ObjectHideFlags: 0
@@ -6137,9 +6244,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1992896761}
-  m_LocalRotation: {x: -9.84789565e-08, y: .281590343, z: 7.93039092e-08, w: -.959534764}
-  m_LocalPosition: {x: .795297623, y: 1.64532733, z: -1.63002205}
-  m_LocalScale: {x: .143226996, y: .143226966, z: .143226981}
+  m_LocalRotation: {x: -0.00000009847896, y: 0.28159034, z: 0.00000007930391, w: -0.95953476}
+  m_LocalPosition: {x: 0.7952976, y: 1.6453273, z: -1.630022}
+  m_LocalScale: {x: 0.143227, y: 0.14322697, z: 0.14322698}
   m_Children: []
   m_Father: {fileID: 1254824692}
   m_RootOrder: 6
@@ -6153,7 +6260,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!114 &1992896764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6189,8 +6296,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6205,7 +6314,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1992896767
 MeshFilter:
@@ -6269,8 +6378,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6285,7 +6396,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1997322797
 MeshFilter:
@@ -6301,8 +6412,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997322793}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -.488897085, y: .63264966, z: .588587761}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: -0.4888971, y: 0.63264966, z: 0.58858776}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children:
   - {fileID: 2084161873}
   m_Father: {fileID: 1744454526}
@@ -6317,7 +6428,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &2049404694
 GameObject:
   m_ObjectHideFlags: 0
@@ -6356,8 +6467,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6372,7 +6485,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2049404697
 MeshFilter:
@@ -6387,9 +6500,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2049404694}
-  m_LocalRotation: {x: -4.0943668e-08, y: .786925852, z: 9.99865257e-09, w: .617047668}
-  m_LocalPosition: {x: -1.44428539, y: -.147705138, z: -.178256989}
-  m_LocalScale: {x: .149999961, y: .149999991, z: .149999946}
+  m_LocalRotation: {x: -0.000000040943668, y: 0.78692585, z: 0.000000009998653, w: 0.61704767}
+  m_LocalPosition: {x: -1.4442854, y: -0.14770514, z: -0.17825699}
+  m_LocalScale: {x: 0.14999996, y: 0.14999999, z: 0.14999995}
   m_Children:
   - {fileID: 1581493154}
   m_Father: {fileID: 1393376877}
@@ -6421,7 +6534,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11
 --- !u!1 &2084161872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6493,8 +6606,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6533,8 +6648,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2096740292}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: .398988366, y: .951042771, z: -.229128838}
-  m_LocalScale: {x: .143226996, y: .143226996, z: .143226996}
+  m_LocalPosition: {x: 0.39898837, y: 0.9510428, z: -0.22912884}
+  m_LocalScale: {x: 0.143227, y: 0.143227, z: 0.143227}
   m_Children:
   - {fileID: 1624655816}
   m_Father: {fileID: 1744454526}
@@ -6574,8 +6689,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -6590,7 +6707,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .800000012
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2096740297
 MeshFilter:
@@ -6609,4 +6726,4 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
-  m_Size: .109999999
+  m_Size: 0.11

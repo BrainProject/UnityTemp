@@ -23,13 +23,13 @@ namespace Game
 		public bool gsiStandalone;
 		public bool clicked = false;
 
-		void Awake()
-		{
+//		void Awake()
+//		{
 //			if (Application.loadedLevel > 1)
 //				backIcon.gameObject.SetActive(true);
 //			else
 //				backIcon.gameObject.SetActive(false);
-		}
+//		}
 
 
 		/// <summary>
@@ -70,8 +70,8 @@ namespace Game
             { 
 			    if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
 			    {
-				    if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
-					    showHelpIcon.show ();
+				    //if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+					    //showHelpIcon.show ();
 			    }
             }
 
@@ -86,7 +86,7 @@ namespace Game
 			brainIcon.hide ();
 			menuIcon.hide ();
 			guiDetection.guiIsHidden = true;
-			showHelpIcon.hide ();
+			//showHelpIcon.hide ();
 
             screenshotIcon.hide();
             
