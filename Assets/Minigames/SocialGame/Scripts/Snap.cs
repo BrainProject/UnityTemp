@@ -47,6 +47,7 @@ namespace SocialGame{
 					oldParent = transform.parent.parent;
 					transform.parent.parent = null;
 				}
+				anim.SetTrigger("activate");
 			}
 			else
 			{
@@ -57,7 +58,7 @@ namespace SocialGame{
 					oldParent = null;
 				}
 			}
-			anim.SetBool ("active", activated);
+			
 			base.show ();
 		}
 
