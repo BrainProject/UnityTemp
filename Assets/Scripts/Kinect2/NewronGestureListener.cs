@@ -137,8 +137,8 @@ namespace Kinect
             {
                 gestureInfo.GetComponent<GUIText>().text = "Swipe left, right or up to change the slides.";
             }
-            else
-                Debug.LogWarning("Swipe left, right or up to change the slides.");
+            //else
+                //Debug.LogWarning("Swipe left, right or up to change the slides.");
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Kinect
             {
                 gestureInfo.GetComponent<GUIText>().text = string.Empty;
             }
-            else
-                Debug.LogWarning("User " + userId + " lost");
+            //else
+                //Debug.LogWarning("User " + userId + " lost");
         }
 
         /// <summary>
@@ -192,8 +192,8 @@ namespace Kinect
                     progressDisplayed = true;
                     //progressGestureTime = Time.realtimeSinceStartup;
                 }
-                else
-                    Debug.LogWarning(string.Format("{0} - {1:F0}%", gesture, screenPos.z * 100f));
+                //else
+                    //Debug.LogWarning(string.Format("{0} - {1:F0}%", gesture, screenPos.z * 100f));
             }
             else if ((gesture == KinectGestures.Gestures.Wheel || gesture == KinectGestures.Gestures.LeanLeft ||
                      gesture == KinectGestures.Gestures.LeanRight) && progress > 0.5f)
@@ -206,8 +206,8 @@ namespace Kinect
                     progressDisplayed = true;
                     //progressGestureTime = Time.realtimeSinceStartup;
                 }
-                else
-                    Debug.LogWarning(string.Format("{0} - {1:F0} degrees", gesture, screenPos.z));
+                //else
+                    //Debug.LogWarning(string.Format("{0} - {1:F0} degrees", gesture, screenPos.z));
             }
         }
 
@@ -234,8 +234,8 @@ namespace Kinect
                 string sGestureText = gesture + " detected";
                 gestureInfo.GetComponent<GUIText>().text = sGestureText;
             }
-            else
-                Debug.LogWarning(gesture + " detected");
+            //else
+                //Debug.LogWarning(gesture + " detected");
 
             switch (gesture)
             {
