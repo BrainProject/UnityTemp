@@ -114,8 +114,6 @@ RectTransform:
   m_Children:
   - {fileID: 2026270675}
   - {fileID: 402791309}
-  - {fileID: 829026702}
-  - {fileID: 853830062}
   - {fileID: 123421707}
   - {fileID: 239413251}
   m_Father: {fileID: 1083627512}
@@ -172,10 +170,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 106763022}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -200, y: -150}
+  m_AnchoredPosition: {x: -200, y: -242}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123421708
@@ -309,10 +307,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 106763022}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 200, y: -150.00003}
+  m_AnchoredPosition: {x: -75, y: -242}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239413252
@@ -328,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: ButterflyRush
   isKinectRequired: 0
-  isKinectSupported: 0
+  isKinectSupported: 1
   isAndroidSupported: 1
 --- !u!114 &239413253
 MonoBehaviour:
@@ -449,7 +447,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -75, y: -150}
+  m_AnchoredPosition: {x: 200, y: -242}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &402791310
@@ -551,8 +549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameName: LondonTowerGame
   isKinectRequired: 0
-  isKinectSupported: 1
-  isAndroidSupported: 1
+  isKinectSupported: 0
+  isAndroidSupported: 0
 --- !u!1 &483927258
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,14 +852,14 @@ RectTransform:
   m_GameObject: {fileID: 688300752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.044898152, y: 0.044898156, z: 0.044898156}
   m_Children: []
   m_Father: {fileID: 1083627512}
   m_RootOrder: 5
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -100.399994, y: 67.600006}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 2713, y: 1500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &688300754
 MonoBehaviour:
@@ -1061,11 +1059,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 106763022}
-  m_RootOrder: 2
+  m_Father: {fileID: 1493483571}
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 75, y: -300}
+  m_AnchoredPosition: {x: 150, y: -150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829026703
@@ -1198,11 +1196,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 106763022}
-  m_RootOrder: 3
+  m_Father: {fileID: 1493483571}
+  m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -75, y: -300}
+  m_AnchoredPosition: {x: -150, y: -150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &853830063
@@ -2684,6 +2682,8 @@ RectTransform:
   - {fileID: 1600501983}
   - {fileID: 1126155128}
   - {fileID: 1961255878}
+  - {fileID: 829026702}
+  - {fileID: 853830062}
   m_Father: {fileID: 1083627512}
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
@@ -3543,7 +3543,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 75, y: -150}
+  m_AnchoredPosition: {x: 75, y: -242}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2026270676
