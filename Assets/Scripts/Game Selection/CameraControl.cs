@@ -55,15 +55,15 @@ namespace MinigameSelection
                 MGC.Instance.initialTouchPosition.x = Input.mousePosition.x;
                 timestamp = Time.time;
 			}
-            if (Time.time - timestamp > 0.5 && (MGC.Instance.initialTouchPosition.x != 0))
+            if (Input.GetButtonDown("Horizontal") || Time.time - timestamp > 0.5 && (MGC.Instance.initialTouchPosition.x != 0))
             {
-                if (((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && !movingLeft)
+                if (Input.GetAxis("Horizontal") < 0 || ((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 					{
 						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
-						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+						while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
 							next = next.left.GetComponent<SelectionWaypoint>();
 						
 						targetWaypoint = currentWaypoint = next.gameObject;
@@ -73,13 +73,13 @@ namespace MinigameSelection
 					movingRight = false;
 					SetNewTarget();
 				}
-				else if(((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && !movingRight)
+				else if(Input.GetAxis("Horizontal") > 0 || ((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 					{
 						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
-						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+						while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
 							next = next.right.GetComponent<SelectionWaypoint>();
 						
 						targetWaypoint = currentWaypoint = next.gameObject;
