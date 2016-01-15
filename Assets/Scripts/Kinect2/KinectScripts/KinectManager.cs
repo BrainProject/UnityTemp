@@ -2086,9 +2086,9 @@ namespace Kinect
 
                             foreach (KinectGestures.GestureListenerInterface listener in gestureListeners)
                             {
-                                if (listener != null && listener.GestureCompleted(GetPrimaryUserID(), userIndex, gestureData.gesture, (KinectInterop.JointType)gestureData.joint, gestureData.screenPos))
+                                if (listener != null && listener.GestureCompleted(userId, userIndex, gestureData.gesture, (KinectInterop.JointType)gestureData.joint, gestureData.screenPos))
                                 {
-                                    ResetPlayerGestures(GetPrimaryUserID());
+                                    ResetPlayerGestures(userId);
                                 }
                             }
                         }
@@ -2096,9 +2096,9 @@ namespace Kinect
                         {
                             foreach (KinectGestures.GestureListenerInterface listener in gestureListeners)
                             {
-                                if (listener != null && listener.GestureCancelled(GetPrimaryUserID(), userIndex, gestureData.gesture, (KinectInterop.JointType)gestureData.joint))
+                                if (listener != null && listener.GestureCancelled(userId, userIndex, gestureData.gesture, (KinectInterop.JointType)gestureData.joint))
                                 {
-                                    ResetGesture(GetPrimaryUserID(), gestureData.gesture);
+                                    ResetGesture(userId, gestureData.gesture);
                                 }
                             }
                         }

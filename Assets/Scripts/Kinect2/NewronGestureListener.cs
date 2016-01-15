@@ -16,7 +16,7 @@ namespace Kinect
 
         // internal variables to track if progress message has been displayed
         private bool progressDisplayed;
-        private float progressGestureTime;
+        //private float progressGestureTime;
 
         // whether the needed gesture has been detected or not
         private bool swipeLeft;
@@ -123,7 +123,7 @@ namespace Kinect
         {
             // the gestures are allowed for the primary user only
             KinectManager manager = KinectManager.Instance;
-            if (!manager || (userId != manager.GetPrimaryUserID()))
+            if (!manager/* || (userId != manager.GetPrimaryUserID())*/)
                 return;
 
             // detect these user specific gestures
@@ -150,7 +150,7 @@ namespace Kinect
         {
             // the gestures are allowed for the primary user only
             KinectManager manager = KinectManager.Instance;
-            if (!manager || (userId != manager.GetPrimaryUserID()))
+            if (!manager/* || (userId != manager.GetPrimaryUserID())*/)
                 return;
 
             if (gestureInfo != null)
@@ -190,7 +190,7 @@ namespace Kinect
                     gestureInfo.GetComponent<GUIText>().text = sGestureText;
 
                     progressDisplayed = true;
-                    progressGestureTime = Time.realtimeSinceStartup;
+                    //progressGestureTime = Time.realtimeSinceStartup;
                 }
                 else
                     Debug.LogWarning(string.Format("{0} - {1:F0}%", gesture, screenPos.z * 100f));
@@ -204,7 +204,7 @@ namespace Kinect
                     gestureInfo.GetComponent<GUIText>().text = sGestureText;
 
                     progressDisplayed = true;
-                    progressGestureTime = Time.realtimeSinceStartup;
+                    //progressGestureTime = Time.realtimeSinceStartup;
                 }
                 else
                     Debug.LogWarning(string.Format("{0} - {1:F0} degrees", gesture, screenPos.z));
