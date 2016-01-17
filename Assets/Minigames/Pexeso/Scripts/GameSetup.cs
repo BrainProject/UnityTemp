@@ -259,7 +259,8 @@ namespace MinigamePexeso
 					{
 						buttons[i].GetComponent<Rigidbody>().isKinematic = false;
 		                buttons[i].GetComponent<Rigidbody>().useGravity = true;
-		                buttons[i].GetComponent<Rigidbody>().AddForce(chosenButton.transform.position * (-100));
+		                buttons[i].GetComponent<Rigidbody>().AddForce(Vector3.forward * 250);
+                        buttons[i].GetComponent<Rigidbody>().AddTorque(Vector3.right * 100);
 					}
 	            }
 	        }
