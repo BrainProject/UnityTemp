@@ -167,7 +167,7 @@ namespace FindIt
      */
     private void CreateResourcePacksIcons(int menuRows, int menuColumns)
     {
-        System.Random r = new System.Random();
+        //System.Random r = new System.Random();
 
         // defines borders in the scene
         /*const*/ float minx = -5.7f; // -6.5f;
