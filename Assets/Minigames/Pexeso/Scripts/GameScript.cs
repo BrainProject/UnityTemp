@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 
 namespace MinigamePexeso
 {
@@ -206,45 +207,47 @@ namespace MinigamePexeso
                 {
                     Flipper flipper = hittedObject.GetComponent("MinigamePexeso.Flipper") as Flipper;
 
-                    if (canFlip)
+                    if (!canFlip)
                     {
-                        //just flip it 
-                        flipper.Flip();
+                        return;
+                    }
+                    //just flip it 
+                    flipper.Flip();
 
-                        // is this the first flipped picture?
-                        if (first == null)
+                    // is this the first flipped picture?
+                    if (first == null)
+                    {
+                        first = hittedObject;
+                        //print("First turned tile: " + first.name);
+                    }
+
+                    // one tile was already flipped, user clicked on another one
+                    else
+                    {
+                        // check if images are matching...
+                        if (checkTilesMatch(first, hittedObject))
                         {
-                            first = hittedObject;
-                            //print("First turned tile: " + first.name);
+                            //increase score and display it
+                            correctPairs++;
+                            correctPairsDisplay.text = correctPairs.ToString();
+
+                            //run animation of removing flipped pair
+                            StartCoroutine(FoundPairPexeso(first, hittedObject));
                         }
 
-                        // one tile was already flipped, user clicked on another one
+                        //second picture is not matching for the first
                         else
                         {
-                            // check if images are matching...
-                            if (checkTilesMatch(first, hittedObject))
-                            {
-                                //increase score and display it
-                                correctPairs++;
-                                correctPairsDisplay.text = correctPairs.ToString();
+                            wrongPairs++;
+                            wrongPairsDisplay.text = wrongPairs.ToString();
 
-                                //run animation of removing flipped pair
-                                StartCoroutine(FoundPairPexeso(first, hittedObject));
-                            }
-
-                            //second picture is not matching for the first
-                            else
-                            {
-                                wrongPairs++;
-                                wrongPairsDisplay.text = wrongPairs.ToString();
-
-                                //flipped both picsture back, after some time
-                                StartCoroutine(NotFoundPairPexeso(first, hittedObject));
-                            }
-
-                            first = null;
+                            //flipped both picsture back, after some time
+                            StartCoroutine(NotFoundPairPexeso(first, hittedObject));
                         }
+
+                        first = null;
                     }
+
                 }
             }
         }
@@ -268,6 +271,12 @@ namespace MinigamePexeso
                     {
                         return;
                     }
+
+                    if (!canFlip)
+                    {
+                        return;
+                    }
+
                     //this is first selected picture
                     if (first == null)
                     {
@@ -470,6 +479,8 @@ namespace MinigamePexeso
         /// <param name="second">Second object</param>
         public IEnumerator NotFoundPairSilhouette(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Mover mover1 = first.GetComponent("Mover") as Mover;
             Mover mover2 = second.GetComponent("Mover") as Mover;
 
@@ -481,6 +492,12 @@ namespace MinigamePexeso
             }
             mover1.MoveDown();
             mover2.MoveDown();
+
+            while (mover1.isMoving || mover2.isMoving)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            canFlip = true;
         }
 
         /// <summary>
@@ -491,6 +508,8 @@ namespace MinigamePexeso
         /// <param name="second">Second object</param>
         public IEnumerator FoundPairSilhouette(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Mover mover1 = first.GetComponent("Mover") as Mover;
             Mover mover2 = second.GetComponent("Mover") as Mover;
             mover1.toRemove = true;
@@ -513,6 +532,8 @@ namespace MinigamePexeso
             second.GetComponent<Rigidbody>().AddForce(first.transform.position * 100);
 
             yield return new WaitForSeconds(1.3f);
+
+            canFlip = true;
 
             Destroy(first);
             Destroy(second);
