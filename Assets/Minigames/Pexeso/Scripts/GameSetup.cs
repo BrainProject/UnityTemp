@@ -199,25 +199,33 @@ namespace MinigamePexeso
             print("Number of standard res. packs: " + resPackCount);
             print("Number of game tiles: " + gameTiles.Length);
 
-            for (int i = 0; i < menuColumns * menuRows; i++)
-            {
-                //while we have some resource packs left
-                if (i < resPackCount)
+		    for (int i = 0; i < menuColumns*menuRows; i++)
+		    {
+		        //while we have some resource packs left
+		        if (i < resPackCount)
+		        {
+		            print("Resource pack name: '" + resPacksNames[i] + "'");
+
+		            //set name of game-object (will be used later as chosen resource-pack identifier]
+		            //string[] s = resourcePacks[i].Split('\\');
+		            gameTiles[i].name = resPacksNames[i];
+
+		            //use first image in pack as tile texture
+		            gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture =
+		                Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
+		        }
+                
+                #if UNITY_ANDROID
+                else
                 {
-                    print("Resource pack name: '" + resPacksNames[i] + "'");
-
-                    //set name of game-object (will be used later as chosen resource-pack identifier]
-                    //string[] s = resourcePacks[i].Split('\\');
-                    gameTiles[i].name = resPacksNames[i];
-
-                    //use first image in pack as tile texture
-                    gameTiles[i].transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = Resources.Load(resPackPath + resPacksNames[i] + "/00") as Texture2D;
+                    Destroy(gameTiles[i]);
                 }
-            }
+                #endif
+	        }
 
             //Add custom resoruce packs
             #if UNITY_STANDALONE_WIN
-            StartCoroutine(LoadCustomResourcePacks());
+                StartCoroutine(LoadCustomResourcePacks());
             #endif
         }
 

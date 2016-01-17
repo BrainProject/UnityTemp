@@ -130,9 +130,9 @@ namespace Puzzle
             this.top =  (index + 1 + puzzle_width) > puzzle_width * puzzle_height ? -1 : index + puzzle_width;
             this.left = index % puzzle_width == 0 ? -1 : index - 1;
             
-            int a = (left == -1) ? (top == -1 ? 1 : (bottom == -1 ? 7 : 4)) :
-                    (right == -1)? (top == -1 ? 3 : (bottom == -1 ? 9 : 6)) :
-                    (top == -1)  ? 2 : (bottom == -1 ? 8 : 5);
+            //int a = (left == -1) ? (top == -1 ? 1 : (bottom == -1 ? 7 : 4)) :
+            //        (right == -1)? (top == -1 ? 3 : (bottom == -1 ? 9 : 6)) :
+            //        (top == -1)  ? 2 : (bottom == -1 ? 8 : 5);
 
             
             // gameObject.renderer.material.mainTexture = texture;
