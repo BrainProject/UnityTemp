@@ -85,9 +85,9 @@ namespace Game
 		public bool isKinectRequired = false;
 		
 		/// <summary>
-		/// mini-game help. So far, simple texture
+		/// Icon of the minigame to show in the difficulty chooser (use highlighted versions if available)
 		/// </summary>
-		//public Texture helpTexture;
+		public Sprite minigameIcon;
 
         /// <summary>
         /// Image symbolizing low difficulty

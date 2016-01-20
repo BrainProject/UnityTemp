@@ -49,12 +49,18 @@ namespace MinigameSelection
 
 		public void SwitchMenu(int sectionIndex)
 		{
-            previouslySelectedSectionIndex = currentlySelectedSectionIndex;
-            currentlySelectedSectionIndex = sectionIndex;
-            MGC.Instance.selectedMenuSectionIndex = sectionIndex;
-            StartCoroutine(Fade());
-            
-            //TODO: show back button if brain is not active
+            if (sectionIndex == 2) //DEV NOTE: Only for the empty painting section. When more minigames will be added, remove if block completely and use only else section!
+            {
+                MGC.Instance.sceneLoader.LoadScene("Coloring");
+                MGC.Instance.minigamesGUI.backIcon.show();
+            }
+            else
+            {
+                previouslySelectedSectionIndex = currentlySelectedSectionIndex;
+                currentlySelectedSectionIndex = sectionIndex;
+                MGC.Instance.selectedMenuSectionIndex = sectionIndex;
+                StartCoroutine(Fade());
+            }
 		}
 
 		IEnumerator Fade()
