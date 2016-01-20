@@ -26,7 +26,7 @@ namespace Frogger
             // If on boat, check, wheter not out of bounds
             if (isOnBoat)
             {
-                if (transform.position.x > 11 || transform.position.x < -11)
+                if (transform.position.x > 11.5f || transform.position.x < -11.5f)
                 {
                     RespawnFrog();
                 }
@@ -158,6 +158,7 @@ namespace Frogger
 
         void RespawnFrog(bool isDrowned = false)
         {
+            StopAllCoroutines();
             StartCoroutine(RespawnFrogCoroutine());
             if (isDrowned)
             {

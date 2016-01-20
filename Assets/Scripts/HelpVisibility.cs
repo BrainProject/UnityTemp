@@ -54,7 +54,13 @@ public class HelpVisibility : MonoBehaviour {
 	
 	public void StartHelpAnimation()
 	{
-		helpClone.GetComponent<Animator> ().SetTrigger ("AnimateHelp");
+        if (helpClone)
+        {
+            if (helpClone.GetComponent<Animator>())
+            {
+                helpClone.GetComponent<Animator>().SetTrigger("AnimateHelp");
+            }
+        }
 		//StartCoroutine("ShowButtons");
 	}
 	
