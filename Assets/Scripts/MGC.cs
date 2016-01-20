@@ -420,9 +420,12 @@ public class MGC : Singleton<MGC>
 				{
 					if(minigamesProperties.IsWithHelp(SceneManager.GetActiveScene().name))
 					{
-		//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
-						neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
-						minigamesProperties.SetPlayedWithHelp(SceneManager.GetActiveScene().name);
+                        //				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
+                        if (neuronHelp)
+                        {
+                            neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+                            minigamesProperties.SetPlayedWithHelp(SceneManager.GetActiveScene().name);
+                        }
 					}
 				}
 			}
