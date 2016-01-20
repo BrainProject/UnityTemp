@@ -59,8 +59,18 @@ namespace Coloring
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-			MGC.Instance.minigamesGUI.screenshotIcon.show();
-		}
+            //TODO vypnuto pro Android pro verzi 2.0 z nedostatku casu na odladeni
+            #if UNITY_STANDALONE
+		    if (isVisible)
+		    {
+		        MGC.Instance.minigamesGUI.screenshotIcon.show();
+		    }
+		    else
+		    {
+                MGC.Instance.minigamesGUI.screenshotIcon.hide();
+		    }
+            #endif
+        }
 
 
 #if UNITY_STANDALONE

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 
 namespace MinigamePexeso
 {
@@ -126,6 +127,12 @@ namespace MinigamePexeso
         private int lastDisplayTime = 0;
 
         /// <summary>
+        /// can user flip a tile? 
+        /// No if two tiles are already flipped
+        /// </summary>
+        private bool canFlip = true;
+
+        /// <summary>
         /// The images loaded as objects.
         /// </summary>
         UnityEngine.Object[] images;
@@ -200,6 +207,10 @@ namespace MinigamePexeso
                 {
                     Flipper flipper = hittedObject.GetComponent("MinigamePexeso.Flipper") as Flipper;
 
+                    if (!canFlip)
+                    {
+                        return;
+                    }
                     //just flip it 
                     flipper.Flip();
 
@@ -236,6 +247,7 @@ namespace MinigamePexeso
 
                         first = null;
                     }
+
                 }
             }
         }
@@ -253,11 +265,18 @@ namespace MinigamePexeso
                 if (Input.GetMouseButtonUp(0) && hit.collider.tag == "gameTile")
                 {
                     Mover mover = hit.collider.gameObject.GetComponent("Mover") as Mover;
+
                     //picture is already being removed
                     if (mover.toRemove)
                     {
                         return;
                     }
+
+                    if (!canFlip)
+                    {
+                        return;
+                    }
+
                     //this is first selected picture
                     if (first == null)
                     {
@@ -392,6 +411,8 @@ namespace MinigamePexeso
         /// <param name="second">Second game tile</param>
         public IEnumerator NotFoundPairPexeso(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Flipper flipper1 = first.GetComponent("MinigamePexeso.Flipper") as Flipper;
             Flipper flipper2 = second.GetComponent("MinigamePexeso.Flipper") as Flipper;
 
@@ -405,6 +426,13 @@ namespace MinigamePexeso
 
             flipper1.Flip();
             flipper2.Flip();
+
+            while (flipper1.isMoving || flipper2.isMoving)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            canFlip = true;
         }
 
         /// <summary>
@@ -415,6 +443,8 @@ namespace MinigamePexeso
         /// <param name="second">Second object</param>
         public IEnumerator FoundPairPexeso(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Flipper flipper1 = first.GetComponent("MinigamePexeso.Flipper") as Flipper;
             Flipper flipper2 = second.GetComponent("MinigamePexeso.Flipper") as Flipper;
 
@@ -437,6 +467,8 @@ namespace MinigamePexeso
             yield return new WaitForSeconds(1.3f);
             Destroy(first);
             Destroy(second);
+
+            canFlip = true;
         }
 
         /// <summary>
@@ -447,6 +479,8 @@ namespace MinigamePexeso
         /// <param name="second">Second object</param>
         public IEnumerator NotFoundPairSilhouette(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Mover mover1 = first.GetComponent("Mover") as Mover;
             Mover mover2 = second.GetComponent("Mover") as Mover;
 
@@ -458,6 +492,12 @@ namespace MinigamePexeso
             }
             mover1.MoveDown();
             mover2.MoveDown();
+
+            while (mover1.isMoving || mover2.isMoving)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            canFlip = true;
         }
 
         /// <summary>
@@ -468,6 +508,8 @@ namespace MinigamePexeso
         /// <param name="second">Second object</param>
         public IEnumerator FoundPairSilhouette(GameObject first, GameObject second)
         {
+            canFlip = false;
+
             Mover mover1 = first.GetComponent("Mover") as Mover;
             Mover mover2 = second.GetComponent("Mover") as Mover;
             mover1.toRemove = true;
@@ -490,6 +532,8 @@ namespace MinigamePexeso
             second.GetComponent<Rigidbody>().AddForce(first.transform.position * 100);
 
             yield return new WaitForSeconds(1.3f);
+
+            canFlip = true;
 
             Destroy(first);
             Destroy(second);
