@@ -137,7 +137,7 @@ namespace Game
                     }
 					
 					//return back
-					if(SceneManager.GetActiveScene().buildIndex > 3)	//NOTE: Update minimal minigame level index here
+					if(SceneManager.GetActiveScene().buildIndex > 5)	//NOTE: Update minimal minigame level index here
 					{
 						// Coloring mini-game se special treatment...
 						if (SceneManager.GetActiveScene().name == "Coloring")

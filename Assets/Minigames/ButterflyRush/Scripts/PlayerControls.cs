@@ -22,7 +22,7 @@ namespace ButterflyRush
 			}
 		}
 #else
-            if (Input.GetMouseButton(0))
+            //if (Input.GetMouseButton(0))
             {
                 if (Physics.Raycast((Camera.main.ScreenPointToRay(Input.mousePosition)), out hit))
                 {

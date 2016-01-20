@@ -34,7 +34,7 @@ namespace Game
             if (MGC.Instance.kinectManagerObject.activeSelf)
             {
 #if UNITY_STANDALONE
-                if (Kinect.KinectManager.Instance.GetUsersCount() > 0)
+                if (MGC.Instance.kinectManagerInstance.GetUsersCount() > 0)
                 {
                     //thisRectTransform.position = new Vector2(
                     //    interactionManager.GetCursorPosition().x * Screen.width,
