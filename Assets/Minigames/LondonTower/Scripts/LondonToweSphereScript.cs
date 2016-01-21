@@ -16,7 +16,7 @@ namespace LondonTower
         //private bool animatedUp = false;
         //private bool clicked = false;
         //private bool lastClicked = false;
-        private bool moveX = true;
+        //private bool moveX = true;
         private bool isControlled = false;
         private float lastPolePolesition;
 
@@ -175,10 +175,10 @@ namespace LondonTower
         }
 
 
-        public void EnableXMove(bool enableX)
+        /*public void EnableXMove(bool enableX)
         {
             moveX = enableX;
-        }
+        }*/
 
         /// <summary>
         /// set position of last pole,where sphere was

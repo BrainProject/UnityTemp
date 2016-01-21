@@ -18,7 +18,7 @@ namespace LondonTower
                 LondonToweSphereScript sphere = other.gameObject.GetComponent<LondonToweSphereScript>();
                 if (sphere != null)
                 {
-                    sphere.EnableXMove(false);
+                    //sphere.EnableXMove(false);
                     //sphere.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
                     sphere.transform.position = new Vector3(this.transform.position.x, sphere.transform.position.y, sphere.transform.position.z);
                     sphere.SetLastPolePosition(this.transform.position.x);
@@ -41,7 +41,7 @@ namespace LondonTower
                 if (sphere != null)
                 {
                     //sphere.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-                    sphere.EnableXMove(true);
+                    //sphere.EnableXMove(true);
                     capacity++;
                 }
             }

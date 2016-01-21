@@ -121,7 +121,7 @@ namespace Game
 		{
             //help appears only in mini-games, not in initial menu scenes
             
-			if((SceneManager.GetActiveScene().buildIndex > 5) && MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == SceneManager.GetActiveScene().name)
+			if(/*(SceneManager.GetActiveScene().buildIndex > 3) &&*/ MGC.Instance.getSelectedMinigameProperties() && MGC.Instance.getSelectedMinigameProperties().mainScene == SceneManager.GetActiveScene().name)
 			{
 				newHelp.helpObject.helpPrefab = MGC.Instance.getSelectedMinigameProperties ().helpPrefab;
 				questionMark.SetActive (MGC.Instance.getSelectedMinigameProperties().helpPrefab);
