@@ -10,8 +10,8 @@ namespace ButterflyRush
 
         public int cocoonCount;
         public int startCount = 10;
-        public float durationBetweenSpawnStandalone = 10;
         public float durationBetweenSpawnAndroid = 5;
+        public float durationBetweenSpawnStandalone = 10;
         public GameObject cocoonPrefab;
         public GameObject butterflyPrefab;
 
