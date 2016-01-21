@@ -6,6 +6,7 @@ namespace Frogger
     public class FrogControls : MonoBehaviour
     {
         public SpriteRenderer frogSpriteRenderer;
+        public BoxCollider frogCollider;
         public Sprite frogSprite;
         public Sprite bloodSprite;
         public bool isOnBoat = false;
@@ -160,6 +161,7 @@ namespace Frogger
         {
             StopAllCoroutines();
             StartCoroutine(RespawnFrogCoroutine());
+
             if (isDrowned)
             {
                 frogSpriteRenderer.sprite = null;
@@ -173,6 +175,7 @@ namespace Frogger
 
         IEnumerator RespawnFrogCoroutine()
         {
+            frogCollider.enabled = false;
             canControl = false;
             isOnBoat = false;
             transform.SetParent(null);
@@ -180,6 +183,7 @@ namespace Frogger
             frogSpriteRenderer.sprite = frogSprite;
             transform.position = thisLevelManager.frogSpawn.position;
             canControl = true;
+            frogCollider.enabled = true;
         }
 
         void CheckBoat(Vector3 direction)

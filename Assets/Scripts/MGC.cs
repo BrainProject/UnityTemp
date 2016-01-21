@@ -313,9 +313,6 @@ public class MGC : Singleton<MGC>
             menuType = MenuType.Tiles;
             touchBlockTimestamp = Time.time;
         }*/
-
-
-        //PC ...
 #else
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -336,48 +333,54 @@ public class MGC : Singleton<MGC>
         }
 
         //Debug actions
-        if (Input.GetKeyDown(KeyCode.F11))
+        if (Debug.isDebugBuild)
         {
-            SceneManager.LoadScene("Main");
-        }
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            SceneManager.LoadScene(gameSelectionSceneName);
+            if (Input.GetKeyDown(KeyCode.F11))
+            {
+                SceneManager.LoadScene("Crossroads");
+            }
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                SceneManager.LoadScene(gameSelectionSceneName);
 
-            //TODO test only...
-            minigamesProperties.printStatisticsToFile();
+                //TODO test only...
+                minigamesProperties.printStatisticsToFile();
+            }
         }
-		if(Input.GetKeyDown(KeyCode.F8))
+
+        //Reset minigame statistics
+		if(Input.GetKeyDown(KeyCode.F12))
 		{
 			ResetMinigamesStatistics();
-			if(SceneManager.GetActiveScene().name == gameSelectionSceneName)
-				SceneManager.LoadScene(gameSelectionSceneName);
+			/*if(SceneManager.GetActiveScene().name == gameSelectionSceneName)
+				SceneManager.LoadScene(gameSelectionSceneName);*/
 		}
-    
+
 #endif
-
         //Change of menu types
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-		{
-			menuType = MenuType.None;
-			Debug.Log("Changed menu type to default.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad1))
-		{
-			menuType = MenuType.Brain;
-			Debug.Log("Changed menu type to brain.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad2))
-		{
-			menuType = MenuType.Tiles;
-			Debug.Log("Changed menu type to tiles.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad3))
-		{
-			menuType = MenuType.GSI;
-			Debug.Log("Changed menu type to gsi.");
-		}
-
+        /*if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad0))
+            {
+                menuType = MenuType.None;
+                Debug.Log("Changed menu type to default.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                menuType = MenuType.Brain;
+                Debug.Log("Changed menu type to brain.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                menuType = MenuType.Tiles;
+                Debug.Log("Changed menu type to tiles.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                menuType = MenuType.GSI;
+                Debug.Log("Changed menu type to gsi.");
+            }
+        }*/
         
         //Inactivity detection
         if (Input.anyKeyDown)
@@ -414,7 +417,7 @@ public class MGC : Singleton<MGC>
 		}
 		else
 		{
-			if(level > 4)
+			if(level > 3)
 			{
 				if(minigamesProperties.GetMinigame(SceneManager.GetActiveScene().name))
 				{
