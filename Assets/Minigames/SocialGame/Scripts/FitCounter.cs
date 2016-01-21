@@ -37,6 +37,16 @@ namespace SocialGame{
 			if(count >= max)
 			{
 				redraw();
+				GameObject[] playerItem = GameObject.FindGameObjectsWithTag ("Player1");
+				foreach(GameObject item in playerItem)
+				{
+					GestCheckerFigure gest = item.GetComponent<GestCheckerFigure> ();
+					if (gest) 
+					{
+						Destroy (item);
+					}
+				}
+
 				LevelManager.win ();
 			}
 			else
