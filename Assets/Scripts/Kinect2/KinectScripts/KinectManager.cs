@@ -2874,8 +2874,9 @@ namespace Kinect
         private void RemoveUser(Int64 userId)
         {
             int uidIndex = alUserIds.IndexOf(userId);
-            Debug.Log("Removing user " + uidIndex + ", ID: " + userId + ", Body: " + dictUserIdToIndex[userId]);
+            Debug.LogWarning("Removing user " + uidIndex + ", ID: " + userId + ", Body: " + dictUserIdToIndex[userId]);
 
+            
             for (int i = 0; i < avatarControllers.Count; i++)
             {
                 AvatarController avatar = avatarControllers[i];
@@ -2930,6 +2931,7 @@ namespace Kinect
                 if (alUserIds.Count > 0)
                 {
                     liPrimaryUserId = alUserIds[0];
+                    //dictUserIdToIndex[liPrimaryUserId] = 0;
                 }
                 else
                 {
