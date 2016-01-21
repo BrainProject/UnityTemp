@@ -429,7 +429,7 @@ namespace MinigamePexeso
 
             while (flipper1.isMoving || flipper2.isMoving)
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
 
             canFlip = true;
@@ -463,12 +463,16 @@ namespace MinigamePexeso
             first.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, -5) * 100);
             second.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, -5) * 100);
 
+            //wait some time before user can select another tile
+            yield return new WaitForSeconds(0.5f);
+            canFlip = true;
+
             //wait until tiles are out of view, then destroy them
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1.5f);
             Destroy(first);
             Destroy(second);
 
-            canFlip = true;
+            
         }
 
         /// <summary>
@@ -488,14 +492,14 @@ namespace MinigamePexeso
 
             while (mover1.isMoving || mover2.isMoving)
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
             mover1.MoveDown();
             mover2.MoveDown();
 
             while (mover1.isMoving || mover2.isMoving)
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
             canFlip = true;
         }
@@ -531,10 +535,12 @@ namespace MinigamePexeso
             first.GetComponent<Rigidbody>().AddForce(second.transform.position * 100);
             second.GetComponent<Rigidbody>().AddForce(first.transform.position * 100);
 
-            yield return new WaitForSeconds(1.3f);
-
+            //wait before user can select another tile
+            yield return new WaitForSeconds(0.5f);
             canFlip = true;
 
+            //TODO change - tiles have to be checked for Y axis - if it is below, destroy
+            yield return new WaitForSeconds(1.7f);
             Destroy(first);
             Destroy(second);
         }
