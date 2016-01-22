@@ -1,20 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 namespace SocialGame{
 	public class ChangeSprites : MonoBehaviour {
 
 		public Sprite[] steps;
 		public SpriteRenderer spriteRender;
-
+		public Image imageUI;
 		/// <summary>
 		/// Sets the image.
 		/// </summary>
 		/// <param name="index">Index.</param>
 		public void SetImage(int index)
 		{
-			if(index < steps.Length)
+			if (spriteRender) 
 			{
-				spriteRender.sprite = steps [index];
+				if (index < steps.Length) 
+				{
+					spriteRender.sprite = steps [index];
+				}
+
+			}
+			if (imageUI) 
+			{
+				imageUI.sprite = steps [index];
 			}
 		}
 
@@ -23,7 +32,15 @@ namespace SocialGame{
 		/// </summary>
 		public void ResetSprites()
 		{
-			spriteRender.sprite = steps[steps.Length - 1];
+			if (spriteRender)
+			{
+				spriteRender.sprite = steps [0];
+
+			}
+			if (imageUI) 
+			{
+				imageUI.sprite = steps [0];
+			}
 		}
 	}
 }

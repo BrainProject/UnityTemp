@@ -258,13 +258,14 @@ namespace SocialGame
 		}
 
 		void OnDrawGizmos() {
+			
 			for(int i = 0; i< transform.childCount; i++)
 			{
 				Transform child = transform.GetChild(i);
 				Check script = child.GetComponent<Check>();
 				if(script)
 				{
-					Gizmos.DrawWireSphere(script.transform.position,distance * script.multiDist);
+					Gizmos.DrawWireSphere(child.position,distance * script.multiDist);
 				}
 			}
 		}
