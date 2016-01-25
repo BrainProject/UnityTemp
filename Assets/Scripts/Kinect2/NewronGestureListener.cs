@@ -8,8 +8,8 @@ namespace Kinect
 {
     public class NewronGestureListener : MonoBehaviour, KinectGestures.GestureListenerInterface
     {
-        [Tooltip("GUI-Text to display gesture-listener messages and gesture information.")]
-        public GUIText gestureInfo;
+        //[Tooltip("GUI-Text to display gesture-listener messages and gesture information.")]
+        //public GUIText gestureInfo;
 
         // singleton instance of the class
         private static NewronGestureListener instance = null;
@@ -22,7 +22,7 @@ namespace Kinect
         private bool swipeLeft;
         private bool swipeRight;
         private bool swipeUp;
-        private bool click;
+        //private bool click;
         private bool hiddenGesture;
 
 
@@ -87,7 +87,7 @@ namespace Kinect
         /// Determines whether click is detected.
         /// </summary>
         /// <returns><c>true</c> if click is detected; otherwise, <c>false</c>.</returns>
-        public bool IsClick()
+        /*public bool IsClick()
         {
             if (click)
             {
@@ -96,7 +96,7 @@ namespace Kinect
             }
 
             return false;
-        }
+        }*/
 
         /// <summary>
         /// Determines whether hidden gesture is detected.
@@ -130,13 +130,13 @@ namespace Kinect
             manager.DetectGesture(userId, KinectGestures.Gestures.SwipeLeft);
             manager.DetectGesture(userId, KinectGestures.Gestures.SwipeRight);
             manager.DetectGesture(userId, KinectGestures.Gestures.SwipeUp);
-            manager.DetectGesture(userId, KinectGestures.Gestures.Click);
+            //manager.DetectGesture(userId, KinectGestures.Gestures.Click);
             manager.DetectGesture(userId, KinectGestures.Gestures.HiddenGesture);
 
-            if (gestureInfo != null)
-            {
-                gestureInfo.GetComponent<GUIText>().text = "Swipe left, right or up to change the slides.";
-            }
+            //if (gestureInfo != null)
+            //{
+                //gestureInfo.GetComponent<GUIText>().text = "Swipe left, right or up to change the slides.";
+            //}
             //else
                 //Debug.LogWarning("Swipe left, right or up to change the slides.");
         }
@@ -153,10 +153,10 @@ namespace Kinect
             if (!manager/* || (userId != manager.GetPrimaryUserID())*/)
                 return;
 
-            if (gestureInfo != null)
-            {
-                gestureInfo.GetComponent<GUIText>().text = string.Empty;
-            }
+            //if (gestureInfo != null)
+            //{
+                //gestureInfo.GetComponent<GUIText>().text = string.Empty;
+            //}
             //else
                 //Debug.LogWarning("User " + userId + " lost");
         }
@@ -179,33 +179,33 @@ namespace Kinect
                 return;
 
             // this function is currently needed only to display gesture progress, skip it otherwise
-            if (gestureInfo == null)
-                return;
+            //if (gestureInfo == null)
+                //return;
 
             if ((gesture == KinectGestures.Gestures.ZoomOut || gesture == KinectGestures.Gestures.ZoomIn) && progress > 0.5f)
             {
-                if (gestureInfo != null)
+                /*if (gestureInfo != null)
                 {
                     string sGestureText = string.Format("{0} - {1:F0}%", gesture, screenPos.z * 100f);
                     gestureInfo.GetComponent<GUIText>().text = sGestureText;
 
                     progressDisplayed = true;
                     //progressGestureTime = Time.realtimeSinceStartup;
-                }
+                }*/
                 //else
                     //Debug.LogWarning(string.Format("{0} - {1:F0}%", gesture, screenPos.z * 100f));
             }
             else if ((gesture == KinectGestures.Gestures.Wheel || gesture == KinectGestures.Gestures.LeanLeft ||
                      gesture == KinectGestures.Gestures.LeanRight) && progress > 0.5f)
             {
-                if (gestureInfo != null)
+                /*if (gestureInfo != null)
                 {
                     string sGestureText = string.Format("{0} - {1:F0} degrees", gesture, screenPos.z);
                     gestureInfo.GetComponent<GUIText>().text = sGestureText;
 
                     progressDisplayed = true;
                     //progressGestureTime = Time.realtimeSinceStartup;
-                }
+                }*/
                 //else
                     //Debug.LogWarning(string.Format("{0} - {1:F0} degrees", gesture, screenPos.z));
             }
@@ -229,11 +229,11 @@ namespace Kinect
             if (!manager || (userId != manager.GetPrimaryUserID()))
                 return false;
 
-            if (gestureInfo != null)
+            /*if (gestureInfo != null)
             {
                 string sGestureText = gesture + " detected";
                 gestureInfo.GetComponent<GUIText>().text = sGestureText;
-            }
+            }*/
             //else
                 //Debug.LogWarning(gesture + " detected");
 
@@ -248,11 +248,11 @@ namespace Kinect
                 case KinectGestures.Gestures.SwipeUp:
                     swipeUp = true;
                     break;
-                case KinectGestures.Gestures.Click:
+                /*case KinectGestures.Gestures.Click:
                     click = true;
-                    break;
+                    break;*/
                 case KinectGestures.Gestures.HiddenGesture:
-                    click = true;
+                    hiddenGesture = true;
                     break;
             }
 
@@ -280,10 +280,10 @@ namespace Kinect
             {
                 progressDisplayed = false;
 
-                if (gestureInfo != null)
+                /*if (gestureInfo != null)
                 {
                     gestureInfo.GetComponent<GUIText>().text = String.Empty;
-                }
+                }*/
             }
 
             return true;

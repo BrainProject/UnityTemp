@@ -12,6 +12,8 @@ public class KinectManagerSwitcher : MonoBehaviour {
         public AvatarController player1;
         public AvatarController player2;
 
+        public GameObject thisSceneCanvas;
+
         // Use this for initialization
         void Awake ()
         {
@@ -37,6 +39,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
 			}*/
             if (MGC.Instance)
             {
+                MGC.Instance.isKinectRestartRequired = true;
                 if (KinectManager.Instance)
                 {
                     MGC.Instance.kinectManagerInstance.ClearKinectUsers();
@@ -70,7 +73,11 @@ public class KinectManagerSwitcher : MonoBehaviour {
             im.allowHandClicks = false;
             instance.player1.enabled = true;
             if(instance.player2)
-            instance.player2.enabled = true;
+                instance.player2.enabled = true;
+
+
+            if (instance.thisSceneCanvas)
+                instance.thisSceneCanvas.SetActive(true);
             /*setActiveMGC(false);
 			
 			if(thisLevelKManager)
@@ -144,7 +151,10 @@ public class KinectManagerSwitcher : MonoBehaviour {
             instance.player1.enabled = false;
             if(instance.player2)
                 instance.player2.enabled = false;
-		}
+
+            if(instance.thisSceneCanvas)
+                instance.thisSceneCanvas.SetActive(false);
+        }
 		#endif
 	}
 }

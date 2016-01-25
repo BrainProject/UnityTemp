@@ -107,6 +107,8 @@ namespace Kinect
         // The single instance of FacetrackingManager
         private static InteractionManager instance;
 
+        private Game.CursorUI customCursor;
+
 
         /// <summary>
         /// Gets the single InteractionManager instance.
@@ -301,6 +303,8 @@ namespace Kinect
         {
             instance = this;
             interactionInited = true;
+
+            customCursor = MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference;
         }
 
         void OnDestroy()
@@ -392,6 +396,7 @@ namespace Kinect
                             lastLeftHandPos = leftHandPos;
                             lastLeftHandTime = Time.realtimeSinceStartup;
                         }
+                        customCursor.cursorCircleLeft.progress = leftHandClickProgress;
                     }
                     else
                     {
@@ -473,6 +478,7 @@ namespace Kinect
                             lastRightHandPos = rightHandPos;
                             lastRightHandTime = Time.realtimeSinceStartup;
                         }
+                        customCursor.cursorCircleRight.progress = rightHandClickProgress;
                     }
                     else
                     {
@@ -611,6 +617,7 @@ namespace Kinect
                     }
                 }
             }
+
         }
 
 

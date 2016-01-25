@@ -6,19 +6,19 @@ namespace SocialGame{
 public class CheckSwitchObj :Check {
 		public GameObject player1;
 		public GameObject player2;
-		public string name;
+		public string switchName;
 		public int owner;
 		// Use this for initialization
-		void Start () {
+		new void Start () {
 			if (!player1) 
 			{
-				player1 = GameObjectEx.FindGameObjectWithNameTag (name, "Player1");
+				player1 = GameObjectEx.FindGameObjectWithNameTag (switchName, "Player1");
 				owner = 2;
 			}
 
 			if (!player2) 
 			{
-				player2 = GameObjectEx.FindGameObjectWithNameTag (name, "Player2");
+				player2 = GameObjectEx.FindGameObjectWithNameTag (switchName, "Player2");
 				owner = 1;
 			}
 		}
@@ -27,7 +27,7 @@ public class CheckSwitchObj :Check {
 		/// Checked the specified target.
 		/// </summary>
 		/// <param name="target">Target.</param>
-		public virtual bool Checked(Transform target)
+		public new virtual bool Checked(Transform target)
 		{
 			bool last = false;
 			finishTarget = target;

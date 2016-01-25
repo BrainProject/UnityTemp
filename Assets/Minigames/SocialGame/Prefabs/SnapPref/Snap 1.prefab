@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -324,10 +324,10 @@ MonoBehaviour:
   activated: 0
   multiDist: 1
   next: []
-  player1: {fileID: 0}
+  player1: {fileID: 100000}
   player2: {fileID: 0}
-  name: Snap
-  owner: 0
+  switchName: Snap
+  owner: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

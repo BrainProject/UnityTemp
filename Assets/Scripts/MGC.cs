@@ -93,6 +93,7 @@ public class MGC : Singleton<MGC>
     internal bool fromMain;
     internal bool fromSelection;
 	internal bool isControlTakenForGUI;
+    internal bool isKinectRestartRequired;
 
     // name of MiniGame scene to be loaded
     internal string selectedMiniGameName;
@@ -195,6 +196,7 @@ public class MGC : Singleton<MGC>
 
 		
 		isControlTakenForGUI = false;
+        isKinectRestartRequired = true;
     }
 
     void Start()
@@ -629,33 +631,37 @@ public class MGC : Singleton<MGC>
     /// </summary>
     public void ResetKinect()
     {
-        if (kinectManagerObject.activeSelf)
+        if (isKinectRestartRequired)
         {
+            if (kinectManagerObject.activeSelf)
+            {
 #if UNITY_STANDALONE
-            try
-            {
-                kinectManagerInstance = KinectManager.Instance;
-                Debug.Log("Kinect settings are being reset.");
-                bool bNeedRestart = false;
-                Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-                kinectManagerObject.SetActive(true);
-                kinectManagerInstance.ClearKinectUsers();
-                kinectManagerInstance.avatarControllers.Clear();
-                kinectManagerInstance.StartKinect();
-                InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
-                im.controlMouseCursor = true;
-                im.controlMouseDrag = true;
-                im.allowHandClicks = true;
-            }
-            catch(Exception)
-            {
-                kinectManagerObject.SetActive(false);
-                Debug.LogWarning("Kinect is not initialized.");
-            }
+                try
+                {
+                    kinectManagerInstance = KinectManager.Instance;
+                    Debug.Log("Kinect settings are being reset.");
+                    bool bNeedRestart = false;
+                    Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+                    kinectManagerObject.SetActive(true);
+                    kinectManagerInstance.ClearKinectUsers();
+                    kinectManagerInstance.avatarControllers.Clear();
+                    kinectManagerInstance.StartKinect();
+                    InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
+                    im.controlMouseCursor = true;
+                    im.controlMouseDrag = true;
+                    im.allowHandClicks = true;
+                    isKinectRestartRequired = false;
+                }
+                catch (Exception)
+                {
+                    kinectManagerObject.SetActive(false);
+                    Debug.LogWarning("Kinect is not initialized.");
+                }
 #else
             kinectManagerObject.SetActive(false);
-            Debug.LogWarning("Kinect is not initialized.");
+            Debug.LogWarning("Kinect is not supported on this platform.");
 #endif
+            }
         }
     }
 

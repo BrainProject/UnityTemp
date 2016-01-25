@@ -583,11 +583,11 @@ namespace Kinect
                                 Vector3 jointPos = jointsPos[gestureData.joint];
                                 CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.ClickStayDuration);
                                 //							SetGestureCancelled(gestureData);
-                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress + 0.1f;
+                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircleRight.progress = gestureData.progress + 0.1f;
 
                                 if(gestureData.progress >= 1)
                                 {
-                                    MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = 0;
+                                    MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircleRight.progress = 0;
                                     //MouseControl.MouseClick();
                                 }
                             }

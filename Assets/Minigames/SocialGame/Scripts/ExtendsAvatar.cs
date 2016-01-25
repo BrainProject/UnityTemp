@@ -10,13 +10,19 @@ namespace SocialGame{
 		public Transform handLeft;
 		public Transform handRight;
 		public bool realPosition = true;
+        public int currentUserId;
 
 		private Vector3 newPos;
 		private bool run = true;
+        private bool singlePlayer = false;
 
         void Start()
         {
             print("Avatar " + gameObject.name);
+            if(!KinectManagerSwitcher.instance.player2)
+            {
+                singlePlayer = true;
+            }
         }
 
 
@@ -26,7 +32,14 @@ namespace SocialGame{
 		{
             if (enabled)
             {
-                base.UpdateAvatar(UserID);
+                if (singlePlayer)
+                {
+                    base.UpdateAvatar(KinectManager.Instance.GetPrimaryUserID());
+                }
+                else
+                {
+                    base.UpdateAvatar(UserID);
+                }
                 /*playerId = UserID;
 
                 if(!transform.gameObject.activeInHierarchy) 

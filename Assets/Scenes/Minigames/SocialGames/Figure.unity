@@ -131,6 +131,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &523116326 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 174182, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+  m_PrefabInternal: {fileID: 523116325}
 --- !u!1 &650488564
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +351,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22492186, guid: 898f5967110b64448abb1ec3afa98817, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.45
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473852, guid: 898f5967110b64448abb1ec3afa98817, type: 2}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492186, guid: 898f5967110b64448abb1ec3afa98817, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 898f5967110b64448abb1ec3afa98817, type: 2}
@@ -406,6 +418,10 @@ Prefab:
       propertyPath: player1
       value: 
       objectReference: {fileID: 1679275258}
+    - target: {fileID: 11400000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
+      propertyPath: thisSceneCanvas
+      value: 
+      objectReference: {fileID: 523116326}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
   m_IsPrefabParent: 0
