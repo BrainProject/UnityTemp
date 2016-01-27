@@ -14,7 +14,7 @@ namespace SocialGame{
 		private bool handOnIt;
 		private bool corutineRuning;
 
-		public new void Start()
+		public override void Start()
 		{
 			if(numOfParts == 0 && anim != null)
 			{
@@ -24,7 +24,6 @@ namespace SocialGame{
 
 		public override bool Checked (Transform target)
 		{
-			Debug.Log ("Start");
 			handOnIt = true;
 			if(!corutineRuning)
 			{

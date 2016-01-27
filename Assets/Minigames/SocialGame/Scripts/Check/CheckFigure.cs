@@ -15,7 +15,7 @@ namespace SocialGame{
 			changeColorMaterial(Color.red);
 		}
 
-		protected override void Start()
+		public override void Start()
 		{
 			base.Start();
 			changeColorMaterial(Color.red);

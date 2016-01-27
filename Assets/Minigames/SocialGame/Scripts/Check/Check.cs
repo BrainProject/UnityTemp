@@ -14,7 +14,7 @@ public class Check : MonoBehaviour {
 	/// <summary>
 	/// Start this instance. Hide or show object.
 	/// </summary>
-	protected virtual void Start()
+	public virtual void Start()
 	{
 		show();
 	}

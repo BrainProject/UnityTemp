@@ -9,7 +9,7 @@ public class CheckSwitchObj :Check {
 		public string switchName;
 		public int owner;
 		// Use this for initialization
-		new void Start () {
+		public override void Start () {
 			if (!player1) 
 			{
 				player1 = GameObjectEx.FindGameObjectWithNameTag (switchName, "Player1");

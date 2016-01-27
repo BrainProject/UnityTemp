@@ -14,7 +14,7 @@ namespace SocialGame{
 		private bool good;
 
 
-		protected override void Start () {
+		public override void Start () {
 			GameObject clone = null;
 			good =  Random.Range(0,100) <= ChanceOfGood;
 			if(good && goodObj)
