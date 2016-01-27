@@ -13,6 +13,7 @@ namespace SocialGame{
 		/// <param name="index">Index.</param>
 		public void SetImage(int index)
 		{
+			Debug.Log ("set index: " + index);
 			if (spriteRender) 
 			{
 				if (index < steps.Length) 
@@ -23,7 +24,11 @@ namespace SocialGame{
 			}
 			if (imageUI) 
 			{
-				imageUI.sprite = steps [index];
+
+				if (index < steps.Length) 
+				{
+					imageUI.sprite = steps [index];
+				}
 			}
 		}
 

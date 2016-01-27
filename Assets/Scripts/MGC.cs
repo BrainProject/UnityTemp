@@ -309,7 +309,6 @@ public class MGC : Singleton<MGC>
             ResetMinigamesStatistics();
         }
 
-
         /*if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
         {
             menuType = MenuType.Brain;
@@ -411,6 +410,11 @@ public class MGC : Singleton<MGC>
         inactivityCounter = 0;
         print("[MGC] Scene: '" + SceneManager.GetActiveScene().name + "' loaded");
         logger.addEntry("Scene loaded: '" + SceneManager.GetActiveScene().name + "'");
+
+        if(SceneManager.GetActiveScene().name == "TiledMenu")
+        {
+            selectedMiniGameDiff = 0;
+        }
 
         //perform fade in?
         if (sceneLoader.doFade)
