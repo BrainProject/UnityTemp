@@ -73,7 +73,8 @@ namespace Game
 
             if (doFade)
             {
-                if(!fadeInProgress)
+                //if(!fadeInProgress)
+                StopAllCoroutines();
                     StartCoroutine(LoadWithFadeOut(levelName));
             }
             else
@@ -90,7 +91,8 @@ namespace Game
 			
 			if (doFade)
             {
-                if (!fadeInProgress)
+                //if (!fadeInProgress)
+                StopAllCoroutines();
                     StartCoroutine(LoadByIndexWithFadeOut(levelIndex));
 			}
 			else
@@ -101,6 +103,7 @@ namespace Game
 
         public void FadeIn()
         {
+            StopAllCoroutines();
             StartCoroutine(FadeInCoroutine());
         }
 
@@ -111,10 +114,12 @@ namespace Game
 			
             float startTime = Time.time;
             fadePanel.enabled = true;
+            fadePanel.raycastTarget = false;
+            Color startColor = fadePanel.color;
             
-            while (fadePanel.color.a > 0.01f)
+            while (fadePanel.color.a > 0)
             {
-                fadePanel.color = Color.Lerp(opaqueColor, transparentColor, (Time.time - startTime) * fadeSpeed);
+                fadePanel.color = Color.Lerp(startColor, transparentColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 
@@ -142,10 +147,12 @@ namespace Game
 			{
 				float startTime = Time.time;              
                 fadePanel.enabled = true;
+                fadePanel.raycastTarget = true;
+                Color startColor = fadePanel.color;
 
                 while (fadePanel.color.a < 1)
                 {
-                    fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                    fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                     //print("barva: " + fadePanel.color);
                     yield return null;
                 }
@@ -167,10 +174,12 @@ namespace Game
 
 			float startTime = Time.time;
             fadePanel.enabled = true;
+            fadePanel.raycastTarget = true;
+            Color startColor = fadePanel.color;
 
             while (fadePanel.color.a < 1)
             {
-                fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 
