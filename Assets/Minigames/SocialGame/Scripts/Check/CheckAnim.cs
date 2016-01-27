@@ -8,14 +8,16 @@ namespace SocialGame{
 		public Vector3 translate;
 		public bool run;
 		public bool walk;
-		private Animator anim;
+		public Animator anim;
 		private float WalkTime;
 
 		/// <summary>
 		/// Start this instance.
 		/// </summary>
 		public override void Start () {
-			anim = gameObject.GetComponent<Animator>();
+			if (!anim) {
+				anim = gameObject.GetComponent<Animator> ();
+			}
 		}
 		
 		/// <summary>
