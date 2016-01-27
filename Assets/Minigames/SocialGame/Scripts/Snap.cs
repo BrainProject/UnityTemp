@@ -27,7 +27,7 @@ namespace SocialGame{
 		private Vector3 oldLocalPos;
 		private Transform oldParent;
 
-		protected override void Start()
+		public override void Start()
 		{
 			base.Start();
 		}

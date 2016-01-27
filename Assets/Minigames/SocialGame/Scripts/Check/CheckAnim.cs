@@ -14,7 +14,7 @@ namespace SocialGame{
 		/// <summary>
 		/// Start this instance.
 		/// </summary>
-		protected override void Start () {
+		public override void Start () {
 			anim = gameObject.GetComponent<Animator>();
 		}
 		

@@ -14,7 +14,7 @@ namespace SocialGame{
 		private bool handOnIt;
 		private bool corutineRuning;
 
-		public new void Start()
+		public override void Start()
 		{
 			if(numOfParts == 0 && anim != null)
 			{

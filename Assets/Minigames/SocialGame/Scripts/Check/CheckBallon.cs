@@ -10,7 +10,7 @@ namespace SocialGame{
 
 		public SpriteRenderer render;
 
-		protected override void Start () {
+		public override void Start () {
 			transform.localScale = Vector3.one * 0.3f;
 			render = gameObject.GetComponent<SpriteRenderer>();
 			if(render)
