@@ -126,11 +126,16 @@ public class MGC : Singleton<MGC>
     private float touchBlockTimestamp;
 #endif
 
-
-
-
     internal Vector2 initialTouchPosition = Vector2.zero;
     internal Vector2 swipeDistance = Vector2.zero;
+
+
+
+
+    //GAME CONSTANTS (read only)
+    public float fadeSpeed { get { return 1.5f; } }
+
+
 
     void Awake()
     {
