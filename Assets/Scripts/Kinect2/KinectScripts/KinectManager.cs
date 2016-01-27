@@ -2930,7 +2930,14 @@ namespace Kinect
             {
                 if (alUserIds.Count > 0)
                 {
-                    liPrimaryUserId = alUserIds[0];
+                    if (SetPrimaryUserID(alUserIds[0]))
+                    {
+                        Debug.LogWarning("New Primary User ID: " + GetPrimaryUserID());
+                        if(avatarControllers.Count > 0)
+                            avatarControllers[0].playerId = GetPrimaryUserID();
+                    }
+                    else
+                        liPrimaryUserId = 0;
                     //dictUserIdToIndex[liPrimaryUserId] = 0;
                 }
                 else
