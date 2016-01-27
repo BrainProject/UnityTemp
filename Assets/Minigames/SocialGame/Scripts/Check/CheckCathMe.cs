@@ -10,11 +10,18 @@ namespace SocialGame{
 		public GameObject badObj;
 		public int points = 1;
 		[Range(0, 100)] public float ChanceOfGood;
+		public float timeToDie;
 
 		private bool good;
+		private bool die;
+		private float timeOfKillingSelf = 0;
+		private SpriteRenderer visual;
 
 
 		public override void Start () {
+			if (HelpListener.Instance.activatedGUI) {
+				Destroy (gameObject);
+			}
 			GameObject clone = null;
 			good =  Random.Range(0,100) <= ChanceOfGood;
 			if(good && goodObj)
@@ -32,6 +39,13 @@ namespace SocialGame{
 			if(clone)
 			{
 				clone.transform.parent= transform;
+				SpriteRenderer[] temp = clone.GetComponentsInChildren<SpriteRenderer> ();
+				if (temp.Length > 0) {
+					visual = temp [0];
+					if (temp.Length > 1) {
+						Debug.LogWarning ("So many spriteRenderers on objects check correct was choosen");
+					}
+				}
 			}
 		}
 		
@@ -42,6 +56,17 @@ namespace SocialGame{
 			if(transform.position.y < deathZone)
 			{
 				Destroy(gameObject);
+			}
+			if (die || HelpListener.Instance.activatedGUI) {
+				die = true;
+				timeOfKillingSelf += Time.deltaTime;
+				if (timeOfKillingSelf > timeToDie) {
+					Destroy (gameObject);
+				} else {
+					if (visual) {
+						visual.color = new Color (visual.color.r, visual.color.g, visual.color.b, 1 - (timeOfKillingSelf / timeToDie));
+					}
+				}
 			}
 		}
 

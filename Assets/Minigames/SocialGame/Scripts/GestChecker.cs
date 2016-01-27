@@ -17,6 +17,7 @@ namespace SocialGame
 		public bool destroy = true;
 		public bool finish = true;
 		public bool allChecked = false;
+		public bool DeactivatedWithGUI = false;
 		//private Vector3 temp;
 		public List<Transform> Targets = new List<Transform>();
 
@@ -77,7 +78,7 @@ namespace SocialGame
 		/// Checking collision
 		/// </summary>
 		void Update () {
-			if(activeChecking)
+			if(activeChecking && (!DeactivatedWithGUI || !HelpListener.Instance.activatedGUI ))
 			{
 				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
 				for(int i = 0; i< transform.childCount; i++)

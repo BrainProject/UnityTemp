@@ -5,21 +5,21 @@ using UnityEngine.SceneManagement;
 namespace SocialGame{
 	public class HelpListener : MonoBehaviour {
 		#if UNITY_STANDALONE
-		//public static HelpListener Instance;
+		public static HelpListener Instance;
 		public  bool activatedGUI = false;
 		public  GameObject[] ObjToPause;
 
 
 		void Awake()
 		{
-			/*if (Instance) 
+			if (Instance) 
 			{
 				Destroy(this);
 			}
 			else
 			{
 				Instance = this;
-			}*/
+			}
 		}
 
 		void OnEnable()
