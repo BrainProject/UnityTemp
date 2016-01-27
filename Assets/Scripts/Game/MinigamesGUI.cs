@@ -111,7 +111,9 @@ namespace Game
             //handle back icon visibility
             if (SceneManager.GetActiveScene().buildIndex > 0)
             {
+                StopAllCoroutines();
                 backIcon.gameObject.SetActive(true);
+                backIcon.show();
                 hide();
             }
             else

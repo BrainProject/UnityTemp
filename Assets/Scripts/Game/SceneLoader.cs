@@ -12,8 +12,8 @@ namespace Game
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 1f;
 
+        private float fadeSpeed;
         private float speed;
         private Color transparentColor;
 		private Color opaqueColor;
@@ -30,6 +30,7 @@ namespace Game
 		void Start()
 		{
             //print("SceneLoader::Start()...");
+            fadeSpeed = MGC.Instance.fadeSpeed;
 
             transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);

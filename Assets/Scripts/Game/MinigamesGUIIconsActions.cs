@@ -21,6 +21,8 @@ namespace Game
 		internal Image thisImage;
 		public Button thisButton;
 
+        private float fadeSpeed;
+
 		void Start()
 		{
 			thisImage = GetComponent<Image> ();
@@ -37,6 +39,8 @@ namespace Game
 				this.gameObject.SetActive (true);
 				thisButton.interactable = true;
 			}
+
+            fadeSpeed = MGC.Instance.fadeSpeed;
 		}
         
 //		public void resetState()
@@ -172,7 +176,7 @@ namespace Game
 					
 					else if(SceneManager.GetActiveScene().name == "DifficultyChooser")
 					{
-						MGC.Instance.sceneLoader.LoadScene("Crossroad");
+						MGC.Instance.sceneLoader.LoadScene("TiledMenu");
 					}
 					else if(SceneManager.GetActiveScene().name == "GameSelection")
 					{
@@ -253,7 +257,7 @@ namespace Game
 			
 			while(thisImage.color.a < 0.99f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 		}
@@ -270,7 +274,7 @@ namespace Game
 			
 			while(thisImage.color.a > 0.001f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 

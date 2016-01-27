@@ -16,6 +16,8 @@ namespace MinigameSelection
 		private int currentlySelectedSectionIndex;
 		private int previouslySelectedSectionIndex;
 
+        private float fadeSpeed;
+
         void Awake()
         {
             Instance = this;
@@ -45,6 +47,8 @@ namespace MinigameSelection
                 previouslySelectedSectionIndex = 0;
                 currentlySelectedSectionIndex = MGC.Instance.selectedMenuSectionIndex;
             }
+
+            fadeSpeed = MGC.Instance.fadeSpeed;
         }
 
 		public void SwitchMenu(int sectionIndex)
@@ -70,7 +74,7 @@ namespace MinigameSelection
 
 			while(menuSections[previouslySelectedSectionIndex].alpha > 0.001)
 			{
-				menuSections[previouslySelectedSectionIndex].alpha = Mathf.Lerp (1, 0, (Time.time - startTime));
+				menuSections[previouslySelectedSectionIndex].alpha = Mathf.Lerp (1, 0, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			menuSections [previouslySelectedSectionIndex].gameObject.SetActive (false);
@@ -87,7 +91,7 @@ namespace MinigameSelection
 
 			while(menuSections[currentlySelectedSectionIndex].alpha < 1)
 			{
-				menuSections[currentlySelectedSectionIndex].alpha = Mathf.Lerp (0, 1, (Time.time - startTime));
+				menuSections[currentlySelectedSectionIndex].alpha = Mathf.Lerp (0, 1, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			blockPanel.SetActive (false);
@@ -110,7 +114,7 @@ namespace MinigameSelection
 			
 			while(kinectRequiredIcon.color.a < 1)
 			{
-				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			
@@ -123,7 +127,7 @@ namespace MinigameSelection
 			
 			while(kinectRequiredIcon.color.a > 0)
 			{
-				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			

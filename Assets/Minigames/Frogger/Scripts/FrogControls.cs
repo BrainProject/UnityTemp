@@ -179,7 +179,7 @@ namespace Frogger
             canControl = false;
             isOnBoat = false;
             transform.SetParent(null);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             frogSpriteRenderer.sprite = frogSprite;
             transform.position = thisLevelManager.frogSpawn.position;
             canControl = true;
