@@ -24,7 +24,6 @@ namespace SocialGame{
 
 		public override bool Checked (Transform target)
 		{
-			Debug.Log ("Start");
 			handOnIt = true;
 			if(!corutineRuning)
 			{
