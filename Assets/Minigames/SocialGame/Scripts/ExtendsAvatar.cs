@@ -14,14 +14,20 @@ namespace SocialGame{
 
 		private Vector3 newPos;
 		private bool run = true;
-        private bool singlePlayer = false;
+        public bool singlePlayer = false;
 
         void Start()
         {
+            if(!MGC.Instance)
+                Debug.Log("Creating MGC " + MGC.Instance);
+
             print("Avatar " + gameObject.name);
-            if(!KinectManagerSwitcher.instance.player2)
+            if (KinectManagerSwitcher.instance)
             {
-                singlePlayer = true;
+                if (!KinectManagerSwitcher.instance.player2)
+                {
+                    singlePlayer = true;
+                }
             }
         }
 

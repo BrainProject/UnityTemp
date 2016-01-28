@@ -43,14 +43,14 @@ namespace Butterflies
 
         void Start()
         {
-            directionX = ButterflyGameManager.directionForButterfly.x; //Random.Range(min, max);
-            directionY = ButterflyGameManager.directionForButterfly.y; //Random.Range(min, max);
+            directionX = ButterflySpawner.directionForButterfly.x; //Random.Range(min, max);
+            directionY = ButterflySpawner.directionForButterfly.y; //Random.Range(min, max);
             // randomizing the direction
             directionX = Random.Range(directionX - directionRange, directionX + directionRange);
             directionY = Random.Range(directionY - directionRange, directionY + directionRange);
 
-            angle = ButterflyGameManager.angle;
-            rotateRight = ButterflyGameManager.rotateRight;
+            angle = ButterflySpawner.angle;
+            rotateRight = ButterflySpawner.rotateRight;
 
 
             // speed of butterfly depending on mouse speed
