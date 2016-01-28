@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace FindIt
 {
@@ -55,8 +57,10 @@ namespace FindIt
         public GameObject clona;
 
         // UI visible elements
-        public UnityEngine.UI.Text textProgress;
-        public UnityEngine.UI.Image progressBar;
+        public Slider progresSlider;
+
+        //to fix wierd Unity implementation of slider - especially at min and max values
+        int progressBarHack;
 
         // image in the middle. 
         public GameObject targetImage;
@@ -123,6 +127,10 @@ namespace FindIt
             FindItStatistics.numberPieces = numberPieces;
 
             FindItStatistics.expectedGameTurnsTotal = numberPieces;
+
+            progressBarHack = numberPieces / 10;
+            progresSlider.maxValue = numberPieces + progressBarHack;            
+            progresSlider.value = progressBarHack;
         }
 
 
@@ -207,7 +215,7 @@ namespace FindIt
             UpdateCameraSize();
             newTargetImage();
             
-			MGC.Instance.minigamesProperties.SetPlayed (Application.loadedLevelName);
+			MGC.Instance.minigamesProperties.SetPlayed (SceneManager.GetActiveScene().name);
         }
 
         /**
@@ -230,8 +238,10 @@ namespace FindIt
          */
         void UpdateGreenBarAndText()
         {
-            progressBar.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
-            textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();            
+            //progressBarOldGraphics.GetComponent<RectTransform>().localScale = new Vector3((float)FindItStatistics.turnsPassed / (float)FindItStatistics.expectedGameTurnsTotal * (float)Screen.width / (float)Screen.height, 1f, 0f);
+            //textProgress.text = FindItStatistics.turnsPassed.ToString() + "/" + FindItStatistics.expectedGameTurnsTotal.ToString();
+
+            progresSlider.value = FindItStatistics.turnsPassed + progressBarHack;
         }
     }
 }

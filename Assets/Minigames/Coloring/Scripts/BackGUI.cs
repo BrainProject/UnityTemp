@@ -31,14 +31,15 @@ namespace Coloring
 
 		public void BackAction()
 		{
-			if((Time.time - thisLevelManager.timestamp > 2) && Images.activeSelf)
+			if(/*(Time.timeSinceLevelLoad - thisLevelManager.timestamp > 2) &&*/ Images.activeSelf)
 			{
 				thisLevelManager.timestamp = Time.time;
 				deskAnimator.SetBool("painting", false);
 				deskAnimator.SetTrigger("animate");
 				thisLevelManager.painting = false;
-				MGC.Instance.minigamesGUI.screenshotIcon.hide();
-				MGC.Instance.ShowCustomCursor(true);
+                MGC.Instance.minigamesGUI.screenshotIcon.hide();
+                MGC.Instance.minigamesGUI.screenshotIcon.GetComponent<Game.SavePictureGUI>().IconInstantlyVisible(false);
+                MGC.Instance.ShowCustomCursor(true);
 			}
 		}
 

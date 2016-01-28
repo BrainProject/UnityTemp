@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace ButterflyRush
 {
@@ -9,10 +10,12 @@ namespace ButterflyRush
 
         public int cocoonCount;
         public int startCount = 10;
-        public float durationBetweenSpawn = 5;
+        public float durationBetweenSpawnAndroid = 5;
+        public float durationBetweenSpawnStandalone = 10;
         public GameObject cocoonPrefab;
         public GameObject butterflyPrefab;
 
+        private float durationBetweenSpawn;
         private float timestamp;
         private bool isGameFinished;
 
@@ -30,6 +33,11 @@ namespace ButterflyRush
 
         void Start()
         {
+#if UNITY_ANDROID
+            durationBetweenSpawn = durationBetweenSpawnAndroid;       
+#else
+            durationBetweenSpawn = durationBetweenSpawnStandalone;
+#endif
             timestamp = Time.time;
             durationBetweenSpawn = Mathf.Clamp(durationBetweenSpawn - (float)MGC.Instance.selectedMiniGameDiff / 4, 0.01f, 60);
         }
@@ -65,7 +73,7 @@ namespace ButterflyRush
 
         public void RestartLevel()
         {
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

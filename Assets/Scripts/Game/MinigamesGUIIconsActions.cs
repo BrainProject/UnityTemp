@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -18,24 +19,28 @@ namespace Game
 		internal Color startColor;
 		internal Color targetColor;
 		internal Image thisImage;
-		internal Button thisButton;
+		public Button thisButton;
+
+        private float fadeSpeed;
 
 		void Start()
 		{
 			thisImage = GetComponent<Image> ();
 			thisButton = GetComponent<Button> ();
-			startColor = thisImage.color;
+            startColor = thisImage.color;
 			targetColor = thisImage.color;
 			if (defaultDisabled)
 			{
-				thisButton.enabled = false;
+				thisButton.interactable = false;
 				this.gameObject.SetActive (false);
 			}
 			else
 			{
 				this.gameObject.SetActive (true);
-				thisButton.enabled = true;
+				thisButton.interactable = true;
 			}
+
+            fadeSpeed = MGC.Instance.fadeSpeed;
 		}
         
 //		public void resetState()
@@ -73,10 +78,10 @@ namespace Game
 	                //hide GUI
 	                MGC.Instance.minigamesGUI.hide();
 
-					if(Application.loadedLevel > 3)
+					if(SceneManager.GetActiveScene().buildIndex > 3)
 	                    MGC.Instance.startMiniGame(MGC.Instance.getSelectedMinigameName());
 					else
-						MGC.Instance.sceneLoader.LoadScene(Application.loadedLevel);
+						MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
 					break;
 	            }
 
@@ -108,6 +113,9 @@ namespace Game
 				
 				case "Brain":
 				{
+                    //reset menu index
+                    MGC.Instance.selectedMenuSectionIndex = 0;
+
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
 					
@@ -119,14 +127,24 @@ namespace Game
 
 				case "Back":
 				{
+                    //print("Icon `Back' pushed.");
+
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
+
+                    //if help is shown, disable it
+                    NEWBrainHelp neuronHelp = MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>();
+                    if(neuronHelp.helpObject.helpClone)
+                    {
+                        neuronHelp.helpObject.HideHelpAnimation();
+                        break;
+                    }
 					
 					//return back
-					if(Application.loadedLevel > 6)	//NOTE: Update minimal minigame level index here
+					if(SceneManager.GetActiveScene().buildIndex > 3)	//NOTE: Update minimal minigame level index here
 					{
 						// Coloring mini-game se special treatment...
-						if (Application.loadedLevelName == "Coloring")
+						if (SceneManager.GetActiveScene().name == "Coloring")
 						{
 							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
 							if (coloringLM.painting)
@@ -156,11 +174,11 @@ namespace Game
 						}
 					}
 					
-					else if(Application.loadedLevelName == "DifficultyChooser")
+					else if(SceneManager.GetActiveScene().name == "DifficultyChooser")
 					{
-						MGC.Instance.sceneLoader.LoadScene("Crossroad");
+						MGC.Instance.sceneLoader.LoadScene("TiledMenu");
 					}
-					else if(Application.loadedLevelName == "GameSelection")
+					else if(SceneManager.GetActiveScene().name == "GameSelection")
 					{
 						//Zoom out in selection scene if zoomed to some minigame.
 						//Go to brain scene if not zoomed.
@@ -173,7 +191,7 @@ namespace Game
 						else
 							cm.ZoomOutCamera();
 					}
-					else if(Application.loadedLevelName == "TiledMenu")
+					else if(SceneManager.GetActiveScene().name == "TiledMenu")
 					{
 						hide();
 						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);
@@ -184,8 +202,9 @@ namespace Game
 				}
 
 				case "Screenshot":
-				{
-					GetComponent<SavePictureGUI>().TakeScreenshot();
+                {
+                    GetComponent<SavePictureGUI>().TakeScreenshot();
+                    show();
 					break;
 				}
 
@@ -229,7 +248,7 @@ namespace Game
 		IEnumerator FadeInGUI()
 		{
 			float startTime = Time.time;
-			thisButton.enabled = true;
+			thisButton.interactable = true;
 			StopCoroutine ("FadeOutGUI");
 	//		collider.enabled = true;
 			startColor = thisImage.color;
@@ -238,7 +257,7 @@ namespace Game
 			
 			while(thisImage.color.a < 0.99f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 		}
@@ -246,7 +265,7 @@ namespace Game
 		IEnumerator FadeOutGUI()
 		{
 			float startTime = Time.time;
-			thisButton.enabled = false;
+			thisButton.interactable = false;
 			StopCoroutine ("FadeInGUI");
 //			collider.enabled = false;
 			startColor = thisImage.color;
@@ -255,12 +274,12 @@ namespace Game
 			
 			while(thisImage.color.a > 0.001f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 
 			thisImage.color = targetColor;
-			thisButton.enabled = false;
+			thisButton.interactable = false;
 			this.gameObject.SetActive (false);
 		}
     }

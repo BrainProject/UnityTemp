@@ -27,7 +27,7 @@ namespace SocialGame{
 		private Vector3 oldLocalPos;
 		private Transform oldParent;
 
-		protected override void Start()
+		public override void Start()
 		{
 			base.Start();
 		}
@@ -47,6 +47,7 @@ namespace SocialGame{
 					oldParent = transform.parent.parent;
 					transform.parent.parent = null;
 				}
+				anim.SetTrigger("activate");
 			}
 			else
 			{
@@ -57,7 +58,7 @@ namespace SocialGame{
 					oldParent = null;
 				}
 			}
-			anim.SetBool ("active", activated);
+			
 			base.show ();
 		}
 

@@ -2,91 +2,93 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// containst start/win configuration for level
-/// work with 3 poles
-/// </summary>
-public class LondonToweGameStartWinData  {
-
+namespace LondonTower
+{
     /// <summary>
-    /// for matching win-start configuration in list
+    /// containst start/win configuration for level
+    /// work with 3 poles
     /// </summary>
-    int gameID;
-
-   
-
-    bool isStart;
-
-   public List<string> pole1 = new List<string>();
-   public List<string> pole2 = new List<string>();
-   public List<string> pole3 = new List<string>();
-    int pole1Size, pole2Size, pole3Size;
-
-    public int GameID
+    public class LondonToweGameStartWinData
     {
-        get { return gameID; }
-    }
 
-    public int Pole3Size
-    {
-        get { return pole3Size; }
-        set { pole3Size = value; }
-    }
+        /// <summary>
+        /// for matching win-start configuration in list
+        /// </summary>
+        int gameID;
 
-    public int Pole2Size
-    {
-        get { return pole2Size; }
-        set { pole2Size = value; }
-    }
 
-    public int Pole1Size
-    {
-        get { return pole1Size; }
-        set { pole1Size = value; }
-    }
 
-    public LondonToweGameStartWinData(bool isStart, int gameId)
-    {
-        this.isStart = isStart;
-        this.gameID = gameId;
-    }
+        bool isStart;
 
-    public void AddBallOnPole(int pole, string ballId)
-    {
-        switch (pole)
+        public List<string> pole1 = new List<string>();
+        public List<string> pole2 = new List<string>();
+        public List<string> pole3 = new List<string>();
+        int pole1Size, pole2Size, pole3Size;
+
+        public int GameID
         {
-            case 1: pole1.Add(ballId); break;
-            case 2: pole2.Add(ballId); break;
-            case 3: pole3.Add(ballId); break;
+            get { return gameID; }
         }
 
-    }
+        public int Pole3Size
+        {
+            get { return pole3Size; }
+            set { pole3Size = value; }
+        }
 
-    public bool IsStart()
-    {
-        return isStart;
-    }
+        public int Pole2Size
+        {
+            get { return pole2Size; }
+            set { pole2Size = value; }
+        }
 
-    public override string ToString()
-    {
-        string data =gameID.ToString()+ "==";
-        foreach (string s in pole1)
+        public int Pole1Size
         {
-            data = data + s+";";
+            get { return pole1Size; }
+            set { pole1Size = value; }
         }
-        data = data +"::";
-        foreach (string s in pole2)
+
+        public LondonToweGameStartWinData(bool isStart, int gameId)
         {
-            data = data + s+";";
+            this.isStart = isStart;
+            this.gameID = gameId;
         }
-        data = data + "::";
-        foreach (string s in pole3)
+
+        public void AddBallOnPole(int pole, string ballId)
         {
-            data = data + s + ";";
+            switch (pole)
+            {
+                case 1: pole1.Add(ballId); break;
+                case 2: pole2.Add(ballId); break;
+                case 3: pole3.Add(ballId); break;
+            }
+
         }
-      
-        return data + "__" + pole1Size.ToString() + "__" + pole2Size.ToString() + "__" + pole3Size.ToString() +";;"+ isStart.ToString();
+
+        public bool IsStart()
+        {
+            return isStart;
+        }
+
+        public override string ToString()
+        {
+            string data = gameID.ToString() + "==";
+            foreach (string s in pole1)
+            {
+                data = data + s + ";";
+            }
+            data = data + "::";
+            foreach (string s in pole2)
+            {
+                data = data + s + ";";
+            }
+            data = data + "::";
+            foreach (string s in pole3)
+            {
+                data = data + s + ";";
+            }
+
+            return data + "__" + pole1Size.ToString() + "__" + pole2Size.ToString() + "__" + pole3Size.ToString() + ";;" + isStart.ToString();
+        }
     }
-    
-	
 }

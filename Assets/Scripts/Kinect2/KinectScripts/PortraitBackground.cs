@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -83,3 +84,4 @@ namespace Kinect
         }
     }
 }
+#endif

@@ -15,6 +15,7 @@ namespace Kinect
     /// </summary>
     public class KinectManager : MonoBehaviour
     {
+#if UNITY_STANDALONE
         //Is default kinect manager
         public bool isDefaultKM = true;
 
@@ -1880,7 +1881,7 @@ namespace Kinect
             kinectInitialized = true;
 
 #if USE_SINGLE_KM_IN_MULTIPLE_SCENES
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
 #endif
 
             // GUI Text.
@@ -2873,8 +2874,9 @@ namespace Kinect
         private void RemoveUser(Int64 userId)
         {
             int uidIndex = alUserIds.IndexOf(userId);
-            Debug.Log("Removing user " + uidIndex + ", ID: " + userId + ", Body: " + dictUserIdToIndex[userId]);
+            Debug.LogWarning("Removing user " + uidIndex + ", ID: " + userId + ", Body: " + dictUserIdToIndex[userId]);
 
+            
             for (int i = 0; i < avatarControllers.Count; i++)
             {
                 AvatarController avatar = avatarControllers[i];
@@ -2928,7 +2930,15 @@ namespace Kinect
             {
                 if (alUserIds.Count > 0)
                 {
-                    liPrimaryUserId = alUserIds[0];
+                    if (SetPrimaryUserID(alUserIds[0]))
+                    {
+                        Debug.LogWarning("New Primary User ID: " + GetPrimaryUserID());
+                        if(avatarControllers.Count > 0)
+                            avatarControllers[0].playerId = GetPrimaryUserID();
+                    }
+                    else
+                        liPrimaryUserId = 0;
+                    //dictUserIdToIndex[liPrimaryUserId] = 0;
                 }
                 else
                 {
@@ -3467,6 +3477,6 @@ namespace Kinect
 
             return false;
         }
-
+#endif
     }
 }

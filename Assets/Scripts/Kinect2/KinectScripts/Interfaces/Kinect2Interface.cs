@@ -6,6 +6,7 @@ using Microsoft.Kinect.Face;
 using System.Collections.Generic;
 using System;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     public class Kinect2Interface : DepthSensorInterface
@@ -1728,3 +1729,4 @@ namespace Kinect
         }
     }
 }
+#endif

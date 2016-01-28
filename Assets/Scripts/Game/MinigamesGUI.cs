@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Diagnostics;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -22,13 +23,13 @@ namespace Game
 		public bool gsiStandalone;
 		public bool clicked = false;
 
-		void Awake()
-		{
+//		void Awake()
+//		{
 //			if (Application.loadedLevel > 1)
 //				backIcon.gameObject.SetActive(true);
 //			else
 //				backIcon.gameObject.SetActive(false);
-		}
+//		}
 
 
 		/// <summary>
@@ -69,8 +70,8 @@ namespace Game
             { 
 			    if(MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject)
 			    {
-				    if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
-					    showHelpIcon.show ();
+				    //if (MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpPrefab && !MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>().helpObject.helpClone)
+					    //showHelpIcon.show ();
 			    }
             }
 
@@ -85,7 +86,7 @@ namespace Game
 			brainIcon.hide ();
 			menuIcon.hide ();
 			guiDetection.guiIsHidden = true;
-			showHelpIcon.hide ();
+			//showHelpIcon.hide ();
 
             screenshotIcon.hide();
             
@@ -99,14 +100,20 @@ namespace Game
                     }
                 }
             }
+            else
+            {
+                MGC.Instance.TakeControlForGUIAction(false);
+            }
         }
 
 		void OnLevelWasLoaded (int level)
 		{
             //handle back icon visibility
-            if (Application.loadedLevel > 0)
+            if (SceneManager.GetActiveScene().buildIndex > 0)
             {
+                StopAllCoroutines();
                 backIcon.gameObject.SetActive(true);
+                backIcon.show();
                 hide();
             }
             else

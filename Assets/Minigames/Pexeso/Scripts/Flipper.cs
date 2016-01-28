@@ -13,7 +13,7 @@ namespace MinigamePexeso
         /// <summary>
         /// speed of flipping animation
         /// </summary>
-        public float moveSpeed = 2f;
+        public float moveSpeed = 4.0f;
 
         /// <summary>
         /// is tile moving?
@@ -93,14 +93,14 @@ namespace MinigamePexeso
 
 			isMoving = true;
 			t = 0;
-
-			while (t < 1f)
+            Vector3 beginRotation = transform.eulerAngles;
+			while (t < 1.0f)
 			{
 				t += Time.deltaTime * moveSpeed;
-				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, endRotation, t);
+                transform.eulerAngles = Vector3.Lerp(beginRotation, endRotation, t);
 				yield return null;
 			}
-
+            //print("rotation finished");
 			isMoving = false;
 
             //after tile is flipped down, re-enable collider to allow mouse clicks on this object

@@ -8,25 +8,25 @@ SceneSettings:
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
     smallestOccluder: 5
-    smallestHole: .25
+    smallestHole: 0.25
     backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
   m_Fog: 0
-  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: .00999999978
+  m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_AmbientEquatorColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_AmbientGroundColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  m_AmbientSkyColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_AmbientEquatorColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_AmbientGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 2100000, guid: a2126534b3a11b34e977105bd9e3cc03, type: 2}
-  m_HaloStrength: .5
+  m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -40,7 +40,7 @@ RenderSettings:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 5
+  serializedVersion: 6
   m_GIWorkflowMode: 1
   m_LightmapsMode: 1
   m_GISettings:
@@ -66,7 +66,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightmapSnapshot: {fileID: 0}
+  m_LightingDataAsset: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
 NavMeshSettings:
@@ -74,15 +74,15 @@ NavMeshSettings:
   m_ObjectHideFlags: 0
   m_BuildSettings:
     serializedVersion: 2
-    agentRadius: .5
+    agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: .400000006
+    agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     accuratePlacement: 0
     minRegionArea: 2
-    cellSize: .166666657
+    cellSize: 0.16666666
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &138837855
@@ -132,6 +132,18 @@ Prefab:
       propertyPath: ObjToPause.Array.data[0]
       value: 
       objectReference: {fileID: 1116271520}
+    - target: {fileID: 2000000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.85882354
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
   m_IsPrefabParent: 0
@@ -178,6 +190,10 @@ Prefab:
       propertyPath: player1
       value: 
       objectReference: {fileID: 504299135}
+    - target: {fileID: 11400000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
+      propertyPath: thisSceneCanvas
+      value: 
+      objectReference: {fileID: 1477175284}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
   m_IsPrefabParent: 0
@@ -191,6 +207,52 @@ MonoBehaviour:
 GameObject:
   m_PrefabParentObject: {fileID: 100052, guid: 4efd80c9db40429439d09c91bf97dbd3, type: 2}
   m_PrefabInternal: {fileID: 504299134}
+--- !u!1001 &1477175283
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423576, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1477175284 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 174182, guid: 94bd44ba6ace0804698e256b90c92b01, type: 2}
+  m_PrefabInternal: {fileID: 1477175283}
 --- !u!1 &2056390251 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 6a6803c72cb695443bd24dee45800771, type: 2}
@@ -210,5 +272,5 @@ MonoBehaviour:
   - {fileID: 100004, guid: 711d759d910192b489803503dab92f6a, type: 2}
   - {fileID: 100002, guid: fc46a81216dc8aa4fa763e5fd08d7307, type: 2}
   - {fileID: 100000, guid: e0905ff4e6ed8a541997847637aa5b41, type: 2}
-  position: {x: 0, y: 1.70000005, z: -3}
+  position: {x: 0, y: 1.7, z: -3}
   SelectedType: -1

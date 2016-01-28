@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Game 
 {
@@ -11,11 +12,6 @@ namespace Game
 	public class SplashScreen: MonoBehaviour 
     {
         public float timeBeforeFade = 2.5f;
-		
-        private Color originalColor;
-		private Color targetColor;
-        
-        private float startTime;
 
 		void Awake()
 		{
@@ -24,8 +20,6 @@ namespace Game
 
 		void Start()
 		{
-			originalColor = this.GetComponent<GUITexture>().color;
-			targetColor = this.GetComponent<GUITexture>().color;
 			Cursor.visible = false;
 			StartCoroutine (LoadMainLevel());
 
@@ -44,27 +38,10 @@ namespace Game
 			}
 		}
 
-		public IEnumerator LoadMainLevel()
-		{
+        public IEnumerator LoadMainLevel()
+        {
             yield return new WaitForSeconds(timeBeforeFade);
-            startTime = Time.time;
-
-			originalColor.a = 0;
-			targetColor.a = 1.0f;
-			while(this.GetComponent<GUITexture>().color.a < 0.99f)
-			{
-				this.GetComponent<GUITexture>().color = Color.Lerp (originalColor, targetColor,(Time.time - startTime)/2);
-				yield return null;
-			}
-			
-            //Screen.showCursor = true;
-			//MGC.Instance.ShowCustomCursor();
-
-            //we want 'fade-in' effect for main scene
-            MGC.Instance.sceneLoader.doFade = true;
-
-            //load main scene
-			Application.LoadLevel("Crossroad");
-		}
+            MGC.Instance.sceneLoader.LoadScene("Crossroad");
+        }
 	}
 }

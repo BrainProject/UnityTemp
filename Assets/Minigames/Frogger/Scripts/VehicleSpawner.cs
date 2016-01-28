@@ -30,7 +30,8 @@ namespace Frogger
             thisLevelManager = FrogLevelManager.Instance;
             randomer = Random.Range(0, Mathf.Clamp(minimalSpawnDelay * 2 - MGC.Instance.selectedMiniGameDiff, 1, minimalSpawnDelay * 2));
             lastSpawnTime = Time.time;
-            SpawnNewVehicle();
+            //for(int i=0; i<MGC.Instance.selectedMiniGameDiff; ++i)
+                SpawnNewVehicle();
         }
 
         void Update()

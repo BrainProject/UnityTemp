@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.IO;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -318,3 +319,4 @@ namespace Kinect
 
     }
 }
+#endif

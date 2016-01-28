@@ -8,9 +8,12 @@ public class MinigameDifficultyChooser : MonoBehaviour
     
     public GameObject diffSliderGO;
     public Image IconDifficultyLow;
+    public Image IconDifficultyMedium;
     public Image IconDifficultyHigh;
     public Sprite DefaultSpriteDiffLow;
+    public Sprite DefaultSpriteDiffMedium;
     public Sprite DefaultSpriteDiffHigh;
+    public Image MinigameIcon;
 
     internal Slider diffSlider;
 
@@ -76,6 +79,18 @@ public class MinigameDifficultyChooser : MonoBehaviour
                 IconDifficultyLow.sprite = DefaultSpriteDiffLow;
             }
 
+            if (props.IconDifficultyMedium)
+            {
+                IconDifficultyMedium.enabled = true;
+                IconDifficultyMedium.sprite = props.IconDifficultyMedium;
+            }
+            // use default
+            else
+            {
+                IconDifficultyMedium.enabled = false;
+                //IconDifficultyMedium.sprite = DefaultSpriteDiffMedium;
+            }
+
             if (props.IconDifficultyHigh)
             {
                 IconDifficultyHigh.sprite = props.IconDifficultyHigh;
@@ -86,6 +101,10 @@ public class MinigameDifficultyChooser : MonoBehaviour
                 IconDifficultyHigh.sprite = DefaultSpriteDiffHigh;
             }
 
+            if(props.minigameIcon)
+            {
+                MinigameIcon.sprite = props.minigameIcon;
+            }
 
         }
     }
@@ -100,4 +119,8 @@ public class MinigameDifficultyChooser : MonoBehaviour
         MGC.Instance.sceneLoader.LoadScene(MGC.Instance.getSelectedMinigameName());
     }
 
+    public void SetMinigameIcon(Sprite newIcon)
+    {
+
+    }
 }

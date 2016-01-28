@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -333,8 +334,10 @@ namespace Kinect
             float bandSize = (jointsPos[shoulderCenterIndex].y - jointsPos[hipCenterIndex].y);
             float gestureTop = jointsPos[shoulderCenterIndex].y + bandSize * 1.2f / 3f;
             float gestureBottom = jointsPos[shoulderCenterIndex].y - bandSize * 1.8f / 3f;
+            /*
             float gestureRight = jointsPos[rightHipIndex].x;
             float gestureLeft = jointsPos[leftHipIndex].x;
+            */
 
             switch (gestureData.gesture)
             {
@@ -580,11 +583,11 @@ namespace Kinect
                                 Vector3 jointPos = jointsPos[gestureData.joint];
                                 CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectInterop.Constants.ClickStayDuration);
                                 //							SetGestureCancelled(gestureData);
-                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = gestureData.progress + 0.1f;
+                                MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircleRight.progress = gestureData.progress + 0.1f;
 
                                 if(gestureData.progress >= 1)
                                 {
-                                    MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircle.progress = 0;
+                                    MGC.Instance.mouseCursor.GetComponent<Game.CursorReference>().cursorReference.cursorCircleRight.progress = 0;
                                     //MouseControl.MouseClick();
                                 }
                             }
@@ -1724,7 +1727,9 @@ namespace Kinect
                                     //Debug.LogError("Hidden gesture complete");
                                     Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.KEY_I);
                                     //Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.NUMPAD9);
+#if UNITY_ANDROID
                                     Win32.MouseKeySimulator.SendKeyPress(Win32.KeyCode.ESC);
+#endif
                                     SetGestureCancelled(ref gestureData);
                                 }
                             }
@@ -1737,3 +1742,4 @@ namespace Kinect
         }
     }
 }
+#endif

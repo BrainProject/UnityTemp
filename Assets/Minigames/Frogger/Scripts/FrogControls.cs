@@ -6,6 +6,7 @@ namespace Frogger
     public class FrogControls : MonoBehaviour
     {
         public SpriteRenderer frogSpriteRenderer;
+        public BoxCollider frogCollider;
         public Sprite frogSprite;
         public Sprite bloodSprite;
         public bool isOnBoat = false;
@@ -26,7 +27,7 @@ namespace Frogger
             // If on boat, check, wheter not out of bounds
             if (isOnBoat)
             {
-                if (transform.position.x > 11 || transform.position.x < -11)
+                if (transform.position.x > 11.5f || transform.position.x < -11.5f)
                 {
                     RespawnFrog();
                 }
@@ -43,7 +44,7 @@ namespace Frogger
 
                 if(Input.GetMouseButtonUp(0))
                 {
-                    Debug.Log("Tap duration: " + (Time.time - tapTimestamp));
+                    //Debug.Log("Tap duration: " + (Time.time - tapTimestamp));
                     if(Time.time - tapTimestamp < 0.2f)
                     {
                         CheckBoat(transform.forward);
@@ -158,7 +159,9 @@ namespace Frogger
 
         void RespawnFrog(bool isDrowned = false)
         {
+            StopAllCoroutines();
             StartCoroutine(RespawnFrogCoroutine());
+
             if (isDrowned)
             {
                 frogSpriteRenderer.sprite = null;
@@ -172,13 +175,15 @@ namespace Frogger
 
         IEnumerator RespawnFrogCoroutine()
         {
+            frogCollider.enabled = false;
             canControl = false;
             isOnBoat = false;
             transform.SetParent(null);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             frogSpriteRenderer.sprite = frogSprite;
             transform.position = thisLevelManager.frogSpawn.position;
             canControl = true;
+            frogCollider.enabled = true;
         }
 
         void CheckBoat(Vector3 direction)

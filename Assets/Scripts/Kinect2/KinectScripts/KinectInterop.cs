@@ -10,7 +10,9 @@ using System.IO;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
 using OpenCvSharp;
+using UnityEngine.SceneManagement;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -550,7 +552,7 @@ namespace Kinect
                             sensorData.sensorIntPlatform = sensorInt.GetSensorPlatform();
                             Debug.Log("Interface used: " + sensorInt.GetType().Name);
 
-                            Debug.Log("Shader level: " + SystemInfo.graphicsShaderLevel);
+                            //Debug.Log("Shader level: " + SystemInfo.graphicsShaderLevel);
                             if (sensorData.bodyIndexImage != null && IsDirectX11Available())
                             {
                                 Shader bodyIndexShader = Shader.Find("Kinect/BodyShader");
@@ -1625,7 +1627,7 @@ namespace Kinect
             }
 
             // reload the same level
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // checks if DirectX11/Direct3D-11 is turned on or not
@@ -2092,3 +2094,4 @@ namespace Kinect
         }
     }
 }
+#endif

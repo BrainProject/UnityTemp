@@ -14,6 +14,14 @@ namespace SocialGame{
 		private bool handOnIt;
 		private bool corutineRuning;
 
+		public override void Start()
+		{
+			if(numOfParts == 0 && anim != null)
+			{
+				numOfParts = anim.steps.Length;
+			}
+		}
+
 		public override bool Checked (Transform target)
 		{
 			handOnIt = true;
@@ -60,7 +68,7 @@ namespace SocialGame{
 		/// <summary>
 		/// Ends the timer.
 		/// </summary>
-		private void EndTimer()
+		protected virtual void EndTimer()
 		{
 			TimerReset ();
 			activated = false;
@@ -79,7 +87,7 @@ namespace SocialGame{
 		/// <summary>
 		/// Reset timers .
 		/// </summary>
-		private void TimerReset()
+		protected void TimerReset()
 		{
 			if(anim)
 			{

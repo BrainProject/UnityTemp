@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using Windows.Kinect;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -244,3 +245,4 @@ namespace Kinect
         }
     }
 }
+#endif

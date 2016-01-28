@@ -12,27 +12,30 @@ namespace Game
 	public class CursorUI : MonoBehaviour {
 		public Sprite cursorNormal;
 		public Sprite cursorDrag;
-		public CursorCircle cursorCircle;
+        public CursorCircle cursorCircleRight;
+        public CursorCircle cursorCircleLeft;
 
-        //		private Sprite currentCursor;
+        //private Sprite currentCursor;
+
         private RectTransform thisRectTransform;
-        private Kinect.InteractionManager interactionManager;
+        //private Kinect.InteractionManager interactionManager;
 		
-#if !UNITY_ANDROID
 		void Start ()
-		{
+        {
+#if !UNITY_ANDROID || UNITY_EDITOR
 			Cursor.visible = false;
             thisRectTransform = GetComponent<RectTransform>();
-            if(MGC.Instance.kinectManagerObject.activeSelf)
-                interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();
-        }
+            /*if(MGC.Instance.kinectManagerObject.activeSelf)
+                interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();*/
 #endif
+        }
 
-		void Update()
-		{
+        void Update()
+        {
             if (MGC.Instance.kinectManagerObject.activeSelf)
             {
-                if (Kinect.KinectManager.Instance.GetUsersCount() > 0)
+#if UNITY_STANDALONE
+                if (MGC.Instance.kinectManagerInstance && MGC.Instance.kinectManagerInstance.GetUsersCount() > 0)
                 {
                     //thisRectTransform.position = new Vector2(
                     //    interactionManager.GetCursorPosition().x * Screen.width,
@@ -45,13 +48,14 @@ namespace Game
                 {
                     thisRectTransform.position = Input.mousePosition;
                 }
+#endif
             }
             else
             {
                 thisRectTransform.position = Input.mousePosition;
             }
 
-			if (Input.GetMouseButtonDown (0))
+            if (Input.GetMouseButtonDown (0))
 				CursorToDrag ();
 			
 			if (Input.GetMouseButtonUp (0))

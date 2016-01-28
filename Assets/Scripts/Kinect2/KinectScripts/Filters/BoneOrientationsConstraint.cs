@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -296,3 +297,4 @@ namespace Kinect
         }
     }
 }
+#endif

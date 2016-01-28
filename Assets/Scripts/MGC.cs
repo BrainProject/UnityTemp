@@ -27,6 +27,7 @@ using MainScene;
 using MinigameSelection;
 using Game;
 using Kinect;
+using UnityEngine.SceneManagement;
 
 public enum BrainPartName
 {
@@ -68,6 +69,7 @@ public class MGC : Singleton<MGC>
     }
 
     public BrainPartName currentBrainPart;
+    public int selectedMenuSectionIndex = 0;
 	public Vector3 currentCameraDefaultPosition;
 	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";
@@ -91,6 +93,7 @@ public class MGC : Singleton<MGC>
     internal bool fromMain;
     internal bool fromSelection;
 	internal bool isControlTakenForGUI;
+    internal bool isKinectRestartRequired;
 
     // name of MiniGame scene to be loaded
     internal string selectedMiniGameName;
@@ -123,11 +126,16 @@ public class MGC : Singleton<MGC>
     private float touchBlockTimestamp;
 #endif
 
-
-
-
     internal Vector2 initialTouchPosition = Vector2.zero;
     internal Vector2 swipeDistance = Vector2.zero;
+
+
+
+
+    //GAME CONSTANTS (read only)
+    public float fadeSpeed { get { return 1.5f; } }
+
+
 
     void Awake()
     {
@@ -193,6 +201,7 @@ public class MGC : Singleton<MGC>
 
 		
 		isControlTakenForGUI = false;
+        isKinectRestartRequired = true;
     }
 
     void Start()
@@ -300,8 +309,7 @@ public class MGC : Singleton<MGC>
             ResetMinigamesStatistics();
         }
 
-
-        if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+        /*if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
         {
             menuType = MenuType.Brain;
             touchBlockTimestamp = Time.time;
@@ -310,15 +318,12 @@ public class MGC : Singleton<MGC>
         {
             menuType = MenuType.Tiles;
             touchBlockTimestamp = Time.time;
-        }
-
-
-        //PC ...
+        }*/
 #else
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    Application.Quit();
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -334,48 +339,54 @@ public class MGC : Singleton<MGC>
         }
 
         //Debug actions
-        if (Input.GetKeyDown(KeyCode.F11))
+        if (Debug.isDebugBuild)
         {
-            Application.LoadLevel("Main");
-        }
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            Application.LoadLevel(gameSelectionSceneName);
+            if (Input.GetKeyDown(KeyCode.F11))
+            {
+                SceneManager.LoadScene("Crossroads");
+            }
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                SceneManager.LoadScene(gameSelectionSceneName);
 
-            //TODO test only...
-            minigamesProperties.printStatisticsToFile();
+                //TODO test only...
+                minigamesProperties.printStatisticsToFile();
+            }
         }
-		if(Input.GetKeyDown(KeyCode.F8))
+
+        //Reset minigame statistics
+		if(Input.GetKeyDown(KeyCode.F12))
 		{
 			ResetMinigamesStatistics();
-			if(Application.loadedLevelName == gameSelectionSceneName)
-				Application.LoadLevel(gameSelectionSceneName);
+			/*if(SceneManager.GetActiveScene().name == gameSelectionSceneName)
+				SceneManager.LoadScene(gameSelectionSceneName);*/
 		}
-    
+
 #endif
-
         //Change of menu types
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-		{
-			menuType = MenuType.None;
-			Debug.Log("Changed menu type to default.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad1))
-		{
-			menuType = MenuType.Brain;
-			Debug.Log("Changed menu type to brain.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad2))
-		{
-			menuType = MenuType.Tiles;
-			Debug.Log("Changed menu type to tiles.");
-		}
-		if(Input.GetKeyDown(KeyCode.Keypad3))
-		{
-			menuType = MenuType.GSI;
-			Debug.Log("Changed menu type to gsi.");
-		}
-
+        /*if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad0))
+            {
+                menuType = MenuType.None;
+                Debug.Log("Changed menu type to default.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                menuType = MenuType.Brain;
+                Debug.Log("Changed menu type to brain.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                menuType = MenuType.Tiles;
+                Debug.Log("Changed menu type to tiles.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                menuType = MenuType.GSI;
+                Debug.Log("Changed menu type to gsi.");
+            }
+        }*/
         
         //Inactivity detection
         if (Input.anyKeyDown)
@@ -397,8 +408,13 @@ public class MGC : Singleton<MGC>
     {
         inactivityTimestamp = Time.time;
         inactivityCounter = 0;
-        print("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
-        logger.addEntry("Scene loaded: '" + Application.loadedLevelName + "'");
+        print("[MGC] Scene: '" + SceneManager.GetActiveScene().name + "' loaded");
+        logger.addEntry("Scene loaded: '" + SceneManager.GetActiveScene().name + "'");
+
+        if(SceneManager.GetActiveScene().name == "TiledMenu")
+        {
+            selectedMiniGameDiff = 0;
+        }
 
         //perform fade in?
         if (sceneLoader.doFade)
@@ -406,21 +422,24 @@ public class MGC : Singleton<MGC>
             sceneLoader.FadeIn();
         }
 
-		if (minigamesProperties.GetPlayed (Application.loadedLevelName))
+		if (minigamesProperties.GetPlayed (SceneManager.GetActiveScene().name))
 		{
 			Debug.Log ("The minigame was already visited, don't show help.");
 		}
 		else
 		{
-			if(level > 4)
+			if(level > 3)
 			{
-				if(minigamesProperties.GetMinigame(Application.loadedLevelName))
+				if(minigamesProperties.GetMinigame(SceneManager.GetActiveScene().name))
 				{
-					if(minigamesProperties.IsWithHelp(Application.loadedLevelName))
+					if(minigamesProperties.IsWithHelp(SceneManager.GetActiveScene().name))
 					{
-		//				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
-						neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
-						minigamesProperties.SetPlayedWithHelp(Application.loadedLevelName);
+                        //				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
+                        if (neuronHelp)
+                        {
+                            neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+                            minigamesProperties.SetPlayedWithHelp(SceneManager.GetActiveScene().name);
+                        }
 					}
 				}
 			}
@@ -451,7 +470,7 @@ public class MGC : Singleton<MGC>
 		//	isControlTakenForGUI = false;
 		//}
 
-        if(Application.loadedLevelName == "Crossroad")
+        if(SceneManager.GetActiveScene().name == "Crossroad")
         {
             ShowCustomCursor(true);
         }
@@ -515,7 +534,7 @@ public class MGC : Singleton<MGC>
                 ResetMinigamesStatistics();
             }
 
-		    if (Application.loadedLevelName == gameSelectionSceneName)
+		    if (SceneManager.GetActiveScene().name == gameSelectionSceneName)
 		    {
 			    sceneLoader.LoadScene(gameSelectionSceneName);
 		    }
@@ -621,27 +640,36 @@ public class MGC : Singleton<MGC>
     /// </summary>
     public void ResetKinect()
     {
-        if (kinectManagerObject.activeSelf)
+        if (isKinectRestartRequired)
         {
-            try
+            if (kinectManagerObject.activeSelf)
             {
-                kinectManagerInstance = KinectManager.Instance;
-                Debug.Log("Kinect settings are being reset.");
-                bool bNeedRestart = false;
-                Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-                kinectManagerObject.SetActive(true);
-                kinectManagerInstance.ClearKinectUsers();
-                kinectManagerInstance.avatarControllers.Clear();
-                kinectManagerInstance.StartKinect();
-                InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
-                im.controlMouseCursor = true;
-                im.controlMouseDrag = true;
-                im.allowHandClicks = true;
-            }
-            catch(Exception e)
-            {
-                kinectManagerObject.SetActive(false);
-                Debug.LogWarning("Kinect is not initialized.");
+#if UNITY_STANDALONE
+                try
+                {
+                    kinectManagerInstance = KinectManager.Instance;
+                    Debug.Log("Kinect settings are being reset.");
+                    bool bNeedRestart = false;
+                    Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+                    kinectManagerObject.SetActive(true);
+                    kinectManagerInstance.ClearKinectUsers();
+                    kinectManagerInstance.avatarControllers.Clear();
+                    kinectManagerInstance.StartKinect();
+                    InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
+                    im.controlMouseCursor = true;
+                    im.controlMouseDrag = true;
+                    im.allowHandClicks = true;
+                    isKinectRestartRequired = false;
+                }
+                catch (Exception)
+                {
+                    kinectManagerObject.SetActive(false);
+                    Debug.LogWarning("Kinect is not initialized.");
+                }
+#else
+            kinectManagerObject.SetActive(false);
+            Debug.LogWarning("Kinect is not supported on this platform.");
+#endif
             }
         }
     }
@@ -663,41 +691,45 @@ public class MGC : Singleton<MGC>
 		if(!isShown)
 		{
 			isControlTakenForGUI = false;
-			if(TakeControlForGUIEvent != null)
-				TakeControlForGUIEvent(isShown);
+            if (TakeControlForGUIEvent != null)
+            {              
+                TakeControlForGUIEvent(isShown);
+            }
 		}
 		else
 		{
 			if(!isControlTakenForGUI)
 			{
 				isControlTakenForGUI = true;
-				if(TakeControlForGUIEvent != null)
-					TakeControlForGUIEvent(isShown);
+                if (TakeControlForGUIEvent != null)
+                {
+                    TakeControlForGUIEvent(isShown);
+                }
 			}
 		}
     }
 
     void InactivityReaction()
     {
-        print("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
-        logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        print("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        logger.addEntry("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
         if (inactivityCounter == 5)
         {
             inactivityCounter = 0;
 			ShowCustomCursor(true);
             print("Load another scene. Im getting bored here.");
-            if (Application.loadedLevelName != inactivityScene)
+            if (SceneManager.GetActiveScene().name != inactivityScene)
             {
                 //load inactivityMinigame
 				if(kinectManagerObject.activeSelf)
-	                Application.LoadLevel(inactivityScene);
+	                SceneManager.LoadScene(inactivityScene);
 				else
-					Application.LoadLevel(alternativeInteractionScene);
+					SceneManager.LoadScene(alternativeInteractionScene);
             }
             else
             {
                 //load either previous scene or selection scene
-                Application.LoadLevel(1);
+                SceneManager.LoadScene(1);
             }
         }
         else

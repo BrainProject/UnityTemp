@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     public class Kinect1Interface : DepthSensorInterface
@@ -1764,3 +1765,4 @@ namespace Kinect
         }
     }
 }
+#endif

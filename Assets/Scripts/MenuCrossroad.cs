@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum MenuType
 {
@@ -43,19 +44,19 @@ public class MenuCrossroad : MonoBehaviour {
             case MenuType.Brain:
                 {
                     MGC.Instance.mainSceneName = brainMenuScene;
-                    Application.LoadLevel(brainMenuScene);
+                    SceneManager.LoadScene(brainMenuScene);
                     break;
                 }
             case MenuType.Tiles:
                 {
                     MGC.Instance.mainSceneName = tilesMenuScene;
-                    Application.LoadLevel(tilesMenuScene);
+                    SceneManager.LoadScene(tilesMenuScene);
                     break;
                 }
             case MenuType.GSI:
                 {
                     MGC.Instance.mainSceneName = GSIMenuScene;
-                    Application.LoadLevel(GSIMenuScene);
+                    SceneManager.LoadScene(GSIMenuScene);
                     break;
                 }
             default:
@@ -73,7 +74,7 @@ public class MenuCrossroad : MonoBehaviour {
 		{
 			if(MGC.Instance.menuType != MenuType.None)
 			{
-				MGC.Instance.sceneLoader.LoadScene(Application.loadedLevelName);
+				MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
 			}
 		}
 	}

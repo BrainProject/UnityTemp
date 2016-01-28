@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Game 
 {
@@ -11,8 +12,8 @@ namespace Game
 	public class SceneLoader : MonoBehaviour 
     {
         public bool doFade = false;
-        public float fadeSpeed = 1f;
 
+        private float fadeSpeed;
         private float speed;
         private Color transparentColor;
 		private Color opaqueColor;
@@ -21,12 +22,15 @@ namespace Game
 
         private Image fadePanel;
 
+        private bool fadeInProgress = false;
+
         /// <summary>
         /// Set it up, mainly UI panel used for fading
         /// </summary>
 		void Start()
 		{
             //print("SceneLoader::Start()...");
+            fadeSpeed = MGC.Instance.fadeSpeed;
 
             transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -69,11 +73,13 @@ namespace Game
 
             if (doFade)
             {
-                StartCoroutine(LoadWithFadeOut(levelName));
+                //if(!fadeInProgress)
+                StopAllCoroutines();
+                    StartCoroutine(LoadWithFadeOut(levelName));
             }
             else
             {
-                Application.LoadLevel(levelName);
+                SceneManager.LoadScene(levelName);
             }
         }
 
@@ -84,17 +90,20 @@ namespace Game
 			doFade = doFadeInOut;
 			
 			if (doFade)
-			{
-				StartCoroutine(LoadByIndexWithFadeOut(levelIndex));
+            {
+                //if (!fadeInProgress)
+                StopAllCoroutines();
+                    StartCoroutine(LoadByIndexWithFadeOut(levelIndex));
 			}
 			else
 			{
-				Application.LoadLevel(levelIndex);
+                SceneManager.LoadScene(levelIndex);
 			}
 		}
 
         public void FadeIn()
         {
+            StopAllCoroutines();
             StartCoroutine(FadeInCoroutine());
         }
 
@@ -105,10 +114,12 @@ namespace Game
 			
             float startTime = Time.time;
             fadePanel.enabled = true;
+            fadePanel.raycastTarget = false;
+            Color startColor = fadePanel.color;
             
-            while (fadePanel.color.a > 0.01f)
+            while (fadePanel.color.a > 0)
             {
-                fadePanel.color = Color.Lerp(opaqueColor, transparentColor, (Time.time - startTime) * fadeSpeed);
+                fadePanel.color = Color.Lerp(startColor, transparentColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
 
@@ -123,6 +134,7 @@ namespace Game
 		/// <returns></returns>
 		private IEnumerator LoadWithFadeOut(string levelName)
 		{
+            fadeInProgress = true;
 			Instantiate (Resources.Load ("BlockBorder"));
 
 			//print("fading out coroutine...");
@@ -135,38 +147,44 @@ namespace Game
 			{
 				float startTime = Time.time;              
                 fadePanel.enabled = true;
+                fadePanel.raycastTarget = true;
+                Color startColor = fadePanel.color;
 
-                while (fadePanel.color.a < 0.99f)
+                while (fadePanel.color.a < 1)
                 {
-                    fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                    fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                     //print("barva: " + fadePanel.color);
                     yield return null;
                 }
                 
-				
-				Application.LoadLevel(levelName);
-			}
-		}
+                fadeInProgress = false;
+                SceneManager.LoadScene(levelName);
+            }
+        }
 		/// <summary>
 		/// Coroutine for fading out and loading level by index
 		/// </summary>
 		/// <param index="levelIndex"></param>
 		/// <returns></returns>
 		private IEnumerator LoadByIndexWithFadeOut(int levelIndex)
-		{
-			Instantiate (Resources.Load ("BlockBorder"));
+        {
+            fadeInProgress = true;
+            Instantiate (Resources.Load ("BlockBorder"));
 			print("fading out coroutine...");
 
 			float startTime = Time.time;
             fadePanel.enabled = true;
+            fadePanel.raycastTarget = true;
+            Color startColor = fadePanel.color;
 
-            while (fadePanel.color.a < 0.99f)
+            while (fadePanel.color.a < 1)
             {
-                fadePanel.color = Color.Lerp(transparentColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
                 yield return null;
             }
-				
-			Application.LoadLevel(levelIndex);
-		}
+
+            fadeInProgress = false;
+            SceneManager.LoadScene(levelIndex);
+        }
 	}
 }

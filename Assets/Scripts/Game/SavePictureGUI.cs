@@ -36,6 +36,24 @@ namespace Game
 			//MGC.Instance.logger.addEntry ("Snapshot saved into " + Application.persistentDataPath);
 		}
 
+        public void IconInstantlyVisible(bool isVisible)
+        {
+            if (isVisible)
+            {
+                iconCheck.enabled = true;
+                Color tmpColor = iconCheck.color;
+                tmpColor.a = 1;
+                iconCheck.color = tmpColor;
+            }
+            else
+            {
+                Color tmpColor = iconCheck.color;
+                tmpColor.a = 0;
+                iconCheck.color = tmpColor;
+                iconCheck.enabled = false;
+            }
+        }
+
 		public void IconVisible(bool isVisible)
 		{
 			if(isVisible)
@@ -43,7 +61,7 @@ namespace Game
 			else
 				StartCoroutine("FadeOutGUI");
 		}
-		
+		/*
 		IEnumerator FadeInGUI()
 		{
 			float startTime = Time.time;
@@ -75,7 +93,7 @@ namespace Game
 				yield return null;
 			}
 			this.gameObject.SetActive (false);
-		}
+		}*/
 
 		IEnumerator GreenCheck()
 		{

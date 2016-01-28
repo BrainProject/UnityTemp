@@ -85,14 +85,19 @@ namespace Game
 		public bool isKinectRequired = false;
 		
 		/// <summary>
-		/// mini-game help. So far, simple texture
+		/// Icon of the minigame to show in the difficulty chooser (use highlighted versions if available)
 		/// </summary>
-		//public Texture helpTexture;
+		public Sprite minigameIcon;
 
         /// <summary>
         /// Image symbolizing low difficulty
         /// </summary>
         public Sprite IconDifficultyLow;
+
+        /// <summary>
+        /// Image symbolizing medium difficulty
+        /// </summary>
+        public Sprite IconDifficultyMedium;
 
         /// <summary>
         /// Image symbolizing high difficulty
@@ -104,10 +109,10 @@ namespace Game
 		/// </summary>
 		public GameObject helpPrefab;
 
-		/// <summary>
-		/// The duration of the help animation.
-		/// </summary>
-		public float helpDuration = 3;
+		///// <summary>
+		///// The duration of the help animation.
+		///// </summary>
+		//public float helpDuration = 3;
 
 
         internal MinigameStatistics stats;

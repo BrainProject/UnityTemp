@@ -16,6 +16,8 @@ namespace MinigameSelection
 		private int currentlySelectedSectionIndex;
 		private int previouslySelectedSectionIndex;
 
+        private float fadeSpeed;
+
         void Awake()
         {
             Instance = this;
@@ -32,15 +34,37 @@ namespace MinigameSelection
                 MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
             }
 			blockPanel.SetActive (false);
-		}
+
+            // Jump to section when returning from minigame.
+            if (MGC.Instance.selectedMenuSectionIndex > 0)
+            {
+                MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive(true);
+                MGC.Instance.minigamesGUI.backIcon.show();
+                menuSections[0].alpha = 0;
+                menuSections[0].gameObject.SetActive(false);
+                menuSections[MGC.Instance.selectedMenuSectionIndex].alpha = 1;
+                menuSections[MGC.Instance.selectedMenuSectionIndex].gameObject.SetActive(true);
+                previouslySelectedSectionIndex = 0;
+                currentlySelectedSectionIndex = MGC.Instance.selectedMenuSectionIndex;
+            }
+
+            fadeSpeed = MGC.Instance.fadeSpeed;
+        }
 
 		public void SwitchMenu(int sectionIndex)
 		{
-			previouslySelectedSectionIndex = currentlySelectedSectionIndex;
-			currentlySelectedSectionIndex = sectionIndex;
-			StartCoroutine (Fade ());
-
-			//TODO: show back button if brain is not active
+            /*if (sectionIndex == 2) //DEV NOTE: Only for the empty painting section. When more minigames will be added, remove if block completely and use only else section!
+            {
+                MGC.Instance.sceneLoader.LoadScene("Coloring");
+                MGC.Instance.minigamesGUI.backIcon.show();
+            }
+            else
+            {*/
+                previouslySelectedSectionIndex = currentlySelectedSectionIndex;
+                currentlySelectedSectionIndex = sectionIndex;
+                MGC.Instance.selectedMenuSectionIndex = sectionIndex;
+                StartCoroutine(Fade());
+            //}
 		}
 
 		IEnumerator Fade()
@@ -50,7 +74,7 @@ namespace MinigameSelection
 
 			while(menuSections[previouslySelectedSectionIndex].alpha > 0.001)
 			{
-				menuSections[previouslySelectedSectionIndex].alpha = Mathf.Lerp (1, 0, (Time.time - startTime));
+				menuSections[previouslySelectedSectionIndex].alpha = Mathf.Lerp (1, 0, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			menuSections [previouslySelectedSectionIndex].gameObject.SetActive (false);
@@ -67,7 +91,7 @@ namespace MinigameSelection
 
 			while(menuSections[currentlySelectedSectionIndex].alpha < 1)
 			{
-				menuSections[currentlySelectedSectionIndex].alpha = Mathf.Lerp (0, 1, (Time.time - startTime));
+				menuSections[currentlySelectedSectionIndex].alpha = Mathf.Lerp (0, 1, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			blockPanel.SetActive (false);
@@ -90,7 +114,7 @@ namespace MinigameSelection
 			
 			while(kinectRequiredIcon.color.a < 1)
 			{
-				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			
@@ -103,7 +127,7 @@ namespace MinigameSelection
 			
 			while(kinectRequiredIcon.color.a > 0)
 			{
-				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				kinectRequiredIcon.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
 				yield return null;
 			}
 			

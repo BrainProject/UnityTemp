@@ -14,9 +14,10 @@ namespace Kinect
 	    [DllImport("User32.dll")] 
 	    private static extern void mouse_event(MouseFlags dwFlags, int dx, int dy, int dwData, System.UIntPtr dwExtraInfo);
 
+        /*
 		private static float windowX = 0f;
 		private static float windowY = 0f;
-
+        */
 
 	    // Flags needed to specify the mouse action 
 	    [System.Flags]
@@ -63,7 +64,9 @@ namespace Kinect
 			mouseCoords.x = screenX * 65535;
 			mouseCoords.y = (1.0f - screenY) * 65535;*/
 
+#if UNITY_STANDALONE
             Kinect.Win32.MouseKeySimulator.CursorPos(InteractionManager.Instance.GetCursorPosition());
+#endif
 	        //mouse_event(MouseFlags.Absolute | MouseFlags.Move, (int)mouseCoords.x, (int)mouseCoords.y, 0, System.UIntPtr.Zero);
 
 	//		Vector2 screenPos = new Vector2(screenCoordinates.x * Screen.width, screenCoordinates.y * Screen.height);

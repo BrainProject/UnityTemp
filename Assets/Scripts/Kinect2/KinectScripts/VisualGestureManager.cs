@@ -6,6 +6,7 @@ using Microsoft.Kinect.VisualGestureBuilder;
 using Windows.Kinect;
 using System.IO;
 
+#if UNITY_STANDALONE
 namespace Kinect
 {
     /// <summary>
@@ -608,3 +609,4 @@ namespace Kinect
 
     }
 }
+#endif
