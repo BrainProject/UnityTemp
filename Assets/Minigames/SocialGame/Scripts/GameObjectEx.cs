@@ -9,12 +9,12 @@ public class GameObjectEx{
 	/// <returns>The game object with name and tag.</returns>
 	/// <param name="name">Name.</param>
 	/// <param name="tag">Tag.</param>
-	public static GameObject FindGameObjectWithNameTag(string name, string tag)
+	public static GameObject FindGameObjectWithNameTag(string nameOfObj, string tag)
 	{
 		GameObject[] objects =GameObject.FindGameObjectsWithTag(tag);
 		foreach(GameObject obj in objects)
 		{
-			if(obj.name.Equals(name))
+			if(obj.name == (nameOfObj))
 			{
 				return obj;
 			}

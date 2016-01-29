@@ -94,6 +94,8 @@ namespace SocialGame{
 				anim.ResetSprites();
 			}
 			corutineRuning = false;
+			//StopCoroutine (Stay());
+			StopAllCoroutines();
 		}
 
 		/// <summary>

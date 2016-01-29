@@ -18,7 +18,22 @@ namespace SocialGame{
 		void Start () {      
             SocialGame.LevelManager.gameSelected = 0;
 			normal = player2.material;
-            KManager = MGC.Instance.kinectManagerInstance;
+			KManager = MGC.Instance.kinectManagerInstance;
+		}
+
+		IEnumerator WaitOnStartMGC()
+		{
+			float timeOfWaiting = Time.time;
+			while ((MGC.Instance != null && MGC.Instance.kinectManagerInstance != null)) {
+
+				if ((Time.time - timeOfWaiting) > 10) {
+					Debug.LogWarning ("MGC or Kineck is not created");
+					break;
+				}
+
+				yield return null;
+			}
+			KManager = MGC.Instance.kinectManagerInstance;
 		}
 		
 		/// <summary>

@@ -30,8 +30,8 @@ namespace SocialGame
 
 			if(KManager)
 			{
-				findTartgetByCheckName();
-				StartCoroutine(Check());
+				findTartgetByCheckName ();
+				StartCoroutine (Check ());
 			}
 			else
 			{
@@ -106,6 +106,7 @@ namespace SocialGame
 		/// </summary>
 		protected virtual void CompleteGest()
 		{
+			Debug.Log (" Created figure checker is complete. Name: " + gameObject.name + " check:" + (player1 ? " player1" : "") + (player2 ? "player2" : "" ) + " Tag: " + gameObject.tag);
 			if(next)
 			{
 				GameObject clone = GameObject.Instantiate(this.next);
@@ -146,7 +147,7 @@ namespace SocialGame
 		/// <summary>
 		/// Finds the name of the tartget by check.
 		/// </summary>
-		public void findTartgetByCheckName()
+		public bool findTartgetByCheckName()
 		{
 			for(int i =0; i <transform.childCount; i++)
 			{
@@ -155,12 +156,12 @@ namespace SocialGame
 				string[] names =nameGest.Split('-');
 				GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 				Check che =child.GetComponent<Check>();
-				if (che != null)
-				{
-					Transform[] targ = new Transform[] {obj.transform};
+				if (che != null) {
+					Transform[] targ = new Transform[] { obj.transform };
 					che.target = targ;
-				}
+				} 
 			}
+			return true;
 		}
 
 		/// <summary>

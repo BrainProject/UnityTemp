@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Kinect;
+using UnityEngine.SceneManagement;
 
 namespace SocialGame{
 public class KinectManagerSwitcher : MonoBehaviour {
@@ -17,13 +18,19 @@ public class KinectManagerSwitcher : MonoBehaviour {
         // Use this for initialization
         void Awake()
         {
-            if(!MGC.Instance)
+			
+			if(! MGC.Instance.kinectManagerInstance)
             {
                 Debug.Log("Creating MGC " + MGC.Instance);
+			
+			#if UNITY_EDITOR 
+				StartCoroutine(GoToCroossroadWithDelay());
+			#endif
             }
             
-            instance = this;
-            StartCoroutine(SetKinectManagerWithDelay());
+			instance = this;
+			setThisLevelManager();
+			activateThisLevelKManager();
         }
 
 		/// <summary>
@@ -161,11 +168,12 @@ public class KinectManagerSwitcher : MonoBehaviour {
         }
 
 
-        IEnumerator SetKinectManagerWithDelay()
+        IEnumerator GoToCroossroadWithDelay()
         {
-            yield return new WaitForSeconds(0.1f);
-            setThisLevelManager();
-            activateThisLevelKManager();
+            yield return new WaitForSeconds(0.5f);
+			SceneManager.LoadScene ("Crossroad");
+            //setThisLevelManager();
+            //activateThisLevelKManager();
         }
 		#endif
 	}

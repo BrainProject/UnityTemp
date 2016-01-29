@@ -71,8 +71,10 @@ namespace SocialGame{
 			GameObject playerObj = null;
 			string tag= "Error";
 			//KinectManager kinect = Kinect.KinectManager.Instance;
-			if(player <0 || player > 1)
+			if (player < 0 || player > 1) {
+				Debug.Log ("Player" + player + " is of Array");
 				return;
+			}
 			if(player == 0)
 			{
 
@@ -88,8 +90,10 @@ namespace SocialGame{
 			}
 			if(playerObj)
 			{
+				Debug.Log ("Player" + player + " is making selfie");
 				FigureCreate figCreate = playerObj.GetComponentInChildren<FigureCreate>();
 				GameObject checker = figCreate.createPoints();
+				Debug.Log (" Created checker " + checker);
 				GestCheckerFigure checkerScript = checker.GetComponent<GestCheckerFigure>();
 				setTags(checker,tag);
 				if(targetPlayer && (targetPlayer.transform.position.x > 0))
@@ -102,8 +106,8 @@ namespace SocialGame{
 				}
 				if(checkerScript)
 				{
-					checkerScript.findTartgetByCheckName();
 					setCheckerScript(checkerScript);
+					checkerScript.findTartgetByCheckName();
 				}
 				else
 				{
@@ -115,6 +119,7 @@ namespace SocialGame{
 					cancle.activate();
 
 				}
+				Debug.Log (" Created checker " + checker + ", still created?");
 			}
 
 			deactivate ();

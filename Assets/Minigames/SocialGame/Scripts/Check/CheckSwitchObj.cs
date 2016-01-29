@@ -3,13 +3,15 @@ using System.Collections;
 
 
 namespace SocialGame{
-public class CheckSwitchObj :Check {
+public class CheckSwitchObj :CheckCancleFigure {
+		public Check parsedCheck;
 		public GameObject player1;
 		public GameObject player2;
 		public string switchName;
 		public int owner;
 		// Use this for initialization
 		public override void Start () {
+			base.Start ();
 			if (!player1) 
 			{
 				player1 = GameObjectEx.FindGameObjectWithNameTag (switchName, "Player1");
@@ -22,29 +24,23 @@ public class CheckSwitchObj :Check {
 				owner = 1;
 			}
 		}
-	
-		/// <summary>
-		/// Checked the specified target.
-		/// </summary>
-		/// <param name="target">Target.</param>
-		public new virtual bool Checked(Transform target)
-		{
-			bool last = false;
-			finishTarget = target;
-			if(next.Length > 0)
-			{
-				foreach(Check obj in next)
-				{
-					obj.activate();
-				}
-			}
-			else
-			{
 
-				last = true;
+		void Update()
+		{
+			if (parsedCheck && parsedCheck.activated != activated) {
+				activated = parsedCheck.activated;
+				show ();
+				TimerReset();
 			}
-			thisActivate();
-			Debug.Log("Check");
+		}
+
+	
+
+		protected override void EndTimer()
+		{
+			//bool last = false;
+			//finishTarget = target;
+			TimerReset();
 			switch (owner) 
 			{
 			case(1):
@@ -56,7 +52,7 @@ public class CheckSwitchObj :Check {
 				player2.SetActive(false);
 				break;
 			}
-			return last;
+			//return last;
 		}
 	}
 }

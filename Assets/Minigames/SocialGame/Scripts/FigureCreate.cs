@@ -65,6 +65,7 @@ namespace SocialGame
 			ExtendsAvatar avatar = figure.GetComponentInChildren<ExtendsAvatar>();
 			if(avatar)
 			{
+				
 				Destroy(avatar);
 			}
 			if (figure.transform.parent) 	

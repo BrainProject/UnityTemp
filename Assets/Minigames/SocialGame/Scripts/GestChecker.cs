@@ -128,6 +128,7 @@ namespace SocialGame
 		/// </summary>
 		protected virtual void CompleteGest()
 		{
+			Debug.Log ("Complete " + gameObject.name);
 			if(next)
 			{
 				GameObject.Instantiate(this.next);
