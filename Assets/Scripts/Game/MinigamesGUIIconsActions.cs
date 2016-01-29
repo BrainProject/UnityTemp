@@ -247,7 +247,7 @@ namespace Game
 
 		IEnumerator FadeInGUI()
 		{
-			float startTime = Time.time;
+			float startTime = Time.unscaledTime;
 			thisButton.interactable = true;
 			StopCoroutine ("FadeOutGUI");
 	//		collider.enabled = true;
@@ -257,14 +257,14 @@ namespace Game
 			
 			while(thisImage.color.a < 0.99f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.unscaledTime - startTime) * fadeSpeed);
 				yield return null;
 			}
 		}
 		
 		IEnumerator FadeOutGUI()
 		{
-			float startTime = Time.time;
+			float startTime = Time.unscaledTime;
 			thisButton.interactable = false;
 			StopCoroutine ("FadeInGUI");
 //			collider.enabled = false;
@@ -274,7 +274,7 @@ namespace Game
 			
 			while(thisImage.color.a > 0.001f)
 			{
-				thisImage.color = Color.Lerp (startColor, targetColor, (Time.time - startTime) * fadeSpeed);
+				thisImage.color = Color.Lerp (startColor, targetColor, (Time.unscaledTime - startTime) * fadeSpeed);
 				yield return null;
 			}
 

@@ -24,7 +24,8 @@ namespace SocialGame{
 				break;
 			case(GUIActionSocialGame.Help):
 				Game.NEWBrainHelp tempHelp = MGC.Instance.neuronHelp.GetComponent<Game.NEWBrainHelp> ();
-				if (tempHelp) {
+				if (tempHelp)
+                {
 					tempHelp.helpObject.ShowHelpAnimation ();
 				}
 				break;

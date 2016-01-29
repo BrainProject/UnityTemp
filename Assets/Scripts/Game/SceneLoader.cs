@@ -22,7 +22,7 @@ namespace Game
 
         private Image fadePanel;
 
-        private bool fadeInProgress = false;
+        //private bool fadeInProgress = false;
 
         /// <summary>
         /// Set it up, mainly UI panel used for fading
@@ -134,7 +134,7 @@ namespace Game
 		/// <returns></returns>
 		private IEnumerator LoadWithFadeOut(string levelName)
 		{
-            fadeInProgress = true;
+            //fadeInProgress = true;
 			Instantiate (Resources.Load ("BlockBorder"));
 
 			//print("fading out coroutine...");
@@ -157,7 +157,7 @@ namespace Game
                     yield return null;
                 }
                 
-                fadeInProgress = false;
+                //fadeInProgress = false;
                 SceneManager.LoadScene(levelName);
             }
         }
@@ -168,7 +168,7 @@ namespace Game
 		/// <returns></returns>
 		private IEnumerator LoadByIndexWithFadeOut(int levelIndex)
         {
-            fadeInProgress = true;
+            //fadeInProgress = true;
             Instantiate (Resources.Load ("BlockBorder"));
 			print("fading out coroutine...");
 
@@ -183,7 +183,7 @@ namespace Game
                 yield return null;
             }
 
-            fadeInProgress = false;
+            //fadeInProgress = false;
             SceneManager.LoadScene(levelIndex);
         }
 	}

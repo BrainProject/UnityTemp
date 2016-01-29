@@ -109,7 +109,8 @@ namespace Butterflies
                     for (int i = 0; i < numberOfButterflies; i++)
                     {
                         objectPosition = new Vector3(Random.Range(objectPosition.x - appearRange, objectPosition.x + appearRange), Random.Range(objectPosition.y - appearRange, objectPosition.y + appearRange), objectPosition.z);
-                        GameObject instance = Instantiate(butterflies[Random.Range(0, butterflies.Length)], objectPosition, Quaternion.identity) as GameObject;
+                        /*GameObject instance = */
+                        Instantiate(butterflies[Random.Range(0, butterflies.Length)], objectPosition, Quaternion.identity);// as GameObject;
                     }
                     /*   
                     objectPosition = new Vector3(Random.Range(objectPosition.x - appearRange, objectPosition.x + appearRange), Random.Range(objectPosition.y - appearRange, objectPosition.y + appearRange), objectPosition.z);

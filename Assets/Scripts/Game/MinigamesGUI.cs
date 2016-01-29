@@ -19,7 +19,8 @@ namespace Game
 		public MinigamesGUIIconsActions showHelpIcon;
 		public MinigamesGUIIconsActions menuIcon;
 		public MinigamesGUIDetection guiDetection;
-		public bool visible;
+        public BlockControlsUI controlsBlock;
+        public bool visible;
 		public bool gsiStandalone;
 		public bool clicked = false;
 
@@ -63,8 +64,11 @@ namespace Game
 
 			restartIcon.thisButton.enabled = true;
 			restartIcon.show ();
-				
-			guiDetection.guiIsHidden = false;
+            controlsBlock.gameObject.SetActive(true);
+            controlsBlock.MoveToCamera();
+            MGC.Instance.PauseGame(true);
+
+            guiDetection.guiIsHidden = false;
 
             if(MGC.Instance.neuronHelp)
             { 
@@ -82,11 +86,13 @@ namespace Game
 		{
 			visible = false;
 			gameSelectionIcon.hide ();
-			restartIcon.hide ();
+            restartIcon.hide ();
 			brainIcon.hide ();
 			menuIcon.hide ();
 			guiDetection.guiIsHidden = true;
-			//showHelpIcon.hide ();
+            controlsBlock.gameObject.SetActive(false);
+            MGC.Instance.PauseGame(false);
+            //showHelpIcon.hide ();
 
             screenshotIcon.hide();
             

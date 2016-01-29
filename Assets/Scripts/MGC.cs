@@ -743,6 +743,17 @@ public class MGC : Singleton<MGC>
         inactivityTimestamp = Time.time;
     }
 
+
+
+    public void PauseGame(bool isPaused)
+    {
+        if (isPaused)
+            Time.timeScale = 0.0001f;
+        else
+            Time.timeScale = 1;
+    }
+
+
     public string getSelectedMinigameName()
     {
         return selectedMiniGameName;
