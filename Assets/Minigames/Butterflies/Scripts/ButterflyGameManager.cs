@@ -6,7 +6,7 @@ namespace Butterflies
     public class ButterflyGameManager : MonoBehaviour
     {
         public Kinect.AvatarController avatar;
-
+        /*
         void Start()
         {
             if (!MGC.Instance)
@@ -23,6 +23,6 @@ namespace Butterflies
                 Debug.LogWarning("Avatars count: " + MGC.Instance.kinectManagerInstance.avatarControllers.Count);
                 MGC.Instance.isKinectRestartRequired = true;
             }
-        }
+        }*/
     }
 }

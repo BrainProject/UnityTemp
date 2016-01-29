@@ -15,12 +15,16 @@ public class KinectManagerSwitcher : MonoBehaviour {
         public GameObject thisSceneCanvas;
 
         // Use this for initialization
-        void Awake ()
+        void Awake()
         {
+            if(!MGC.Instance)
+            {
+                Debug.Log("Creating MGC " + MGC.Instance);
+            }
+            
             instance = this;
-            setThisLevelManager();
-            activateThisLevelKManager();
-		}
+            StartCoroutine(SetKinectManagerWithDelay());
+        }
 
 		/// <summary>
 		/// Sets the this level manager.
@@ -43,7 +47,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
                 if (KinectManager.Instance)
                 {
                     MGC.Instance.kinectManagerInstance.ClearKinectUsers();
-                    MGC.Instance.kinectManagerInstance.StartKinect();
+                    //MGC.Instance.kinectManagerInstance.StartKinect();
                     MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
                     if (player1)
                         KinectManager.Instance.avatarControllers.Add(player1);
@@ -154,6 +158,14 @@ public class KinectManagerSwitcher : MonoBehaviour {
 
             if(instance.thisSceneCanvas)
                 instance.thisSceneCanvas.SetActive(false);
+        }
+
+
+        IEnumerator SetKinectManagerWithDelay()
+        {
+            yield return new WaitForSeconds(0.1f);
+            setThisLevelManager();
+            activateThisLevelKManager();
         }
 		#endif
 	}
