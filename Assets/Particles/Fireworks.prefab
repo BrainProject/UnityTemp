@@ -43,7 +43,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 0, z: .258819133, w: -.965925813}
+  m_LocalRotation: {x: 0, y: 0, z: 0.25881913, w: -0.9659258}
   m_LocalPosition: {x: -9, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -86,7 +86,7 @@ ParticleAnimator:
     rgba: 184549375
   worldRotationAxis: {x: 0, y: 0, z: 0}
   localRotationAxis: {x: 0, y: 0, z: 0}
-  sizeGrow: -.357573718
+  sizeGrow: -0.35757372
   rndForce: {x: 1, y: 1, z: 1}
   force: {x: 0, y: -5, z: 0}
   damping: 1
@@ -131,16 +131,16 @@ EllipsoidParticleEmitter:
   serializedVersion: 2
   m_Enabled: 1
   m_Emit: 0
-  minSize: .100000001
-  maxSize: .5
-  minEnergy: .5
+  minSize: 0.1
+  maxSize: 0.5
+  minEnergy: 0.5
   maxEnergy: 2
   minEmission: 75
   maxEmission: 200
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 3, z: 0}
   rndVelocity: {x: 5, y: 5, z: 5}
-  emitterVelocityScale: .0500000007
+  emitterVelocityScale: 0.05
   tangentVelocity: {x: 0, y: 0, z: 0}
   angularVelocity: 0
   rndAngularVelocity: 0
@@ -167,14 +167,14 @@ EllipsoidParticleEmitter:
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: -5, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}
-  emitterVelocityScale: .0500000007
+  emitterVelocityScale: 0.05
   tangentVelocity: {x: 0, y: 0, z: 0}
   angularVelocity: 0
   rndAngularVelocity: 0
   rndRotation: 1
   Simulate in Worldspace?: 1
   m_OneShot: 0
-  m_Ellipsoid: {x: .200000003, y: .200000003, z: .200000003}
+  m_Ellipsoid: {x: 0.2, y: 0.2, z: 0.2}
   m_MinEmitterRange: 0
 --- !u!26 &2600000
 ParticleRenderer:
@@ -185,15 +185,21 @@ ParticleRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 74bcba72c2286ce429281c86d5928418, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   serializedVersion: 2
@@ -201,7 +207,7 @@ ParticleRenderer:
   m_StretchParticles: 0
   m_LengthScale: 2
   m_VelocityScale: 0
-  m_MaxParticleSize: .25
+  m_MaxParticleSize: 0.25
   UV Animation:
     x Tile: 1
     y Tile: 1
@@ -215,15 +221,21 @@ ParticleRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 7c98ffa948c8d43d5ac42a3e9f0ea897, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   serializedVersion: 2
@@ -231,7 +243,7 @@ ParticleRenderer:
   m_StretchParticles: 0
   m_LengthScale: 2
   m_VelocityScale: 0
-  m_MaxParticleSize: .25
+  m_MaxParticleSize: 0.25
   UV Animation:
     x Tile: 1
     y Tile: 1
@@ -262,4 +274,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

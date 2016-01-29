@@ -747,10 +747,10 @@ public class MGC : Singleton<MGC>
 
     public void PauseGame(bool isPaused)
     {
-        if (isPaused)
+        /*if (isPaused)
             Time.timeScale = 0.0001f;
         else
-            Time.timeScale = 1;
+            Time.timeScale = 1;*/
     }
 
 
