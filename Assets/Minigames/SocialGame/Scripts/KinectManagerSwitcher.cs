@@ -30,7 +30,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
             
 			instance = this;
 			setThisLevelManager();
-			activateThisLevelKManager();
+			//activateThisLevelKManager();
         }
 
 		/// <summary>
