@@ -18,17 +18,17 @@ public class KinectManagerSwitcher : MonoBehaviour {
         // Use this for initialization
         void Awake()
         {
-			
-			if(! MGC.Instance.kinectManagerInstance)
+
+
+            if (! MGC.Instance)
             {
                 Debug.Log("Creating MGC " + MGC.Instance);
-			
-			#if UNITY_EDITOR 
-				StartCoroutine(GoToCroossroadWithDelay());
-			#endif
+#if UNITY_EDITOR
+                StartCoroutine(GoToCroossroadWithDelay());
+#endif
             }
-            
-			instance = this;
+
+            instance = this;
 			setThisLevelManager();
 			//activateThisLevelKManager();
         }
@@ -53,6 +53,7 @@ public class KinectManagerSwitcher : MonoBehaviour {
                 MGC.Instance.isKinectRestartRequired = true;
                 if (KinectManager.Instance)
                 {
+                    MGC.Instance.kinectManagerInstance = KinectManager.Instance;
                     MGC.Instance.kinectManagerInstance.ClearKinectUsers();
                     //MGC.Instance.kinectManagerInstance.StartKinect();
                     MGC.Instance.kinectManagerInstance.avatarControllers.Clear();

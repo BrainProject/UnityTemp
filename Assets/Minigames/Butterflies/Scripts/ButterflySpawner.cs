@@ -16,7 +16,7 @@ namespace Butterflies
         public int rangeOfCurve; //length of buffer for last mouse positions
         public int numberOfButterflies; //number of butterfiles printed in one update
 
-        private float durationBetweenSpawn = 0.01f;
+        private float durationBetweenSpawn = 0.02f;
 
         // values for directions and mouse posiotions
         // private Vector3 deltaMousePosition;
@@ -32,6 +32,8 @@ namespace Butterflies
 
         private float timestamp;
 
+        private float timestampPrint;
+
 
 
         void Start()
@@ -40,28 +42,36 @@ namespace Butterflies
             mousePosition = transform.position;//mainCamera.WorldToScreenPoint(transform.position); //transform.position;
             //deltaMousePosition = Vector3.zero;
             timestamp = Time.time;
+            timestampPrint = Time.time;
         }
 
         void Update()
         {
-            //Vector3 tmp = mainCamera.WorldToScreenPoint(transform.position);
-            mousePosition = transform.position;
-            mousePositionBuffer.Add(mousePosition);
-
-            if (mousePositionBuffer.Count >= rangeOfCurve)
+            if (Time.time - timestamp > durationBetweenSpawn)
             {
-                mousePositionBuffer.RemoveAt(0);
-            }
+                //Vector3 tmp = mainCamera.WorldToScreenPoint(transform.position);
 
-            float deltaFirstLast = this.countPointDistance(mousePositionBuffer[0], mousePositionBuffer[mousePositionBuffer.Count - 1]);
-            //Mathf.Sqrt(Mathf.Pow(mousePositionBuffer[0].x - mousePositionBuffer[mousePositionBuffer.Count-1].x, 2) + Mathf.Pow(mousePositionBuffer[0].y - mousePositionBuffer[mousePositionBuffer.Count-1].y, 2));
-            directionForButterfly = mousePositionBuffer[mousePositionBuffer.Count - 1] - mousePositionBuffer[0];
+              //  if (Time.time - timestampPrint > 0.1f)
+            //{
+                mousePosition = transform.position;
+                mousePositionBuffer.Add(mousePosition);
 
-            angle = this.countAngle(mousePositionBuffer[0], mousePositionBuffer[mousePositionBuffer.Count - 1], mousePositionBuffer[(mousePositionBuffer.Count - 1) / 2]);
-            if (float.IsNaN(angle))
-            {
-                angle = 0;
-            }
+                if (mousePositionBuffer.Count >= rangeOfCurve)
+                {
+                    mousePositionBuffer.RemoveAt(0);
+                }
+
+                float deltaFirstLast = this.countPointDistance(mousePositionBuffer[0], mousePositionBuffer[mousePositionBuffer.Count - 1]);
+                //Mathf.Sqrt(Mathf.Pow(mousePositionBuffer[0].x - mousePositionBuffer[mousePositionBuffer.Count-1].x, 2) + Mathf.Pow(mousePositionBuffer[0].y - mousePositionBuffer[mousePositionBuffer.Count-1].y, 2));
+                directionForButterfly = mousePositionBuffer[mousePositionBuffer.Count - 1] - mousePositionBuffer[0];
+
+                angle = this.countAngle(mousePositionBuffer[0], mousePositionBuffer[mousePositionBuffer.Count - 1], mousePositionBuffer[(mousePositionBuffer.Count - 1) / 2]);
+                if (float.IsNaN(angle))
+                {
+                    angle = 0;
+                }
+                //timestampPrint = Time.time;
+            //}
 
             /*
             Vector3 lastMousePositionDelta = deltaMousePosition;
@@ -101,8 +111,6 @@ namespace Butterflies
             deltaPosition = Mathf.Sqrt(Mathf.Pow(deltaMousePosition.x, 2) + Mathf.Pow(deltaMousePosition.y, 2));
             lastDeltaPosition = Mathf.Sqrt(Mathf.Pow(lastMousePositionDelta.x, 2) + Mathf.Pow(lastMousePositionDelta.y, 2));
             */
-            if (Time.time - timestamp > durationBetweenSpawn)
-            {
                 if (deltaFirstLast > printButterflyValue)
                 {
                     this.isRightRotation(mousePositionBuffer[(mousePositionBuffer.Count - 1) / 2], mousePositionBuffer[0], mousePositionBuffer[mousePositionBuffer.Count - 1]);
