@@ -20,6 +20,8 @@ namespace SocialGame{
 			//show ();
 			switch (type) {
 			case(GUIActionSocialGame.Back):
+                activated = false;
+                show();
 				MGC.Instance.minigamesGUI.backIcon.GUIAction ();
 				break;
 			case(GUIActionSocialGame.Help):
