@@ -13,6 +13,14 @@ namespace HanoiTowers
         public float yMax = 5.5f;
     }
 
+    public enum diskState
+    {
+        lying,
+        animatedUp,
+        dragged,
+        animatedDown
+    }
+
     /**
      * \brief Handles logic of one disk in Hanoi Towers mini-game
      * 
@@ -26,13 +34,13 @@ namespace HanoiTowers
         /// size of this disk - larger disk can not be put on top of smaller one
         public int size;
 
+        private diskState state;
 
         private Color startcolor;
         private Column actualColumn;
 
         private bool waitingForTarget;
-        private bool jumpInProgress = false;
-        private bool draggingEnabled = false;
+        //private bool draggingEnabled = false;
         private Vector3 animationTarget;
         private float animationFraction;
         private float animationStartTime;
@@ -43,28 +51,24 @@ namespace HanoiTowers
 
         void Awake()
         {
-            startcolor = renderer.material.color;
+            startcolor = GetComponent<Renderer>().material.color;
         }
 
         void Start()
         {
             //initialization
+            state = diskState.lying;
+
             waitingForTarget = false;
             boundary = new Boundary();
-
-
         }
 
         private void animateDiskUp()
         {
-            jumpInProgress = true;
-
-            //animationTarget = new Vector3(actualColumn.gameObject.transform.position.x, 4.75f, actualColumn.gameObject.transform.position.z);
-            //animationFraction = 0.0f;
-            //animationStartTime = Time.time;
+            state = diskState.animatedUp;
 
             //adjust impulse to number of disk on the column - the more disks, the less necessary impulse
-            rigidbody.AddForce(transform.up * (10.75f - (0.375f * actualColumn.getNumberofDisks())), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.up * (10.75f - (0.375f * actualColumn.getNumberofDisks())), ForceMode.Impulse);
 
 
         }
@@ -80,7 +84,7 @@ namespace HanoiTowers
                 Debug.LogError("column not set!");
             }
 
-            if (this == actualColumn.topDisk())
+            if (this == actualColumn.topDisk() && ( state == diskState.lying))
             {
                 return true;
             }
@@ -91,8 +95,8 @@ namespace HanoiTowers
 
         public void moveToColumn(Column target, bool animate)
         {
-
-            draggingEnabled = false;
+            //todo
+            //draggingEnabled = false;
 
             waitingForTarget = false;
             gameController.setWaitingForTarget(null);
@@ -104,14 +108,13 @@ namespace HanoiTowers
                     //Debug.Log("Moving from column: " + actualColumn);
                     //Debug.Log("Moving to column: " + target);
                     MGC.Instance.logger.addEntry("akce - přesun | disk: " + this.size + " | ze sloupce: " + actualColumn + " | na sloupec: " + target);
-
-                    gameController.increaseScore();
                 }
                 else
                 {
                     MGC.Instance.logger.addEntry("Disk položen na stejný sloupec, ze kterého byl zvednut");
                 }
 
+                gameController.increaseNumberofMoves();
                 actualColumn.removeTopDisk();
             }
 
@@ -127,19 +130,21 @@ namespace HanoiTowers
                 updatePosition(0.0f);
             }
 
-            renderer.material.color = startcolor;
-            rigidbody.isKinematic = false;
+            GetComponent<Renderer>().material.color = startcolor;
+            GetComponent<Rigidbody>().isKinematic = false;
 
         }
 
         void OnMouseUp()
         {
+            //lift the disk
             if (isMovable() && gameController.getWaitingForTarget() == null)
             {
                 MGC.Instance.logger.addEntry("Disk " + this.size + " lifted");
                 waitingForTarget = true;
                 gameController.setWaitingForTarget(this);
 
+                //should be disk animated?
                 if (gameController.disksAnimations)
                 {
                     animateDiskUp();
@@ -165,13 +170,19 @@ namespace HanoiTowers
 
             if (isMovable())
             {
-                renderer.material.color = gameController.greenColor;
+                GetComponent<Renderer>().material.color = gameController.greenColor;
             }
             else
             {
-                renderer.material.color = gameController.redColor;
+                GetComponent<Renderer>().material.color = gameController.redColor;
             }
 
+        }
+
+        // returns current state of disk
+        public diskState getState()
+        {
+            return state;
         }
 
         // highlighting 
@@ -179,7 +190,7 @@ namespace HanoiTowers
         {
             if (!waitingForTarget)
             {
-                renderer.material.color = startcolor;
+                GetComponent<Renderer>().material.color = startcolor;
             }
 
         }
@@ -199,47 +210,55 @@ namespace HanoiTowers
             if (fallHeight == 0.0)
             {
                 y = (float)actualColumn.getNumberofDisks() * gameController.getDiskHeight() - 0.5f * gameController.getDiskHeight();
+                state = diskState.lying;
             }
             else
             {
                 y = fallHeight;
+                state = diskState.animatedDown;
             }
 
             Vector3 newPos = new Vector3(actualColumn.gameObject.transform.position.x, y, transform.position.z);
+
+            //TODO is it necessary to have both lines here?
             transform.position = newPos;
-            rigidbody.position = newPos;
+            //rigidbody.position = newPos;
         }
 
         
         void Update()
         {
-            if (jumpInProgress)
+            if (state == diskState.animatedUp)
             {
                 float cp = gameController.getCeilingPosition();
                 //print("Ceiling position y: " + cp);
                 if (transform.position.y > cp)
                 {
                     gameController.ceilingObject.SetActive(true);
-                    jumpInProgress = false;
-                    draggingEnabled = true;
 
-                    //disable movement in Z axis
-                    //disable rotations of disk
+                    state = diskState.dragged;
+                    
 
-                    //rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                    GetComponent<Rigidbody>().isKinematic = true;
 
-                    rigidbody.isKinematic = true;
 
                     initialDiskScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
                     //offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, initialDiskScreenPoint.z));
                 }
             }
 
-            if (draggingEnabled)
+            //"ground" falling disk
+            if (state == diskState.animatedDown)
             {
+                if (transform.position.y < (float)actualColumn.getNumberofDisks() * gameController.getDiskHeight() - 0.5f * gameController.getDiskHeight() + 0.1)
+                {
+                    state = diskState.lying;
+                }
+            }
 
+            if (state == diskState.dragged)
+            {
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, initialDiskScreenPoint.z);
-
                 Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);// +offset;
 
                 //TODO clamp position

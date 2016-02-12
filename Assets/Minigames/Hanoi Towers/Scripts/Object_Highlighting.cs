@@ -17,14 +17,14 @@ namespace HanoiTowers
         void OnMouseEnter()
         {
 
-            startcolor = renderer.material.color;
-            renderer.material.color = new Color(255, 255, 0, 0.5f);
+            startcolor = GetComponent<Renderer>().material.color;
+            GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0.5f);
 
         }
 
         void OnMouseExit()
         {
-            renderer.material.color = startcolor;
+            GetComponent<Renderer>().material.color = startcolor;
         }
 
 

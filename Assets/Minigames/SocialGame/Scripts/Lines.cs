@@ -1,36 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lines : MonoBehaviour {
-	private LineSet set; 
-	public LineRenderer renderLine;
-	public Transform[] joint;
+namespace SocialGame{
+	public class Lines : MonoBehaviour {
+		private LineSet set; 
+		public LineRenderer renderLine;
+		public Transform[] joint;
 
-	void Start () {
-		//Look to root and in children find LineSet
-		set = transform.root.GetComponentInChildren<LineSet>();
-		renderLine = gameObject.AddComponent("LineRenderer") as LineRenderer;
-		if(set != null)
-		{
-			//set data from LineSet
-			renderLine.SetWidth(set.widthStart, set.widthEnd);
-			renderLine.SetColors(set.colorStart,set.colorEnd);
-			renderLine.material = set.material;
-		} 
-		else
-		{
-			Debug.LogWarning(gameObject.name + "this object not found seting script");
+		/// <summary>
+		/// set lines
+		/// </summary>
+		void Start () {
+			set = transform.root.GetComponentInChildren<LineSet>();
+			renderLine = gameObject.AddComponent<LineRenderer>() as LineRenderer;
+			if(set != null)
+			{
+				renderLine.SetWidth(set.widthStart, set.widthEnd);
+				renderLine.SetColors(set.colorStart,set.colorEnd);
+				renderLine.material = set.material;
+			} 
+			else
+			{
+				Debug.LogWarning(gameObject.name + "this object not found seting script");
+			}
+			renderLine.SetVertexCount(joint.Length);
 		}
-		//count of vertes joints + this object;
-		renderLine.SetVertexCount(joint.Length);
-	}
-	
-
-	void Update () {
-		// Redraw line
-		for(int i = 0; i < joint.Length;i++)
-		{
-			renderLine.SetPosition(i,joint[i].position);
+		
+		/// <summary>
+		/// Redraw line.
+		/// </summary>
+		void Update () {
+			for(int i = 0; i < joint.Length;i++)
+			{
+				renderLine.SetPosition(i,joint[i].position);
+			}
 		}
 	}
 }

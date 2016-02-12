@@ -110,7 +110,7 @@ namespace MinigameSilhouette {
 					cubes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Cube);//create cube
 					cubes[rows*i + o].transform.localScale = new Vector3(1, 1, 0.1f);//flatten it
 					cubes[rows*i + o].transform.position = new Vector3((i * 1.2f) - (0.1125f*(float)Math.Pow(columns, 2)),(o * 1.2f) - (0.05625f*(float)Math.Pow(rows, 2)),0);//move them
-					cubes[rows*i + o].renderer.material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
+					cubes[rows*i + o].GetComponent<Renderer>().material.mainTexture = Resources.Load("Textures/back") as Texture2D;//load texture
 					
 					planes[rows*i + o] = GameObject.CreatePrimitive(PrimitiveType.Plane);//create plane
 					planes[rows*i + o].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);//shrink them
@@ -121,11 +121,11 @@ namespace MinigameSilhouette {
 					
 					cubes[rows*i + o].transform.parent = planes[rows*i + o].transform;//make plane parent of cube
 					
-					planes[rows*i + o].AddComponent("MoverSil");//attach script
-					planes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
-					cubes[rows*i + o].renderer.material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+					planes[rows*i + o].AddComponent<MoverSil>();//attach script
+					planes[rows*i + o].GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");//set shader
+					cubes[rows*i + o].GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");//set shader
 					
-					Destroy(planes[rows*i + o].collider);
+					Destroy(planes[rows*i + o].GetComponent<Collider>());
 					planes[rows*i + o].AddComponent<BoxCollider>(); 
 					Rigidbody gameObjectsRigidBody = planes[rows*i + o].AddComponent<Rigidbody>(); // Add the rigidbody.
 					gameObjectsRigidBody.mass = 5;//set weight
@@ -186,7 +186,7 @@ namespace MinigameSilhouette {
 				{
 					AudioSource musicPlayer = GameObject.Find("MusicPlayer").GetComponent("AudioSource") as AudioSource;
 					musicPlayer.Stop();
-					this.gameObject.audio.Play();
+					this.gameObject.GetComponent<AudioSource>().Play();
 					canWin = 2;
 				}
 				else
@@ -225,7 +225,7 @@ namespace MinigameSilhouette {
 								mover.MoveDown();
 							}
 							//second picture is matching for the first
-							else if (pictureMatch(first.renderer.material.mainTexture.name, hit.collider.gameObject.renderer.material.mainTexture.name))
+							else if (pictureMatch(first.GetComponent<Renderer>().material.mainTexture.name, hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture.name))
 							{
 								correctPairs++;
 								correctPairsDisplay.text = correctPairs.ToString();
@@ -304,11 +304,11 @@ namespace MinigameSilhouette {
 				yield return new WaitForSeconds(0.1f);
 			}
 			
-			first.rigidbody.useGravity = true;
-			second.rigidbody.useGravity = true;
+			first.GetComponent<Rigidbody>().useGravity = true;
+			second.GetComponent<Rigidbody>().useGravity = true;
 			
-			first.rigidbody.AddForce(second.transform.position * 100);
-			second.rigidbody.AddForce(first.transform.position * 100);
+			first.GetComponent<Rigidbody>().AddForce(second.transform.position * 100);
+			second.GetComponent<Rigidbody>().AddForce(first.transform.position * 100);
 			
 			yield return new WaitForSeconds(1.3f);
 			
@@ -370,7 +370,7 @@ namespace MinigameSilhouette {
 			for (int i = 0; i < (rows * columns); i++)
 			{
 				num = random.Next(0, chosen.Count);
-				planes[i].renderer.material.mainTexture = chosen[num];
+				planes[i].GetComponent<Renderer>().material.mainTexture = chosen[num];
 				chosen.RemoveAt(num);
 			}
 		}

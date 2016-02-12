@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /**
  * \brief namespace for Hanoi Towers mini-game 
  * Hanoi Towers mini-game
  * 
- * The of the game is to move all disks from one column to another. Only top disk can be moved
+ * The goal of the game is to move all disks from one column to another. Only top disk can be moved
  * 
  * Functionality is divided into GameController class,
  * Column class and Disk class.
- * There is also simple end-game GUI
  *
+ * @author Jiří Chmelík
  */
 namespace HanoiTowers
 {
@@ -24,12 +24,11 @@ namespace HanoiTowers
         Right
     }
 
+    /// <summary>
+    /// Main class for 'Hanoi Towers' mini-game
+    /// </summary>
     public class GameController : MonoBehaviour
     {
-
-        //TODO proper initialization - ??
-        //TODO better graphics ??
-
         public ColumnsNames startingColumnName;
         public ColumnsNames endingColumnName;
 
@@ -48,17 +47,18 @@ namespace HanoiTowers
         public GameObject[] disks;
         public GameObject ceilingObject;
 
-        //public GameObject endGameGUI;
 
         private Column startingColumn;
         private Column endingColumn;
-        private int score = 0;
+        private int numberofMoves = 0;
         private float diskHeight = 0.41f;
         private Disk waitingForTarget;
 
         private float gameStartTime;
 
-        //private bool showEndGameGUI = false;
+        /// <summary>
+        /// game starts...  
+        /// </summary>
         void Start()
         {
             //set up columns
@@ -74,15 +74,16 @@ namespace HanoiTowers
                 Debug.LogError("Wrong pointers to columns...");
             }
 
+            MGC.Instance.minigamesProperties.SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+
             ResetGame();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-            //QualitySettings.antiAliasing = 4;
+			
         }
 
         public void ResetGame()
         {
-            //TODO temporary hack
-            numberOfDisks = MGC.Instance.hanoiTowersNumberOfDisks;
+            //load difficulty from ...
+            numberOfDisks = MGC.Instance.selectedMiniGameDiff + 2;
 
             MGC.Instance.logger.addEntry("New game starts with: " + numberOfDisks + " disks");
 
@@ -98,41 +99,26 @@ namespace HanoiTowers
                 disks[i].SetActive(false);
 
                 disks[i].GetComponent<Disk>().setColumn(null);
-                //disks[i].gameObject.rigidbody.isKinematic = true;
-
-                //disks[i].transform.position = new Vector3(100, 0, 0);
             }
 
-            //enable disks and move them to correct column
+            //enable chosen number of disks and move them to correct column
             Disk disk;
             for (int i = numberOfDisks - 1; i >= 0; i--)
             {
                 disk = disks[i].GetComponent<Disk>();
 
                 disk.moveToColumn(startingColumn, false);
-
-                //disks[i].rigidbody.isKinematic = false;
                 disks[i].SetActive(true);
             }
 
-            score = 0;
+            numberofMoves = 0;
             gameStartTime = Time.time;
         }
 
-        // parameter has to be float to be usable with Unity UI
-        public void setDifficulty(float newNumberofDisks)
+        public void increaseNumberofMoves()
         {
-            print("Hanoi Towers: setting difficulty to: " + newNumberofDisks);
-            numberOfDisks = (int)newNumberofDisks;
-
-            //TODO temporary hack - solve by implementing mini-game statistics saving
-            MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-        }
-
-        public void increaseScore()
-        {
-            score++;
-            //Debug.Log("Number of moves: " + score);
+            numberofMoves++;
+            //Debug.Log("Number of moves: " + numberofMoves);
         }
 
         public float getCeilingPosition()
@@ -140,9 +126,9 @@ namespace HanoiTowers
             return ceilingObject.transform.position.y + ceilingObject.transform.localScale.y;
         }
 
-        public int getScore()
+        public int getNumberofMoves()
         {
-            return score;
+            return numberofMoves;
         }
 
         public float getGameStartTime()
@@ -172,41 +158,12 @@ namespace HanoiTowers
         }
 
 
+        /// <summary>
+        /// No special stuff needed here, just call MGC...
+        /// </summary>
         public void endGame()
         {
-            //animate Neuron
-            
-            GameObject Neuronek = MGC.Instance.neuronHelp;
-            if (Neuronek)
-            {
-                Neuronek.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-            }
-
-            //global GUI
-            MGC.Instance.minigamesGUI.show(true);
-
-            //mini-game specific gui
-            //endGameGUI.SetActive(true);
-            //showEndGameGUI = true;
-
-
+            MGC.Instance.WinMinigame();
         }
-
-
-        
-        //void OnGUI()
-        //{
-        //    if (showEndGameGUI)
-        //    {
-        //        //float w = Screen.width;
-        //        //float h = Screen.height;
-
-        //        //numberOfDisks = (int)GUI.HorizontalSlider(new Rect(0.25f * w, 0.2f * h, 0.5f * w, 50), (int)numberOfDisks, 2.0F, 8.0F);
-                
-        //        ////TODO temporary hack - solve by implementing mini-game statistics saving
-        //        //MGC.Instance.hanoiTowersNumberOfDisks = numberOfDisks;
-        //    }
-        //}
     }
-
 }

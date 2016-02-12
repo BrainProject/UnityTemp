@@ -1,101 +1,80 @@
-﻿/*
+﻿#pragma warning disable 0414
+/*
  * Created by: Milan Doležal
  */ 
 
 using UnityEngine;
 using System.Collections;
 using Game;
+using UnityEngine.EventSystems;
 
 /**
  * \brief name-space for classes and method related to main scene
  */
 namespace MainScene {
 	public class SelectBrainPart : MonoBehaviour {
-		//public string descriptionText;
 		public GameObject icon;
 		public BrainPartName brainPartToLoad;
+		public bool showOnAndroid = true;
 		public bool CanSelect{ get; set; }
 
-		//private string levelName;
 		private bool initialMouseOver;
 		private Color selectionColor;
 		private Color originalColor;
 		private GameObject Icon { get; set; }
-		//private GameObject Description{ get; set; }
 
 		void Start()
 		{
 			CanSelect = false;
-			//Icon = GameObject.Find ("Brain Part Icon");
-			icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+			icon.GetComponent<Renderer>().material.color = new Color(icon.GetComponent<Renderer>().material.color.r, icon.GetComponent<Renderer>().material.color.g, icon.GetComponent<Renderer>().material.color.b, 0);
 			icon.transform.position = this.transform.parent.transform.position;
-			//Description = GameObject.Find ("Description");
-			originalColor = this.renderer.material.color;
-            //levelName = "GameSelection";
+			originalColor = this.GetComponent<Renderer>().material.color;
 			initialMouseOver = true;
 		}
 
-
+#if UNITY_STANDALONE
 		void OnMouseEnter()
 		{
-			if(CanSelect)
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 			{
-				//icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 1);
 				StartCoroutine("FadeIn");
-				//Texture tmp = (Texture)Resources.Load ("Main/" + iconName, typeof(Texture));
-				//if(tmp)
-				//{
-				//	Icon.renderer.material.mainTexture = tmp;
-				//	Icon.renderer.material.color = new Color(Icon.renderer.material.color.r, Icon.renderer.material.color.g, Icon.renderer.material.color.b, 1);
-				//	Icon.transform.position = this.transform.parent.transform.position;
-				//}
-				
-                //this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 
-                //set description
-				//Description.GetComponent<TextMesh> ().text = descriptionText;
-				//Description.transform.position = this.transform.parent.transform.position - (new Vector3(0, 0.05f, 0));
-				
                 //highlight material
-                this.renderer.material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
+                this.GetComponent<Renderer>().material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 				initialMouseOver = false;
 			}
 		}
 
 		void OnMouseExit()
 		{
-			if(CanSelect)
-			{
-				//Icon.renderer.material.mainTexture = null;
-				//icon.renderer.material.color = new Color(icon.renderer.material.color.r, icon.renderer.material.color.g, icon.renderer.material.color.b, 0);
+			if(CanSelect
+#if UNITY_ANDROID
+&& showOnAndroid
+#endif
+			   )
 				StartCoroutine("FadeOut");
-				//this.transform.localScale = new Vector3(1, 1, 1);
-				//Description.GetComponent<TextMesh> ().text = "";
-			}
-			this.renderer.material.color = originalColor;
-		}
 
+			this.GetComponent<Renderer>().material.color = originalColor;
+		}
+#endif
 		void OnMouseOver()
 		{
-			if(CanSelect)
+			if(CanSelect && !EventSystem.current.IsPointerOverGameObject()
+#if UNITY_ANDROID
+			   && showOnAndroid
+#endif
+			   )
 			{
 				if(Input.GetButtonDown ("Fire1"))
 				{
-                    //useless
-                    //switch(descriptionText)
-                    //{
-                    //case "Frontal Lobe": 
-                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
-                    //    break;
-                    //case "Pariental Lobe": 
-                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
-                    //    break;
-                    //case "Occipital Lobe": 
-                    //    mgc.currentCameraDefaultPosition = new Vector3(0,0,0);
-                    //    break;
-                    //}
+					//highlight material
+					this.GetComponent<Renderer>().material.color = new Color(originalColor.r + 0.4f, originalColor.g + 0.4f, originalColor.b + 0.4f);
 
-                    print("Going into brain part: '" + brainPartToLoad + "'");
+                    //print("Going into brain part: '" + brainPartToLoad + "'");
                     MGC mgc = MGC.Instance;
 					
                     mgc.currentBrainPart = brainPartToLoad;
@@ -110,43 +89,54 @@ namespace MainScene {
 			}
 			if(CanSelect && initialMouseOver)
 			{
+#if UNITY_STANDALONE
 				OnMouseEnter();
-				print ("Mouse over from initial animation.");
+#endif
+				//print ("Mouse over from initial animation.");
 			}
 		}
+
+#if UNITY_ANDROID
+		public void ShowIcon()
+		{
+			if(showOnAndroid)
+			{
+				StartCoroutine("FadeIn");
+				initialMouseOver = false;
+			}
+		}
+#endif
 
 		IEnumerator FadeIn()
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeOut");
-			Color startColor = icon.renderer.material.color;
-			Color targetColor = icon.renderer.material.color;
+			Color startColor = icon.GetComponent<Renderer>().material.color;
+			Color targetColor = icon.GetComponent<Renderer>().material.color;
 			targetColor.a = 1;
 			
-			while(icon.renderer.material.color.a < 0.99f)
+			while(icon.GetComponent<Renderer>().material.color.a < 1)
 			{
-				icon.renderer.material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+				icon.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 				yield return null;
 			}
-			//Time.timeScale = 0;
 		}
 		
 		IEnumerator FadeOut()
 		{
 			float startTime = Time.time;
 			StopCoroutine ("FadeIn");
-			Color startColor = icon.renderer.material.color;
-			Color targetColor = icon.renderer.material.color;
+			Color startColor = icon.GetComponent<Renderer>().material.color;
+			Color targetColor = icon.GetComponent<Renderer>().material.color;
 			targetColor.a = 0;
 			
-			while(icon.renderer.material.color.a > 0.01f)
+			while(icon.GetComponent<Renderer>().material.color.a > 0)
 			{
-				icon.renderer.material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
-				//Time.timeScale = state;
+				icon.GetComponent<Renderer>().material.color = Color.Lerp (startColor, targetColor, Time.time - startTime);
 				yield return null;
 			}
 
-			icon.renderer.material.color = targetColor;
+			icon.GetComponent<Renderer>().material.color = targetColor;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0414
+using UnityEngine;
 using System.Collections;
 
 namespace Coloring
@@ -6,8 +7,8 @@ namespace Coloring
 	public class LevelManagerColoring : MonoBehaviour
 	{
 		public Texture brush;
-		public GameObject backGUI;
-		public GameObject savePictureGUI;
+		public BackGUI backGUI;
+		public SetColor brushColor;
 
 		internal bool painting = false;
 		internal bool hiddenGUIwhilePainting = false;
@@ -18,14 +19,20 @@ namespace Coloring
 		private int w = Screen.width / 16;
 		private int h = Screen.height / 9;
 
-//		void Awake()
-//		{
-//			MGC.Instance.ShowCustomCursor (true);
-//		}
+#if UNITY_ANDROID
+		internal Material neuronMaterial;
+		internal Color neuronOriginalColor;
+#endif
+
 
 		void Start()
 		{
 			timestamp = -2;
+
+#if UNITY_ANDROID
+			neuronMaterial = GameObject.Find("Neuron_body").GetComponent<Renderer>().material;
+			neuronOriginalColor = neuronMaterial.color;
+#endif
 		}
 
 		void Update()
@@ -39,25 +46,42 @@ namespace Coloring
 				if(painting && !hiddenGUIwhilePainting)
 					MGC.Instance.ShowCustomCursor(false);
 			}
+
+			if(MGC.Instance.minigamesGUIObject.activeSelf && MGC.Instance.minigamesGUI.clicked)
+			{
+#if UNITY_ANDROID
+				neuronMaterial.color = neuronOriginalColor;
+#endif
+				MGC.Instance.minigamesGUI.clicked = false;
+			}
 		}
 
 
 		public void ShowColoringGUI(bool isVisible)
 		{
-//			print (isVisible);
-			backGUI.SetActive (true);
-			backGUI.GetComponent<BackGUI> ().IconVisible (isVisible);
-			backGUI.guiTexture.texture = backGUI.GetComponent<BackGUI> ().normal;
+            //TODO vypnuto pro Android pro verzi 2.0 z nedostatku casu na odladeni
+            #if UNITY_STANDALONE
+		    if (isVisible)
+		    {
+		        MGC.Instance.minigamesGUI.screenshotIcon.show();
+		    }
+		    else
+		    {
+                MGC.Instance.minigamesGUI.screenshotIcon.hide();
+		    }
+            #endif
+        }
 
-			savePictureGUI.SetActive (true);
-			savePictureGUI.GetComponent<SavePictureGUI> ().IconVisible (isVisible);
-			savePictureGUI.guiTexture.texture = savePictureGUI.GetComponent<SavePictureGUI> ().normal;
-		}
 
+#if UNITY_STANDALONE
 		void OnGUI()
 		{
-			if(painting && !hiddenGUIwhilePainting)
-				GUI.DrawTexture (new Rect (Input.mousePosition.x - x*2, Screen.height - Input.mousePosition.y - y*2, w*2, h*2), brush);
+            // drawing a brush cursor
+            if (painting && !hiddenGUIwhilePainting)
+            {
+                GUI.DrawTexture(new Rect(Input.mousePosition.x - x * 2, Screen.height - Input.mousePosition.y - y * 2, w * 2, h * 2), brush);
+            }
 		}
+#endif
 	}
 }

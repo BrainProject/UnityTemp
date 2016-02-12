@@ -6,7 +6,8 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class GestChecker : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
+		public bool activeChecking = true;
 		public float distance;
 		public GameObject next;
 		public string clipBone;
@@ -16,42 +17,32 @@ namespace SocialGame
 		public bool destroy = true;
 		public bool finish = true;
 		public bool allChecked = false;
-		private Vector3 temp;
-		private List<Transform> Targets = new List<Transform>();
+		public bool DeactivatedWithGUI = false;
+		//private Vector3 temp;
+		public List<Transform> Targets = new List<Transform>();
 
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
 		void Start () {
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
-			}
-			if(KManager)
+
+			//GameObject temp = GameObject.FindWithTag("GameController");
+			KManager = MGC.Instance.kinectManagerInstance;
+            //Debug.Log(MGC.Instance.kinectManagerInstance.avatarControllers.Count);
+            if (KManager)
 			{
 				if(handMode)
 				{
-					if(player1)
+                    
+                    foreach (Kinect.AvatarController avatar in KManager.avatarControllers)
 					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
+                        
+						if((player1 && avatar.playerIndex == 0)||(player2 && avatar.playerIndex == 1))
 						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
+							ExtendsAvatar avatarEx = avatar as ExtendsAvatar;
+							if(avatarEx)
 							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
+								Targets.Add(avatarEx.handLeft);
+								Targets.Add(avatarEx.handRight);
 							}
 						}
 					}
@@ -83,59 +74,67 @@ namespace SocialGame
 		}
 
 	
-		// Update is called once per frame
+		/// <summary>
+		/// Checking collision
+		/// </summary>
 		void Update () {
-			bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
-			for(int i = 0; i< transform.childCount; i++)
+			if(activeChecking && (!DeactivatedWithGUI || !HelpListener.Instance.activatedGUI ))
 			{
-				Transform child = transform.GetChild(i);
-				Check script = child.GetComponent<Check>();
-				if(script  && script.activated)
+				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+				for(int i = 0; i< transform.childCount; i++)
 				{
-					Transform[] targets = script.target;
-					foreach(Transform target in targets)
+					Transform child = transform.GetChild(i);
+					Check script = child.GetComponent<Check>();
+					if(script  && script.activated)
 					{
-						bool next = Vector2.Distance(child.position,target.position) < distance;
-						if(next)
+						Transform[] targets = script.target;
+						foreach(Transform target in targets)
 						{
-							if(!allChecked)
+							bool next = Vector2.Distance(child.position,target.position) < (script.multiDist * distance);
+							if(next)
 							{
-								complete = script.Checked(target);
-							}
+								if(!allChecked)
+								{
+									complete = script.Checked(target);
+								}
+								else
+								{
+									complete = script.Checked(target) && complete;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.green);
+								break;
+							}	
 							else
 							{
-								complete = script.Checked(target) && complete;
+								if(allChecked)
+								{
+									complete = false;
+								}
+								//Debug.DrawRay(target.position,child.position - target.position,Color.red);
+								//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.green);
-							break;
-						}	
-						else
-						{
-							if(allChecked)
-							{
-								complete = false;
-							}
-							//Debug.DrawRay(target.position,child.position - target.position,Color.red);
-							//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 						}
 					}
 				}
-			}
-			if(complete)
-			{
-				CompleteGest();
+				if(complete)
+				{
+					CompleteGest();
+				}
 			}
 		}
 
+		/// <summary>
+		/// Completes the gest.
+		/// </summary>
 		protected virtual void CompleteGest()
 		{
+			Debug.Log ("Complete " + gameObject.name);
 			if(next)
 			{
 				GameObject.Instantiate(this.next);
 			}
 			if(finish && (next== null))
 			{
-				//Debug.Log("blbnu " + gameObject.name);
 				finishHim();
 			}
 			if(destroy)
@@ -145,7 +144,9 @@ namespace SocialGame
 		}
 
 
-
+		/// <summary>
+		/// Finishs the him.
+		/// </summary>
 		void finishHim()
 		{
 			GameObject root = gameObject.transform.root.gameObject;
@@ -154,15 +155,18 @@ namespace SocialGame
 				FinalCount script = root.GetComponent<FinalCount>();
 				if(script)
 				{
-					script.next();
+					script.Next();
 					return;
 				}
 			}
-			LevelManager.finish();
+			LevelManager.win();
 
 		}
 	
-
+		/// <summary>
+		/// Moves the parent on bone.
+		/// </summary>
+		/// <param name="boneName">Bone name.</param>
 		public void MoveParentOnBone(string boneName)
 		{
 			GameObject bone = GameObjectEx.FindGameObjectWithNameTag(boneName,gameObject.tag);
@@ -176,6 +180,9 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
 		public void findTartgetByCheckName()
 		{
 			for(int i =0; i <transform.childCount; i++)
@@ -193,6 +200,10 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
+		/// <param name="child">Child.</param>
 		public void findTartgetByCheckName(Transform child)
 		{
 			string nameGest = child.name;
@@ -206,6 +217,10 @@ namespace SocialGame
 			}										
 		}
 
+		/// <summary>
+		/// Adds the check.
+		/// </summary>
+		/// <param name="check">Check.</param>
 		public void addCheck(Transform check)
 		{
 			check.parent = transform;
@@ -224,6 +239,39 @@ namespace SocialGame
 				findTartgetByCheckName(check);
 			}
 		}
+
+		/// <summary>
+		/// Activates the checking.
+		/// </summary>
+		/// <param name="active">If set to <c>true</c> active.</param>
+		public void ActivateChecking(bool active)
+		{
+
+			activeChecking = true;//active;
+			for(int i = 0; i< transform.childCount; i++)
+			{
+				Transform child = transform.GetChild(i);
+				CheckClip script = child.GetComponent<CheckClip>();
+				if(script)
+				{
+					script.Halo(active);
+				}
+			}
+		}
+
+		void OnDrawGizmos() {
+			
+			for(int i = 0; i< transform.childCount; i++)
+			{
+				Transform child = transform.GetChild(i);
+				Check script = child.GetComponent<Check>();
+				if(script)
+				{
+					Gizmos.DrawWireSphere(child.position,distance * script.multiDist);
+				}
+			}
+		}
+		
 		#else
 		public void findTartgetByCheckName()
 		{

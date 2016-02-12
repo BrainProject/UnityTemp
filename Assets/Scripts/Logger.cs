@@ -51,16 +51,16 @@ public class Logger : MonoBehaviour
             filename = pfilename;
         
             Debug.Log("Initialization of Logger...");
-            string logPath = path + "/" + filename;
-            Debug.Log("...Newron log path: " + logPath);
-            //Debug.Log("Application data path: " + Application.dataPath);
-            //Debug.Log("Application persistent data path: " + Application.persistentDataPath);
 
             //create directory if it don't exists already
             Directory.CreateDirectory(path);
             //Debug.Log("directory: " + dInfo.FullName + " should exists now");
 
+            string logPath = path + "/" + filename;
+            print("Newron Log will be saved to: '" + logPath + "PlayerActions.txt'");
+
             bool addCreatedEntry = false;
+            
             //check if log already exists
             if (!File.Exists(logPath))
             {
@@ -68,7 +68,15 @@ public class Logger : MonoBehaviour
             }
 
             //create new stream writer - will create new or append to existing file
-            logfile = new System.IO.StreamWriter(logPath, true);
+			try
+			{
+            	logfile = new System.IO.StreamWriter(logPath, true);
+			}
+			catch(IOException e)
+			{
+				Debug.LogWarning("Log file creation failed!");
+                Debug.LogWarning(e);
+			}
 
             if (addCreatedEntry)
             {
@@ -88,15 +96,22 @@ public class Logger : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Logger is not initialized - entry will not be added to log file. Do you have an active instance of 'Logger' prefab in your scene?");
+                Debug.LogWarning("Logger is not initialized - entry will not be added to log file.");
             }
         }
 
+        /// <summary>
+        /// Finish logging.
+        /// </summary>
         public void OnApplicationQuit()
-        {
-            print("Closing log file");
-            addEntry("Session ended\r\n\r\n\r\n");
-            logfile.Close();
+        {  
+            if (logfile != null)
+            {
+                print("Closing log file");
+                addEntry("Session ended\r\n\r\n\r\n");
+
+                logfile.Close();
+            }
         }
     #endif 
 }

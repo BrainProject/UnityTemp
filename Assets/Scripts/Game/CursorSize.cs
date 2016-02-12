@@ -26,7 +26,9 @@ namespace Game
 			//this.transform.localScale = Vector3.zero;
 			//this.guiTexture.pixelInset = new Rect (x, y, w, h);
 			currentCursor = cursorNormal;
-			Screen.showCursor = false;
+#if !UNITY_ANDROID
+			Cursor.visible = false;
+#endif
 			//Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
 			//Screen.showCursor = false;
 		}

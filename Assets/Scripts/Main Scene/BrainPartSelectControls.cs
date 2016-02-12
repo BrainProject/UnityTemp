@@ -9,6 +9,18 @@ namespace MainScene
 {
 	public class BrainPartSelectControls : MonoBehaviour 
     {
+		public RotateAroundBrainBorder rotateLeft;
+		public RotateAroundBrainBorder rotateRight;
+		public RotateAroundBrainBorder rotateUp;
+		public RotateAroundBrainBorder rotateDown;
+		public SelectBrainPart frontalLobe;
+		public SelectBrainPart parietalLobe;
+		public SelectBrainPart occipitalLobe;
+		public SelectBrainPart cerebellum;
+		public SelectBrainPart temporalLobe;
+
+
+
 		internal Animator cameraAnimation;
 
 		void Start()
@@ -20,6 +32,10 @@ namespace MainScene
 				cameraAnimation.SetBool("start", true);
 				cameraAnimation.speed = 100;
 			}
+			MGC.Instance.minigamesGUI.backIcon.gameObject.SetActive (false);
+			Color tmp = MGC.Instance.minigamesGUI.backIcon.thisImage.color;
+			tmp.a = 0;
+			MGC.Instance.minigamesGUI.backIcon.thisImage.color = tmp;
 		}
 		
 		void Update()
@@ -30,7 +46,7 @@ namespace MainScene
 				{
 					cameraAnimation.SetBool("start", true);
 					cameraAnimation.speed = 1;
-					//MGC.Instance.LoadGame();
+					//MGC.Instance.LoadMinigamesPropertiesFromFile();
 				}
 			}
     
@@ -44,15 +60,22 @@ namespace MainScene
 
 		public void EnableInteraction()
 		{
-			GameObject.Find("Left").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-			GameObject.Find("Right").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-			GameObject.Find("Up").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-			GameObject.Find("Down").GetComponent<RotateAroundBrainBorder>().CanRotate = true;
-			GameObject.Find("FrontalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
-			GameObject.Find("ParietalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
-			GameObject.Find("OccipitalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
-			GameObject.Find("Cerebellum").GetComponent<SelectBrainPart>().CanSelect = true;
-			GameObject.Find("TemporalLobe").GetComponent<SelectBrainPart>().CanSelect = true;
+			rotateLeft.CanRotate = true;
+			rotateRight.CanRotate = true;
+			rotateUp.CanRotate = true;
+			rotateDown.CanRotate = true;
+			frontalLobe.CanSelect = true;
+			parietalLobe.CanSelect = true;
+			occipitalLobe.CanSelect = true;
+			cerebellum.CanSelect = true;
+			temporalLobe.CanSelect = true;
+#if UNITY_ANDROID
+			frontalLobe.ShowIcon();
+			parietalLobe.ShowIcon();
+			occipitalLobe.ShowIcon();
+			cerebellum.ShowIcon();
+			temporalLobe.ShowIcon();
+#endif
 		}
 	}
 }

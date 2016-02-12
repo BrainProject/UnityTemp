@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_STANDALONE
 public class OnDestroyDestroy : MonoBehaviour {
+	#if UNITY_STANDALONE
 
 	public int game;
 	public GameObject destroy;
@@ -12,6 +12,9 @@ public class OnDestroyDestroy : MonoBehaviour {
 		SocialGame.LevelManager.gameSelected = 0;
 	}
 
+	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
 	void OnDestroy()
 	{
 		if(destroy)
@@ -20,5 +23,5 @@ public class OnDestroyDestroy : MonoBehaviour {
 			Destroy(destroy);
 		}
 	}
+	#endif
 }
-#endif

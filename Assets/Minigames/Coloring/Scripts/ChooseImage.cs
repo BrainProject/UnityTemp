@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Coloring
 {
@@ -26,9 +27,12 @@ namespace Coloring
 				deskAnimator.SetTrigger("animate");
 				thisLevelManager.painting = true;
 				thisLevelManager.ShowColoringGUI(true);
-				if(!thisLevelManager.hiddenGUIwhilePainting)
-					MGC.Instance.ShowCustomCursor(false);
-				MGC.Instance.minigameStates.SetPlayed(Application.loadedLevelName);
+                if (!thisLevelManager.hiddenGUIwhilePainting)
+                {
+                    MGC.Instance.ShowCustomCursor(false);
+                }
+
+				MGC.Instance.minigamesProperties.SetPlayed(SceneManager.GetActiveScene().name);
 			}
 		}
 

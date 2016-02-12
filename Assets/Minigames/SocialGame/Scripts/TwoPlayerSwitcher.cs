@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-#if UNITY_STANDALONE
 using Kinect;
 
 
 namespace SocialGame{
 	public class TwoPlayerSwitcher : MonoBehaviour {
+		#if UNITY_STANDALONE
 		KinectManager KManager;
 		public bool TwoPlayer;
 		public SkinnedMeshRenderer player2;
@@ -15,20 +15,32 @@ namespace SocialGame{
 		public Material ghost;
 		private Material normal;
 		// Use this for initialization
-		void Start () {
-			SocialGame.LevelManager.gameSelected = 0;
+		void Start () {      
+            SocialGame.LevelManager.gameSelected = 0;
 			normal = player2.material;
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
+			KManager = MGC.Instance.kinectManagerInstance;
+		}
+
+		IEnumerator WaitOnStartMGC()
+		{
+			float timeOfWaiting = Time.time;
+			while ((MGC.Instance != null && MGC.Instance.kinectManagerInstance != null)) {
+
+				if ((Time.time - timeOfWaiting) > 10) {
+					Debug.LogWarning ("MGC or Kineck is not created");
+					break;
+				}
+
+				yield return null;
 			}
+			KManager = MGC.Instance.kinectManagerInstance;
 		}
 		
-		// Update is called once per frame
+		/// <summary>
+		/// check second player and show him
+		/// </summary>
 		void Update () {
-			//Debug.Log(KManager.GetPlayer2ID());
-			if(KManager && KManager.GetPlayer2ID() != 0)
+			if(KManager && KManager.GetUserIdByIndex(1) != 0)
 			{
 				if(!TwoPlayer)
 				{
@@ -42,19 +54,15 @@ namespace SocialGame{
 					Deactivate2player();
 				}
 			}
-			/*if(TwoPlayer)
-			{
-				Activate2player();
-			}
-			else
-			{
-				Deactivate2player();
-			}*/
 		}
 
+		/// <summary>
+		/// Activate2player this instance.
+		/// </summary>
 		 public void Activate2player()
 		{
 			TwoPlayer = true;
+            Debug.Log("Player2 connect");
 			if(ghost)
 			{
 				player2.material = normal;
@@ -71,8 +79,13 @@ namespace SocialGame{
 			}
 		}
 
+		/// <summary>
+		/// Deactivate2player this instance.
+		/// </summary>
 		public void Deactivate2player()
 		{
+            if(KManager)
+                KManager.ClearKinectUsers();
 			TwoPlayer = false;
 			if(ghost)
 			{
@@ -82,17 +95,8 @@ namespace SocialGame{
 			{
 				player2.enabled = false;
 			}
-			if(animPlayer2)
-				animPlayer2.SetBool("TwoPlayers",false);
-			if(LevelManager.gameSelected == 0 && button)
-			{
-				button.deactivate();
-			}
-			if(LevelManager.gameSelected == 2)
-			{
-				LevelManager.finish();
-			}
+
 		}
+		#endif
 	}
 }
-#endif

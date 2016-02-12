@@ -8,6 +8,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Puzzle
 {
@@ -16,16 +17,16 @@ namespace Puzzle
     /// </summary>
     public class GameScript : MonoBehaviour
     {
+
+        public Shader shader;
 		/// <summary>
         /// number of puzzle pieces
 		/// </summary>
- 
         public int numberPieces = 4;
 
 		/// <summary>
         /// texture of image to complete in puzzle 
 		/// </summary>
- 
         public Texture2D puzzleImage;
 
 		/// <summary>
@@ -43,10 +44,14 @@ namespace Puzzle
 		/// <summary>
         /// indicates whether game was won or not
 		/// </summary>
-
         public Image targetImage;
 
 		bool gameWon = false;
+
+        /// <summary>
+        /// The background sprite
+        /// </summary>
+        public GameObject backgroundSprite = null;
 
         /**
          * Unity Engine method for initialisation
@@ -64,16 +69,25 @@ namespace Puzzle
          */
         void Start()
         {
-			gameWon = false;
+            gameWon = false;
 
             // loading image texture
             try
             {
-                puzzleImage = Resources.Load("Pictures/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                bool custom = PlayerPrefs.GetInt("custom") == 1;
+                if (custom)
+                {
+                    WWW www = new WWW("file:///" + PlayerPrefs.GetString("Image"));
+                    puzzleImage = www.texture;
+                }
+                else
+                {
+                    puzzleImage = Resources.Load(PlayerPrefs.GetString("defaultPicsPath") + "/" + PlayerPrefs.GetString("Image")) as Texture2D;
+                }
                 PuzzleStatistics.pictureName = PlayerPrefs.GetString("Image");
 
             }
-            catch (Exception ex)
+            catch (PlayerPrefsException ex)
             {
                 Debug.Log("Exception occured while trying to load image: " + ex.Message);
                 Debug.Log("Trying to load Bonobo image");
@@ -83,48 +97,21 @@ namespace Puzzle
                 PuzzleStatistics.pictureName = "Bonobo";
             }
 
-            Sprite testSprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
-            targetImage.sprite = testSprite;
-
-			//GameObject targetImageGUITexture = new GameObject("TargetImage");
-
-            //targetImageGUITexture.AddComponent<GUITexture>();
-            //targetImageGUITexture.guiTexture.texture = puzzleImage;
-            //targetImageGUITexture.transform.localScale = 
-            //    new Vector3(0.3f,
-            //                0.3f * Screen.width/Screen.height,
-            //                1.0f);
-
-            //targetImageGUITexture.transform.position = 
-            //    new Vector3(0.15F,
-            //                1.0f - targetImageGUITexture.transform.localScale.y/2.0f,
-            //                1.0f);
-
-            //targetImageGUITexture.layer = 13;
-
+            targetImage.sprite = Sprite.Create(puzzleImage, new Rect(0, 0, puzzleImage.width, puzzleImage.height), new Vector2(0.5f, 0.5f));
 
             //  loading number of pieces
-            try
+            int dim = (MGC.Instance.selectedMiniGameDiff + 2);
+            numberPieces = dim * dim;
+
+            if (backgroundSprite)
             {
-                numberPieces = PlayerPrefs.GetInt("size");
-                PuzzleStatistics.numberPieces = numberPieces;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("Exception occured while trying to get number of pieces: " + ex.Message);
-                Debug.Log("Using number 4.");
-                numberPieces = 4;
-                PuzzleStatistics.numberPieces = numberPieces;
+                // super weird, but works
+                backgroundSprite.transform.position = new Vector3(backgroundSprite.transform.position.x, 6 + (dim - 2) * 9 * 1.3f, numberPieces + 1);
+                backgroundSprite.transform.localScale = new Vector3(dim * 1.3f, dim * 1.3f, 1);
             }
 
             connectedComponents = new HashSet<HashSet<GameObject>>();
             pieces = new Dictionary<string, PuzzlePiece>();
-
-            int dim = (int)Math.Floor(Math.Sqrt(numberPieces));
-            numberPieces = dim * dim;
-
-            int pixels_per_cell_x = (int)Math.Floor((double)puzzleImage.width / dim);
-            int pixels_per_cell_y = (int)Math.Floor((double)puzzleImage.height / dim);
 
             bool[] x = new bool[dim];
             bool[] y = new bool[dim];
@@ -132,60 +119,29 @@ namespace Puzzle
             {
                 x[i] = false; y[i] = false;
             }
-            
-            for (int i = 1; i <= dim; i++)
+
+            for (int i = 0; i < numberPieces; i++)
             {
-                for (int j = 1; j <= dim; j++)
-                {
-                    // Create texture
-                    Texture2D texture = new Texture2D(pixels_per_cell_x, pixels_per_cell_y);
 
-                    Color[] pixels = puzzleImage.GetPixels(
-                        (j - 1) * pixels_per_cell_x,
-                        puzzleImage.height - i * pixels_per_cell_y,
-                        pixels_per_cell_x,
-                        pixels_per_cell_y);
+                PuzzlePiece piece = new PuzzlePiece(puzzleImage, i, dim, dim, shader);
 
-                    texture.SetPixels(pixels);
-                    texture.Apply();
+                pieces.Add(piece.gameObject.name, piece);
 
-                    int dim_x = dim;
-                    int dim_y = dim;
-
-					// in case every connection had a number
-                    /*PuzzlePiece piece = new PuzzlePiece(texture,
-                                                        i == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 2) + j,
-					                                    j == 1 ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j - 1,
-                                                        i == dim_y ? -1 : (dim_x - 1) * i + dim_y * (i - 1) + j,
-					                                    j == dim_x ? -1 : (dim_x - 1) * (i - 1) + dim_y * (i - 1) + j,
-					                                    Vector3.zero);*/
-
-					// in case of remembering IDs of neighbouring pieces
-					PuzzlePiece piece = new PuzzlePiece(texture,
-					                                    i == 1 ? -1 : ((i - 2) * dim + j),
-					                                    j == dim_x ? -1 : ((i - 1) * dim + j + 1),
-					                                    i == dim_y ? -1 : ((i) * dim + j),
-					                                    j == 1 ? -1 : ((i - 1) * dim + j - 1),
-
-					                                    Vector3.zero);
-					piece.id = ((i - 1) * dim + j);
-                    pieces.Add(piece.gameObject.name, piece);
-
-                    // add a connected component
-                    HashSet<GameObject> pieceSet = new HashSet<GameObject>();
-                    pieceSet.Add(piece.gameObject);
-                    connectedComponents.Add(pieceSet);
-
-                }
-                // placement in grid
-                placePuzzlePieces();
+                // add a connected component
+                HashSet<GameObject> pieceSet = new HashSet<GameObject>();
+                pieceSet.Add(piece.gameObject);
+                connectedComponents.Add(pieceSet);
             }
+
+            placePuzzlePieces();
+
             setOrthographicCamera();
 
             PuzzleStatistics.Clear();
             PuzzleStatistics.StartMeasuringTime();
-			MGC.Instance.minigameStates.SetPlayed (Application.loadedLevelName);
-			//MGC.Instance.SaveGame ();
+            MGC.Instance.minigamesProperties.SetPlayed(SceneManager.GetActiveScene().name);
+			
+
         }
 
 		/**
@@ -204,8 +160,8 @@ namespace Puzzle
 			{
 				foreach (GameObject piece in pieceComponent)
 				{
-					Vector3 piece_min = piece.renderer.bounds.min;
-					Vector3 piece_max = piece.renderer.bounds.max;
+					Vector3 piece_min = piece.GetComponent<Renderer>().bounds.min;
+					Vector3 piece_max = piece.GetComponent<Renderer>().bounds.max;
 					
 					if (piece_min.x < min_x) min_x = piece_min.x;
 					if (piece_min.y < min_y) min_y = piece_min.y;
@@ -237,7 +193,6 @@ namespace Puzzle
             {
 				gameWon = true;
                 PuzzleStatistics.StopMeasuringTime();
-				//MGC.Instance.sceneLoader.LoadScene("PuzzleVictory");
 				EndGame();
             }
         }
@@ -255,6 +210,7 @@ namespace Puzzle
         {
             // distance, in which two pieces will be connected.
             const int diff = 5;
+            const float offset = 1.8f; // this is caused by partial overlapping of transparent parts
 
             HashSet<GameObject> my_component = null;
             foreach (HashSet<GameObject> component in connectedComponents)
@@ -267,13 +223,11 @@ namespace Puzzle
             }
 
 			PuzzlePiece my_piece = pieces[puzzleObject.name];
-			//Debug.Log ("ID: " + puzzleObject.name);
-			//Debug.Log ("top: " + my_piece.top + ", bottom: " + my_piece.bottom + ", left: " + my_piece.left + ", right: " + my_piece.right);
 
-			PuzzlePiece topPiece = my_piece.top > 0 ? pieces[my_piece.top.ToString()] : null;
-			PuzzlePiece bottomPiece = my_piece.bottom > 0 ? pieces[my_piece.bottom.ToString()] : null;
-			PuzzlePiece leftPiece = my_piece.left > 0 ? pieces[my_piece.left.ToString()] : null;
-			PuzzlePiece rightPiece = my_piece.right > 0 ? pieces[my_piece.right.ToString()] : null;
+			PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
+			PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
+			PuzzlePiece leftPiece = my_piece.left >= 0 ? pieces[my_piece.left.ToString()] : null;
+			PuzzlePiece rightPiece = my_piece.right >= 0 ? pieces[my_piece.right.ToString()] : null;
 
 			HashSet<GameObject> top_component = null;
 			HashSet<GameObject> bottom_component = null;
@@ -312,13 +266,13 @@ namespace Puzzle
             if (topPiece != null && my_component!=top_component)
             {
                 // CHECK DISTANCE
-               if (my_piece.gameObject.renderer.bounds.min.y < topPiece.gameObject.renderer.bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(topPiece.gameObject.renderer.bounds.min.y - my_piece.gameObject.renderer.bounds.max.y) < diff &&    // pieces are close vertically
+               if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y < topPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+				    Math.Abs(topPiece.gameObject.GetComponent<Renderer>().bounds.min.y - my_piece.gameObject.GetComponent<Renderer>().bounds.max.y) < diff &&    // pieces are close vertically
                     Math.Abs(my_piece.gameObject.transform.position.x - topPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
                 {
                   	Vector3 newPosition = new Vector3(
 						topPiece.gameObject.transform.position.x,
-						topPiece.gameObject.transform.position.y - topPiece.gameObject.renderer.bounds.size.y,
+                        topPiece.gameObject.transform.position.y - topPiece.gameObject.GetComponent<Renderer>().bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -341,13 +295,13 @@ namespace Puzzle
 			if (bottomPiece != null && my_component!=bottom_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.y > bottomPiece.gameObject.renderer.bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(bottomPiece.gameObject.renderer.bounds.max.y - my_piece.gameObject.renderer.bounds.min.y) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y > bottomPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+				    Math.Abs(bottomPiece.gameObject.GetComponent<Renderer>().bounds.max.y - my_piece.gameObject.GetComponent<Renderer>().bounds.min.y) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.x - bottomPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
 						bottomPiece.gameObject.transform.position.x,
-						bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.renderer.bounds.size.y,
+                        bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.GetComponent<Renderer>().bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
 						my_piece.gameObject.transform.position.z);
 					
 					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
@@ -370,12 +324,12 @@ namespace Puzzle
 			if (leftPiece != null && my_component!=left_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.x > leftPiece.gameObject.renderer.bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(leftPiece.gameObject.renderer.bounds.max.x - my_piece.gameObject.renderer.bounds.min.x) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x > leftPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+				    Math.Abs(leftPiece.gameObject.GetComponent<Renderer>().bounds.max.x - my_piece.gameObject.GetComponent<Renderer>().bounds.min.x) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.y - leftPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-						leftPiece.gameObject.transform.position.x + leftPiece.gameObject.renderer.bounds.size.x,
+                        leftPiece.gameObject.transform.position.x + leftPiece.gameObject.GetComponent<Renderer>().bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
 						leftPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
@@ -399,12 +353,12 @@ namespace Puzzle
 			if (rightPiece != null && my_component!=right_component)
 			{
 				// CHECK DISTANCE
-				if (my_piece.gameObject.renderer.bounds.min.x < rightPiece.gameObject.renderer.bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(rightPiece.gameObject.renderer.bounds.min.x - my_piece.gameObject.renderer.bounds.max.x) < diff &&    // pieces are close vertically
+				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x < rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+				    Math.Abs(rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x - my_piece.gameObject.GetComponent<Renderer>().bounds.max.x) < diff &&    // pieces are close vertically
 				    Math.Abs(my_piece.gameObject.transform.position.y - rightPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 				{
 					Vector3 newPosition = new Vector3(
-						rightPiece.gameObject.transform.position.x - rightPiece.gameObject.renderer.bounds.size.x,
+                        rightPiece.gameObject.transform.position.x - rightPiece.gameObject.GetComponent<Renderer>().bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
 						rightPiece.gameObject.transform.position.y,
 						my_piece.gameObject.transform.position.z);
 					
@@ -471,7 +425,7 @@ namespace Puzzle
                     }
                 }
                 occupied[pos] = true;
-				float pieceSize = (float)Math.Ceiling(piece.gameObject.renderer.bounds.size.magnitude / 2.0f);
+				float pieceSize = (float)Math.Ceiling(piece.gameObject.GetComponent<Renderer>().bounds.size.magnitude / 2.0f);
 				piece.gameObject.transform.position = new Vector3(2 * (pos / dim) * pieceSize,
 				                                                  2 * (pos % dim) * pieceSize,
 				                                                  1);
@@ -484,10 +438,7 @@ namespace Puzzle
 		 */
 		private void EndGame()
 		{
-			//animate Neuron
-			MGC.Instance.neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
-			
-			MGC.Instance.minigamesGUI.show(false,true,"PuzzleChoosePicture");
+			MGC.Instance.WinMinigame();
 		}
     }
 }

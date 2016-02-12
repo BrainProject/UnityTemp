@@ -9,13 +9,18 @@ namespace SocialGame{
 		public Camera main;
 		public float Border;
 
-		// Use this for initialization
+		/// <summary>
+		/// Awake this instance.
+		/// </summary>
 		void Awake () {
 			Icon.Size = NumOfIconOnHeight;
 			Icon.Expands = Border;
 			Icon.MainCamera = main;
 		}
 
+		/// <summary>
+		/// Update this instance.
+		/// </summary>
 		void Update () {
 			Icon.Size = NumOfIconOnHeight;
 			Icon.Expands = Border;

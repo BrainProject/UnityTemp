@@ -1,38 +1,71 @@
-﻿using UnityEngine;
+﻿/**
+ * @file ClickImageScript.cs
+ * @author Ján Bella
+ */
+using UnityEngine;
 using System.Collections;
 
 
 namespace FindIt
 {
+    /**
+     * Callback for clicking on an image
+     */
     public class ClickImageScript : MonoBehaviour
     {
-        void OnMouseDown()
-        {
-            //restartIdleTimer();
-            //double actualTime = gameStopwatch.ElapsedMilliseconds;
+        public GameObject gameScriptHolder;
 
-            if (this.gameObject.GetComponent<SpriteRenderer>().sprite.Equals(GameObject.Find("SearchedImage").GetComponent<SpriteRenderer>().sprite))
+        public GameObject targetImage;
+
+        private GameScript gameScript;
+
+        void Start()
+        {
+            if (gameScriptHolder == null)
             {
-                if (this.gameObject.tag == "Left")
-                {
-                    FindItStatistics.RecordLeftGoodClick();
-                }
-                else if (this.gameObject.tag == "Right")
-                {
-                    FindItStatistics.RecordRightGoodClick();
-                }
-                // else unexpected error
-                Camera.main.GetComponent<GameScript>().newTargetImage();
+                Debug.LogError("GameScriptHolder in some ClickImageScript instance is not set! ");
             }
             else
             {
-                if (this.gameObject.tag == "Left")
+                gameScript = gameScriptHolder.GetComponent<GameScript>();
+                if(gameScript == null)
                 {
-                    FindItStatistics.RecordLeftWrongClick();
+                    Debug.LogError("GameScript is not assigned to some GameScriptHolder! ");
                 }
-                else if (this.gameObject.tag == "Right")
+            }
+            if(targetImage == null)
+            {
+                Debug.LogError("TargetImage in some ClickImageScript instance is not set!");
+            }
+        }
+
+        void OnMouseDown()
+        {
+            if (!gameScript.gameWon)
+            {
+                if (this.gameObject.GetComponent<Renderer>().material.mainTexture.Equals(targetImage.GetComponent<Renderer>().material.mainTexture))
                 {
-                    FindItStatistics.RecordRightWrongClick();
+                    if (this.gameObject.tag == "Left")
+                    {
+                        FindItStatistics.RecordLeftGoodClick();
+                    }
+                    else if (this.gameObject.tag == "Right")
+                    {
+                        FindItStatistics.RecordRightGoodClick();
+                    }
+                    // else unexpected error
+                    gameScript.newTargetImage();
+                }
+                else
+                {
+                    if (this.gameObject.tag == "Left")
+                    {
+                        FindItStatistics.RecordLeftWrongClick();
+                    }
+                    else if (this.gameObject.tag == "Right")
+                    {
+                        FindItStatistics.RecordRightWrongClick();
+                    }
                 }
             }
         }

@@ -5,15 +5,15 @@ public class GenerateNext : MonoBehaviour {
 
 	public GameObject[] GestChecker;
 	public Vector3 position;
-	public int DebugInt = -1;
+	public int SelectedType = -1;
 
 	public void Next()
 	{
-		//bugbug
-		if (DebugInt >= 0) 
+	
+		if (SelectedType >= 0) 
 		{
-			GameObject.Instantiate(GestChecker[DebugInt],position,Quaternion.identity);
-			Debug.LogWarning(gameObject.name + " is in Debug mod set DebugInt to -1 for cancel debugmod");
+			GameObject.Instantiate(GestChecker[SelectedType],position,Quaternion.identity);
+			//Debug.LogWarning(gameObject.name + " is in Debug mod set DebugInt to -1 for cancel debugmod");
 			return;
 		}
 		int rnd = Random.Range(0,GestChecker.Length);
@@ -22,7 +22,7 @@ public class GenerateNext : MonoBehaviour {
 
 	void Start()
 	{
-		Debug.Log("test");
-		Next();
+        SelectedType = MGC.Instance.selectedMiniGameDiff;
+        Next();
 	}
 }

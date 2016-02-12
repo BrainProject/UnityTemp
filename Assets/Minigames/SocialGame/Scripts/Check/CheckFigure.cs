@@ -4,15 +4,18 @@ using System.Collections;
 namespace SocialGame{
 	public class CheckFigure : Check {
 		public bool check;
-		private bool checkedLastUpdate;
+		//private bool checkedLastUpdate;
 
+		/// <summary>
+		/// uncheck this check.
+		/// </summary>
 		public void UnCheck()
 		{
 			check = false;
 			changeColorMaterial(Color.red);
 		}
 
-		protected override void Start()
+		public override void Start()
 		{
 			base.Start();
 			changeColorMaterial(Color.red);
@@ -25,26 +28,10 @@ namespace SocialGame{
 			changeColorMaterial(Color.green);
 		}
 
-		/*void LateUpdate()
-		{
-			if(checkedLastUpdate !=  check) // xor if is check = true and *lastupdete = false, check = false and *lastupdate =  
-			{
-				if(check)
-				{
-					check = false;
-					changeColorMaterial(Color.red);
-					//do samething
-				}
-				else
-				{
-					check = true;
-					changeColorMaterial(Color.green);
-					//do samething
-				}
-			}
-			checkedLastUpdate = false;
-		}*/
-
+		/// <summary>
+		/// Changes the color material.
+		/// </summary>
+		/// <param name="color">Color.</param>
 		void changeColorMaterial(Color color)
 		{
 			MeshRenderer  render = gameObject.GetComponent<MeshRenderer>();

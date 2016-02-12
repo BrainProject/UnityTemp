@@ -11,10 +11,10 @@ public class MinigamesGUIDetection : MonoBehaviour {
 
 	void Start ()
 	{
-		this.guiTexture.pixelInset = new Rect (Screen.width - Screen.width / 8, Screen.height / 9, Screen.width / 16, Screen.height / 9);
+		this.GetComponent<GUITexture>().pixelInset = new Rect (Screen.width - Screen.width / 8, Screen.height / 9, Screen.width / 16, Screen.height / 9);
 
-		startColor = this.guiTexture.color;
-		targetColor = this.guiTexture.color;
+		startColor = this.GetComponent<GUITexture>().color;
+		targetColor = this.GetComponent<GUITexture>().color;
 		targetColor.a = 0.51f;
 		//startColorVisibleGUI = targetColor;
 		//targetColorVisibleGUI = Color.green;
@@ -34,7 +34,7 @@ public class MinigamesGUIDetection : MonoBehaviour {
 	{
 //		StartCoroutine ("FadeInGUI");
 		if(guiIsHidden)
-			this.guiTexture.color = Color.Lerp (startColor, targetColor, state);
+			this.GetComponent<GUITexture>().color = Color.Lerp (startColor, targetColor, state);
 		//else
 		//	this.guiTexture.color = Color.Lerp (startColorVisibleGUI, targetColorVisibleGUI, state);
 	}
@@ -63,15 +63,15 @@ public class MinigamesGUIDetection : MonoBehaviour {
 	{
 		float startTime = Time.time;
 		StopCoroutine ("FadeInGUI");
-		Color startColor = this.guiTexture.color;
-		Color targetColor = this.guiTexture.color;
+		Color startColor = this.GetComponent<GUITexture>().color;
+		Color targetColor = this.GetComponent<GUITexture>().color;
 		targetColor.a = 0;
 		
-		while(this.guiTexture.color.a > 0.01f)
+		while(this.GetComponent<GUITexture>().color.a > 0.01f)
 		{
-			this.guiTexture.color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
+			this.GetComponent<GUITexture>().color = Color.Lerp (startColor, targetColor, (Time.time - startTime));
 			yield return null;
 		}
-		this.guiTexture.color = targetColor;
+		this.GetComponent<GUITexture>().color = targetColor;
 	}
 }

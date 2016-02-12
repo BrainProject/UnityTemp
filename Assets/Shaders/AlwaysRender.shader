@@ -13,7 +13,7 @@
  		Fog { Mode Off }
  		Tags {"Queue" = "Transparent" }
  		Pass {
- 			Blend SrcAlpha OneMinusSrcAlpha
+ 			Blend One Zero
  			SetTexture [_MainTex] {
  				constantColor [_Color]
  				Combine texture * constant, texture * constant

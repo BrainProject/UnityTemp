@@ -6,88 +6,54 @@ using System.Collections.Generic;
 namespace SocialGame
 {
 	public class GestCheckerFigure : MonoBehaviour {
-#if !UNITY_WEBPLAYER
+#if UNITY_STANDALONE
 		public float distance;
 		public GameObject next;
+		public Check[] nextCheck;
+		public CheckCancleFigure cancle;
 		public string clipBone;
-		public bool handMode = true;
+
 		public bool player1;
 		public bool player2;
 		public bool destroy = true;
 		public bool allChecked = false;
+        public FitCounter counter;
 
 		private Vector3 temp;
-		private List<Transform> Targets = new List<Transform>();
-
+		//private List<Transform> Targets = new List<Transform>();
+		private bool runningcorutine;
 		public Kinect.KinectManager KManager;
 		// Use this for initialization
-		void Start () {
-			GameObject temp = GameObject.FindWithTag("GameController");
-			if(temp != null)
-			{
-				KManager = temp.GetComponent<Kinect.KinectManager>();
-			}
+		void Start ()
+        {
+            KManager = MGC.Instance.kinectManagerInstance;
+
 			if(KManager)
 			{
-				if(handMode)
-				{
-					if(player1)
-					{
-						foreach(GameObject avatar in KManager.Player1Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					if(player2 && KManager.TwoUsers)
-					{
-						foreach(GameObject avatar in KManager.Player2Avatars)
-						{
-							Kinect.AvatarController avatarControler = avatar.GetComponent<Kinect.AvatarController>();
-							if(avatarControler)
-							{
-								Targets.Add(avatarControler.LeftHand);
-								Targets.Add(avatarControler.RightHand);
-							}
-						}
-					}
-					for(int i =0; i <transform.childCount; i++)
-					{
-						Transform child = transform.GetChild(i);
-						Check che =child.GetComponent<Check>();
-						if (che != null)
-						{
-							Transform[] targ = Targets.ToArray();
-							che.target = targ;
-						}
-					}
-
-					}
-					else
-					{
-						findTartgetByCheckName();
-					}
-				StartCoroutine("Check");
+				findTartgetByCheckName ();
+				StartCoroutine (Check ());
 			}
 			else
 			{
 				Debug.Log("Kinect Manager not founded");
 			}
+			//temp = GameObject.FindWithTag("Board");
+			//if(temp != null)
+			//{
+			//	counter = temp.GetComponent<FitCounter>();
+			//}
 		}
 
 	
-		// Update is called once per frame
+		/// <summary>
+		/// Check collison.
+		/// </summary>
 		IEnumerator Check() {
 			//string name = gameObject.name;
-
-			while(true)
+			runningcorutine = true;
+			while(runningcorutine)
 			{
-				//Debug.Log(name + " is chenking");
-				bool complete = allChecked;//need start true for sai is not all checked but need false if to say no
+				bool complete = allChecked;
 				for(int i = 0; i< transform.childCount; i++)
 				{
 					Transform child = transform.GetChild(i);
@@ -108,7 +74,6 @@ namespace SocialGame
 								{
 									complete = script.Checked(target) && complete;
 								}
-								//Debug.DrawRay(target.position,child.position - target.position,Color.green);
 								break;
 							}	
 							else
@@ -118,17 +83,14 @@ namespace SocialGame
 								{
 									complete = false;
 								}
-								//Debug.DrawRay(target.position,child.position - target.position,Color.red);
-								//Debug.Log(child.name +" "+ target.name + "ve vzdalenosti: " + Vector2.Distance(child.position,target.position).ToString());
 							}
 						}
 					}
 				}
 				if(complete)
 				{
+					runningcorutine =false;
 					CompleteGest();
-					//Debug.Log( name + "finish checking");
-					//StopCoroutine("Check");
 					yield return null;
 
 				}
@@ -139,19 +101,53 @@ namespace SocialGame
 			}
 		}
 
+		/// <summary>
+		/// Completes the gest.
+		/// </summary>
 		protected virtual void CompleteGest()
 		{
+			Debug.Log (" Created figure checker is complete. Name: " + gameObject.name + " check:" + (player1 ? " player1" : "") + (player2 ? "player2" : "" ) + " Tag: " + gameObject.tag);
 			if(next)
 			{
-				GameObject.Instantiate(this.next);
+				GameObject clone = GameObject.Instantiate(this.next);
+                if(counter)
+                {
+                    GestCheckerFigure fig = clone.GetComponent<GestCheckerFigure>();
+                    fig.counter = counter;
+                }
+
+			}
+			if (cancle) 
+			{
+				cancle.deactivate();
+			}
+			if (counter)
+			{
+				counter.nextComplete();
+			}
+			foreach(Check check in nextCheck)
+			{
+				check.activate();
 			}
 			if(destroy)
 			{
-				Destroy(gameObject);
+				DestroyChecker();
 			}
 		}
 
-		public void findTartgetByCheckName()
+		/// <summary>
+		/// Destroies the checker.
+		/// </summary>
+		public void DestroyChecker()
+		{
+			runningcorutine = false;
+			Destroy(gameObject);
+		}
+
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
+		public bool findTartgetByCheckName()
 		{
 			for(int i =0; i <transform.childCount; i++)
 			{
@@ -160,14 +156,18 @@ namespace SocialGame
 				string[] names =nameGest.Split('-');
 				GameObject obj = GameObjectEx.FindGameObjectWithNameTag(names[0],gameObject.tag);
 				Check che =child.GetComponent<Check>();
-				if (che != null)
-				{
-					Transform[] targ = new Transform[] {obj.transform};
+				if (che != null) {
+					Transform[] targ = new Transform[] { obj.transform };
 					che.target = targ;
-				}
+				} 
 			}
+			return true;
 		}
 
+		/// <summary>
+		/// Finds the name of the tartget by check.
+		/// </summary>
+		/// <param name="child">Child.</param>
 		public void findTartgetByCheckName(Transform child)
 		{
 			string nameGest = child.name;
@@ -181,23 +181,15 @@ namespace SocialGame
 			}										
 		}
 
+		/// <summary>
+		/// Adds the check.
+		/// </summary>
+		/// <param name="check">Check.</param>
 		public void addCheck(Transform check)
 		{
 			check.parent = transform;
-
-			if(handMode)
-			{
-				Check che =check.GetComponent<Check>();
-				if (che != null)
-				{
-					Transform[] targ = Targets.ToArray();
-					che.target = targ;
-				}
-			}
-			else
-			{
-				findTartgetByCheckName(check);
-			}
+			findTartgetByCheckName(check);
+			
 		}
 		#else
 		public void findTartgetByCheckName()

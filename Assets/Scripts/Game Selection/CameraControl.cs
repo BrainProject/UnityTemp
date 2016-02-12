@@ -13,6 +13,7 @@ namespace MinigameSelection
 		public float sweepSpeed = 1.0f;
 		public GameObject currentWaypoint;
 		public GameObject targetWaypoint;
+		public LevelManagerSelection levelManager;
 		public bool movingLeft;
 		public bool movingRight;
 
@@ -20,7 +21,10 @@ namespace MinigameSelection
 		//public bool ReadyToLeave { get; set; }
 
 		private bool OnTransition { get; set; }
-		
+#if UNITY_STANDALONE
+        private float timestamp;
+#endif
+
         private MGC mgc;
 
 		void Start()
@@ -35,41 +39,139 @@ namespace MinigameSelection
 		
 		void Update()
 		{
-			//print (currentWaypoint.name);
-			//print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
-			#if UNITY_STANDALONE
-			if(Input.GetButtonDown("Horizontal") || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
-			#else
-			if(Input.GetButtonDown("Horizontal"))
-			#endif
+			//Set target position of camera back to its original point
+			if((Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0) || Input.GetMouseButtonDown(1))
 			{
-				if((Input.GetAxis("Horizontal") < 0 || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
+				ZoomOutCamera();
+			}
+
+            //print (currentWaypoint.name);
+            //print ("Distance: " + Vector3.Distance (this.transform.position, currentWaypoint.transform.position));
+
+
+#if UNITY_STANDALONE
+            if (Input.GetMouseButtonDown(0))
+			{
+                MGC.Instance.initialTouchPosition.x = Input.mousePosition.x;
+                timestamp = Time.time;
+			}
+            if (Input.GetButtonDown("Horizontal") || Time.time - timestamp > 0.5 && (MGC.Instance.initialTouchPosition.x != 0))
+            {
+                if (Input.GetAxis("Horizontal") < 0 || ((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && !movingLeft)
 				{
 					//Set current waypoint to left
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().left;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+						while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.left.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
-					movingLeft = true;
+                    movingLeft = true;
 					movingRight = false;
 					SetNewTarget();
 				}
-				else if((Input.GetAxis("Horizontal") > 0 || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
+				else if(Input.GetAxis("Horizontal") > 0 || ((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && !movingRight)
 				{
 					//Set current waypoint to right
 					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
 					{
-						targetWaypoint = currentWaypoint = currentWaypoint.GetComponent<SelectionWaypoint>().right;
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+						while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.right.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
 						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
 					}
 					movingLeft = false;
 					movingRight = true;
 					SetNewTarget();
 				}
+                MGC.Instance.initialTouchPosition = Vector2.zero;
 			}
+#else
+            if (Input.GetMouseButtonDown(0))
+			{
+                MGC.Instance.initialTouchPosition.x = Input.mousePosition.x;
+			}
+            if (Input.GetMouseButtonUp(0) && (MGC.Instance.initialTouchPosition.x != 0))
+            {
+                if (((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) < -MGC.Instance.swipeDistance.x) && !movingLeft)
+				{
+					//Set current waypoint to left
+					if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
+					{
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.left.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
+						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+					}
+                    movingLeft = true;
+					movingRight = false;
+					SetNewTarget();
+				}
+				else if(((MGC.Instance.initialTouchPosition.x - Input.mousePosition.x) > MGC.Instance.swipeDistance.x) && !movingRight)
+				{
+					//Set current waypoint to right
+					if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
+					{
+						SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+						while(next.skipOnAndroid && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+							next = next.right.GetComponent<SelectionWaypoint>();
+						
+						targetWaypoint = currentWaypoint = next.gameObject;
+						mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+					}
+					movingLeft = false;
+					movingRight = true;
+					SetNewTarget();
+				}
+                MGC.Instance.initialTouchPosition = Vector2.zero;
+			}
+#endif
+            /*if(Input.GetButtonDown("Horizontal") || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L))))
+            {
+                if((Input.GetAxis("Horizontal") < 0 || Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.J) && Input.GetMouseButton(0))) && !movingLeft)
+                {
+                    //Set current waypoint to left
+                    if(currentWaypoint.GetComponent<SelectionWaypoint>().left != null)
+                    {
+                        SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().left.GetComponent<SelectionWaypoint>();
+                        while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+                            next = next.left.GetComponent<SelectionWaypoint>();
 
-			if(movingLeft || movingRight)
+                        targetWaypoint = currentWaypoint = next.gameObject;
+                        mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+                    }
+                    movingLeft = true;
+                    movingRight = false;
+                    SetNewTarget();
+                }
+                else if((Input.GetAxis("Horizontal") > 0 || Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.L) && Input.GetMouseButton(0)))  && !movingRight)
+                {
+                    //Set current waypoint to right
+                    if(currentWaypoint.GetComponent<SelectionWaypoint>().right != null)
+                    {
+                        SelectionWaypoint next = currentWaypoint.GetComponent<SelectionWaypoint>().right.GetComponent<SelectionWaypoint>();
+                        while(next.skipOnStandalone && next != currentWaypoint.GetComponent<SelectionWaypoint>())
+                            next = next.right.GetComponent<SelectionWaypoint>();
+
+                        targetWaypoint = currentWaypoint = next.gameObject;
+                        mgc.currentCameraDefaultPosition = currentWaypoint.transform.position;
+                    }
+                    movingLeft = false;
+                    movingRight = true;
+                    SetNewTarget();
+                }
+            }*/
+
+
+
+            if (movingLeft || movingRight)
 			{
 				if(Vector3.Distance(currentWaypoint.transform.position,this.transform.position) < 0.01f)
 				{
@@ -103,53 +205,12 @@ namespace MinigameSelection
 				movingRight = false;
 			}
 		}
-
-		void OnGUI()
+		
+		public void ZoomOutCamera()
 		{
-//			if(GUI.Button(new Rect(20, 20, 100, 30), "Reset pos"))
-//			{
-//				currentWaypoint = GameObject.Find ("OccipitalLobePos");
-//				this.GetComponent<SmoothCameraMove>().From = currentWaypoint.transform.position;
-//				this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
-//				this.GetComponent<SmoothCameraMove>().FromYRot = currentWaypoint.transform.eulerAngles.y;
-//				this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
-//				this.transform.position = currentWaypoint.transform.position;
-//				this.transform.rotation = currentWaypoint.transform.rotation;
-//				movingLeft = false;
-//				movingRight = false;
-//			}
-			/*
-			GUI.Label (new Rect (20, 20, 200, 40), "Map function\nprototype:");
-			if(GUI.Button(new Rect(20, 60, 100, 30), "Occipital"))
-			{
-				targetWaypoint = GameObject.Find ("OccipitalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 100, 100, 30), "Temporal"))
-			{
-				targetWaypoint = GameObject.Find ("TemporalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 140, 100, 30), "Frontal"))
-			{
-				targetWaypoint = GameObject.Find ("FrontalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 180, 100, 30), "Parietal"))
-			{
-				targetWaypoint = GameObject.Find ("ParietalLobePos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}
-			if(GUI.Button(new Rect(20, 220, 100, 30), "Cerebellum"))
-			{
-				targetWaypoint = GameObject.Find ("CerebellumPos");
-				FindShorterDirectionToWaypoint();
-				SetNewTarget();
-			}*/
+			levelManager.OnSelection = false;
+			levelManager.minigameOnSelection = null;
+			GetComponent<SmoothCameraMove> ().MoveCameraBack ();
 		}
 
 		public void BackToMain()
@@ -200,10 +261,10 @@ namespace MinigameSelection
 			this.GetComponent<SmoothCameraMove>().To = currentWaypoint.transform.position;
 			this.GetComponent<SmoothCameraMove>().FromYRot = this.transform.eulerAngles.y;
 			this.GetComponent<SmoothCameraMove>().ToYRot = currentWaypoint.transform.eulerAngles.y;
-			if(GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection)
+			if(levelManager.minigameOnSelection)
 			{
-				GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection.GetComponent<SelectMinigame>().OnSelection = false;
-				GameObject.Find("_LevelManager").GetComponent<LevelManagerSelection>().minigameOnSelection = null;
+				levelManager.OnSelection = false;
+				levelManager.minigameOnSelection = null;
 			}
 			ReadyToLeave = true;
 		}

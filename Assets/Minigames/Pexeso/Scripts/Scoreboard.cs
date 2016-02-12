@@ -40,7 +40,7 @@ namespace MinigamePexeso
 	        if (Physics.Raycast(ray, out hit))
 	        {
 	            //user clicks left mouse button and hits scoreboard
-	            if (Input.GetMouseButtonUp(0) && hit.collider == this.collider)
+	            if (Input.GetMouseButtonUp(0) && hit.collider == this.GetComponent<Collider>())
 	            {
 					this.gameObject.SetActive(false);
 	            }

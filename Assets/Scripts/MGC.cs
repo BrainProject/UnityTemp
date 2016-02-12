@@ -3,7 +3,7 @@
  *
  * @section About
  * 
- * The Newron is therapeutic software for children with autism spectrum disorder. The softwrae is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
+ * The Newron is therapeutic software for children with autism spectrum disorder. The software is being developed on Faculty of Informatics, Masaryk University (Brno, Czech Republic).
  * 
  * It is based on Unity game engine.
   * 
@@ -17,6 +17,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -25,6 +26,8 @@ using System.IO;
 using MainScene;
 using MinigameSelection;
 using Game;
+using Kinect;
+using UnityEngine.SceneManagement;
 
 public enum BrainPartName
 {
@@ -36,7 +39,7 @@ public enum BrainPartName
 	Cerebellum,
 	BrainStem
 }
-;
+
 
 /// <summary>
 /// Master Game Controller.
@@ -61,48 +64,81 @@ public enum BrainPartName
 /// \date 07-2014
 public class MGC : Singleton<MGC>
 {
-	protected MGC ()
-	{
-	}
-	// guarantee this will be always a singleton only - can't use the constructor!
+    protected MGC()
+    {
+    }
 
-	
-	//public Game.LoadLevelWithFade loadLevelWithFade;
-	public BrainPartName currentBrainPart;
+    public BrainPartName currentBrainPart;
+    public int selectedMenuSectionIndex = 0;
 	public Vector3 currentCameraDefaultPosition;
-	//public GameObject selectedMinigame;
+	public string mainSceneName = "Main";
 	public string gameSelectionSceneName = "GameSelection";
-	/// <summary>
-	/// Logs players actions
-	/// </summary>
-	internal Logger logger;
-	internal SceneLoader sceneLoader;
-	internal MinigameStates minigameStates;
-	internal GameObject kinectManager;
-	internal GameObject mouseCursor;
+	public GameObject confetti;
+
+    /// <summary>
+    /// Logs players actions
+    /// </summary>
+    internal Logger logger;
+    internal SceneLoader sceneLoader;
+
+    internal Minigames minigamesProperties;
+    internal GameObject kinectManagerObject;
+    internal KinectManager kinectManagerInstance;
+    internal GameObject mouseCursor;
 	internal GameObject neuronHelp;
+	internal MenuType menuType = MenuType.None;
 
     internal GameObject minigamesGUIObject;
     internal MinigamesGUI minigamesGUI;
-	internal bool fromMain;
-	internal bool fromSelection;
-	internal bool fromMinigame;
-	internal Vector3 selectedMinigame;
-	internal string inactivityScene = "Figure";
-	internal bool checkInactivity = true;
+    internal bool fromMain;
+    internal bool fromSelection;
+	internal bool isControlTakenForGUI;
+    internal bool isKinectRestartRequired;
+
+    // name of MiniGame scene to be loaded
+    internal string selectedMiniGameName;
+
+    // minigame will be started with this difficulty
+    internal int selectedMiniGameDiff { get; set; }
 
     /// <summary>
-    /// TODO just a temporary solution, before mini-games statistics will be properly saved
+    /// Path, where painting created by players will be stored
     /// </summary>
-    internal int hanoiTowersNumberOfDisks = 3;
-	
-	private float inactivityTimestamp;
-	private float inactivityLenght = 60f;
-	private int inactivityCounter = 1;
-	private GameObject controlsGUI;
+    internal string pathtoPaintings;
 
-	void Awake ()
-	{
+    /// <summary>
+    /// Path, where users shloud put their custom image sets...
+    /// </summary>
+    internal string pathtoCustomImageSets;
+
+    internal string inactivityScene = "Figure";
+	internal string alternativeInteractionScene = "HanoiTowers";
+    internal bool checkInactivity = true;
+
+    private float inactivityTimestamp;
+    private float inactivityLenght = 60f;
+    private int inactivityCounter = 1;
+    private GameObject controlsGUI;
+
+#if UNITY_STANDALONE
+    internal bool isKinectUsed = false; // to disable all future checks if Kinect is not initialized in the beginning
+#elif UNITY_ANDROID
+    private float touchBlockTimestamp;
+#endif
+
+    internal Vector2 initialTouchPosition = Vector2.zero;
+    internal Vector2 swipeDistance = Vector2.zero;
+
+
+
+
+    //GAME CONSTANTS (read only)
+    public float fadeSpeed { get { return 1.5f; } }
+
+
+
+    void Awake()
+    {
 #if UNITY_EDITOR
         if (UnityEditorInternal.InternalEditorUtility.HasPro())
         {
@@ -113,62 +149,182 @@ public class MGC : Singleton<MGC>
             print("You are working with FREE version of Unity");
         }
 #endif
-		print ("Master Game Controller Awake()...");
+        print("Master Game Controller Awake()...");
 
-		//Initiate Logger
-		logger = this.gameObject.AddComponent<Logger> ();
-		logger.Initialize ("Logs", "PlayerActions.txt");
+		//Show custom cursor
+		ShowCustomCursor (true);
 
-		//initiate level loader
-		sceneLoader = this.gameObject.AddComponent<SceneLoader> ();
-			
-		//initiate minigame states
-		minigameStates = this.gameObject.AddComponent<MinigameStates> ();
+        //Initiate Logger
+        logger = this.gameObject.AddComponent<Logger>();
+        logger.Initialize(Application.persistentDataPath + "/Logs", "PlayerActions.txt");
+
+        //initiate level loader
+        sceneLoader = this.gameObject.AddComponent<SceneLoader>();
+
+        //initiate minigame properties
+        minigamesProperties = this.gameObject.AddComponent<Minigames>();
+        minigamesProperties.loadConfigurationsfromFile();
+        LoadMinigamesStatisticsFromFile();
 
         //initiate minigames GUI
-        minigamesGUIObject = Instantiate(Resources.Load("MinigamesGUI")) as GameObject;
+        minigamesGUIObject = Instantiate(Resources.Load("MinigamesUI")) as GameObject;
         if (minigamesGUIObject == null)
         {
             Debug.LogError("Nenelazen prefab pro MinigamesGUI");
         }
 
         //make GUI a child of MGC 
-        minigamesGUIObject.transform.parent = this.transform;
-        
+		minigamesGUIObject.transform.SetParent(this.transform);
+
         minigamesGUI = minigamesGUIObject.GetComponent<MinigamesGUI>();
         if (minigamesGUI == null)
         {
             Debug.LogError("komponenta minigamesGUI nenalezena - špatný prefab?");
         }
 
+        //set up path, check or create directories
+        pathtoPaintings = Application.persistentDataPath + "/Pictures/";
+        pathtoCustomImageSets = Application.persistentDataPath + "/CustomImages/";
+
+        Directory.CreateDirectory(pathtoPaintings);
+        Directory.CreateDirectory(pathtoCustomImageSets);
         
-		//initiate kinect manager
-		kinectManager = (GameObject)Instantiate (Resources.Load ("_KinectManager") as GameObject);
-		kinectManager.transform.parent = this.transform;
-	}
 
-	void Start()
-	{
-		print("Master Game Controller Start()...");
+        //initiate kinect manager
+        Debug.Log("Trying to create KinectManager.");
+        kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
+        kinectManagerObject.transform.parent = this.transform;
 
-		//due to unknown reason, I doesn't set the list
-		//in the MinigameStates script correctly without this command.
-		minigameStates.Start ();
+		//create UI event system
+		GameObject eventSystem = (GameObject)Instantiate (Resources.Load ("EventSystem") as GameObject);
+		eventSystem.transform.parent = this.transform;
 
-		inactivityTimestamp = Time.time;
-		#if UNITY_WEBPLAYER
+		
+		isControlTakenForGUI = false;
+        isKinectRestartRequired = true;
+    }
+
+    void Start()
+    {
+        print("Master Game Controller Start()...");
+
+        //TODO ...
+        //due to unknown reason, I doesn't set the list
+        //in the Minigames script correctly without this command.
+        minigamesProperties.Start();
+
+        inactivityTimestamp = Time.time;
+#if !UNITY_STANDALONE
 		inactivityScene = "HanoiTowers";
-		#endif
-	}
+#endif
 
-	void Update()
-	{
+
+
+#if UNITY_STANDALONE
+        kinectManagerInstance = Kinect.KinectManager.Instance;
+
+        //should the KinectManager be active?
+        //Debug.Log ("Windows version: " + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor);
+
+
+        StartCoroutine(CheckKinect());
+
+
+        /*if(Environment.OSVersion.Version.Major <= 6 && Environment.OSVersion.Version.Minor < 2)	//is Windows version is lower than Windows 8?
+        {
+            if(!kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized())
+            {
+
+                print(kinectManager.transform.GetChild(0).GetComponent<Kinect.KinectManager>().IsInitialized());
+                kinectManager.SetActive(false);
+            }
+        }*/
+#else
+		kinectManagerObject.SetActive(false);
+#endif
+        swipeDistance = new Vector2(Screen.width / 4, Screen.width / 3);
+    }
+
+    void Update()
+    {
+
+
+        /*
+        if (Input.GetMouseButtonDown(0))
+        {
+            initialTouchPosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0) && (initialTouchPosition.x != 0))
+        {
+            if (((initialTouchPosition.x - Input.mousePosition.x) < -swipeDistance.x))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_D);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_D);
+            }
+            else if (((initialTouchPosition.x - Input.mousePosition.x) > swipeDistance.x))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_A);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_A);
+            }
+            initialTouchPosition.x = 0;
+        }
+        if (Input.GetMouseButtonUp(0) && (initialTouchPosition.y != 0))
+        {
+            if (((initialTouchPosition.y - Input.mousePosition.y) < -swipeDistance.y))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_W);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_W);
+            }
+            else if (((initialTouchPosition.y - Input.mousePosition.y) > swipeDistance.y))
+            {
+                Kinect.Win32.MouseKeySimulator.SendKeyDown(Kinect.Win32.KeyCode.KEY_S);
+                Kinect.Win32.MouseKeySimulator.SendKeyUp(Kinect.Win32.KeyCode.KEY_S);
+            }
+            initialTouchPosition.y = 0;
+        }*/
+
+
+#if UNITY_ANDROID
+        //if(Input.touchCount == 3 && ((Time.time - touchBlockTimestamp) > 2) || Input.GetKeyDown (KeyCode.I))
+        //{
+        //    touchBlockTimestamp = Time.time;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            print("Show hidden menu.");
+            if (!minigamesGUI.visible)
+            {
+                minigamesGUI.show();
+            }
+            else
+            {
+                minigamesGUI.hide();
+            }
+        }
+
+        if(Input.touchCount == 10 && ((Time.time - touchBlockTimestamp) > 2))
+		{
+			touchBlockTimestamp = Time.time;
+            ResetMinigamesStatistics();
+        }
+
+        /*if (Input.touchCount == 4 && ((Time.time - touchBlockTimestamp) > 2))
+        {
+            menuType = MenuType.Brain;
+            touchBlockTimestamp = Time.time;
+        }
+        if (Input.touchCount == 5 && ((Time.time - touchBlockTimestamp) > 2))
+        {
+            menuType = MenuType.Tiles;
+            touchBlockTimestamp = Time.time;
+        }*/
+#else
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
 
-		//Hidden menu possible to show with secret gesture
         if (Input.GetKeyDown(KeyCode.I))
         {
             print("Show hidden menu.");
@@ -182,257 +338,584 @@ public class MGC : Singleton<MGC>
             }
         }
 
-		//Inactivity detection
-		if(Input.anyKeyDown)
+        //Debug actions
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.F11))
+            {
+                SceneManager.LoadScene("Crossroads");
+            }
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                SceneManager.LoadScene(gameSelectionSceneName);
+
+                //TODO test only...
+                minigamesProperties.printStatisticsToFile();
+            }
+        }
+
+        //Reset minigame statistics
+		if(Input.GetKeyDown(KeyCode.F12))
 		{
-			inactivityTimestamp = Time.time;
-			inactivityCounter = 0;
+			ResetMinigamesStatistics();
+			/*if(SceneManager.GetActiveScene().name == gameSelectionSceneName)
+				SceneManager.LoadScene(gameSelectionSceneName);*/
 		}
 
-		if(checkInactivity)
-		{
-			if (Time.time - inactivityTimestamp > inactivityLenght)
-    	    {
-        	    InactivityReaction();
-        	}
-		}
+#endif
+        //Change of menu types
+        /*if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad0))
+            {
+                menuType = MenuType.None;
+                Debug.Log("Changed menu type to default.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                menuType = MenuType.Brain;
+                Debug.Log("Changed menu type to brain.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                menuType = MenuType.Tiles;
+                Debug.Log("Changed menu type to tiles.");
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                menuType = MenuType.GSI;
+                Debug.Log("Changed menu type to gsi.");
+            }
+        }*/
+        
+        //Inactivity detection
+        if (Input.anyKeyDown)
+        {
+            inactivityTimestamp = Time.time;
+            inactivityCounter = 0;
+        }
 
-		//Debug actions
-		if (Input.GetKeyDown(KeyCode.F11))
-		{
-			Application.LoadLevel ("Main");
-		}
-		if (Input.GetKeyDown(KeyCode.F12))
-		{
-			Application.LoadLevel ("GameSelection");
-		}
-		if (Input.GetKeyDown(KeyCode.F5)) {
-			SaveGame ();
-		}
-		if (Input.GetKeyDown(KeyCode.F8))
-		{
-			LoadGame ();
-		}
-		if (Input.GetKeyDown (KeyCode.F3))
-		{
-			ResetGameStatus ();
-		}
-	}
+        if (checkInactivity)
+        {
+            if (Time.time - inactivityTimestamp > inactivityLenght)
+            {
+                InactivityReaction();
+            }
+        }
+    }
 
-	void OnLevelWasLoaded (int level)
-	{
-		inactivityTimestamp = Time.time;
-		inactivityCounter = 0;
-		print ("[MGC] Scene: '" + Application.loadedLevelName + "' loaded");
-		MGC.Instance.logger.addEntry ("Scene loaded: '" + Application.loadedLevelName + "'");
-		//Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
+    void OnLevelWasLoaded(int level)
+    {
+        inactivityTimestamp = Time.time;
+        inactivityCounter = 0;
+        print("[MGC] Scene: '" + SceneManager.GetActiveScene().name + "' loaded");
+        logger.addEntry("Scene loaded: '" + SceneManager.GetActiveScene().name + "'");
 
-		//DEV NOTE: Only temporary until we unify cursor styles.
-//		if (Application.loadedLevelName == "Coloring")
-//		{
-//			mouseCursor.SetActive (false);
-//			Screen.showCursor = true;
-//		}
-//		else if(mouseCursor)
-//		{
-//			mouseCursor.SetActive(true);
-//			Screen.showCursor = false;
-//		}
-//
-//		if (!mouseCursor && Application.loadedLevel > 0)
-//		{
-//			ShowCustomCursor ();
-//		}
+        if(SceneManager.GetActiveScene().name == "TiledMenu")
+        {
+            selectedMiniGameDiff = 0;
+        }
 
-		//perform fade in?
-		if (MGC.Instance.sceneLoader.doFade)
+        //perform fade in?
+        if (sceneLoader.doFade)
+        {
+            sceneLoader.FadeIn();
+        }
+
+		if (minigamesProperties.GetPlayed (SceneManager.GetActiveScene().name))
 		{
-			MGC.Instance.sceneLoader.FadeIn ();
+			Debug.Log ("The minigame was already visited, don't show help.");
 		}
 		else
 		{
-			gameObject.guiTexture.enabled = false;
-		}
-            
-
-		//loadLevelWithFade.LoadSeledctedLevelWithColorLerp()
-		//print("calling object ID: " + this.GetInstanceID());
-
-
-
-		//if (level > 2)
-		//{
-		//    this.GetComponent<Game.MinigameStates>().SetPlayed(Application.loadedLevelName);
-		//}
-	}
-
-	//Only for debugging and testing purposes
-//	void OnGUI ()
-//	{
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 80, 110, 30), "Brain")) {
-//			Application.LoadLevel ("Main");
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 120, 110, 30), "Game Selection")) {
-//			Application.LoadLevel ("GameSelection");
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 160, 110, 30), "QUIT")) {
-//			Application.Quit ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 200, 110, 30), "Save")) {
-//			SaveGame ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 240, 110, 30), "Load")) {
-//			LoadGame ();
-//		}
-//		if (GUI.Button (new Rect (Screen.width - 130, Screen.height - 280, 110, 30), "Reset status")) {
-//			ResetGameStatus ();
-//		}
-//	}
-	public void SaveGame()
-	{
-		#if !UNITY_WEBPLAYER
-		//remove delete of the save file feature when finished, it will no longer be necessary
-		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
-		{
-			File.Delete(Application.persistentDataPath + "/newron.sav");
-		}
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/newron.sav");
-
-		foreach(Game.Minigame minigameData in minigameStates.minigames)
-		{
-			bf.Serialize(file, minigameData);
-		}
-		print ("Game saved.");
-		file.Close();
-		#endif
-	}
-
-	public void LoadGame()
-	{
-		#if !UNITY_WEBPLAYER
-		if(File.Exists(Application.persistentDataPath + "/newron.sav"))
-		{
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/newron.sav", FileMode.Open);
-			FileInfo info = new FileInfo(file.Name);
-			if(info.Length > 0)
+			if(level > 3)
 			{
-				for(int i=0; i<minigameStates.minigames.Count; ++i)
+				if(minigamesProperties.GetMinigame(SceneManager.GetActiveScene().name))
 				{
-					minigameStates.minigames[i] = (Game.Minigame)bf.Deserialize(file);
+					if(minigamesProperties.IsWithHelp(SceneManager.GetActiveScene().name))
+					{
+                        //				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
+                        if (neuronHelp)
+                        {
+                            neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+                            minigamesProperties.SetPlayedWithHelp(SceneManager.GetActiveScene().name);
+                        }
+					}
 				}
-
-				print ("Saved game-data loaded.");
-			}
-			else
-			{
-				print ("Game NOT loaded.");
-			}
-			file.Close();
-		}
-
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
-		#endif
-	}
-
-	public void ShowCustomCursor(bool isShown)
-	{
-		if(isShown)
-		{
-			if(!mouseCursor)
-			{
-				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-				mouseCursor.guiTexture.enabled = false;
-				mouseCursor.transform.parent = this.transform;
-			}
-			else
-			{
-				mouseCursor.SetActive(true);
 			}
 		}
-		else
-		{
-			if(!mouseCursor)
-			{
-				mouseCursor = (GameObject)Instantiate(Resources.Load("MouseCursor") as GameObject);
-				mouseCursor.guiTexture.enabled = false;
-				mouseCursor.transform.parent = this.transform;
-			}
-			else
-			{
-				mouseCursor.SetActive(false);
-			}
-		}
-	}
+//        else
+//        {
+//            gameObject.guiTexture.enabled = false;
+//        }
 
-	public void HideCustomCursor()
-	{
-		Destroy(mouseCursor);
-	}
-
-	void ResetGameStatus()
-	{		
-		foreach(Minigame minigameData in this.GetComponent<MinigameStates>().minigames)
-		{
-			minigameData.played = false;
-			minigameData.initialShowHelpCounter = 0;
-		}
-
-		print ("Game statuses were reset to 'not yet played' (Minigame.played == false)");
-
-		SaveGame ();
-		if(Application.loadedLevelName == "GameSelection")
-			sceneLoader.LoadScene("GameSelection");
-	}
-
-	public void ShowHelpBubble()
-	{
-		if(neuronHelp)
-		{
-			neuronHelp.GetComponent<BrainHelp>().ShowHelpBubble();
-		}
-	}
+//		if(Application.loadedLevelName == "GameSelection" || Application.loadedLevelName == "Main")
+//		{
+//#if UNITY_STANDALONE
+//            if(isKinectUsed && !kinectManagerObject.activeSelf)
+//			{
+//				kinectManagerObject.SetActive(true);
+//				kinectManagerInstance.ClearKinectUsers();
+//				//kinectManagerInstance.StartKinect();
+//				kinectManagerInstance.avatarControllers.Clear();
+//			}
+//#endif
 
 
-	void InactivityReaction()
-	{
-		print ("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
-		logger.addEntry("Inactive in " + Application.loadedLevelName + " for " + inactivityLenght * inactivityCounter + " seconds.");
-		if(inactivityCounter == 5)
-		{
-			inactivityCounter = 0;
-			print ("Load another scene. Im getting bored here.");
-			if(Application.loadedLevelName != inactivityScene)
-			{
-				//load inactivityMinigame
-				Application.LoadLevel(inactivityScene);
-			}
-			else
-			{
-				//load either previous scene or selection scene
-				Application.LoadLevel(1);
-			}
-		}
-		else
-		{
-			if(neuronHelp)
-			{
-				neuronHelp.GetComponent<BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
-				++inactivityCounter;
-			}
-		}
-		inactivityTimestamp = Time.time;
-	}
+            //if (!mouseCursor.activeSelf)
+			//{
+				//ShowCustomCursor(true);
+			//}
 
-
-
-
-
-		////// (optional) allow runtime registration of global objects
-		//static public T RegisterComponent<T>()
-		//{
-		//    return Instance.GetOrAddComponent<T>();
+		//	isControlTakenForGUI = false;
 		//}
+
+        if(SceneManager.GetActiveScene().name == "Crossroad")
+        {
+            ShowCustomCursor(true);
+        }
+    }
+
+    /// <summary>
+    /// Saves statistics of all mini-games to file
+    /// </summary>
+    public void SaveMinigamesStatisticsToFile()
+    {
+#if !UNITY_WEBPLAYER
+        {
+            //delete old saved file 
+            if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
+            {
+                File.Delete(Application.persistentDataPath + "/mini-games.stats");
+            }
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/mini-games.stats");
+
+            foreach (Game.MinigameProperties minigameData in minigamesProperties.minigames)
+            {
+                bf.Serialize(file, minigameData.stats);
+            }
+            print("Mini-games statistics saved to 'mini-games.stats' file.");
+            file.Close();
+        }
+#endif
+    }
+
+    public void LoadMinigamesStatisticsFromFile()
+    {
+#if !UNITY_WEBPLAYER
+        try
+        {
+            if (File.Exists(Application.persistentDataPath + "/mini-games.stats"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/mini-games.stats", FileMode.Open);
+                FileInfo info = new FileInfo(file.Name);
+                if (info.Length > 0)
+                {
+                    for (int i = 0; i < minigamesProperties.minigames.Count; ++i)
+                    {
+                        minigamesProperties.minigames[i].stats = (Game.MinigameStatistics)bf.Deserialize(file);
+                    }
+
+                    print("Saved mini-games statistics was loaded.");
+                }
+                else
+                {
+                    Debug.LogError("Saved mini-games statistics was NOT loaded.");
+                }
+                file.Close();
+            }
+
+            // if file doesn't exists, allocate new statistics and save initial version of file
+            else
+            {
+                ResetMinigamesStatistics();
+            }
+
+		    if (SceneManager.GetActiveScene().name == gameSelectionSceneName)
+		    {
+			    sceneLoader.LoadScene(gameSelectionSceneName);
+		    }
+        }
+        catch (EndOfStreamException ex)
+        {
+            Debug.LogWarning("Minigame statistics not loaded because of EndOfStreamException!\n" + ex);
+        }
+#endif
+    }
+
+
+    public void ShowCustomCursor(bool isShown)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+		Debug.Log("No cursor on Android is needed.");
+#else
+        if (isShown)
+        {
+            if (!mouseCursor)
+            {
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = true;
+                mouseCursor.transform.SetParent(this.transform);
+            }
+            else
+            {
+                mouseCursor.SetActive(true);
+				mouseCursor.GetComponent<CursorReference>().cursorReference.CursorToNormal();
+            }
+        }
+        else
+        {
+            if (!mouseCursor)
+            {
+                mouseCursor = (GameObject)Instantiate(Resources.Load("CursorUI") as GameObject);
+				mouseCursor.transform.GetChild(0).GetComponent<Image>().enabled = false;
+				mouseCursor.transform.SetParent(this.transform);
+            }
+            else
+            {
+                mouseCursor.SetActive(false);
+            }
+        }
+#endif
+    }
+
+    public void HideCustomCursor()
+    {
+#if UNITY_ANDROID
+		Debug.Log("No cursor...");
+#else
+        Destroy(mouseCursor);
+#endif
+    }
+
+    /// <summary>
+    /// resets statistics of all mini-games
+    /// </summary>
+    /// creates new data-structure and fills it for each mini-game
+    /// saves freshly created data to file
+    public void ResetMinigamesStatistics()
+    {
+        print("Reset...");
+        Minigames minigames = this.GetComponent<Minigames>();
+        if (minigames != null)
+        {
+
+
+            foreach (MinigameProperties minigameProperties in this.GetComponent<Minigames>().minigames)
+            {
+                print("   reseting minigame: " + minigameProperties.readableName);
+                Game.MinigameStatistics newstats = new MinigameStatistics();
+                newstats.played = false;
+                newstats.initialShowHelpCounter = 0;
+                newstats.DifficutlyLastPlayed = 0;
+                newstats.playedCount = new int[minigameProperties.MaxDifficulty + 1];
+                newstats.finishedCount = new int[minigameProperties.MaxDifficulty + 1];
+
+                minigameProperties.stats = newstats;
+            }
+
+            SaveMinigamesStatisticsToFile();
+
+            print("Mini-games statistics were reseted");
+        }
+
+        else
+        {
+            Debug.LogError("Missing component in MGC...");
+        }
+
+
+        //TODO ?question by jch? what is purpose of this code?
+        //if (Application.loadedLevelName == "GameSelection")
+        //{
+        //    sceneLoader.LoadScene("GameSelection");
+        //}
+    }
+
+    /// <summary>
+    /// Resets Kinect to the default state.
+    /// </summary>
+    public void ResetKinect()
+    {
+        if (isKinectRestartRequired)
+        {
+            if (kinectManagerObject.activeSelf)
+            {
+#if UNITY_STANDALONE
+                try
+                {
+                    kinectManagerInstance = KinectManager.Instance;
+                    Debug.Log("Kinect settings are being reset.");
+                    bool bNeedRestart = false;
+                    Kinect.KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+                    kinectManagerObject.SetActive(true);
+                    kinectManagerInstance.ClearKinectUsers();
+                    kinectManagerInstance.avatarControllers.Clear();
+                    kinectManagerInstance.StartKinect();
+                    InteractionManager im = kinectManagerInstance.GetComponent<InteractionManager>();
+                    im.controlMouseCursor = true;
+                    im.controlMouseDrag = true;
+                    im.allowHandClicks = true;
+                    isKinectRestartRequired = false;
+                }
+                catch (Exception)
+                {
+                    kinectManagerObject.SetActive(false);
+                    Debug.LogWarning("Kinect is not initialized.");
+                }
+#else
+            kinectManagerObject.SetActive(false);
+            Debug.LogWarning("Kinect is not supported on this platform.");
+#endif
+            }
+        }
+    }
+
+    public void ShowHelpBubble()
+    {
+        if (neuronHelp)
+        {
+			neuronHelp.GetComponent<NEWBrainHelp>().helpObject.ShowHelpAnimation();
+        }
+    }
+
+	public delegate void TakeControlForGUI(bool isShown);
+
+	public static event TakeControlForGUI TakeControlForGUIEvent;
+
+	public void TakeControlForGUIAction(bool isShown)
+	{
+		if(!isShown)
+		{
+			isControlTakenForGUI = false;
+            if (TakeControlForGUIEvent != null)
+            {              
+                TakeControlForGUIEvent(isShown);
+            }
+		}
+		else
+		{
+			if(!isControlTakenForGUI)
+			{
+				isControlTakenForGUI = true;
+                if (TakeControlForGUIEvent != null)
+                {
+                    TakeControlForGUIEvent(isShown);
+                }
+			}
+		}
+    }
+
+    void InactivityReaction()
+    {
+        print("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        logger.addEntry("Inactive in " + SceneManager.GetActiveScene().name + " for " + inactivityLenght * inactivityCounter + " seconds.");
+        if (inactivityCounter == 5)
+        {
+            inactivityCounter = 0;
+			ShowCustomCursor(true);
+            print("Load another scene. Im getting bored here.");
+            if (SceneManager.GetActiveScene().name != inactivityScene)
+            {
+                //load inactivityMinigame
+				if(kinectManagerObject.activeSelf)
+	                SceneManager.LoadScene(inactivityScene);
+				else
+					SceneManager.LoadScene(alternativeInteractionScene);
+            }
+            else
+            {
+                //load either previous scene or selection scene
+                SceneManager.LoadScene(1);
+            }
+        }
+        else
+        {
+            if (neuronHelp)
+            {
+                neuronHelp.GetComponent<BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
+                ++inactivityCounter;
+            }
+        }
+        inactivityTimestamp = Time.time;
+    }
+
+    public string getSelectedMinigameName()
+    {
+        return selectedMiniGameName;
+    }
+
+    //returns properties of currently selected mini-game, if there is such
+    public MinigameProperties getSelectedMinigameProperties()
+    {
+        return minigamesProperties.GetMinigame(selectedMiniGameName);
+    }
+
+    public void startMiniGame(string name)
+    {
+        try
+        {
+            //store the name of selected minigame
+            selectedMiniGameName = name;
+
+            // check, if difficulty is applicable for this mini-game
+            // if not, run it directly
+            if (getSelectedMinigameProperties().MaxDifficulty == 0)
+            {
+                sceneLoader.LoadScene(selectedMiniGameName);
+            }
+
+            // first, load difficulty chooser scene, mini-game will be loaded from that scene
+            else
+            {
+                sceneLoader.LoadScene("DifficultyChooser");
+            }
+        }
+        catch(NullReferenceException ex)
+        {
+            Debug.LogWarning("Minigame not did not start correctly.\n" + ex);
+        }
+    }
+
+
+
+    // evoked when player successfuully finish minigame
+    public void WinMinigame()
+    {
+        print("Minigame successffully finished");
+
+        //TODO Add "Celebration phase" stuff here
+        //animate Neuron character
+        if (neuronHelp)
+        {
+			Game.BrainHelp neuron = neuronHelp.GetComponent<Game.BrainHelp>();
+			neuron.ShowSmile(Resources.Load("Neuron/smilyface") as Texture);
+			neuron.LaunchConfetties();
+        }
+
+        minigamesProperties.SetSuccessfullyPlayed(selectedMiniGameName, selectedMiniGameDiff);
+        SaveMinigamesStatisticsToFile();
+
+        //global GUI
+        MGC.Instance.minigamesGUI.show(true);
+    }
+
+	public void LoseMinigame()
+	{
+        print("Minigame successffully unfinished");
+
+		//animate Neuron character
+		if (neuronHelp)
+		{
+			neuronHelp.GetComponent<Game.BrainHelp>().ShowSmile(Resources.Load("Neuron/sadface") as Texture);
+		}
+				
+		//global GUI
+		MGC.Instance.minigamesGUI.show(true);
+	}
+
+
+    public Minigames getMinigameStates()
+    {
+        return minigamesProperties;
+    }
+
+    public string getPathtoPaintings()
+    {
+        return pathtoPaintings;
+    }
+
+    public string getPathtoCustomImageSets()
+    {
+        return pathtoCustomImageSets;
+    }
+
+
+    /// <summary>
+    /// Checks the Kinect connection.
+    /// </summary>
+    /// 
+    /// //Please don't look at this function. It's nasty, but it works...
+    private IEnumerator CheckKinect()
+    {
+#if UNITY_STANDALONE
+        kinectManagerInstance = KinectManager.Instance;
+        yield return null;
+        // Wait until all is initialized.
+        
+        yield return new WaitForSeconds(1);
+
+        // Set more aggressive smoothing for cursor if Kinect1 is connected.
+        if (Kinect.KinectInterop.GetSensorType() == "Kinect1Interface")
+        {
+            Kinect.InteractionManager im = Kinect.InteractionManager.Instance;
+			im.smoothFactor = 5;
+			isKinectUsed = true;
+        }
+
+        kinectManagerInstance = KinectManager.Instance;
+
+        if (kinectManagerInstance)
+        {
+            if (!kinectManagerInstance.IsInitialized())
+            {
+                kinectManagerObject.SetActive(false);
+            }
+        }
+
+
+        /*int sensorsCount = 0;
+
+        
+        try
+        {
+            Debug.Log("Is kinect initialized: " + KinectManager.Instance.IsInitialized());
+        }
+        catch (NullReferenceException)
+        {
+            kinectManagerObject.SetActive(false);
+            isKinectUsed = false;
+            yield break;
+        }
+
+
+        if (KinectManager.Instance.IsInitialized())
+        {
+            KinectInterop.SensorData sensorData = kinectManagerInstance.GetSensorData();
+            sensorsCount = (sensorData != null && sensorData.sensorInterface != null) ? sensorData.sensorInterface.GetSensorsCount() : 0;
+            //Debug.Log("Connected sensors: " + sensorsCount);
+
+            if (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount < 2)
+            {
+                Destroy(kinectManagerObject);
+                yield return new WaitForSeconds(1);
+                Debug.Log("First Kinect 2 initialization failed. Trying to recreate KinectManager again.");
+                kinectManagerObject = (GameObject)Instantiate(Resources.Load("_KinectManager") as GameObject);
+				kinectManagerObject.transform.parent = this.transform;
+				isKinectUsed = false;
+            }
+			else
+			{
+				isKinectUsed = true;
+				yield return null;
+			}
+            // sensorsCount == 0 means no sensor is currently connected
+        }
+
+        if ((Kinect.KinectInterop.GetSensorType() == "Kinect1Interface" && sensorsCount == 0) || (Kinect.KinectInterop.GetSensorType() == "Kinect2Interface" && sensorsCount == 1))
+        {
+            kinectManagerObject.SetActive(false);
+			Debug.Log("Something with Kinect initialization went terribly wrong! Thus disabling the KinectManager.");
+			isKinectUsed = false;
+        }*/
+#else
+		yield return null;
+#endif
+
+    }
+
+
 }
