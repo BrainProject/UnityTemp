@@ -226,6 +226,7 @@ namespace Puzzle
 			HashSet<HashSet<GameObject>> toConnect = new HashSet<HashSet<GameObject>>();
 
 
+			// checking all objects in one component, instead of just puzzleObject
 			foreach (GameObject obj in my_component) 
 			{
 				PuzzlePiece my_piece = pieces[obj.name];
