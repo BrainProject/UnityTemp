@@ -29,12 +29,12 @@ Function fnc_kinect_Create
   !insertmacro MUI_HEADER_TEXT "Instalace Microsoft Kinect for Windows SDK" "Dialog subtitle..."
   
   ; === Label2 (type: Label) ===
-  ${NSD_CreateLabel} 7.9u 76.92u 256.05u 28.92u "a postupujte dle uveden˝ch pokynu. "
+  ${NSD_CreateLabel} 7.9u 76.92u 256.05u 28.92u "a postupujte dle uveden√Ωch pokynu. "
   Pop $hCtl_kinect_Label2
   SendMessage $hCtl_kinect_Label2 ${WM_SETFONT} $hCtl_kinect_Font1 0
   
   ; === Label3 (type: Label) ===
-  ${NSD_CreateLabel} 7.9u 105.85u 256.05u 28.92u "V instalaci software Newron prosÌm pokracujte aû po staûenÌ a instalaci Kinect SDK. "
+  ${NSD_CreateLabel} 7.9u 105.85u 256.05u 28.92u "V instalaci software Newron, pros√≠m, pokraƒçujte a≈æ po sta≈æen√≠ a instalaci Kinect SDK. "
   Pop $hCtl_kinect_Label3
   SendMessage $hCtl_kinect_Label3 ${WM_SETFONT} $hCtl_kinect_Font1 0
   
@@ -45,7 +45,7 @@ Function fnc_kinect_Create
   ${NSD_OnClick} $hCtl_kinect_Link1 open1
   
   ; === Label1 (type: Label) ===
-  ${NSD_CreateLabel} 7.9u 20.92u 280.41u 40.62u "Pro spr·vnou funkcnost programu Newron je potreba mÌt v pocÌtaci nainstalov·n zdarma dostupn˝ software: $\"Microsoft Kinect for Windows SDK$\". Pokud jej nainstalov·n nem·te, nebo si nejste jistÌ, prejdete, prosÌm, na str·nku:"
+  ${NSD_CreateLabel} 7.9u 20.92u 280.41u 40.62u "Pro spr√°vnou funkƒçnost programu Newron je pot≈ôeba m√≠t v poƒç√≠taƒçi nainstalov√°n zdarma dostupn√Ω software: $\"Microsoft Kinect for Windows SDK$\". Pokud jej nainstalov√°n nem√°te, nebo si nejste jist√≠, p≈ôejdƒõte, pros√≠m, na str√°nku:"
   Pop $hCtl_kinect_Label1
   SendMessage $hCtl_kinect_Label1 ${WM_SETFONT} $hCtl_kinect_Font1 0
   
