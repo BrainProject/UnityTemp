@@ -26,7 +26,10 @@ Function fnc_kinect_Create
   !insertmacro MUI_HEADER_TEXT "Instalace Microsoft Kinect for Windows SDK" "Dialog subtitle..."
   
   ; === Label1 (type: Label) ===
-  ${NSD_CreateLabel} 7.9u 20.92u 280.41u 113.85u "Pro správnou funkčnost programu Newron je potřeba mít v počítači nainstalován software $\"Microsoft Kinect for Windows SDK$\". Instalace tohoto software (pouze v angličtině) bude spuštěna v dalším kroku. Pro více informací o tomto software, navštivte: http://www.microsoft.com/en-us/download/details.aspx?id=40278"
+  ${NSD_CreateLabel} 7.9u 20.92u 280.41u 113.85u "Pro správnou funkčnost programu Newron je potřeba stáhnout a nainstalovat software $\"Microsoft Kinect for Windows SDK$\". Jestliže používáte starší verzi snímače (Kinect for Xbox 360), navštivte: http://www.microsoft.com/en-us/download/details.aspx?id=40278. Jestliže používate novější snímač (Kinect for Xbox One), navštivte: https://www.microsoft.com/en-us/download/details.aspx?id=44561   Po stažení a instalaci tohoto sotware pokračujte v instalaci software Newron."
+  
+  
+  
   Pop $hCtl_kinect_Label1
   SendMessage $hCtl_kinect_Label1 ${WM_SETFONT} $hCtl_kinect_Font1 0
   
