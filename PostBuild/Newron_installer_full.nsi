@@ -16,7 +16,7 @@
   ;Unicode true
 
   # pøidání informací
-  VIProductVersion                 "0.9.7.0"
+  VIProductVersion                 "2.0.0.0"
   VIAddVersionKey ProductName      "Newron - kompletní balík"
   VIAddVersionKey Comments         "Terapeutický software Newron"
   VIAddVersionKey CompanyName      "Masaryk University"
@@ -46,7 +46,7 @@
   #InstallDirRegKey HKCU "Software\Newron" ""
 
   ;Request application privileges - for SDK
-  RequestExecutionLevel admin
+  ;RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
@@ -67,12 +67,12 @@
 ;--------------------------------
 ;Pages
 
-	!include "kinect.nsdinc"
+  !include "kinect.nsdinc"
 
   !insertmacro MUI_PAGE_LICENSE "Licence.rtf"
+  Page custom fnc_kinect_Show
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
-  Page custom fnc_kinect_Show
   !insertmacro MUI_PAGE_INSTFILES
   
   #!insertmacro MUI_UNPAGE_CONFIRM
@@ -98,18 +98,17 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Kinect SDK" SecKinect
-
-  #povinná položka - nelze odškrtnout
-  SectionIn RO
-
-  SetOutPath $INSTDIR\SDK
-  
-  File "SDK\KinectSDK-v1.8-Setup.exe"
-  ExecWait "$INSTDIR\SDK\KinectSDK-v1.8-Setup.exe"
-  
-
-SectionEnd
+;Section "Kinect SDK" SecKinect
+;
+;  #povinná položka - nelze odškrtnout
+;  SectionIn RO
+;
+;  SetOutPath $INSTDIR\SDK
+;  
+;  File "SDK\KinectSDK-v1.8-Setup.exe"
+;  ExecWait "$INSTDIR\SDK\KinectSDK-v1.8-Setup.exe"  
+;
+;SectionEnd
 
 
 
@@ -125,7 +124,7 @@ Section "Newron" SecNewron
   File /r Newron_Data
   File Newron.exe
   File README.txt
-  File Changelog.txt
+  File Version.txt
   File *.dll
   
   ;Store installation folder
@@ -169,9 +168,9 @@ FunctionEnd
 
 
 ;--- After successful install, remove Kinect SDK ---
-Function .onInstSuccess
-    RMDir /r "$INSTDIR\SDK"
-FunctionEnd
+;Function .onInstSuccess
+;    RMDir /r "$INSTDIR\SDK"
+;FunctionEnd
 
  
 #;--------------------------------

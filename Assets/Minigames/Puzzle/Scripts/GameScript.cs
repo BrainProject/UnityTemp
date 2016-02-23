@@ -222,164 +222,170 @@ namespace Puzzle
                 }
             }
 
-			PuzzlePiece my_piece = pieces[puzzleObject.name];
-
-			PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
-			PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
-			PuzzlePiece leftPiece = my_piece.left >= 0 ? pieces[my_piece.left.ToString()] : null;
-			PuzzlePiece rightPiece = my_piece.right >= 0 ? pieces[my_piece.right.ToString()] : null;
-
-			HashSet<GameObject> top_component = null;
-			HashSet<GameObject> bottom_component = null;
-			HashSet<GameObject> left_component = null;
-			HashSet<GameObject> right_component = null;
-			bool[] set = new bool[4];
-
-			foreach (HashSet<GameObject> component in connectedComponents)
-			{
-				if (!set[0] && topPiece!=null && component.Contains(topPiece.gameObject))
-				{
-					set[0] = true;
-					top_component = component;
-				}
-				if (!set[1] && bottomPiece!=null && component.Contains(bottomPiece.gameObject))
-				{
-					set[1] = true;
-					bottom_component = component;
-				}
-				if (!set[2] && leftPiece!=null && component.Contains(leftPiece.gameObject))
-				{
-					set[2] = true;
-					left_component = component;
-				}
-				if (!set[3] && rightPiece!=null && component.Contains(rightPiece.gameObject))
-				{
-					set[3] = true;
-					right_component = component;
-				}
-			}
-			
-			
 			// to connect connected components
 			HashSet<HashSet<GameObject>> toConnect = new HashSet<HashSet<GameObject>>();
 
-            if (topPiece != null && my_component!=top_component)
-            {
-                // CHECK DISTANCE
-               if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y < topPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(topPiece.gameObject.GetComponent<Renderer>().bounds.min.y - my_piece.gameObject.GetComponent<Renderer>().bounds.max.y) < diff &&    // pieces are close vertically
-                    Math.Abs(my_piece.gameObject.transform.position.x - topPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
-                {
-                  	Vector3 newPosition = new Vector3(
-						topPiece.gameObject.transform.position.x,
-                        topPiece.gameObject.transform.position.y - topPiece.gameObject.GetComponent<Renderer>().bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
-						my_piece.gameObject.transform.position.z);
 
-					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
-
-                    foreach (GameObject o in my_component)
-                    {
-                    	o.transform.position += moveBy;
-                    }
-					foreach (HashSet<GameObject> component in toConnect)
-					{
-						foreach (GameObject o in component)
-						{
-							o.transform.position += moveBy;
-                        }
-                    }
-
-					toConnect.Add(top_component);
-				}
-            }
-			if (bottomPiece != null && my_component!=bottom_component)
+			// checking all objects in one component, instead of just puzzleObject
+			foreach (GameObject obj in my_component) 
 			{
-				// CHECK DISTANCE
-				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y > bottomPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
-				    Math.Abs(bottomPiece.gameObject.GetComponent<Renderer>().bounds.max.y - my_piece.gameObject.GetComponent<Renderer>().bounds.min.y) < diff &&    // pieces are close vertically
-				    Math.Abs(my_piece.gameObject.transform.position.x - bottomPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
+				PuzzlePiece my_piece = pieces[obj.name];
+
+				PuzzlePiece topPiece = my_piece.top >= 0 ? pieces[my_piece.top.ToString()] : null;
+				PuzzlePiece bottomPiece = my_piece.bottom >= 0 ? pieces[my_piece.bottom.ToString()] : null;
+				PuzzlePiece leftPiece = my_piece.left >= 0 ? pieces[my_piece.left.ToString()] : null;
+				PuzzlePiece rightPiece = my_piece.right >= 0 ? pieces[my_piece.right.ToString()] : null;
+
+				HashSet<GameObject> top_component = null;
+				HashSet<GameObject> bottom_component = null;
+				HashSet<GameObject> left_component = null;
+				HashSet<GameObject> right_component = null;
+				bool[] set = new bool[4];
+
+				foreach (HashSet<GameObject> component in connectedComponents)
 				{
-					Vector3 newPosition = new Vector3(
-						bottomPiece.gameObject.transform.position.x,
-                        bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.GetComponent<Renderer>().bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
-						my_piece.gameObject.transform.position.z);
-					
-					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
-					
-					foreach (GameObject o in my_component)
+					if (!set[0] && topPiece!=null && component.Contains(topPiece.gameObject))
 					{
-						o.transform.position += moveBy;
+						set[0] = true;
+						top_component = component;
 					}
-					foreach (HashSet<GameObject> component in toConnect)
+					if (!set[1] && bottomPiece!=null && component.Contains(bottomPiece.gameObject))
 					{
-						foreach (GameObject o in component)
+						set[1] = true;
+						bottom_component = component;
+					}
+					if (!set[2] && leftPiece!=null && component.Contains(leftPiece.gameObject))
+					{
+						set[2] = true;
+						left_component = component;
+					}
+					if (!set[3] && rightPiece!=null && component.Contains(rightPiece.gameObject))
+					{
+						set[3] = true;
+						right_component = component;
+					}
+				}
+
+
+
+				if (topPiece != null && my_component!=top_component)
+				{
+					// CHECK DISTANCE
+					if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y < topPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+						Math.Abs(topPiece.gameObject.GetComponent<Renderer>().bounds.min.y - my_piece.gameObject.GetComponent<Renderer>().bounds.max.y) < diff &&    // pieces are close vertically
+						Math.Abs(my_piece.gameObject.transform.position.x - topPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
+					{
+						Vector3 newPosition = new Vector3(
+							topPiece.gameObject.transform.position.x,
+							topPiece.gameObject.transform.position.y - topPiece.gameObject.GetComponent<Renderer>().bounds.size.y + offset * topPiece.gameObject.transform.localScale.y,
+							my_piece.gameObject.transform.position.z);
+
+						Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
+
+						foreach (GameObject o in my_component)
 						{
 							o.transform.position += moveBy;
 						}
-					}
+						foreach (HashSet<GameObject> component in toConnect)
+						{
+							foreach (GameObject o in component)
+							{
+								o.transform.position += moveBy;
+							}
+						}
 
-					toConnect.Add(bottom_component);
-				}
-			}
-			if (leftPiece != null && my_component!=left_component)
-			{
-				// CHECK DISTANCE
-				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x > leftPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(leftPiece.gameObject.GetComponent<Renderer>().bounds.max.x - my_piece.gameObject.GetComponent<Renderer>().bounds.min.x) < diff &&    // pieces are close vertically
-				    Math.Abs(my_piece.gameObject.transform.position.y - leftPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
-				{
-					Vector3 newPosition = new Vector3(
-                        leftPiece.gameObject.transform.position.x + leftPiece.gameObject.GetComponent<Renderer>().bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
-						leftPiece.gameObject.transform.position.y,
-						my_piece.gameObject.transform.position.z);
-					
-					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
-					
-					foreach (GameObject o in my_component)
-					{
-						o.transform.position += moveBy;
+						toConnect.Add(top_component);
 					}
-					foreach (HashSet<GameObject> component in toConnect)
+				}
+				if (bottomPiece != null && my_component!=bottom_component)
+				{
+					// CHECK DISTANCE
+					if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.y > bottomPiece.gameObject.GetComponent<Renderer>().bounds.min.y &&     // my bound is lower than other
+						Math.Abs(bottomPiece.gameObject.GetComponent<Renderer>().bounds.max.y - my_piece.gameObject.GetComponent<Renderer>().bounds.min.y) < diff &&    // pieces are close vertically
+						Math.Abs(my_piece.gameObject.transform.position.x - bottomPiece.gameObject.transform.position.x) < diff)  // pieces are close horizontally
 					{
-						foreach (GameObject o in component)
+						Vector3 newPosition = new Vector3(
+							bottomPiece.gameObject.transform.position.x,
+							bottomPiece.gameObject.transform.position.y + bottomPiece.gameObject.GetComponent<Renderer>().bounds.size.y - offset * bottomPiece.gameObject.transform.localScale.y,
+							my_piece.gameObject.transform.position.z);
+
+						Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
+
+						foreach (GameObject o in my_component)
 						{
 							o.transform.position += moveBy;
 						}
-					}
+						foreach (HashSet<GameObject> component in toConnect)
+						{
+							foreach (GameObject o in component)
+							{
+								o.transform.position += moveBy;
+							}
+						}
 
-					toConnect.Add(left_component);
-				}
-			}
-			if (rightPiece != null && my_component!=right_component)
-			{
-				// CHECK DISTANCE
-				if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x < rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
-				    Math.Abs(rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x - my_piece.gameObject.GetComponent<Renderer>().bounds.max.x) < diff &&    // pieces are close vertically
-				    Math.Abs(my_piece.gameObject.transform.position.y - rightPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
-				{
-					Vector3 newPosition = new Vector3(
-                        rightPiece.gameObject.transform.position.x - rightPiece.gameObject.GetComponent<Renderer>().bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
-						rightPiece.gameObject.transform.position.y,
-						my_piece.gameObject.transform.position.z);
-					
-					Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
-					
-					foreach (GameObject o in my_component)
-					{
-						o.transform.position += moveBy;
+						toConnect.Add(bottom_component);
 					}
-					foreach (HashSet<GameObject> component in toConnect)
+				}
+				if (leftPiece != null && my_component!=left_component)
+				{
+					// CHECK DISTANCE
+					if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x > leftPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+						Math.Abs(leftPiece.gameObject.GetComponent<Renderer>().bounds.max.x - my_piece.gameObject.GetComponent<Renderer>().bounds.min.x) < diff &&    // pieces are close vertically
+						Math.Abs(my_piece.gameObject.transform.position.y - leftPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
 					{
-						foreach (GameObject o in component)
+						Vector3 newPosition = new Vector3(
+							leftPiece.gameObject.transform.position.x + leftPiece.gameObject.GetComponent<Renderer>().bounds.size.x - offset * leftPiece.gameObject.transform.localScale.x,
+							leftPiece.gameObject.transform.position.y,
+							my_piece.gameObject.transform.position.z);
+
+						Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
+
+						foreach (GameObject o in my_component)
 						{
 							o.transform.position += moveBy;
 						}
-					}
+						foreach (HashSet<GameObject> component in toConnect)
+						{
+							foreach (GameObject o in component)
+							{
+								o.transform.position += moveBy;
+							}
+						}
 
-					toConnect.Add(right_component);
+						toConnect.Add(left_component);
+					}
+				}
+				if (rightPiece != null && my_component!=right_component)
+				{
+					// CHECK DISTANCE
+					if (my_piece.gameObject.GetComponent<Renderer>().bounds.min.x < rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x &&     // my bound is lower than other
+						Math.Abs(rightPiece.gameObject.GetComponent<Renderer>().bounds.min.x - my_piece.gameObject.GetComponent<Renderer>().bounds.max.x) < diff &&    // pieces are close vertically
+						Math.Abs(my_piece.gameObject.transform.position.y - rightPiece.gameObject.transform.position.y) < diff)  // pieces are close horizontally
+					{
+						Vector3 newPosition = new Vector3(
+							rightPiece.gameObject.transform.position.x - rightPiece.gameObject.GetComponent<Renderer>().bounds.size.x + offset * rightPiece.gameObject.transform.localScale.x,
+							rightPiece.gameObject.transform.position.y,
+							my_piece.gameObject.transform.position.z);
+
+						Vector3 moveBy = newPosition - my_piece.gameObject.transform.position;
+
+						foreach (GameObject o in my_component)
+						{
+							o.transform.position += moveBy;
+						}
+						foreach (HashSet<GameObject> component in toConnect)
+						{
+							foreach (GameObject o in component)
+							{
+								o.transform.position += moveBy;
+							}
+						}
+
+						toConnect.Add(right_component);
+					}
 				}
 			}
-            
+
             if (toConnect.Count > 0)
             {
                 PuzzleStatistics.RegisterClickWithConnection();
