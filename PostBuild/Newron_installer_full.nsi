@@ -6,6 +6,7 @@
 
   !include "MUI2.nsh"
 
+
 ;--------------------------------
 ;General
 
@@ -15,7 +16,7 @@
   ;Properly display all languages
   ;Unicode true
 
-  # pøidání informací
+  # pridání informací
   VIProductVersion                 "2.0.0.0"
   VIAddVersionKey ProductName      "Newron - kompletní balík"
   VIAddVersionKey Comments         "Terapeutický software Newron"
@@ -69,6 +70,7 @@
 
   !include "kinect.nsdinc"
 
+  !insertmacro MUI_PAGE_WELCOME
   !insertmacro MUI_PAGE_LICENSE "Licence.rtf"
   Page custom fnc_kinect_Show
   !insertmacro MUI_PAGE_COMPONENTS
@@ -78,6 +80,9 @@
   #!insertmacro MUI_UNPAGE_CONFIRM
   #!insertmacro MUI_UNPAGE_INSTFILES
 
+  
+  
+  
 ;--------------------------------
 ;Languages
 
@@ -160,7 +165,7 @@ FunctionEnd
 
   ;Assign descriptions to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecKinect} "Microsoft Kinect for Windows SDK 1.8"
+#    !insertmacro MUI_DESCRIPTION_TEXT ${SecKinect} "Microsoft Kinect for Windows SDK 1.8"
 	!insertmacro MUI_DESCRIPTION_TEXT ${SecNewron} "Terapeutický software Newron"
     !insertmacro MUI_DESCRIPTION_TEXT ${SecShortcut} "Zástupce na ploše"
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
