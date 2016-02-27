@@ -77,9 +77,13 @@
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
   
-  #!insertmacro MUI_UNPAGE_CONFIRM
-  #!insertmacro MUI_UNPAGE_INSTFILES
-
+  !define MUI_FINISHPAGE_SHOWREADME "$instdir\README.txt" ; Can also be a URL
+  !define MUI_FINISHPAGE_LINK "Více informací na:"
+  !define MUI_FINISHPAGE_LINK_LOCATION "http://www.newron.cz"
+  
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\Newron.exe"
+  !define MUI_FINISHPAGE_RUN_TEXT "Spustit aplikaci Newron"
+  !insertmacro MUI_PAGE_FINISH
   
   
   
