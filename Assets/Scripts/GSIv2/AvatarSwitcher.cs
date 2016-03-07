@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Kinect;
 
@@ -8,51 +9,23 @@ namespace GSIv2
     public class AvatarSwitcher : MonoBehaviour {
 #if UNITY_STANDALONE
         public static AvatarSwitcher Instance { get; private set; }
-        public AvatarController player1;
-        //public AvatarController player2;
+        public List<AvatarController> players = new List<AvatarController>();
 
         void Awake()
         {
             if (!MGC.Instance)
             {
                 Debug.Log("Creating MGC " + MGC.Instance);
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
                 //StartCoroutine(GoToCroossroadWithDelay());
-#endif
+            #endif
             }
 
             Instance = this;
-            BeginGSIMinigame();
+            StartCoroutine(BeginGSIMinigame());
         }
+
         #region public
-
-        /// <summary>
-        /// Initiates Kinect for the GSI minigame at the beginning.
-        /// </summary>
-        void BeginGSIMinigame()
-        {
-            if (MGC.Instance)
-            {
-                MGC.Instance.isKinectRestartRequired = true;
-                if (KinectManager.Instance)
-                {
-                    MGC.Instance.kinectManagerInstance = KinectManager.Instance;
-                    MGC.Instance.kinectManagerInstance.ClearKinectUsers();
-                    MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
-                    if (player1)
-                        KinectManager.Instance.avatarControllers.Add(player1);
-
-                    //if (player2)
-                    //  KinectManager.Instance.avatarControllers.Add(player2);
-                    
-                    bool bNeedRestart = false;
-                    KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
-                    KinectManager.Instance.StartKinect();
-                    Debug.Log("Activate This kinect manager");
-                }
-            }
-        }
-
 
         /// <summary>
         /// Activates or deactivates the default GSI interaction with hand cursor.
@@ -66,7 +39,10 @@ namespace GSIv2
             im.controlMouseCursor = isActive;
             im.controlMouseDrag = isActive;
             im.allowHandClicks = isActive;
-            Instance.player1.enabled = !isActive;
+            for (int i = 0; i < players.Count; ++i)
+            {
+                players[i].enabled = !isActive;
+            }
         }
 
         #endregion
@@ -87,17 +63,48 @@ namespace GSIv2
             Debug.Log("Control taken: " + taken);
             if (taken)
             {
-                ActivateMGCInteraction(false);
+                ActivateMGCInteraction(true);
             }
             else
             {
-                ActivateMGCInteraction(true);
+                ActivateMGCInteraction(false);
             }
         }
 
         void Start()
         {
             StartCoroutine(SetThisMinigamePlayed());
+        }
+
+        /// <summary>
+        /// Initiates Kinect for the GSI minigame at the beginning.
+        /// </summary>
+        IEnumerator BeginGSIMinigame()
+        {
+            while (!MGC.Instance)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (!KinectManager.Instance)
+            {
+                yield return new WaitForSeconds(1);
+            }
+
+            MGC.Instance.isKinectRestartRequired = true;
+            MGC.Instance.kinectManagerInstance = KinectManager.Instance;
+            MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+            MGC.Instance.kinectManagerInstance.avatarControllers.Clear();
+
+            for (int i = 0; i < players.Count; ++i)
+            {
+                KinectManager.Instance.avatarControllers.Add(players[i]);
+            }
+
+            bool bNeedRestart = false;
+            KinectInterop.InitSensorInterfaces(false, ref bNeedRestart);
+            KinectManager.Instance.StartKinect();
+            Debug.Log("Activate This kinect manager");
+            ActivateMGCInteraction(false);
         }
 
         IEnumerator SetThisMinigamePlayed()
