@@ -2,12 +2,15 @@
 using System.Collections;
 using Image = UnityEngine.UI.Image;
 
-//abstract class for colliders
+/// <summary>
+/// abstract class for colliders 
+/// </summary>
+
 abstract public class CollisionLoading : MonoBehaviour {
 
 
     private bool activated;         //collision has been detected
-    private bool done;              //image is whole drawn
+    private bool done;              //loading is done (image is whole drawn)
     protected Image img;
 
     protected virtual void Start ()
@@ -19,11 +22,13 @@ abstract public class CollisionLoading : MonoBehaviour {
             if(!img.sprite)
             {
                 this.enabled = false;
+                Debug.LogWarning("No sprite in image component");
             }
         }
         else
         {
             this.enabled = false;
+            Debug.LogWarning("No image component");
         }
         activated = false;
         done = false;
@@ -48,12 +53,13 @@ abstract public class CollisionLoading : MonoBehaviour {
             img.fillAmount = 0;
         }
 
-        if (done)
+        if (done)       //image is whole drawn
         {
             Action();
             done = false;
+            activated = false;
             img.fillAmount = 0;
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);    
         }
     }
 

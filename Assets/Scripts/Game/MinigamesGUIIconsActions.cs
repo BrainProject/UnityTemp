@@ -132,70 +132,77 @@ namespace Game
 					//hide GUI
 					MGC.Instance.minigamesGUI.hide();
 
-                    //if help is shown, disable it
-                    NEWBrainHelp neuronHelp = MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>();
-                    if(neuronHelp.helpObject.helpClone)
-                    {
-                        neuronHelp.helpObject.HideHelpAnimation();
-                        break;
-                    }
-					
-					//return back
-					if(SceneManager.GetActiveScene().buildIndex > 3)	//NOTE: Update minimal minigame level index here
-					{
-						// Coloring mini-game se special treatment...
-						if (SceneManager.GetActiveScene().name == "Coloring")
-						{
-							Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
-							if (coloringLM.painting)
-							{
-								coloringLM.backGUI.BackAction();
-							}
-							else
-							{
-								MGC.Instance.sceneLoader.LoadScene("Crossroad");
-							}
-						}
-						
-						//back button in other mini-games
-						else
-						{
-							int maxDiff = MGC.Instance.getSelectedMinigameProperties().MaxDifficulty;
-							print("game has maxDiff: " + maxDiff);
-							if(maxDiff == 0)
-							{
-								MGC.Instance.sceneLoader.LoadScene("Crossroad");
-							}
-							else
-							{
-								MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
-							}
-							
-						}
-					}
-					
-					else if(SceneManager.GetActiveScene().name == "DifficultyChooser")
-					{
-						MGC.Instance.sceneLoader.LoadScene("TiledMenu");
-					}
-					else if(SceneManager.GetActiveScene().name == "GameSelection")
-					{
-						//Zoom out in selection scene if zoomed to some minigame.
-						//Go to brain scene if not zoomed.
-						MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
-						if(cm.ReadyToLeave)
-						{
-							MGC.Instance.fromMain = true;
-							MGC.Instance.sceneLoader.LoadScene(1);
-						}
-						else
-							cm.ZoomOutCamera();
-					}
-					else if(SceneManager.GetActiveScene().name == "TiledMenu")
-					{
-						hide();
-						MinigameSelection.MenuLevelManager.Instance.SwitchMenu (0);
-					}
+                        //if help is shown, disable it
+                        if (MGC.Instance.neuronHelp)
+                        {
+                            NEWBrainHelp neuronHelp = MGC.Instance.neuronHelp.GetComponent<NEWBrainHelp>();
+                            if (neuronHelp.helpObject.helpClone)
+                            {
+                                neuronHelp.helpObject.HideHelpAnimation();
+                                break;
+                            }
+                        }
+
+                        //return back
+                        if (SceneManager.GetActiveScene().buildIndex > 3)   //NOTE: Update minimal minigame level index here
+                        {
+                            int maxDiff = 0;
+                            // Coloring mini-game se special treatment...
+                            if (SceneManager.GetActiveScene().name == "Coloring")
+                            {
+                                Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
+                                if (coloringLM.painting)
+                                {
+                                    coloringLM.backGUI.BackAction();
+                                }
+                                else
+                                {
+                                    MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                                }
+                            }
+
+                            //back button in other mini-games
+                            else
+                            {
+                                MinigameProperties minigameProps = MGC.Instance.getSelectedMinigameProperties();
+                                if (minigameProps)
+                                {
+                                    maxDiff = MGC.Instance.getSelectedMinigameProperties().MaxDifficulty;
+                                    print("game has maxDiff: " + maxDiff);
+                                }
+                                if (maxDiff == 0)
+                                {
+                                    MGC.Instance.sceneLoader.LoadScene("Crossroad");
+                                }
+                                else
+                                {
+                                    MGC.Instance.sceneLoader.LoadScene("DifficultyChooser");
+                                }
+
+                            }
+                        }
+                        else if (SceneManager.GetActiveScene().name == "DifficultyChooser")
+                        {
+                            MGC.Instance.sceneLoader.LoadScene("TiledMenu");
+                        }
+                        else if (SceneManager.GetActiveScene().name == "GameSelection")
+                        {
+                            //Zoom out in selection scene if zoomed to some minigame.
+                            //Go to brain scene if not zoomed.
+                            MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
+                            if (cm.ReadyToLeave)
+                            {
+                                MGC.Instance.fromMain = true;
+                                MGC.Instance.sceneLoader.LoadScene(1);
+                            }
+                            else
+                                cm.ZoomOutCamera();
+                        }
+                        else if (SceneManager.GetActiveScene().name == "TiledMenu")
+                        {
+                            hide();
+                            MinigameSelection.MenuLevelManager.Instance.SwitchMenu(0);
+                        }
 					
 					
 					break;
