@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using GSIv2;
+
 
 namespace Builder
 {
@@ -9,6 +9,9 @@ namespace Builder
     public class ActionTakeBlock : CollisionLoading
     {
 
+        public GameObject block;
+        public GameObject hand;
+
         protected override void Start()
         {
             base.Start();
@@ -16,11 +19,16 @@ namespace Builder
 
         /// <summary>
         /// Action runs when loading is done.
-        /// It shows the help.
+        /// The object appers in avatar's hand.
         /// </summary>
         public override void Action()
         {
-            Debug.Log("I am working");
+            if (true) //TODO: overovani jestli je kostka zrovna v ruce
+            {
+                Vector3 startPosition = hand.transform.position;
+                block = Instantiate(block, startPosition, Quaternion.identity) as GameObject;
+                block.GetComponent<BlockBehaviour>().hand = hand;
+            }     
         }
     }
 
