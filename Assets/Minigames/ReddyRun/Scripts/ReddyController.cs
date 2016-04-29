@@ -97,22 +97,21 @@ namespace Reddy
 
             transform.Translate(Vector3.forward * 0.2f * Time.deltaTime * runningSpeed);
 
-            if (Input.GetButtonDown("Vertical"))
+           
+            if (ReddyKinect.Instance.IsSquat()) // SLIDE
             {
-                if (Input.GetAxis("Vertical") < 0) // SLIDE
+                anim.SetTrigger("slideTrigger");
+                StartCoroutine(SlideCoroutine());
+            }
+            if (ReddyKinect.Instance.IsJump()) // JUMP
+            {
+                if (!isJumpInProgress)
                 {
-                    anim.SetTrigger("slideTrigger");
-                    StartCoroutine(SlideCoroutine());
-                }
-                if (Input.GetAxis("Vertical") > 0) // JUMP
-                {
-                    if (!isJumpInProgress)
-                    {
-                        anim.SetTrigger("jumpTrigger");
-                        StartCoroutine(JumpCoroutine());
-                    }
+                    anim.SetTrigger("jumpTrigger");
+                    StartCoroutine(JumpCoroutine());
                 }
             }
+           
 
             cursorObject.transform.position = Input.mousePosition;
             cursorPositionX = cursorObject.transform.position.x;

@@ -21,6 +21,8 @@ namespace Reddy
         private bool jump;
         private bool hiddenGesture;
         private bool squat;
+        private bool leanLeft;
+        private bool leanRight;
 
         
         // The singleton CubeGestureListener instance.
@@ -85,6 +87,30 @@ namespace Reddy
             return false;
         }
 
+        public bool IsLeanLeft()
+        {
+            if (squat)
+            {
+                print("LeanL gesture detected");
+                squat = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsLeanRight()
+        {
+            if (squat)
+            {
+                print("LeanR gesture detected");
+                squat = false;
+                return true;
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Invoked when a new user is detected. Here you can start gesture tracking by invoking KinectManager.DetectGesture()-function.
@@ -103,6 +129,8 @@ namespace Reddy
             manager.DetectGesture(userId, KinectGestures.Gestures.Jump);
             manager.DetectGesture(userId, KinectGestures.Gestures.HiddenGesture);
             manager.DetectGesture(userId, KinectGestures.Gestures.Squat);
+            manager.DetectGesture(userId, KinectGestures.Gestures.LeanLeft);
+            manager.DetectGesture(userId, KinectGestures.Gestures.LeanRight);
 
         }
 
@@ -191,6 +219,16 @@ namespace Reddy
                 case KinectGestures.Gestures.Squat:
                     squat = true;
                     print("SQUAT gesture completed");
+                    break;
+
+                case KinectGestures.Gestures.LeanLeft:
+                    squat = true;
+                    print("LeanL gesture completed");
+                    break;
+
+                case KinectGestures.Gestures.LeanRight:
+                    squat = true;
+                    print("LeanR gesture completed");
                     break;
             }
 

@@ -45,7 +45,7 @@ PlayerSettings:
   Prepare IOS For Recording: 0
   submitAnalytics: 1
   usePlayerLog: 1
-  bakeCollisionMeshes: 1
+  bakeCollisionMeshes: 0
   forceSingleInstance: 0
   resizableWindow: 1
   useMacAppStoreValidation: 0
@@ -89,8 +89,8 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleIdentifier: cz.muni.hci.Nuron
-  bundleVersion: 2.0
+  bundleIdentifier: com.Company.ProductName
+  bundleVersion: 1.0
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   metroEnableLowLatencyPresentationAPI: 0
@@ -110,11 +110,11 @@ PlayerSettings:
   ForceSDCardPermission: 1
   CreateWallpaper: 0
   APKExpansionFiles: 0
-  preloadShaders: 1
+  preloadShaders: 0
   StripUnusedMeshComponents: 1
   VertexChannelCompressionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 238
   iPhoneSdkVersion: 988
   iPhoneTargetOSVersion: 22
   uIPrerenderedIcon: 0
@@ -142,7 +142,7 @@ PlayerSettings:
   iOSLaunchScreenLandscape: {fileID: 0}
   iOSLaunchScreenBackgroundColor:
     serializedVersion: 2
-    rgba: 1852795251
+    rgba: 0
   iOSLaunchScreenFillPct: 100
   iOSLaunchScreenSize: 100
   iOSLaunchScreenCustomXibPath: 
@@ -160,8 +160,8 @@ PlayerSettings:
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
-  AndroidTVCompatibility: 0
-  AndroidIsGame: 0
+  AndroidTVCompatibility: 1
+  AndroidIsGame: 1
   androidEnableBanner: 1
   m_AndroidBanners:
   - width: 320
@@ -175,42 +175,39 @@ PlayerSettings:
     m_Icons:
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: b6932e915f14c96499b1282a47dde784, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448340
+      m_Height: 98448340
   - m_BuildTarget: Android
     m_Icons:
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: b486b0d65a7e0d44091c2d71fab8abbe, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: b486b0d65a7e0d44091c2d71fab8abbe, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: 75c58f68a907b1f4a9bcb02343bc304a, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: 75b3f0d1eb997134faa4490f66d8ea3c, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: 75b3f0d1eb997134faa4490f66d8ea3c, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
     - serializedVersion: 2
       m_Icon: {fileID: 2800000, guid: b486b0d65a7e0d44091c2d71fab8abbe, type: 3}
-      m_Width: 0
-      m_Height: 0
+      m_Width: 98448384
+      m_Height: 98448384
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
     m_StaticBatching: 1
     m_DynamicBatching: 1
   m_BuildTargetGraphicsAPIs:
-  - m_BuildTarget: WindowsStandaloneSupport
-    m_APIs: 01000000
-    m_Automatic: 1
   - m_BuildTarget: AndroidPlayer
     m_APIs: 08000000
     m_Automatic: 0
@@ -298,7 +295,7 @@ PlayerSettings:
   ps4ApplicationParam4: 0
   ps4DownloadDataSize: 0
   ps4GarlicHeapSize: 2048
-  ps4Passcode: eaoEiIgxIX4a2dREbbSqWy6yhKIDCdJO
+  ps4Passcode: F69AzBlax3CF3EDNhm3soLBPh71Yexui
   ps4pnSessions: 1
   ps4pnPresence: 1
   ps4pnFriends: 1
@@ -452,27 +449,17 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   intPropertyNames:
   - Android::ScriptingBackend
-  - Metro::ScriptingBackend
   - Standalone::ScriptingBackend
-  - WP8::ScriptingBackend
   - WebGL::ScriptingBackend
   - WebGL::audioCompressionFormat
   - WebGL::exceptionSupport
   - WebGL::memorySize
-  - iOS::Architecture
-  - iOS::EnableIncrementalBuildSupportForIl2cpp
-  - iOS::ScriptingBackend
   Android::ScriptingBackend: 0
-  Metro::ScriptingBackend: 2
   Standalone::ScriptingBackend: 0
-  WP8::ScriptingBackend: 2
   WebGL::ScriptingBackend: 1
   WebGL::audioCompressionFormat: 4
   WebGL::exceptionSupport: 1
   WebGL::memorySize: 256
-  iOS::Architecture: 2
-  iOS::EnableIncrementalBuildSupportForIl2cpp: 0
-  iOS::ScriptingBackend: 0
   boolPropertyNames:
   - WebGL::analyzeBuildSize
   - WebGL::dataCaching
