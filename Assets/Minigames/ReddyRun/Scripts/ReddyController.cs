@@ -27,6 +27,7 @@ namespace Reddy
         public GameObject cursorObject;
         internal ReddyStates currentState;
         private bool isCelebrating;
+        private bool isDead;
 
         public GameObject pathOwner;
 
@@ -37,11 +38,20 @@ namespace Reddy
         // Use this for initialization
         void Start()
         {
-            MGC.Instance.getMinigameStates().SetPlayed("ReddyRun", 0);
+            if (MGC.Instance)
+            {
+                MGC.Instance.ResetKinect();
+                MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+                MGC.Instance.kinectManagerInstance.StartKinect();
+                MGC.Instance.isKinectRestartRequired = true;
+                MGC.Instance.getMinigameStates().SetPlayed("ReddyRun", 0);
+            }
             anim = GetComponent<Animator>();
             pathCount = 1;
             isJumpInProgress = false;
             isCelebrating = false;
+            isDead = false;
+            
 
             currentState = ReddyStates.WAITING;
         }
@@ -80,7 +90,7 @@ namespace Reddy
 
         void UpdateWaiting()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (ReddyKinect.Instance.IsSquat())
             {
                 anim.SetBool("isRunning", true);
                 currentState = ReddyStates.RUNNING;
@@ -195,11 +205,20 @@ namespace Reddy
         }
         void UpdateDying()
         {
+            if (isDead)
+            {
+                MGC.Instance.LoseMinigame();
+                isDead = false;
+            }
 
+            
             if (Input.GetKeyDown(KeyCode.R))
             {
                 //SceneManager.LoadScene(0);
+                
                 MGC.Instance.sceneLoader.LoadScene("ReddyRun");
+                
+
             }
             //MGC.Instance.FinishMinigame();
         }
@@ -223,6 +242,7 @@ namespace Reddy
             }
             else if (other.gameObject.CompareTag("Obstacle"))
             {
+                
                 //GameObject.Find("mixamorig:Spine").GetComponent<CapsuleCollider>().enabled = false;
                 currentState = ReddyStates.DYING;
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("sprinting_forward_roll_inPlace") || anim.GetCurrentAnimatorStateInfo(0).IsName("jump_inPlace"))
@@ -240,7 +260,7 @@ namespace Reddy
 
                 }
                 anim.SetBool("isFalling", true);
-
+                isDead = true;
             }
         }
 

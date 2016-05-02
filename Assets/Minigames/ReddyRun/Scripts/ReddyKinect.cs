@@ -24,7 +24,7 @@ namespace Reddy
         private bool leanLeft;
         private bool leanRight;
 
-        
+
         // The singleton CubeGestureListener instance.
         public static ReddyKinect Instance { get; private set; }
 
@@ -32,6 +32,25 @@ namespace Reddy
         void Awake()
         {
             Instance = this;
+            print("AWAKE listener + " + MGC.Instance);
+        }
+
+        void Start()
+        {
+            if (MGC.Instance)
+            {
+                if (MGC.Instance.kinectManagerInstance)
+                {
+                    //print("MGC.Instance.KMI = " + MGC.Instance.kinectManagerInstance);
+                    MGC.Instance.kinectManagerInstance.gestureListeners.Add(this);
+                    //MGC.Instance.kinectManagerInstance.ClearKinectUsers();
+                    //MGC.Instance.ResetKinect();
+                }
+                else
+                {
+                    print("No MGC.Instance.KMI");
+                }
+            }
         }
 
         /// <summary>
@@ -119,8 +138,19 @@ namespace Reddy
         /// <param name="userIndex">User index</param>
         public void UserDetected(long userId, int userIndex)
         {
+            
             // the gestures are allowed for the primary user only
-            KinectManager manager = KinectManager.Instance;
+            KinectManager manager = null;
+            if (MGC.Instance.kinectManagerInstance)
+            {
+                manager = MGC.Instance.kinectManagerInstance;
+                print("KinectManager instance");
+            }
+            else
+            {
+                manager = KinectManager.Instance;
+            }
+
             if (!manager/* || (userId != manager.GetPrimaryUserID())*/)
                 return;
 
@@ -263,6 +293,19 @@ namespace Reddy
             }
 
             return true;
+        }
+
+
+        void OnDisable()
+        {
+            if (MGC.Instance)
+            {
+                if (MGC.Instance.kinectManagerInstance)
+                {
+                    MGC.Instance.kinectManagerInstance.gestureListeners.Remove(this);
+                    print("Removing listener");
+                }
+            }
         }
     }
 }
