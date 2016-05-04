@@ -96,6 +96,39 @@ namespace Reddy
                 currentState = ReddyStates.RUNNING;
             }
 
+            cursorObject.transform.position = Input.mousePosition;
+            cursorPositionX = cursorObject.transform.position.x;
+
+            if (pathCount == 0)
+            {
+                if (cursorPositionX > (Screen.width / 3))
+                {
+                    pathTurn = "right";
+                    MoveRight();
+                }
+            }
+            if (pathCount == 1)
+            {
+                if (cursorPositionX > ((Screen.width / 3) * 2))
+                {
+                    pathTurn = "right";
+                    MoveRight();
+                }
+                else if (cursorPositionX < (Screen.width / 3))
+                {
+                    pathTurn = "left";
+                    MoveLeft();
+                }
+            }
+            if (pathCount == 2)
+            {
+                if (cursorPositionX < ((Screen.width / 3) * 2))
+                {
+                    pathTurn = "left";
+                    MoveLeft();
+                }
+            }
+
         }
         void UpdateRunning()
         {
@@ -157,14 +190,7 @@ namespace Reddy
             }
 
 
-            if (pathTurn.CompareTo("left") == 0) // LEFT
-            {
-                
-            }
-            if (pathTurn.CompareTo("right") == 0) // RIGHT
-            {
-                
-            }
+            
         }
 
         void MoveLeft()

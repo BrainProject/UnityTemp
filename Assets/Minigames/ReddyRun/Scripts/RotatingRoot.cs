@@ -12,7 +12,7 @@ namespace Reddy
         // Update is called once per frame
         void Update()
         {
-            transform.Rotate(direction * Vector3.up * Time.deltaTime * 50);
+            transform.Rotate(direction * Vector3.up * Time.deltaTime * 35);
         }
     }
 

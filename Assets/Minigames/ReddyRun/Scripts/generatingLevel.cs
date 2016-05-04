@@ -62,7 +62,7 @@ namespace Reddy
                         case 0:
                             break;
                         case 1: // RIGHT
-                            if (stackRightTurn > 3)
+                            if (stackRightTurn >= 3)
                             {
                                 randomValue = 0;
                             }
@@ -77,7 +77,7 @@ namespace Reddy
 
                             break;
                         case 2: // LEFT
-                            if (stackLeftTurn > 3)
+                            if (stackLeftTurn >= 3)
                             {
                                 randomValue = 0;
                             }
