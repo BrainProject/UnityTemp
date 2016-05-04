@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Reddy
 {
-    public class generatingLevel : MonoBehaviour
+    public class GeneratingLevel : MonoBehaviour
     {
         public int pathLength;
         // public int oxygensNumber;
@@ -30,8 +30,9 @@ namespace Reddy
         void Start()
         {
 
-            
 
+            pathLength = MGC.Instance.selectedMiniGameDiff + 10;
+            //pathLength = 10;
             stackLeftTurn = 0;
             stackRightTurn = 0;
 

@@ -35,7 +35,7 @@ namespace Reddy
         private bool isSlideInProgress;
 
 
-        // Use this for initialization
+        
         void Start()
         {
             if (MGC.Instance)
@@ -44,9 +44,11 @@ namespace Reddy
                 MGC.Instance.kinectManagerInstance.ClearKinectUsers();
                 MGC.Instance.kinectManagerInstance.StartKinect();
                 MGC.Instance.isKinectRestartRequired = true;
-                MGC.Instance.getMinigameStates().SetPlayed("ReddyRun", 0);
+                MGC.Instance.getMinigameStates().SetPlayed(MGC.Instance.selectedMiniGameName, MGC.Instance.selectedMiniGameDiff);
+                //MGC.Instance.getMinigameStates().SetPlayed("ReddyRun", 0);
             }
             anim = GetComponent<Animator>();
+            
             pathCount = 1;
             isJumpInProgress = false;
             isCelebrating = false;
