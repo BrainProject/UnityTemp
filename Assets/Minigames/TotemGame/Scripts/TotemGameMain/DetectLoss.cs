@@ -5,10 +5,9 @@ namespace TotemGame
 {
     public class DetectLoss : MonoBehaviour
     {
-
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.name == "Player")
+            if (other.gameObject == TotemLevelManager.Instance.player)
             {
                 MGC.Instance.LoseMinigame();
             }

@@ -8,40 +8,17 @@ namespace TotemGame
     {
         public static TotemLevelManager Instance { get; private set; }
 
-        public Animator anim;
         public GameObject player;
+        public Animator anim;
+        public GameObject goalCube;
+        public GameObject bomb;
 
         void Awake()
         {
             Instance = this;
-            /*switch (MGC.Instance.selectedMiniGameDiff)
-            {
-                case 0:
-                    MGC.Instance.sceneLoader.LoadScene("TotemGameTutorial");
-                    //MGC.Instance.getMinigameStates().SetPlayed("TotemGameTutorial", MGC.Instance.selectedMiniGameDiff);
-                    break;
-                case 1:
-                    MGC.Instance.sceneLoader.LoadScene("TotemGameTutorialExplosions");
-                    //MGC.Instance.getMinigameStates().SetPlayed("SecondScene", MGC.Instance.selectedMiniGameDiff);
-                    break;
-            }*/
-            }
-
-        void Start()
-        {
-
-                    /*case 2:
-                        //nacitani nahodne sceny ze slozky Difficulty2 v XmlDocs
-                        MGC.Instance.sceneLoader.LoadScene("");
-                        break;
-                    case 3:
-                        //nacitani nahodne sceny ze slozky Difficulty3 v XmlDocs
-                        MGC.Instance.sceneLoader.LoadScene("");
-                        break;*/
-                    
-            //}
-            //MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
+            player.GetComponent<Rigidbody>().useGravity = false;
         }
+
         void Update()
         {
             if (Input.GetMouseButtonDown(0))

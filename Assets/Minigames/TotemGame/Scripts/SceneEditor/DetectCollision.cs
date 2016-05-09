@@ -7,6 +7,7 @@ namespace TotemGame
     {
         private Color startcolor;
         private bool isCollision;
+        public bool isExplosive = false;
 
         void Start()
         {
@@ -35,14 +36,14 @@ namespace TotemGame
         {
             if (!isCollision)
             {
-                if (TotemEditorlManager.Instance)
+                if (TotemEditorManager.Instance)
                 {
-                    if (TotemEditorlManager.Instance.heldItem == this.transform)
-                        TotemEditorlManager.Instance.PickItem();
+                    if (TotemEditorManager.Instance.heldItem == this.transform)
+                        TotemEditorManager.Instance.PickItem();
                     else
-                        TotemEditorlManager.Instance.PickItem(this.transform);
+                        TotemEditorManager.Instance.PickItem(this.transform);
                 }
             }
-        }
+        }  
     }
 }

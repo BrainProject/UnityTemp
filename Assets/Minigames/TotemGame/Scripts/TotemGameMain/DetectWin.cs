@@ -14,6 +14,10 @@ namespace TotemGame
 
         void Start()
         {
+            if(circularSilder==null)
+                circularSilder = GameObject.Find("LoadingCircle").GetComponent<Image>();
+            if (circularSliderTransform == null)
+                circularSliderTransform = GameObject.Find("LoadingCircle").GetComponent<RectTransform>();
             isWon = false;
         }
 
@@ -66,6 +70,7 @@ namespace TotemGame
             }
             isWon = true;
             GameOver();
+            Debug.Log("WIN");
             MGC.Instance.WinMinigame();
             circularSilder.fillAmount = 0;
         }

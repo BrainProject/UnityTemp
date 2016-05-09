@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace TotemGame
 {
@@ -8,6 +9,7 @@ namespace TotemGame
         public float distance = 1.0f;
         public bool useInitalCameraDistance = false;
         private float actualDistance;
+        public InputField actPos;
 
         void Start()
         {
@@ -15,7 +17,7 @@ namespace TotemGame
             {
                 Vector3 toObjectVector = transform.position - Camera.main.transform.position;
                 Vector3 linearDistanceVector = Vector3.Project(toObjectVector, Camera.main.transform.forward);
-                actualDistance = linearDistanceVector.magnitude;
+                actualDistance = linearDistanceVector.magnitude; 
             }
             else
             {
@@ -28,6 +30,7 @@ namespace TotemGame
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = actualDistance;
             transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+            actPos.text = transform.position.ToString();
         }
     }
 }

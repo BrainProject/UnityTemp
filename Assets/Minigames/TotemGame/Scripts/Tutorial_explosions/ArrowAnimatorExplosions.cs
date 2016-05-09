@@ -19,6 +19,7 @@ namespace TotemGame
         public TotemTutorialExplosionStates currrentState;
         private Animator anim;
         private GameObject arrow;
+        private RigidbodyConstraints playerConstraints;
         public GameObject Player;
         public GameObject Cube0;
         public GameObject Beam1;
@@ -32,6 +33,8 @@ namespace TotemGame
             arrow = this.gameObject;
             anim = GetComponent<Animator>();
             currrentState = TotemTutorialExplosionStates.FIRST;
+            playerConstraints = Player.GetComponent<Rigidbody>().constraints;
+            Player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         public void ChangeState(GameObject currentObject)
@@ -41,6 +44,7 @@ namespace TotemGame
                 case TotemTutorialExplosionStates.FIRST:
                     if (currentObject.gameObject == Player)
                     {
+                        Player.GetComponent<Rigidbody>().constraints = playerConstraints;
                         arrow.transform.Rotate(0, 0, 90);
                         arrow.transform.position = new Vector3(Cube0.transform.localPosition.x - 1,
                             Cube0.transform.localPosition.y, arrow.transform.localPosition.z);

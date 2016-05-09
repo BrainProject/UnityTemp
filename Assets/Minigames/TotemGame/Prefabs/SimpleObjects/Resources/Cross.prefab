@@ -11,9 +11,8 @@ GameObject:
   - 33: {fileID: 3309060}
   - 23: {fileID: 2323120}
   - 54: {fileID: 5472806}
-  - 65: {fileID: 6526478}
-  - 65: {fileID: 6511244}
   - 114: {fileID: 11456592}
+  - 64: {fileID: 6469760}
   m_Layer: 0
   m_Name: Cross
   m_TagString: scene
@@ -81,8 +80,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
---- !u!65 &6511244
-BoxCollider:
+--- !u!64 &6469760
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -91,20 +90,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5355607, y: 0.508, z: 0.50800014}
-  m_Center: {x: 0.0060102823, y: 0, z: 0.25646088}
---- !u!65 &6526478
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 190184}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5238624, y: 0.508, z: 0.17157291}
-  m_Center: {x: 0.00019691593, y: 1.38164855e-14, z: 0.2564558}
+  m_Convex: 1
+  m_Mesh: {fileID: 4300000, guid: 4aaa74399877dac428f1b166047e88b0, type: 3}
 --- !u!114 &11456592
 MonoBehaviour:
   m_ObjectHideFlags: 1

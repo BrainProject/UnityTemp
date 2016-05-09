@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TotemGame
 {
-    public class ExplosionForce : MonoBehaviour
+    public class DestroyCollidingObjects : MonoBehaviour
     {
-        public float radius = 100.0F;
-        public float power = 100.0F;
+        public float radius = 50.0F;
+        public float power = 30.0F;
         private GameObject explosion;
         private Color startcolor;
         public GameObject bomb;
         private Vector3 defaultPos;
         private float actualDistance = 6.0f;
+        public List<GameObject> colObj = new List<GameObject>();
 
         void Start()
         {
             if (bomb == null)
-                bomb = TotemLevelManager.Instance.bomb;
-            explosion = (GameObject)Resources.Load("BlueExplosion");
+                bomb = (GameObject)Instantiate(Resources.Load("Bomb"));
+            explosion = (GameObject) Resources.Load("RedExplosion");
             defaultPos = transform.position;
-            
+
         }
         void Update()
         {
@@ -30,11 +32,33 @@ namespace TotemGame
                 bomb.transform.position = new Vector3(mousePosition.x + 15, mousePosition.y - 20, mousePosition.z);
             }
         }
+
+        private void OnCollisionEnter(Collision col)
+        {
+            if ((col.gameObject.Equals(TotemLevelManager.Instance.goalCube)) || (col.gameObject.Equals(TotemLevelManager.Instance.player)))
+            {
+            }
+            else
+            { 
+                colObj.Add(col.gameObject);
+            }
+        }
+
+        private void OnCollisionStay(Collision col)
+        {
+            colObj.RemoveAll((o) => o == null);
+        }
+
+        private void OnCollisionExit(Collision col)
+        {
+                colObj.Remove(col.gameObject);
+        }
+
         private void OnMouseEnter()
         {
             bomb.SetActive(true);
             startcolor = GetComponent<Renderer>().material.color;
-            GetComponent<Renderer>().material.color = Color.blue;
+            GetComponent<Renderer>().material.color = Color.red;
         }
 
         private void OnMouseExit()
@@ -50,6 +74,11 @@ namespace TotemGame
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
 
+            for (int i = 0; i < colObj.Count; i++)
+            {
+                Destroy(colObj[i]); 
+            }
+
             Vector3 explosionPos = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
             foreach (Collider hit in colliders)
@@ -61,4 +90,3 @@ namespace TotemGame
         }
     }
 }
-

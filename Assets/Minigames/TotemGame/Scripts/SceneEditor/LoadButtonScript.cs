@@ -10,7 +10,6 @@ namespace TotemGame
 {
     public class LoadButtonScript : MonoBehaviour
     {
-
         private string filesPath;
         private string path;
         private string fieldText;
@@ -51,7 +50,7 @@ namespace TotemGame
         public void loadOnClick()
         {
             AssetDatabase.Refresh();
-            TotemEditorlManager.Instance.DeleteAll();
+            TotemEditorManager.Instance.DeleteAll();
             int val = loadDropdown.GetComponent<Dropdown>().value;
             string selectedFile = info.GetValue(val).ToString();
 
@@ -73,21 +72,27 @@ namespace TotemGame
                 {
                     XmlNode game_Objects = allGameObjects.Item(j);
 
-                    GameObject obj = Instantiate(Resources.Load(game_Objects.Name, typeof(GameObject))) as GameObject;
+                    GameObject obj = TotemEditorManager.Instance.InstantiateObject(game_Objects.Name);
+                    
                     if (obj)
                     {
                         XmlNodeList GameObjects_Position_Rotation = game_Objects.ChildNodes;
                         //First element have the position stored inside it 
                         XmlNode GameObjects_Position = GameObjects_Position_Rotation.Item(0);
-
                         string[] split_position = GameObjects_Position.InnerText.Split(',');
-                        obj.transform.position = new Vector3(float.Parse(split_position[0]), float.Parse(split_position[1]), float.Parse(split_position[2]));
+                        obj.transform.position = new Vector3(float.Parse(split_position[0]), 
+                            float.Parse(split_position[1]), float.Parse(split_position[2]));
+                        
                         //Second element have the rotation stored inside it 
                         XmlNode GameObjects_Rotation = GameObjects_Position_Rotation.Item(1);
-
                         string[] split_rotation = GameObjects_Rotation.InnerText.Split(',');
-                        obj.transform.rotation = new Quaternion(float.Parse(split_rotation[0]), float.Parse(split_rotation[1]), float.Parse(split_rotation[2]), float.Parse(split_rotation[3]));
+                        obj.transform.rotation = new Quaternion(float.Parse(split_rotation[0]), 
+                            float.Parse(split_rotation[1]), float.Parse(split_rotation[2]), float.Parse(split_rotation[3]));
 
+                        XmlNode GameObjects_Scale = GameObjects_Position_Rotation.Item(2);
+                        string[] split_scale = GameObjects_Scale.InnerText.Split(',');
+                        obj.transform.localScale = new Vector3(float.Parse(split_scale[0]),
+                            float.Parse(split_scale[1]), float.Parse(split_scale[2]));
                     }
                 }
             }
