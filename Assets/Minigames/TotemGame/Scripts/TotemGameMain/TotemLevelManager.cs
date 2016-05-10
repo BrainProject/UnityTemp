@@ -26,13 +26,28 @@ namespace TotemGame
                 player.GetComponent<Rigidbody>().useGravity = true;
                 MovingEye();
             }
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
 
         public void RestartScene()
         {
             //MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
-           Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            Debug.Log(SceneManager.GetActiveScene().name);
+            Scene scene = SceneManager.GetActiveScene();
+           SceneManager.LoadScene(scene.name);
+        }
+
+        public void NextLevel()
+        {
+            //MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
+            Debug.Log(SceneManager.GetActiveScene().name);
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex + 1);
+
         }
 
         public void MovingEye()

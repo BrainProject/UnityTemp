@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace TotemGame
 {
@@ -71,7 +72,9 @@ namespace TotemGame
             isWon = true;
             GameOver();
             Debug.Log("WIN");
-            MGC.Instance.WinMinigame();
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex+1);
+            //MGC.Instance.WinMinigame();
             circularSilder.fillAmount = 0;
         }
     }

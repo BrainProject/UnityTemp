@@ -8,7 +8,7 @@ namespace TotemGame
     {
         private string fieldText;
         private GameObject obj;
-
+        /*
         void Start()
         {
             LoadNewLevel(TotemGameCrossroadManager.Instance.filesPath);
@@ -85,6 +85,6 @@ namespace TotemGame
                 }
             }
             reader.Close();
-        }
+        }*/
     }
 }

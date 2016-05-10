@@ -4,7 +4,6 @@ using System.IO;
 using System.Xml;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEditor;
 
 namespace TotemGame
 {
@@ -16,7 +15,7 @@ namespace TotemGame
         private DirectoryInfo dir;
         private FileInfo[] info;
         public Dropdown loadDropdown;
-
+        /*
         void Start()
         {
             filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/";
@@ -32,7 +31,7 @@ namespace TotemGame
 
         void Update()
         {
-            AssetDatabase.Refresh();
+            //AssetDatabase.Refresh();
             FileInfo[] info2 = dir.GetFiles("*.xml");
 
             if (info2.Length > info.Length)
@@ -49,7 +48,7 @@ namespace TotemGame
 
         public void loadOnClick()
         {
-            AssetDatabase.Refresh();
+            //AssetDatabase.Refresh();
             TotemEditorManager.Instance.DeleteAll();
             int val = loadDropdown.GetComponent<Dropdown>().value;
             string selectedFile = info.GetValue(val).ToString();
@@ -97,6 +96,6 @@ namespace TotemGame
                 }
             }
             reader.Close();
-        }
+        }*/
     }
 }

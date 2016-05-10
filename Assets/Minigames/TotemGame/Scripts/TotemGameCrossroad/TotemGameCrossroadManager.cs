@@ -27,18 +27,23 @@ namespace TotemGame
                         MGC.Instance.sceneLoader.LoadScene("TotemGameTutorialExplosion");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGameTutorialExplosion", MGC.Instance.selectedMiniGameDiff);
                         break;
+
                     case 2:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty1";
-                        MGC.Instance.sceneLoader.LoadScene("TotemGameCrossroad");
-                        //MGC.Instance.getMinigameStates().SetPlayed("TotemGameCrossroad", MGC.Instance.selectedMiniGameDiff);
-                        break;
-                    
-                    case 3:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty2";
-                        MGC.Instance.sceneLoader.LoadScene("TotemGameCrossroad");
-                        //MGC.Instance.getMinigameStates().SetPlayed("TotemGameCrossroad", MGC.Instance.selectedMiniGameDiff);
-                        break;
-                    case 4:
+                        MGC.Instance.sceneLoader.LoadScene("TotemGameLevel");
+                        MGC.Instance.getMinigameStates().SetPlayed("TotemGameLevel", MGC.Instance.selectedMiniGameDiff);
+                    break;
+                /*case 2:
+                    filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty1/Resources";
+                    MGC.Instance.sceneLoader.LoadScene("TotemGameCrossroad");
+                    //MGC.Instance.getMinigameStates().SetPlayed("TotemGameCrossroad", MGC.Instance.selectedMiniGameDiff);
+                    break;*/
+
+                /*case 3:
+                    filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty2/Resources";
+                    MGC.Instance.sceneLoader.LoadScene("TotemGameCrossroad");
+                    //MGC.Instance.getMinigameStates().SetPlayed("TotemGameCrossroad", MGC.Instance.selectedMiniGameDiff);
+                    break;*/
+                case 3:
                         MGC.Instance.sceneLoader.LoadScene("TotemGameFirstLevel");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGameFirstLevel", MGC.Instance.selectedMiniGameDiff);
                         break;

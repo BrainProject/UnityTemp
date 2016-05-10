@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -22,7 +22,7 @@ namespace TotemGame
         private FileInfo[] info;
         private string fileName;
         private bool isExists;
-
+        /*
         public void saveOnClick()
         {
             //GameObject[] allObjects = new GameObject[GameObject.FindGameObjectsWithTag("scene").Length];
@@ -111,7 +111,7 @@ namespace TotemGame
                 xmlDoc.Save(outStream);
                 outStream.Close();
             }
-            AssetDatabase.Refresh();
-        }
+            //AssetDatabase.Refresh();
+        }*/
     }
 }

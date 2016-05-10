@@ -80,7 +80,7 @@ namespace TotemGame
                     if (currentObject.gameObject == Beam1)
                     {
                         arrow.transform.Rotate(0, 0, 0);
-                        arrow.transform.position = new Vector3(Sphere2.transform.localPosition.x - 1,
+                        arrow.transform.position = new Vector3(Sphere2.transform.localPosition.x -1,
                             Sphere2.transform.localPosition.y +1, arrow.transform.localPosition.z);
                         Sphere2.AddComponent<ExplosionForce>();
                         Sphere2.GetComponent<ExplosionForce>().radius = 70.0F;

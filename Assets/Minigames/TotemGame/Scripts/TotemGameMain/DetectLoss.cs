@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace TotemGame
 {
@@ -9,7 +10,9 @@ namespace TotemGame
         {
             if (other.gameObject == TotemLevelManager.Instance.player)
             {
-                MGC.Instance.LoseMinigame();
+                //MGC.Instance.LoseMinigame();
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
     }
