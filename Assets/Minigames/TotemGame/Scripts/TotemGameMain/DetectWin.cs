@@ -71,10 +71,8 @@ namespace TotemGame
             }
             isWon = true;
             GameOver();
-            Debug.Log("WIN");
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.buildIndex+1);
-            //MGC.Instance.WinMinigame();
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            MGC.Instance.WinMinigame();
             circularSilder.fillAmount = 0;
         }
     }

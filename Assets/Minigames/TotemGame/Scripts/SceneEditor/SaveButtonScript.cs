@@ -22,7 +22,7 @@ namespace TotemGame
         private FileInfo[] info;
         private string fileName;
         private bool isExists;
-        /*
+        
         public void saveOnClick()
         {
             //GameObject[] allObjects = new GameObject[GameObject.FindGameObjectsWithTag("scene").Length];
@@ -112,6 +112,6 @@ namespace TotemGame
                 outStream.Close();
             }
             //AssetDatabase.Refresh();
-        }*/
+        }
     }
 }

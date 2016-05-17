@@ -30,7 +30,7 @@ namespace TotemGame
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = actualDistance;
             transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
-            actPos.text = transform.position.ToString();
+            actPos.text = transform.position.ToString("F4");
         }
     }
 }

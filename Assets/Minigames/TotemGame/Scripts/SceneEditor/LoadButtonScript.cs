@@ -15,7 +15,7 @@ namespace TotemGame
         private DirectoryInfo dir;
         private FileInfo[] info;
         public Dropdown loadDropdown;
-        /*
+        
         void Start()
         {
             filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/";
@@ -96,6 +96,6 @@ namespace TotemGame
                 }
             }
             reader.Close();
-        }*/
+        }
     }
 }

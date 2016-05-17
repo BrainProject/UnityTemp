@@ -48,7 +48,6 @@ namespace TotemGame
                         arrow.transform.Rotate(0, 0, 90);
                         arrow.transform.position = new Vector3(Cube0.transform.localPosition.x - 1,
                             Cube0.transform.localPosition.y, arrow.transform.localPosition.z);
-                        anim.Play("FirstStep", -1, 0f);
                         Cube0.AddComponent<DestroyObject>();
                         currrentState = TotemTutorialExplosionStates.SECOND;
                     }

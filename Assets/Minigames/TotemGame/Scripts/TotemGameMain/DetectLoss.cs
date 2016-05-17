@@ -10,9 +10,8 @@ namespace TotemGame
         {
             if (other.gameObject == TotemLevelManager.Instance.player)
             {
-                //MGC.Instance.LoseMinigame();
-
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                MGC.Instance.LoseMinigame();
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
     }
