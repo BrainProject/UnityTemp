@@ -12,7 +12,7 @@ namespace TotemGame
         private string filesPath;
         private string fieldText;
         public Dropdown myDropdown;
-        /*
+        
         void Start()
         {
             FillDropdown();
@@ -30,6 +30,6 @@ namespace TotemGame
                 fieldText = info.GetValue(i).ToString();
                 myDropdown.options.Add(new Dropdown.OptionData(fieldText));
             }
-        }*/
+        }
     }
 }

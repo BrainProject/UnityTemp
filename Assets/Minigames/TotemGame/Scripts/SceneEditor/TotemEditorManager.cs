@@ -43,6 +43,8 @@ namespace TotemGame
 
         void Update()
         {
+            /*if(CursorRoot.transform.childCount > 0)
+                Debug.Log(CursorRoot.GetChild(0).position.ToString());*/
             if (Input.GetMouseButtonDown(1))
             {
                 if (heldItem)

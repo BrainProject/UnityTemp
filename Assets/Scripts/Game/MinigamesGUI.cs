@@ -55,14 +55,34 @@ namespace Game
 				}
 			default:
 				{
-					menuIcon.thisButton.enabled = true;
-					menuIcon.show ();
+                        if (menuIcon)
+                        {
+                            if (menuIcon.thisButton)
+                            {
+                                menuIcon.thisButton.enabled = true;
+                                menuIcon.show();
+                            }
+                            else
+                            {
+                                UnityEngine.Debug.LogWarning("No menuIcon button!");
+                            }
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.LogWarning("No menuIcon object!");
+                        }
 					break;
 				}
 			}
 
-			restartIcon.thisButton.enabled = true;
-			restartIcon.show ();
+            if (restartIcon)
+            {
+                if (restartIcon.thisButton)
+                {
+                    restartIcon.thisButton.enabled = true;
+                    restartIcon.show();
+                }
+            }
 				
 			guiDetection.guiIsHidden = false;
 
