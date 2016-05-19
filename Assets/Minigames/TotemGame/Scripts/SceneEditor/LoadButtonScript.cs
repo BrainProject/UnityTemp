@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.IO;
 using System.Xml;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor;
 
 namespace TotemGame
 {
@@ -46,6 +49,7 @@ namespace TotemGame
 
         public void loadOnClick()
         {
+            AssetDatabase.Refresh();
             TotemEditorManager.Instance.DeleteAll();
             int val = loadDropdown.GetComponent<Dropdown>().value;
             string selectedFile = info.GetValue(val).ToString();
