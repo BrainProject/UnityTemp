@@ -27,32 +27,29 @@ namespace TotemGame
                         MGC.Instance.sceneLoader.LoadScene("TGTutorialExplosion");
                         MGC.Instance.getMinigameStates().SetPlayed("TGTutorialExplosion", MGC.Instance.selectedMiniGameDiff);
                         break;
-
+                    case 2:
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty1/Resources";
+                        MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
+                        MGC.Instance.getMinigameStates().SetPlayed("TGCrossroad", MGC.Instance.selectedMiniGameDiff);
+                        break;
+                    case 3:
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty2/Resources";
+                        MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
+                        MGC.Instance.getMinigameStates().SetPlayed("TmGCrossroad", MGC.Instance.selectedMiniGameDiff);
+                        break;
+                    case 4:
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty3/Resources";
+                        MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
+                    MGC.Instance.getMinigameStates().SetPlayed("TmGCrossroad", MGC.Instance.selectedMiniGameDiff);
+                    break;
                     /*case 2:
                         MGC.Instance.sceneLoader.LoadScene("TotemGameThirdLevel");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGameThirdLevel", MGC.Instance.selectedMiniGameDiff);
-                    break;*/
-                case 2:
-                    filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty1/Resources";
-                    MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
-                    MGC.Instance.getMinigameStates().SetPlayed("TGCrossroad", MGC.Instance.selectedMiniGameDiff);
                     break;
-
-                case 3:
-                    filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty2/Resources";
-                    MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
-                    MGC.Instance.getMinigameStates().SetPlayed("TmGCrossroad", MGC.Instance.selectedMiniGameDiff);
-                    break;
-                /*case 3:
+                    case 3:
                         MGC.Instance.sceneLoader.LoadScene("TotemGameFirstLevel");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGameFirstLevel", MGC.Instance.selectedMiniGameDiff);
-                        break;*/
-                    /*
-                    case 4:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty3";
-                        MGC.Instance.sceneLoader.LoadScene("TotemGameCrossroad");
-                        //MGC.Instance.getMinigameStates().SetPlayed("TotemGameCrossroad", MGC.Instance.selectedMiniGameDiff);
-                        break;     
+                        break;  
                     */
             }
         }

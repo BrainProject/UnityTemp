@@ -5,7 +5,6 @@ using System.IO;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEditor;
 
 namespace TotemGame
 {
@@ -63,7 +62,7 @@ namespace TotemGame
             }
             else
             {
-                path = Application.dataPath + "/Minigames/TotemGame/XmlDocs/" + fieldText + ".xml";
+                path = filesPath + fieldText + ".xml";
                 XmlDocument xmlDoc = new XmlDocument();
 
                 XmlElement elmRoot = xmlDoc.CreateElement("Data");
@@ -109,7 +108,7 @@ namespace TotemGame
 
                 xmlDoc.Save(outStream);
                 outStream.Close();
-                AssetDatabase.Refresh();
+                //AssetDatabase.Refresh();
             }
         }
     }
