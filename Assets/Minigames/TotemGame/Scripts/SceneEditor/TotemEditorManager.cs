@@ -6,14 +6,27 @@ using System.Xml;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class TotemEditorManager : MonoBehaviour
     {
         public static TotemEditorManager Instance { get; private set; }
         public Transform CursorRoot;
-        internal Transform heldItem;
         public Toggle toggleExplosions;
+        public List<GameObject> prefabs = new List<GameObject>();
+        public Dropdown loadDropdown;
+        public Slider scaleXSlider;
+        public Slider scaleYSlider;
+        public Slider scaleXYSlider;
+        public Slider rotationSlider;
+
+        internal Transform heldItem;
+
         private string filesPath;
         private string fieldText;
         private GameObject newObject;
@@ -21,13 +34,6 @@ namespace TotemGame
         private FileInfo[] info;
         private Vector3 objScale;
         private Quaternion objRotation;
-
-        public List<GameObject> prefabs = new List<GameObject>();
-        public Dropdown loadDropdown;
-        public Slider scaleXSlider;
-        public Slider scaleYSlider;
-        public Slider scaleXYSlider;
-        public Slider rotationSlider;
 
         void Start()
         {
@@ -43,8 +49,6 @@ namespace TotemGame
 
         void Update()
         {
-            /*if(CursorRoot.transform.childCount > 0)
-                Debug.Log(CursorRoot.GetChild(0).position.ToString());*/
             if (Input.GetMouseButtonDown(1))
             {
                 if (heldItem)

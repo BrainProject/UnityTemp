@@ -8,10 +8,12 @@ namespace TotemGame
     {
         private string fieldText;
         private GameObject obj;
+        public string xmlName;
 
         void Start()
         {
-            LoadNewLevel(TotemGameCrossroadManager.Instance.filesPath);
+                LoadNewLevel(TotemGameCrossroadManager.Instance.filesPath);
+                //LoadNewLevel(Application.dataPath + "/Minigames/TotemGame/XmlDocs/" + xmlName + ".xml");
         }
 
         public void LoadNewLevel(string fpath)

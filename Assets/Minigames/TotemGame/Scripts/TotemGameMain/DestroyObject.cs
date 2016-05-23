@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DestroyObject : MonoBehaviour
     {
-
         private Color startcolor;
         private GameObject particlesObj;
         private ParticleSystem particlesSystem;

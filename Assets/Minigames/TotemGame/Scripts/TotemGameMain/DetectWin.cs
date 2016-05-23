@@ -3,6 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DetectWin : MonoBehaviour

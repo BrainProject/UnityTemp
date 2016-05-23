@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class TutorialStep : MonoBehaviour
     {
-
         public TotemTutorialStates inStep;
         public ArrowAnimator arrow;
 

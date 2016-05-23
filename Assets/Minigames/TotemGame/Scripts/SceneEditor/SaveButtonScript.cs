@@ -4,17 +4,20 @@ using System.Xml;
 using System.IO;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class SaveButtonScript : MonoBehaviour
     {
-
+        public GameObject inputFieldGo;
         private List<GameObject> Objects = new List<GameObject>();
         private GameObject[] allObjects = new GameObject[0];
         private string path;
-        public GameObject inputFieldGo;
         private string fieldText;
         private string filesPath;
         private DirectoryInfo dir;
@@ -24,7 +27,6 @@ namespace TotemGame
 
         public void saveOnClick()
         {
-            //GameObject[] allObjects = new GameObject[GameObject.FindGameObjectsWithTag("scene").Length];
             allObjects = GameObject.FindGameObjectsWithTag("scene");
             for (int i = 0; i < allObjects.Length; i++)
             {
@@ -41,12 +43,15 @@ namespace TotemGame
             dir = new DirectoryInfo(filesPath);
             info = dir.GetFiles("*.xml");
 
-            for (int i = 0; i == info.Length; i++)
+            if (info.Length > 0)
             {
-                fileName = Path.GetFileNameWithoutExtension(info.GetValue(i).ToString());
-                if (fileName == Path.GetFileName(fieldText).ToString())
+                for (int i = 0; i == info.Length; i++)
                 {
-                    isExists = true;
+                    fileName = Path.GetFileNameWithoutExtension(info.GetValue(i).ToString());
+                    if (fileName == Path.GetFileName(fieldText).ToString())
+                    {
+                        isExists = true;
+                    }
                 }
             }
 

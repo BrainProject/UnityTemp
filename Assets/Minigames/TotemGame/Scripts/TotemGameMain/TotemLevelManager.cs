@@ -2,6 +2,11 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class TotemLevelManager : MonoBehaviour
@@ -21,17 +26,10 @@ namespace TotemGame
 
         void Update()
         {
-            
             if (Input.GetMouseButtonDown(0))
             {
                 player.GetComponent<Rigidbody>().useGravity = true;
-                //MovingPlayerRandom();
             }
-
-            /*if (Input.GetKey(KeyCode.Escape))
-            {
-                Application.Quit();
-            }*/
         }
 
         public void RestartScene()
@@ -44,13 +42,6 @@ namespace TotemGame
         {
             MGC.Instance.sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-
-        public void MovingPlayerRandom()
-        {
-            //string moveState = string.Format("move{0}", Random.Range(0, 4));
-            //anim.Play(moveState, -1, 0f);
-            //anim.Play("rotate", -1, 0f);
         }
     }
 }

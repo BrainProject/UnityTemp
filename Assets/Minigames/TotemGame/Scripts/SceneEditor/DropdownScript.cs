@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
-using System.Xml;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DropdownScript : MonoBehaviour

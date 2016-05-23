@@ -2,18 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DestroyCollidingObjects : MonoBehaviour
     {
         public float radius = 50.0F;
         public float power = 30.0F;
+        public List<GameObject> colObj = new List<GameObject>();
+        public GameObject bomb;
         private GameObject explosion;
         private Color startcolor;
-        public GameObject bomb;
         private Vector3 defaultPos;
         private float actualDistance = 6.0f;
-        public List<GameObject> colObj = new List<GameObject>();
 
         void Start()
         {

@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class ExplosionForce : MonoBehaviour
     {
         public float radius = 100.0F;
         public float power = 100.0F;
+        public GameObject bomb;
         private GameObject explosion;
         private Color startcolor;
-        public GameObject bomb;
         private Vector3 defaultPos;
         private float actualDistance = 6.0f;
 
@@ -17,7 +22,7 @@ namespace TotemGame
         {
             if (bomb == null)
                 bomb = TotemLevelManager.Instance.bomb;
-            explosion = (GameObject)Resources.Load("BlueExplosion");
+            explosion = (GameObject)Resources.Load("RedExplosion");
             defaultPos = transform.position;
             
         }
@@ -27,14 +32,14 @@ namespace TotemGame
             {
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition.z = actualDistance;
-                bomb.transform.position = new Vector3(mousePosition.x + 15, mousePosition.y - 20, mousePosition.z);
+                bomb.transform.position = new Vector3(mousePosition.x +45, mousePosition.y - 20, mousePosition.z);
             }
         }
         private void OnMouseEnter()
         {
             bomb.SetActive(true);
             startcolor = GetComponent<Renderer>().material.color;
-            GetComponent<Renderer>().material.color = Color.blue;
+            GetComponent<Renderer>().material.color = Color.red;
         }
 
         private void OnMouseExit()

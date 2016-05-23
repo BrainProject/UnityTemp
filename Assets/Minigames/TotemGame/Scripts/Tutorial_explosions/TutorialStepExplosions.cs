@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class TutorialStepExplosions : MonoBehaviour

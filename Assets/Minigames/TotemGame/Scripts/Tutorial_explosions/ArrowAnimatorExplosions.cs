@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public enum TotemTutorialExplosionStates
@@ -17,9 +22,6 @@ namespace TotemGame
     public class ArrowAnimatorExplosions : MonoBehaviour
     {
         public TotemTutorialExplosionStates currrentState;
-        private Animator anim;
-        private GameObject arrow;
-        private RigidbodyConstraints playerConstraints;
         public GameObject Player;
         public GameObject Cube0;
         public GameObject Beam1;
@@ -27,6 +29,10 @@ namespace TotemGame
         public GameObject Beam2;
         public GameObject Sphere2;
         public GameObject bomb;
+
+        private Animator anim;
+        private GameObject arrow;
+        private RigidbodyConstraints playerConstraints;
 
         void Start()
         {

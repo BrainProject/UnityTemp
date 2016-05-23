@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class FollowMouse : MonoBehaviour
     {
         public float distance = 1.0f;
         public bool useInitalCameraDistance = false;
-        private float actualDistance;
         public InputField actPos;
+        private float actualDistance;
 
         void Start()
         {

@@ -3,16 +3,21 @@ using System.IO;
 using System.Xml;
 using UnityEngine.UI;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class LoadButtonScript : MonoBehaviour
     {
+        public Dropdown loadDropdown;
         private string filesPath;
         private string path;
         private string fieldText;
         private DirectoryInfo dir;
         private FileInfo[] info;
-        public Dropdown loadDropdown;
         
         void Start()
         {
@@ -85,6 +90,7 @@ namespace TotemGame
                         obj.transform.rotation = new Quaternion(float.Parse(split_rotation[0]), 
                             float.Parse(split_rotation[1]), float.Parse(split_rotation[2]), float.Parse(split_rotation[3]));
 
+                        //Third element have the scale stored inside it 
                         XmlNode GameObjects_Scale = GameObjects_Position_Rotation.Item(2);
                         string[] split_scale = GameObjects_Scale.InnerText.Split(',');
                         obj.transform.localScale = new Vector3(float.Parse(split_scale[0]),

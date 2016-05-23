@@ -2,6 +2,11 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DetectLoss : MonoBehaviour

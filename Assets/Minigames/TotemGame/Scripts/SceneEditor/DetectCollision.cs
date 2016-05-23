@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class DetectCollision : MonoBehaviour
     {
+        public bool isExplosive = false;
         private Color startcolor;
         private bool isCollision;
-        public bool isExplosive = false;
 
         void Start()
         {

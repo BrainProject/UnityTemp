@@ -2,12 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Newron minigame - TotemGame
+ *
+ * @author Petra Ambrozkova
+ */
 namespace TotemGame
 {
     public class GeneratorLevelManager : MonoBehaviour
     {
         public Slider mainSlider;
-
         private float difficulty;
         private List<GameObject> Objects = new List<GameObject>();
 
