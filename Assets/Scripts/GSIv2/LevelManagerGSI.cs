@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GSIv
+namespace GSIv2
 {
     public class LevelManagerGSI : MonoBehaviour
     {
