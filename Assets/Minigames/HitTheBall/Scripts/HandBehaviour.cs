@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HandBehivour : MonoBehaviour {
+public class HandBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

@@ -99,23 +99,6 @@ public class LevelManagerBall : MonoBehaviour {
 
                 break;
         }
-
-        // bude se ti hodit, nezapomeň smazat
-        // loading number of pieces according to the set difficulty
-        /*switch (MGC.Instance.selectedMiniGameDiff)
-        {
-            case 0:
-                numberPieces = 20;
-                break;
-            case 1:
-                numberPieces = 44;
-                break;
-            default:
-                numberPieces = PIECES_RECOMMENDED;
-                break;
-        }*/
-
-
     }
 
     private bool isBallInGame(GameObject ball)
