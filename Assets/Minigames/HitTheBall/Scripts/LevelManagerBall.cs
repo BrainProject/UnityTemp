@@ -14,6 +14,7 @@ public class LevelManagerBall : MonoBehaviour {
     public Text player1text;
     public Text player2text;
     public Text scoreText;
+    public Text countdownText;
 
     public GameObject Player1;
     public GameObject Player2;
