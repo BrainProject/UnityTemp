@@ -9,7 +9,9 @@ namespace Music
     {
         public LevelManagerMusic levelManager;
 
-        public float Expiration;     
+        
+
+        public float Expiration;
 
 
         void Awake()
@@ -22,16 +24,34 @@ namespace Music
         // Use this for initialization
         void Start()
         {
-
+            if (Expiration == 0)
+            {
+                Expiration = 5;
+            }
         }
 
         // Update is called once per frame
         void Update()
-        {
-            Expiration -= Time.deltaTime;
+        {          
             if (Expiration <= 0)
             {
-                
+                float alpha = GetComponent<SpriteRenderer>().color.a;
+                Debug.Log("Alpha is: " + alpha);
+                if (GetComponent<SpriteRenderer>().color.a <= 0.1f)
+                {
+                    levelManager.listOfVisible.Remove(gameObject);
+                    Destroy(gameObject);
+                }
+                alpha -= (Time.deltaTime * 0.7f);
+                if (alpha < 0)
+                {
+                    alpha = 0;
+                }
+                GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+            }
+            else
+            {
+                Expiration -= Time.deltaTime;
             }
         }
 
@@ -39,6 +59,8 @@ namespace Music
         {
             if (col.gameObject.name == "HandCollider2D")
             {
+                levelManager.mainMusic.Stop();
+                levelManager.wrongBuzz.Play();
                 levelManager.listOfVisible.Remove(gameObject);
                 Destroy(gameObject);
             }
