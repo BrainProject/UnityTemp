@@ -7,9 +7,6 @@ namespace Music
 {
     public class ButtonBehaviour : MonoBehaviour
     {
-
-        
-
         public LevelManagerMusic levelManager;
 
         // notes displaying
@@ -49,14 +46,33 @@ namespace Music
             // music control
             if (levelManager.mainMusic.isPlaying)
             {               
-                    if (levelManager.currentPlayTime <= 0)
+                    
+
+                    if(levelManager.mainMusic.GetComponent<AudioPlayer>().FadingOut)
                     {
-                        levelManager.mainMusic.Pause();
+                        if(levelManager.mainMusic.volume > 0.02f )
+                        {
+                            levelManager.mainMusic.volume -= (Time.deltaTime * 0.15f);
+                        }
+                        else
+                        {
+                            levelManager.mainMusic.Pause();
+                            levelManager.mainMusic.GetComponent<AudioPlayer>().FadingOut = false;
+                        }
                     }
                     else
                     {
-                        levelManager.currentPlayTime -= Time.deltaTime;
-                        Debug.Log("Time left: " + levelManager.currentPlayTime);
+                        if (levelManager.currentPlayTime <= 0)
+                        {
+                            levelManager.mainMusic.GetComponent<AudioPlayer>().FadingOut = true;
+                            levelManager.currentPlayTime = levelManager.DefaultPlayTime;
+
+                        }
+                        else
+                        {
+                            levelManager.currentPlayTime -= Time.deltaTime;
+                            Debug.Log("Time left: " + levelManager.currentPlayTime);
+                        }
                     }
             }
 
@@ -70,11 +86,14 @@ namespace Music
                 {
                     Debug.Log("Music was played - it wasn't playing before.");
                     levelManager.mainMusic.Play();
+                    levelManager.mainMusic.volume = 1f;
                     levelManager.currentPlayTime = levelManager.DefaultPlayTime;
+                    
                 }
                 else
                 {
                     levelManager.currentPlayTime = levelManager.DefaultPlayTime;
+                    levelManager.mainMusic.volume = 1f;
                 }         
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }

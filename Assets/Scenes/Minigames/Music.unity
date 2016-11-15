@@ -490,6 +490,74 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85f4cd6a1b67a9d4b97b58b4104ade53, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &554822800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 554822801}
+  - 222: {fileID: 554822803}
+  - 114: {fileID: 554822802}
+  m_Layer: 5
+  m_Name: Loading
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &554822801
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554822800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 8.067501, y: 0.22751993, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 701943218}
+  m_RootOrder: 4
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 5.456968e-12, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &554822802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554822800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: b17a19344a320f343a7eec3032257e01, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &554822803
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554822800}
 --- !u!1 &701943214
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +647,7 @@ RectTransform:
   - {fileID: 768062827}
   - {fileID: 1486369018}
   - {fileID: 723340949}
+  - {fileID: 554822801}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_AnchorMin: {x: 0, y: 0}
@@ -997,7 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bafcc36436049444b34bea079135220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultPlayTime: 5
+  DefaultPlayTime: 6
   currentPlayTime: 0
   wrongBuzz: {fileID: 0}
   mainMusic: {fileID: 0}
@@ -1010,6 +1079,7 @@ MonoBehaviour:
   - {fileID: 1000013735693710, guid: f6f4f873d24e9ca409db268afa36d7d0, type: 2}
   - {fileID: 1000011772241466, guid: 7a4d07e43da48034b9ee034ede99a384, type: 2}
   - {fileID: 1000011058034898, guid: 0ace8c8c86525214e9ffc0effe5969a8, type: 2}
+  Loading: {fileID: 554822802}
   listOfVisible: []
 --- !u!4 &1257173635
 Transform:
@@ -1278,7 +1348,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300001, guid: b8297e9de04228a4592f39770204c189,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: f91bea4392c9e3246b10e1ebc4011692, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4cc268f414011274b99fc4dda1e6a6b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1367,6 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9af2f25a5f4ac34b8401fcce8e7e569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FadingOut: 0
 --- !u!1001 &2073016027
 Prefab:
   m_ObjectHideFlags: 0
@@ -1414,8 +1485,13 @@ Prefab:
     - target: {fileID: 114000010492122564, guid: d365b676036c54a40886122c4a773b47,
         type: 2}
       propertyPath: DefaultPlayTime
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010492122564, guid: d365b676036c54a40886122c4a773b47,
+        type: 2}
+      propertyPath: Loading
+      value: 
+      objectReference: {fileID: 554822802}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d365b676036c54a40886122c4a773b47, type: 2}
   m_IsPrefabParent: 0

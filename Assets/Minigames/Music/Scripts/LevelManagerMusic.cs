@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Music
 {
@@ -20,15 +21,18 @@ namespace Music
 
         public List<GameObject> Blanks;
 
+        public Image Loading;
 
         private float counting;
 
         public List<GameObject> listOfVisible;
 
+        private int probability;
+
 
         void Awake()
         {
-            // assigning main audiosource
+            // assigning audiosources
             AudioSource[] players = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
             foreach (AudioSource source in players)
             {
@@ -46,11 +50,9 @@ namespace Music
         void Start()
         {
             listOfVisible = new List<GameObject>();
+            chooseLevel();
 
-            //DisplayButton(YellowNote);
-
-            Debug.Log("Size of the list" + listOfVisible.Count);
-
+            // instantiation of note buttons (they are whole game in the scene and 
             GameObject yellowNote = Instantiate(YellowNote, GetRandomPositionOnScreen(), Quaternion.identity) as GameObject;
             yellowNote.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
             listOfVisible.Add(yellowNote);
@@ -71,12 +73,12 @@ namespace Music
             counting += Time.deltaTime;
             if (counting >= 6)
             {
-                Debug.Log("Choosing whether to display blank!");
+                //Choosing whether to display blank!
                 counting = 0;
                 DisplayBlank();
             }
 
-            // fade in buttons
+            // fade in all buttons in the list
             foreach(GameObject button in listOfVisible)
             {
                 if (button.GetComponent<SpriteRenderer>().enabled)
@@ -95,6 +97,13 @@ namespace Music
                 }
             }
             
+            // displays the loading bar according the music clip time
+            Loading.GetComponent<Image>().fillAmount = (mainMusic.time / mainMusic.clip.length);
+            if (Loading.GetComponent<Image>().fillAmount >= 1)
+            {
+                MGC.Instance.WinMinigame();
+            }
+            
         }
 
         public Vector2 GetRandomPositionOnScreen()
@@ -106,7 +115,7 @@ namespace Music
             // getting new coordinates until we have some which don't collide with the already visible buttons
             do
             {
-                position = new Vector2(Random.Range(-1.75f, 1.75f), Random.Range(0.75f, 2.1f));
+                position = new Vector2(Random.Range(-1.75f, 1.75f), Random.Range(0.85f, 2.1f));
                 isPositionOk = true;
 
                 foreach (GameObject button in listOfVisible)
@@ -120,12 +129,15 @@ namespace Music
 
             return position;
         }
-
+        
+        /// <summary>
+        /// With given probability displays blank button (WrongBuzz button)
+        /// </summary>
         void DisplayBlank()
         {
             // probability of displaying the blank button
-            int random = Random.Range(0, 7);
-            if (random == 3)
+            int random = Random.Range(0, probability);
+            if (random == 0)
             {
                 // randomly choose the sprite
                 int colorOfBlank = Random.Range(0, Blanks.Count);
@@ -135,6 +147,26 @@ namespace Music
                 listOfVisible.Add(blankNote);
             }
             
+        }
+
+        private void chooseLevel()
+        {
+            Debug.Log("Difficulty: " + MGC.Instance.selectedMiniGameDiff);
+            switch (MGC.Instance.selectedMiniGameDiff)
+            {
+                case 0:
+                    probability = 7;
+                    break;
+                case 1:
+                    probability = 5;
+                    break;
+                case 2:
+                    probability = 3;
+                    break;
+                default:
+                    probability = 7;
+                    break;
+            }
         }
 
     }

@@ -2,17 +2,24 @@
 using System.Collections;
 using UnityEngine.Audio;
 
-public class AudioPlayer : MonoBehaviour {
+namespace Music
+{
+    public class AudioPlayer : MonoBehaviour
+    {
 
+        public bool FadingOut;
 
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
-    
+        // Use this for initialization
+        void Start()
+        {
+            FadingOut = false;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+    } 
 }
