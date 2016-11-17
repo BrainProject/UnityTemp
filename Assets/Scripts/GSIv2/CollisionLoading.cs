@@ -13,6 +13,8 @@ abstract public class CollisionLoading : MonoBehaviour {
     private bool done;              //loading is done (image is whole drawn)
     protected Image img;
 
+    public Collider2D LastCanvasColider; 
+
     protected virtual void Start ()
     {
         if (GetComponent<Image>())
@@ -22,7 +24,7 @@ abstract public class CollisionLoading : MonoBehaviour {
             if(!img.sprite)
             {
                 this.enabled = false;
-                Debug.LogWarning("No sprite in image component");
+                Debug.LogWarning("No sprite in image component.");
             }
         }
         else
@@ -65,6 +67,7 @@ abstract public class CollisionLoading : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        LastCanvasColider = col;
         activated = true;
     }
 
@@ -77,5 +80,5 @@ abstract public class CollisionLoading : MonoBehaviour {
     /// 
     /// </summary>
     public abstract void Action();
-    
+
 }
