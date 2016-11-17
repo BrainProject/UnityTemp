@@ -6,6 +6,14 @@ public class BlockBehaviour2D : MonoBehaviour {
     public LevelManagerBuilding levelManager;
     public Transform ActualHand;
 
+    public float FallSpeed;
+    private Vector3 lastPosition;
+    private Vector3 actualPosition;
+
+    private bool fallen;
+
+    private int time; // time fo calculating the speed of moving
+
     void Awake()
     {
         // assigning levelmanager
@@ -14,13 +22,34 @@ public class BlockBehaviour2D : MonoBehaviour {
     }
 
     void Start () {
-	
+        actualPosition = transform.position;
+        fallen = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    void Update()
+    {
+        if (fallen)
+        {
+            Destroy(gameObject);
+            levelManager.ChangeAlpha(levelManager.Player1, 1f);
+            levelManager.ChangeAlpha(levelManager.Player2, 0.5f);
+            levelManager.gameState = GameState.Player1Takes;
+        }
+        else
+        {
+            transform.position = ActualHand.position;
+            float deltaSpeed = FallSpeed * Time.deltaTime;
+            Debug.Log("DeltaSpeed " + deltaSpeed);
+            lastPosition = actualPosition;
+            actualPosition = transform.position;
+            if (Vector3.Distance(lastPosition, actualPosition) > deltaSpeed)
+            {
+                fallen = true;
+            }
+        }
+        
+        
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -33,36 +62,37 @@ public class BlockBehaviour2D : MonoBehaviour {
                     col.gameObject.tag == "Player2")
                 {
                     ActualHand = col.gameObject.transform;
+                    levelManager.ChangeAlpha(levelManager.Player1, 0.5f);
                     levelManager.gameState = GameState.Player2Puts;
                 }
                 break;
             case GameState.Player2Puts:
-                Debug.Log("GameObject1: " + col.gameObject.name);
-                Debug.Log("GameObject2: " + gameObject.name);
-                if (col.gameObject.name == gameObject.name)
+                // TODO: Jak muze dojit ke kolizi, kdyz k ni nedojde???
+                if (col.gameObject.tag == gameObject.tag &&
+                    col.gameObject.GetComponent<TemplateBlockBehaviour>().Floor == levelManager.Floor &&
+                    !col.gameObject.GetComponent<TemplateBlockBehaviour>().Filled)
                 {
+                    Debug.Log("Collision with " + col.gameObject.name);
                     col.gameObject.GetComponent<TemplateBlockBehaviour>().Filled = true;
-                    levelManager.gameState = GameState.Player2Takes;
                     Destroy(gameObject);
                 }
                 break;
             case GameState.Player2Gives:
-                if ((col.gameObject.name == "mixamorig:LeftHand" ||
-                    col.gameObject.name == "mixamorig:RightHand") &&
+                if ((col.gameObject.name == "2DColliderL" ||
+                    col.gameObject.name == "2DColliderR") &&
                     col.gameObject.tag == "Player1")
                 {
                     ActualHand = col.gameObject.transform;
+                    levelManager.ChangeAlpha(levelManager.Player2, 0.5f);
                     levelManager.gameState = GameState.Player1Puts;
                 }
                 break;
             case GameState.Player1Puts:
-                // block in a hand is the same name as a template block
-                Debug.Log("GameObject1: " + col.gameObject.name);
-                Debug.Log("GameObject2: " + gameObject.name);
-                if (col.gameObject.name == gameObject.name)
+                if (col.gameObject.tag == gameObject.tag &&
+                    col.gameObject.GetComponent<TemplateBlockBehaviour>().Floor == levelManager.Floor &&
+                    !col.gameObject.GetComponent<TemplateBlockBehaviour>().Filled)
                 {
                     col.gameObject.GetComponent<TemplateBlockBehaviour>().Filled = true;
-                    levelManager.gameState = GameState.Player2Takes;
                     Destroy(gameObject);
                 }
                 break;

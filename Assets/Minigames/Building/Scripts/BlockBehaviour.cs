@@ -44,7 +44,7 @@ namespace Building
             }
         }
 
-        void OnCollisionEnter(Collision col)
+        void OnCollisionEnter2D(Collision2D col)
         {
             Debug.Log("Colision: " + col.gameObject.name);
             switch (levelManager.gameState)

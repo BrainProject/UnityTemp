@@ -11,6 +11,10 @@ public class LevelManagerBuilding : MonoBehaviour {
     private int difficulty;
     private GameObject construction;
 
+    public GameObject Player1;
+    public GameObject Player2;
+    
+
     public GameState gameState;
 
 	void Start () {
@@ -19,11 +23,14 @@ public class LevelManagerBuilding : MonoBehaviour {
         // instantiate the building construction based on difficulty
         construction = Instantiate(listOfContructions[difficulty], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         gameState = GameState.Player1Takes;
+        ChangeAlpha(Player1, 1);
+        ChangeAlpha(Player2, 0.5f); 
 	}
 	
 	void Update () {
-       
-	}
+        //Debug.Log("Game state: " + gameState);
+        Floor = SetActualFloor();
+    }
 
     private void chooseLevel()
     {
@@ -42,6 +49,30 @@ public class LevelManagerBuilding : MonoBehaviour {
             default:
                 difficulty = 2;
                 break;
+        }
+    }
+
+    private int SetActualFloor()
+    {
+        int min = 100;
+        foreach (GameObject block in construction.GetComponent<ConstructionData>().ListOfBlocks)
+        {
+            if (!block.GetComponent<TemplateBlockBehaviour>().Filled)
+            {
+                if (block.GetComponent<TemplateBlockBehaviour>().Floor < min)
+                {
+                    min = block.GetComponent<TemplateBlockBehaviour>().Floor;
+                }
+            }
+        }
+        return min;
+    }
+
+    public void ChangeAlpha(GameObject player, float alpha)
+    {
+        foreach (SkinnedMeshRenderer renderer in player.GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, alpha);
         }
     }
 }

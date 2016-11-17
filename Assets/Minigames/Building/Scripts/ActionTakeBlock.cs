@@ -33,28 +33,25 @@ namespace Building
                     // working with canavas coliders
                     if (LastCanvasColider.name == "HandColider1L" || LastCanvasColider.name == "HandColider1R")
                     {
+                        levelManager.ChangeAlpha(levelManager.Player2, 1f);
                         levelManager.gameState = GameState.Player1Gives;
                         block = Instantiate(BlockPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                        block.GetComponent<BlockBehaviour>().ActualHand = LastCanvasColider.GetComponent<HandColiderMovement>().hand;
+                        block.tag = BlockPrefab.tag;
+                        block.GetComponent<BlockBehaviour2D>().ActualHand = LastCanvasColider.GetComponent<HandColiderMovement>().hand;
                     } 
-                    break;
-                case GameState.Player1Gives:                    
                     break;
                 case GameState.Player2Takes:
                     if (LastCanvasColider.name == "HandColider2L" || LastCanvasColider.name == "HandColider2R")
                     {
+                        levelManager.ChangeAlpha(levelManager.Player1, 1f);
                         levelManager.gameState = GameState.Player2Gives;
                         block = Instantiate(BlockPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                        block.GetComponent<BlockBehaviour>().ActualHand = LastCanvasColider.GetComponent<HandColiderMovement>().hand;
+                        block.tag = BlockPrefab.tag;
+                        block.GetComponent<BlockBehaviour2D>().ActualHand = LastCanvasColider.GetComponent<HandColiderMovement>().hand;
                     }
                     break;
 
-            }
-            if (true) //TODO: overovani jestli je kostka zrovna v ruce
-            {
-                
-                
-            }     
+            }    
         }
     }
 
