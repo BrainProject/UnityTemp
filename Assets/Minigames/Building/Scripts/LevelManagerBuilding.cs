@@ -13,6 +13,8 @@ public class LevelManagerBuilding : MonoBehaviour {
 
     public GameObject Player1;
     public GameObject Player2;
+
+    public bool throwObject;
     
 
     public GameState gameState;
@@ -24,7 +26,8 @@ public class LevelManagerBuilding : MonoBehaviour {
         construction = Instantiate(listOfContructions[difficulty], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         gameState = GameState.Player1Takes;
         ChangeAlpha(Player1, 1);
-        ChangeAlpha(Player2, 0.5f); 
+        ChangeAlpha(Player2, 0.5f);
+        throwObject = false;
 	}
 	
 	void Update () {

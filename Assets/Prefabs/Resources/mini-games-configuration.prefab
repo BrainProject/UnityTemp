@@ -122,6 +122,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000012563054816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000010010817216}
+  - 114: {fileID: 114000012702455596}
+  m_Layer: 0
+  m_Name: Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000012684415394
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +308,7 @@ GameObject:
   - 4: {fileID: 4000012581415716}
   - 114: {fileID: 114000010172657520}
   m_Layer: 0
-  m_Name: Music
+  m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,6 +362,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4000010010817216
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012563054816}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -220.11304, y: -248.6065, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000012914367364}
+  m_RootOrder: 19
 --- !u!4 &4000010046525342
 Transform:
   m_ObjectHideFlags: 1
@@ -514,7 +543,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012914367364}
-  m_RootOrder: 19
+  m_RootOrder: 20
 --- !u!4 &4000012581692114
 Transform:
   m_ObjectHideFlags: 1
@@ -548,7 +577,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012410638094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -179.89636, y: 175.50616, z: 0}
+  m_LocalPosition: {x: -237.57535, y: -245.85986, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -571,6 +600,7 @@ Transform:
   - {fileID: 4000013053495318}
   - {fileID: 4000011028268676}
   - {fileID: 4000010046525342}
+  - {fileID: 4000010010817216}
   - {fileID: 4000012581415716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -650,9 +680,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readableName: Music
-  initialScene: Music
-  mainScene: Music
+  readableName: Building
+  initialScene: Building
+  mainScene: Building
   MaxDifficulty: 2
   isKinectRequired: 1
   minigameIcon: {fileID: 0}
@@ -913,6 +943,27 @@ MonoBehaviour:
   IconDifficultyMedium: {fileID: 0}
   IconDifficultyHigh: {fileID: 21300000, guid: d2e0b14c155aaaa4aa3c6222330af7e7, type: 3}
   helpPrefab: {fileID: 132752, guid: 34d20a6d82af0184ab05dfd7c4e5a073, type: 2}
+--- !u!114 &114000012702455596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012563054816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e65e980a5b46340a95a4bba54974be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readableName: Music
+  initialScene: Music
+  mainScene: Music
+  MaxDifficulty: 2
+  isKinectRequired: 1
+  minigameIcon: {fileID: 0}
+  IconDifficultyLow: {fileID: 0}
+  IconDifficultyMedium: {fileID: 0}
+  IconDifficultyHigh: {fileID: 0}
+  helpPrefab: {fileID: 0}
 --- !u!114 &114000012794964724
 MonoBehaviour:
   m_ObjectHideFlags: 1
