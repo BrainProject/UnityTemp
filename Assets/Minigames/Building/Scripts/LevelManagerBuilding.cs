@@ -21,6 +21,7 @@ public class LevelManagerBuilding : MonoBehaviour {
 
 	void Start () {
         chooseLevel();
+        difficulty = 2;
         Floor = 0;
         // instantiate the building construction based on difficulty
         construction = Instantiate(listOfContructions[difficulty], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
@@ -33,6 +34,10 @@ public class LevelManagerBuilding : MonoBehaviour {
 	void Update () {
         //Debug.Log("Game state: " + gameState);
         Floor = SetActualFloor();
+        if (win())
+        {
+            MGC.Instance.WinMinigame();
+        }
     }
 
     private void chooseLevel()
@@ -59,7 +64,7 @@ public class LevelManagerBuilding : MonoBehaviour {
     {
         int min = 100;
         foreach (GameObject block in construction.GetComponent<ConstructionData>().ListOfBlocks)
-        {
+        {   
             if (!block.GetComponent<TemplateBlockBehaviour>().Filled)
             {
                 if (block.GetComponent<TemplateBlockBehaviour>().Floor < min)
@@ -77,5 +82,18 @@ public class LevelManagerBuilding : MonoBehaviour {
         {
             renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, alpha);
         }
+    }
+
+    private bool win()
+    {
+        bool win = true;
+        foreach (GameObject block in construction.GetComponent<ConstructionData>().ListOfBlocks)
+        {
+            if (!block.GetComponent<TemplateBlockBehaviour>().Filled)
+            {
+                win = false;
+            }
+        }
+        return win;
     }
 }

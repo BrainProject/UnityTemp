@@ -23,15 +23,14 @@ public class BlockBehaviour2D : MonoBehaviour
     {
         if (levelManager.throwObject)
         {
-            if (gameObject.transform.position.y < -5f)
-            {
 
                 levelManager.ChangeAlpha(levelManager.Player1, 1f);
                 levelManager.ChangeAlpha(levelManager.Player2, 0.5f);
                 levelManager.gameState = GameState.Player1Takes;
                 levelManager.throwObject = false;
                 Destroy(gameObject);
-            }
+
+
         }
 
         transform.position = ActualHand.position;

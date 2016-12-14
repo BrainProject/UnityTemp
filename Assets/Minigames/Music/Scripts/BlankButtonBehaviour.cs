@@ -36,7 +36,6 @@ namespace Music
             if (Expiration <= 0)
             {
                 float alpha = GetComponent<SpriteRenderer>().color.a;
-                Debug.Log("Alpha is: " + alpha);
                 if (GetComponent<SpriteRenderer>().color.a <= 0.1f)
                 {
                     levelManager.listOfVisible.Remove(gameObject);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+
 namespace Music
 {
     public class LevelManagerMusic : MonoBehaviour
@@ -99,8 +100,9 @@ namespace Music
             
             // displays the loading bar according the music clip time
             Loading.GetComponent<Image>().fillAmount = (mainMusic.time / mainMusic.clip.length);
-            if (Loading.GetComponent<Image>().fillAmount >= 1)
+            if (Loading.GetComponent<Image>().fillAmount > 0.99f)
             {
+                Debug.Log("Winning minigame");
                 MGC.Instance.WinMinigame();
             }
             

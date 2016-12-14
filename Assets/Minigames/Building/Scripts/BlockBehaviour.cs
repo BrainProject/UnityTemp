@@ -8,21 +8,13 @@ namespace Building
         public LevelManagerBuilding levelManager;
         public Transform ActualHand;
 
-
-
         //public GameObject secondPlayer;
-        private bool inHand;
 
         void Awake()
         {
             // assigning levelmanager
             LevelManagerBuilding[] managers = FindObjectsOfType(typeof(LevelManagerBuilding)) as LevelManagerBuilding[];
             levelManager = managers[0];
-        }
-
-        void Start()
-        {
-            inHand = true;
         }
 
         void Update()

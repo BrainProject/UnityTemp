@@ -71,7 +71,7 @@ namespace Music
                         else
                         {
                             levelManager.currentPlayTime -= Time.deltaTime;
-                            Debug.Log("Time left: " + levelManager.currentPlayTime);
+                            
                         }
                     }
             }
@@ -84,7 +84,6 @@ namespace Music
             {
                 if (!levelManager.mainMusic.isPlaying)
                 {
-                    Debug.Log("Music was played - it wasn't playing before.");
                     levelManager.mainMusic.Play();
                     levelManager.mainMusic.volume = 1f;
                     levelManager.currentPlayTime = levelManager.DefaultPlayTime;

@@ -24,6 +24,7 @@ namespace Building
         /// </summary>
         public override void Action()
         {
+            Debug.Log("Action activated.");
             levelManager.throwObject = true;
         }
     }
