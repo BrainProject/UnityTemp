@@ -67,6 +67,12 @@ namespace Game
 
         public void LoadScene(string levelName, bool doFadeInOut = true)
         {
+            if (fadeInProgress)
+            {
+                print("Another fade is in progress.");
+                return;
+            }
+
             print("Loading scene: '" + levelName + "'");
 
             doFade = doFadeInOut;
@@ -85,6 +91,12 @@ namespace Game
 
 		public void LoadScene(int levelIndex, bool doFadeInOut = true)
 		{
+            if(fadeInProgress)
+            {
+                print("Another fade is in progress.");
+                return;
+            }
+
 			print("Loading scene with index: " + levelIndex + "");
 			
 			doFade = doFadeInOut;

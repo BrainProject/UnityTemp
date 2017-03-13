@@ -9,7 +9,7 @@ namespace MinigameMaze2
         //public static int difficutly = 0;
         //public static int level = 1;
 
-        private bool displayWin = false;
+        //private bool displayWin = false;
 
         /*void Start()
         {
@@ -22,7 +22,7 @@ namespace MinigameMaze2
             if (other.tag == "Player")
             {
                 Debug.Log("Win");
-                displayWin = true;
+                //displayWin = true;
                 GameObject.FindObjectOfType<MinigameController>().LoadNextLevel();
             }
         }
@@ -39,7 +39,7 @@ namespace MinigameMaze2
         {
             yield return new WaitForSeconds(3f);
             PlayerScript ps = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-            displayWin = false;
+            //displayWin = false;
             ps.ResetPosition();
             yield return null;
         }

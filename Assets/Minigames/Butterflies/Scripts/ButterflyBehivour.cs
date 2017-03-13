@@ -18,8 +18,8 @@ namespace Butterflies
         public float directionRange;
 
         // current butterfly position
-        private float xPos;
-        private float yPos;
+        //private float xPos;
+        //private float yPos;
 
         // values determining the direction of butterfly flight
         private float directionX;
@@ -67,8 +67,8 @@ namespace Butterflies
         {
 
             // getting position of butterfly
-            xPos = gameObject.GetComponent<Transform>().position.x;
-            yPos = gameObject.GetComponent<Transform>().position.y;
+            //xPos = gameObject.GetComponent<Transform>().position.x;
+            //yPos = gameObject.GetComponent<Transform>().position.y;
 
             translateVector = this.rotateVector(translateVector, angle);
             //Debug.Log(translateVector.x + ", " + translateVector.y);

@@ -40,7 +40,7 @@ namespace TotemGame
                     case 4:
                         filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty3/Resources";
                         MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
-                    MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
+                        MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
                     break;
                     /*case :
                         MGC.Instance.sceneLoader.LoadScene("TotemGameThirdLevel");
