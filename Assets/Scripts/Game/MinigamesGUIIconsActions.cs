@@ -144,7 +144,7 @@ namespace Game
                         }
 
                         //return back
-                        if (SceneManager.GetActiveScene().buildIndex > 3)   //NOTE: Update minimal minigame level index here
+                        if (SceneManager.GetActiveScene().buildIndex > SceneManager.GetSceneByName("DifficultyChooser").buildIndex)
                         {
                             int maxDiff = 0;
                             // Coloring mini-game se special treatment...
