@@ -18,17 +18,30 @@ namespace TotemGame
         public GameObject goalCube;
         public GameObject bomb;
 
+        public delegate void ClickAction();
+        public static event ClickAction OnClicked;
+
+        private bool isGameInitiated = false;
+
         void Awake()
         {
             Instance = this;
             player.GetComponent<Rigidbody>().useGravity = false;
+            isGameInitiated = false;
         }
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!isGameInitiated)
             {
-                player.GetComponent<Rigidbody>().useGravity = true;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    player.GetComponent<Rigidbody>().useGravity = true;
+                    isGameInitiated = true;
+
+                    if (OnClicked != null)
+                        OnClicked();
+                }
             }
         }
 

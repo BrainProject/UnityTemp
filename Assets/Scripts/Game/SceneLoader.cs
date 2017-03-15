@@ -157,18 +157,25 @@ namespace Game
 			}
 			else
 			{
-				float startTime = Time.time;              
-                fadePanel.enabled = true;
-                fadePanel.raycastTarget = true;
-                Color startColor = fadePanel.color;
-
-                while (fadePanel.color.a < 1)
+                if (fadePanel)
                 {
-                    fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
-                    //print("barva: " + fadePanel.color);
-                    yield return null;
+                    float startTime = Time.time;
+                    fadePanel.enabled = true;
+                    fadePanel.raycastTarget = true;
+                    Color startColor = fadePanel.color;
+
+                    while (fadePanel.color.a < 1)
+                    {
+                        fadePanel.color = Color.Lerp(startColor, opaqueColor, (Time.time - startTime) * fadeSpeed);
+                        //print("barva: " + fadePanel.color);
+                        yield return null;
+                    }
                 }
-                
+                else
+                {
+                    Debug.LogWarning("Fade panel is not available!");
+                }
+
                 fadeInProgress = false;
                 SceneManager.LoadScene(levelName);
             }

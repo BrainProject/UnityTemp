@@ -10,9 +10,47 @@ namespace TotemGame
 {
     public class DestroyObject : MonoBehaviour
     {
+        public Rigidbody thisRigidbody;
         private Color startcolor;
         private GameObject particlesObj;
         private ParticleSystem particlesSystem;
+
+        private void Start()
+        {
+            if(!thisRigidbody)
+            {
+                Rigidbody tmp = GetComponent<Rigidbody>();
+                thisRigidbody = tmp;
+                if(!thisRigidbody)
+                {
+                    Debug.LogWarning(gameObject.name + " doesn't have any rigidbody!");
+                    enabled = false;
+                }
+            }
+
+            if(thisRigidbody)
+            {
+                thisRigidbody.isKinematic = true;
+            }
+        }
+
+        void OnEnable()
+        {
+            TotemLevelManager.OnClicked += ActivatePhysics;
+        }
+        
+        void OnDisable()
+        {
+            TotemLevelManager.OnClicked -= ActivatePhysics;
+        }
+
+        void ActivatePhysics()
+        {
+            if (thisRigidbody)
+            {
+                thisRigidbody.isKinematic = false;
+            }
+        }
 
         private void OnMouseEnter()
         {

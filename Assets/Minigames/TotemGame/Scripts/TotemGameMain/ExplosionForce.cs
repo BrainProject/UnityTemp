@@ -10,6 +10,7 @@ namespace TotemGame
 {
     public class ExplosionForce : MonoBehaviour
     {
+        public Rigidbody thisRigidbody;
         public float radius = 100.0F;
         public float power = 100.0F;
         public GameObject bomb;
@@ -24,17 +25,52 @@ namespace TotemGame
                 bomb = TotemLevelManager.Instance.bomb;
             explosion = (GameObject)Resources.Load("RedExplosion");
             defaultPos = transform.position;
-            
+
+            if (!thisRigidbody)
+            {
+                Rigidbody tmp = GetComponent<Rigidbody>();
+                thisRigidbody = tmp;
+                if (!thisRigidbody)
+                {
+                    Debug.LogWarning(gameObject.name + " doesn't have any rigidbody!");
+                    enabled = false;
+                }
+            }
+
+            if (thisRigidbody)
+            {
+                thisRigidbody.isKinematic = true;
+            }
         }
+
+        void OnEnable()
+        {
+            TotemLevelManager.OnClicked += ActivatePhysics;
+        }
+
+        void OnDisable()
+        {
+            TotemLevelManager.OnClicked -= ActivatePhysics;
+        }
+
+        void ActivatePhysics()
+        {
+            if (thisRigidbody)
+            {
+                thisRigidbody.isKinematic = false;
+            }
+        }
+
         void Update()
         {
             if (bomb.activeInHierarchy)
             {
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition.z = actualDistance;
-                bomb.transform.position = new Vector3(mousePosition.x +45, mousePosition.y - 20, mousePosition.z);
+                bomb.transform.position = new Vector3(mousePosition.x +65, mousePosition.y - 40, mousePosition.z);
             }
         }
+
         private void OnMouseEnter()
         {
             bomb.SetActive(true);
