@@ -6,15 +6,6 @@ namespace MinigameMaze2
 {
     public class FinishScript : MonoBehaviour
     {
-        //public static int difficutly = 0;
-        //public static int level = 1;
-
-        //private bool displayWin = false;
-
-        /*void Start()
-        {
-            difficutly = 1;
-        }*/
 
         void OnTriggerEnter(Collider other)
         {
@@ -26,14 +17,6 @@ namespace MinigameMaze2
                 GameObject.FindObjectOfType<MinigameController>().LoadNextLevel();
             }
         }
-
-        /*void OnGUI()
-        {
-            if (displayWin)
-            {
-                GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2), 200f, 200f), "WIN");
-            }
-        }*/
 
         private IEnumerator RestartGame()
         {

@@ -492,7 +492,7 @@ public class MGC : Singleton<MGC>
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/mini-games.stats");
 
-            foreach (Game.MinigameProperties minigameData in minigamesProperties.minigames)
+            foreach (MinigameProperties minigameData in minigamesProperties.minigames)
             {
                 bf.Serialize(file, minigameData.stats);
             }
@@ -541,7 +541,7 @@ public class MGC : Singleton<MGC>
         }
         catch (EndOfStreamException ex)
         {
-            Debug.LogWarning("Minigame statistics not loaded because of EndOfStreamException!\n" + ex);
+            Debug.LogWarning("Minigame statistics not loaded because of EndOfStreamException!\n Filepath: '" + Application.persistentDataPath + "/mini-games.stats'\n" + ex);
         }
 #endif
     }
