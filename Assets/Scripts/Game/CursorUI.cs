@@ -6,6 +6,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -22,12 +23,18 @@ namespace Game
 		
 		void Start ()
         {
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
 #if !UNITY_ANDROID || UNITY_EDITOR
-			Cursor.visible = false;
+            Cursor.visible = false;
             thisRectTransform = GetComponent<RectTransform>();
             /*if(MGC.Instance.kinectManagerObject.activeSelf)
                 interactionManager = MGC.Instance.kinectManagerInstance.GetComponent<Kinect.InteractionManager>();*/
 #endif
+        }
+
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
         }
 
         void Update()
@@ -61,9 +68,9 @@ namespace Game
 			if (Input.GetMouseButtonUp (0))
 				CursorToNormal ();
 		}
-		
-		void OnLevelWasLoaded(int level)
-		{
+        
+        void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
 			GetComponent<Image>().sprite = cursorNormal;
 		}
 

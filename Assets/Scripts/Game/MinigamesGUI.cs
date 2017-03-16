@@ -23,22 +23,31 @@ namespace Game
 		public bool gsiStandalone;
 		public bool clicked = false;
 
-//		void Awake()
-//		{
-//			if (Application.loadedLevel > 1)
-//				backIcon.gameObject.SetActive(true);
-//			else
-//				backIcon.gameObject.SetActive(false);
-//		}
+        //		void Awake()
+        //		{
+        //			if (Application.loadedLevel > 1)
+        //				backIcon.gameObject.SetActive(true);
+        //			else
+        //				backIcon.gameObject.SetActive(false);
+        //		}
 
+        private void Start()
+        {
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
 
-		/// <summary>
-		/// Shows minigames GUI.
-		/// </summary>
-		/// <param name="showReward">If set to <c>true</c>, shows reward button.</param>
-		/// <param name="differentRestartScene">If set to <c>true</c>, attempts to load different scene for restart.</param>
-		/// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
-		public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
+        void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
+
+        /// <summary>
+        /// Shows minigames GUI.
+        /// </summary>
+        /// <param name="showReward">If set to <c>true</c>, shows reward button.</param>
+        /// <param name="differentRestartScene">If set to <c>true</c>, attempts to load different scene for restart.</param>
+        /// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
+        public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
 		{
 			visible = true;
 
@@ -126,10 +135,10 @@ namespace Game
             }
         }
 
-		void OnLevelWasLoaded (int level)
-		{
+		void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
             //handle back icon visibility
-            if (SceneManager.GetActiveScene().buildIndex > 0)
+            if (scene.buildIndex > 0)
             {
                 StopAllCoroutines();
                 backIcon.gameObject.SetActive(true);

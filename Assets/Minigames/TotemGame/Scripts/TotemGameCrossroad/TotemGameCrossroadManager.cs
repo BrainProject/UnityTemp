@@ -28,17 +28,17 @@ namespace TotemGame
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
                         break;
                     case 2:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty1/Resources";
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Resources/Difficulty1/Resources";
                         MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
                         break;
                     case 3:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty2/Resources";
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Resources/Difficulty2/Resources";
                         MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
                         break;
                     case 4:
-                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Difficulty3/Resources";
+                        filesPath = Application.dataPath + "/Minigames/TotemGame/XmlDocs/Resources/Difficulty3/Resources";
                         MGC.Instance.sceneLoader.LoadScene("TGCrossroad");
                         MGC.Instance.getMinigameStates().SetPlayed("TotemGame", MGC.Instance.selectedMiniGameDiff);
                     break;

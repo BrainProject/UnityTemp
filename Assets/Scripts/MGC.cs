@@ -207,11 +207,13 @@ public class MGC : Singleton<MGC>
     void Start()
     {
         print("Master Game Controller Start()...");
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
         //TODO ...
         //due to unknown reason, I doesn't set the list
         //in the Minigames script correctly without this command.
-        minigamesProperties.Start();
+        //minigamesProperties.Start();
+
 
         inactivityTimestamp = Time.time;
 #if !UNITY_STANDALONE
@@ -243,6 +245,11 @@ public class MGC : Singleton<MGC>
 		kinectManagerObject.SetActive(false);
 #endif
         swipeDistance = new Vector2(Screen.width / 4, Screen.width / 3);
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
     void Update()
@@ -404,14 +411,14 @@ public class MGC : Singleton<MGC>
         }
     }
 
-    void OnLevelWasLoaded(int level)
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         inactivityTimestamp = Time.time;
         inactivityCounter = 0;
-        print("[MGC] Scene: '" + SceneManager.GetActiveScene().name + "' loaded");
-        logger.addEntry("Scene loaded: '" + SceneManager.GetActiveScene().name + "'");
+        print("[MGC] Scene: '" + scene.name + "' loaded");
+        logger.addEntry("Scene loaded: '" + scene.name + "'");
 
-        if(SceneManager.GetActiveScene().name == "TiledMenu")
+        if(scene.name == "TiledMenu")
         {
             selectedMiniGameDiff = 0;
         }
@@ -422,17 +429,17 @@ public class MGC : Singleton<MGC>
             sceneLoader.FadeIn();
         }
 
-		if (minigamesProperties.GetPlayed (SceneManager.GetActiveScene().name))
+		if (minigamesProperties.GetPlayed (scene.name))
 		{
 			Debug.Log ("The minigame was already visited, don't show help.");
 		}
 		else
 		{
-			if(level > 3)
+			if(scene.buildIndex > 3)
 			{
-				if(minigamesProperties.GetMinigame(SceneManager.GetActiveScene().name))
+				if(minigamesProperties.GetMinigame(scene.name))
 				{
-					if(minigamesProperties.IsWithHelp(SceneManager.GetActiveScene().name))
+					if(minigamesProperties.IsWithHelp(scene.name))
 					{
                         //				Debug.Log(minigamesProperties.GetMinigame(Application.loadedLevelName));
                         if (neuronHelp)
@@ -754,12 +761,12 @@ public class MGC : Singleton<MGC>
         return minigamesProperties.GetMinigame(selectedMiniGameName);
     }
 
-    public void startMiniGame(string name)
+    public void startMiniGame(string minigameName)
     {
         try
         {
             //store the name of selected minigame
-            selectedMiniGameName = name;
+            selectedMiniGameName = minigameName;
 
             // check, if difficulty is applicable for this mini-game
             // if not, run it directly
