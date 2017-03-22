@@ -5,9 +5,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 400000}
+  - component: {fileID: 400000}
   m_Layer: 0
   m_Name: _KinectManager
   m_TagString: Untagged
@@ -20,13 +20,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 400002}
-  - 114: {fileID: 11400000}
-  - 114: {fileID: 11400006}
-  - 95: {fileID: 9500000}
-  - 114: {fileID: 11492794}
+  - component: {fileID: 400002}
+  - component: {fileID: 11400000}
+  - component: {fileID: 11400006}
+  - component: {fileID: 9500000}
+  - component: {fileID: 11492794}
   m_Layer: 0
   m_Name: KinectControls
   m_TagString: Untagged
@@ -39,9 +39,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 400004}
+  - component: {fileID: 400004}
   m_Layer: 0
   m_Name: MouseCursor
   m_TagString: Untagged
@@ -63,6 +63,7 @@ Transform:
   - {fileID: 400004}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -75,6 +76,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400000}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -87,6 +89,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400000}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -129,10 +132,10 @@ MonoBehaviour:
   useMultiSourceReader: 0
   minUserDistance: 0.5
   maxUserDistance: 0
-  maxTrackedUsers: 6
+  maxTrackedUsers: 2
   detectClosestUser: 1
-  ignoreInferredJoints: 1
-  lateUpdateAvatars: 0
+  ignoreInferredJoints: 0
+  lateUpdateAvatars: 1
   smoothing: 1
   useBoneOrientationConstraints: 1
   allowTurnArounds: 0
@@ -176,7 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b15dd0fe17596479ac6fbce846ab61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gestureInfo: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

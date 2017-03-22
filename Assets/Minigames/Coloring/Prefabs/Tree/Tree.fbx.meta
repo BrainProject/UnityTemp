@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: c31da15d6c701be48be1b27ab85a006f
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 19
   fileIDToRecycleName:
     100000: Apple_1
     100002: Apple_1_2
@@ -27,6 +27,40 @@ ModelImporter:
     100042: //RootNode
     100044: Trunk
     100046: Trunk_2
+    100048: Apple_1_2_2
+    100050: Apple_1_2_3
+    100052: Apple_1_2_4
+    100054: Apple_1_3
+    100056: Apple_2_2_2
+    100058: Apple_2_2_3
+    100060: Apple_2_2_4
+    100062: Apple_2_3
+    100064: Apple_3_2_2
+    100066: Apple_3_2_3
+    100068: Apple_3_2_4
+    100070: Apple_3_3
+    100072: Apple_4_2_2
+    100074: Apple_4_2_3
+    100076: Apple_4_2_4
+    100078: Apple_4_3
+    100080: Apple_5_2_2
+    100082: Apple_5_2_3
+    100084: Apple_5_2_4
+    100086: Apple_5_3
+    100088: Body_2_2
+    100090: Body_2_3
+    100092: Boole
+    100094: Boole_1
+    100096: Cinema4D_Editor
+    100098: Grass_3_2_2
+    100100: Grass_3_2_3
+    100102: Grass_3_2_4
+    100104: Grass_3_3
+    100106: Ground_2_2
+    100108: Ground_2_3
+    100110: Null
+    100112: Null_2
+    100114: Tree
     400000: Apple_1
     400002: Apple_1_2
     400004: Apple_2
@@ -51,6 +85,40 @@ ModelImporter:
     400042: //RootNode
     400044: Trunk
     400046: Trunk_2
+    400048: Apple_1_2_2
+    400050: Apple_1_2_3
+    400052: Apple_1_2_4
+    400054: Apple_1_3
+    400056: Apple_2_2_2
+    400058: Apple_2_2_3
+    400060: Apple_2_2_4
+    400062: Apple_2_3
+    400064: Apple_3_2_2
+    400066: Apple_3_2_3
+    400068: Apple_3_2_4
+    400070: Apple_3_3
+    400072: Apple_4_2_2
+    400074: Apple_4_2_3
+    400076: Apple_4_2_4
+    400078: Apple_4_3
+    400080: Apple_5_2_2
+    400082: Apple_5_2_3
+    400084: Apple_5_2_4
+    400086: Apple_5_3
+    400088: Body_2_2
+    400090: Body_2_3
+    400092: Boole
+    400094: Boole_1
+    400096: Cinema4D_Editor
+    400098: Grass_3_2_2
+    400100: Grass_3_2_3
+    400102: Grass_3_2_4
+    400104: Grass_3_3
+    400106: Ground_2_2
+    400108: Ground_2_3
+    400110: Null
+    400112: Null_2
+    400114: Tree
     2300000: Apple_1
     2300002: Apple_2
     2300004: Apple_3
@@ -63,6 +131,12 @@ ModelImporter:
     2300018: Ground
     2300020: Plane_1
     2300022: Trunk
+    2300024: Apple_1_3
+    2300026: Apple_2_3
+    2300028: Apple_3_3
+    2300030: Apple_4_3
+    2300032: Apple_5_3
+    2300034: Grass_3_3
     3300000: Apple_1
     3300002: Apple_2
     3300004: Apple_3
@@ -75,6 +149,12 @@ ModelImporter:
     3300018: Ground
     3300020: Plane_1
     3300022: Trunk
+    3300024: Apple_1_3
+    3300026: Apple_2_3
+    3300028: Apple_3_3
+    3300030: Apple_4_3
+    3300032: Apple_5_3
+    3300034: Grass_3_3
     4300000: Body
     4300002: Ground
     4300004: Grass_3
@@ -87,6 +167,12 @@ ModelImporter:
     4300018: Apple_2
     4300020: Apple_1
     4300022: Plane_1
+    4300024: Grass_3_3
+    4300026: Apple_5_3
+    4300028: Apple_4_3
+    4300030: Apple_3_3
+    4300032: Apple_2_3
+    4300034: Apple_1_3
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -95,19 +181,24 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -115,30 +206,35 @@ ModelImporter:
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

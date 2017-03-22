@@ -144,12 +144,14 @@ namespace Game
                         }
 
                         //return back
-                        if (SceneManager.GetActiveScene().buildIndex > 3)   //NOTE: Update minimal minigame level index here
+                        if (SceneManager.GetActiveScene().buildIndex > 4)
                         {
+                            print("Back section 1");
                             int maxDiff = 0;
                             // Coloring mini-game se special treatment...
                             if (SceneManager.GetActiveScene().name == "Coloring")
                             {
+                                print("Back section 1-1");
                                 Coloring.LevelManagerColoring coloringLM = GameObject.Find("_LevelManager").GetComponent<Coloring.LevelManagerColoring>();
                                 if (coloringLM.painting)
                                 {
@@ -164,6 +166,7 @@ namespace Game
                             //back button in other mini-games
                             else
                             {
+                                print("Back section 1-2");
                                 MinigameProperties minigameProps = MGC.Instance.getSelectedMinigameProperties();
                                 if (minigameProps)
                                 {
@@ -183,10 +186,12 @@ namespace Game
                         }
                         else if (SceneManager.GetActiveScene().name == "DifficultyChooser")
                         {
+                            print("Back section 2");
                             MGC.Instance.sceneLoader.LoadScene("TiledMenu");
                         }
                         else if (SceneManager.GetActiveScene().name == "GameSelection")
                         {
+                            print("Back section 3");
                             //Zoom out in selection scene if zoomed to some minigame.
                             //Go to brain scene if not zoomed.
                             MinigameSelection.CameraControl cm = Camera.main.GetComponent<MinigameSelection.CameraControl>();
@@ -200,6 +205,7 @@ namespace Game
                         }
                         else if (SceneManager.GetActiveScene().name == "TiledMenu")
                         {
+                            print("Back section 4");
                             hide();
                             MinigameSelection.MenuLevelManager.Instance.SwitchMenu(0);
                         }

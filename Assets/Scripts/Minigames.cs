@@ -21,9 +21,9 @@ namespace Game
             minigames.Add(newgame);
         }
 
-        public void Start()
+        void Start()
         {
-
+            print("Initializing minigame properties.");
         }
 
         /// <summary>

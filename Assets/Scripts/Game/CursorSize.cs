@@ -5,6 +5,7 @@
 /// </summary>
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -29,11 +30,17 @@ namespace Game
 #if !UNITY_ANDROID
 			Cursor.visible = false;
 #endif
-			//Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
-			//Screen.showCursor = false;
-		}
+            //Cursor.SetCursor(cur, Vector2.zero, CursorMode.Auto);
+            //Screen.showCursor = false;
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
 
-		void Update()
+        void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
+
+        void Update()
 		{
 			//this.guiTexture.pixelInset = new Rect(Input.mousePosition.x-x,Input.mousePosition.y-y,w,h);
 			
@@ -57,9 +64,9 @@ namespace Game
 			if(currentCursor)
 				GUI.DrawTexture (new Rect (Input.mousePosition.x - x, Screen.height - Input.mousePosition.y - y, w, h), currentCursor);
 		}
-		
-		void OnLevelWasLoaded(int level)
-		{
+
+        void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
 			currentCursor = cursorNormal;
 		}
 	}

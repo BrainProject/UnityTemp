@@ -23,22 +23,31 @@ namespace Game
 		public bool gsiStandalone;
 		public bool clicked = false;
 
-//		void Awake()
-//		{
-//			if (Application.loadedLevel > 1)
-//				backIcon.gameObject.SetActive(true);
-//			else
-//				backIcon.gameObject.SetActive(false);
-//		}
+        //		void Awake()
+        //		{
+        //			if (Application.loadedLevel > 1)
+        //				backIcon.gameObject.SetActive(true);
+        //			else
+        //				backIcon.gameObject.SetActive(false);
+        //		}
 
+        private void Start()
+        {
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
 
-		/// <summary>
-		/// Shows minigames GUI.
-		/// </summary>
-		/// <param name="showReward">If set to <c>true</c>, shows reward button.</param>
-		/// <param name="differentRestartScene">If set to <c>true</c>, attempts to load different scene for restart.</param>
-		/// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
-		public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
+        void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
+
+        /// <summary>
+        /// Shows minigames GUI.
+        /// </summary>
+        /// <param name="showReward">If set to <c>true</c>, shows reward button.</param>
+        /// <param name="differentRestartScene">If set to <c>true</c>, attempts to load different scene for restart.</param>
+        /// <param name="differentRestartSceneName">Scene name to be loaded with restart.</param>
+        public void show(bool showReward = false, bool differentRestartScene = false, string differentRestartSceneName = "Main")
 		{
 			visible = true;
 
@@ -55,14 +64,34 @@ namespace Game
 				}
 			default:
 				{
-					menuIcon.thisButton.enabled = true;
-					menuIcon.show ();
+                        if (menuIcon)
+                        {
+                            if (menuIcon.thisButton)
+                            {
+                                menuIcon.thisButton.enabled = true;
+                                menuIcon.show();
+                            }
+                            else
+                            {
+                                UnityEngine.Debug.LogWarning("No menuIcon button!");
+                            }
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.LogWarning("No menuIcon object!");
+                        }
 					break;
 				}
 			}
 
-			restartIcon.thisButton.enabled = true;
-			restartIcon.show ();
+            if (restartIcon)
+            {
+                if (restartIcon.thisButton)
+                {
+                    restartIcon.thisButton.enabled = true;
+                    restartIcon.show();
+                }
+            }
 				
 			guiDetection.guiIsHidden = false;
 
@@ -106,10 +135,10 @@ namespace Game
             }
         }
 
-		void OnLevelWasLoaded (int level)
-		{
+		void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
             //handle back icon visibility
-            if (SceneManager.GetActiveScene().buildIndex > 0)
+            if (scene.buildIndex > 0)
             {
                 StopAllCoroutines();
                 backIcon.gameObject.SetActive(true);

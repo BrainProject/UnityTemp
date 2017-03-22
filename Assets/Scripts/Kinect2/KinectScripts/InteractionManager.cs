@@ -10,6 +10,16 @@ using System.IO;
 namespace Kinect
 {
     /// <summary>
+    /// Which hand to use to control the cursor.
+    /// </summary>
+    public enum Handedness
+    {
+        RightHanded = 0,
+        LeftHanded = 1,
+        BothHanded = 2
+    }
+
+    /// <summary>
     /// Interaction manager is the component that deals with hand interactions.
     /// </summary>
     public class InteractionManager : MonoBehaviour
@@ -23,6 +33,9 @@ namespace Kinect
             Grip = 1,
             Release = 2
         }
+        
+        [Tooltip("Which hand is used to control the mouse cursor.")]
+        public Handedness userHandedness = Handedness.RightHanded;
 
         [Tooltip("Index of the player, tracked by this component. 0 means the 1st player, 1 - the 2nd one, 2 - the 3rd one, etc.")]
         public int playerIndex = 0;
@@ -330,294 +343,306 @@ namespace Kinect
                 {
                     HandEventType handEvent = HandEventType.None;
 
-                    // get the left hand state
-                    leftHandState = kinectManager.GetLeftHandState(primaryUserID);
-
-                    // check if the left hand is interacting
-                    isleftIboxValid = kinectManager.GetLeftHandInteractionBox(primaryUserID, ref leftIboxLeftBotBack, ref leftIboxRightTopFront, isleftIboxValid);
-                    //bool bLeftHandPrimaryNow = false;
-
-                    if (isleftIboxValid && //bLeftHandPrimaryNow &&
-                       kinectManager.GetJointTrackingState(primaryUserID, (int)KinectInterop.JointType.HandLeft) != KinectInterop.TrackingState.NotTracked)
+                    if (userHandedness == Handedness.LeftHanded || userHandedness == Handedness.BothHanded)
                     {
-                        leftHandPos = kinectManager.GetJointPosition(primaryUserID, (int)KinectInterop.JointType.HandLeft);
+                        // get the left hand state
+                        leftHandState = kinectManager.GetLeftHandState(primaryUserID);
 
-                        leftHandScreenPos.x = Mathf.Clamp01((leftHandPos.x - leftIboxLeftBotBack.x) / (leftIboxRightTopFront.x - leftIboxLeftBotBack.x));
-                        leftHandScreenPos.y = Mathf.Clamp01((leftHandPos.y - leftIboxLeftBotBack.y) / (leftIboxRightTopFront.y - leftIboxLeftBotBack.y));
-                        leftHandScreenPos.z = Mathf.Clamp01((leftIboxLeftBotBack.z - leftHandPos.z) / (leftIboxLeftBotBack.z - leftIboxRightTopFront.z));
+                        // check if the left hand is interacting
+                        isleftIboxValid = kinectManager.GetLeftHandInteractionBox(primaryUserID, ref leftIboxLeftBotBack, ref leftIboxRightTopFront, isleftIboxValid);
+                        //bool bLeftHandPrimaryNow = false;
 
-                        bool wasLeftHandInteracting = isLeftHandInteracting;
-                        isLeftHandInteracting = (leftHandPos.x >= (leftIboxLeftBotBack.x - 1.0f)) && (leftHandPos.x <= (leftIboxRightTopFront.x + 0.5f)) &&
-                            (leftHandPos.y >= (leftIboxLeftBotBack.y - 0.1f)) && (leftHandPos.y <= (leftIboxRightTopFront.y + 0.7f)) &&
-                            (leftIboxLeftBotBack.z >= leftHandPos.z) && (leftIboxRightTopFront.z * 0.8f <= leftHandPos.z);
-                        //bLeftHandPrimaryNow = isLeftHandInteracting;
-
-                        if (!wasLeftHandInteracting && isLeftHandInteracting)
+                        if (isleftIboxValid && //bLeftHandPrimaryNow &&
+                           kinectManager.GetJointTrackingState(primaryUserID, (int)KinectInterop.JointType.HandLeft) != KinectInterop.TrackingState.NotTracked)
                         {
-                            leftHandInteractingSince = Time.realtimeSinceStartup;
-                        }
+                            leftHandPos = kinectManager.GetJointPosition(primaryUserID, (int)KinectInterop.JointType.HandLeft);
 
-                        // check for left press
-                        isLeftHandPress = ((leftIboxRightTopFront.z - 0.1f) >= leftHandPos.z);
+                            leftHandScreenPos.x = Mathf.Clamp01((leftHandPos.x - leftIboxLeftBotBack.x) / (leftIboxRightTopFront.x - leftIboxLeftBotBack.x));
+                            leftHandScreenPos.y = Mathf.Clamp01((leftHandPos.y - leftIboxLeftBotBack.y) / (leftIboxRightTopFront.y - leftIboxLeftBotBack.y));
+                            leftHandScreenPos.z = Mathf.Clamp01((leftIboxLeftBotBack.z - leftHandPos.z) / (leftIboxLeftBotBack.z - leftIboxRightTopFront.z));
 
-                        // check for left hand click
-                        float fClickDist = (leftHandPos - lastLeftHandPos).magnitude;
+                            bool wasLeftHandInteracting = isLeftHandInteracting;
+                            isLeftHandInteracting = (leftHandPos.x >= (leftIboxLeftBotBack.x - 1.0f)) && (leftHandPos.x <= (leftIboxRightTopFront.x + 0.5f)) &&
+                                (leftHandPos.y >= (leftIboxLeftBotBack.y - 0.1f)) && (leftHandPos.y <= (leftIboxRightTopFront.y + 0.7f)) &&
+                                (leftIboxLeftBotBack.z >= leftHandPos.z) && (leftIboxRightTopFront.z * 0.8f <= leftHandPos.z);
+                            //bLeftHandPrimaryNow = isLeftHandInteracting;
 
-                        if (allowHandClicks && !dragInProgress && isLeftHandInteracting &&
-                           (fClickDist < KinectInterop.Constants.ClickMaxDistance))
-                        {
-                            if ((Time.realtimeSinceStartup - lastLeftHandTime) >= KinectInterop.Constants.ClickStayDuration)
+                            if (!wasLeftHandInteracting && isLeftHandInteracting)
                             {
-                                if (!isLeftHandClick)
+                                leftHandInteractingSince = Time.realtimeSinceStartup;
+                            }
+
+                            // check for left press
+                            isLeftHandPress = ((leftIboxRightTopFront.z - 0.1f) >= leftHandPos.z);
+
+                            // check for left hand click
+                            float fClickDist = (leftHandPos - lastLeftHandPos).magnitude;
+
+                            if (allowHandClicks && !dragInProgress && isLeftHandInteracting &&
+                               (fClickDist < KinectInterop.Constants.ClickMaxDistance))
+                            {
+                                if ((Time.realtimeSinceStartup - lastLeftHandTime) >= KinectInterop.Constants.ClickStayDuration)
                                 {
-                                    isLeftHandClick = true;
-                                    leftHandClickProgress = 1f;
-
-                                    if (controlMouseCursor)
+                                    if (!isLeftHandClick)
                                     {
-                                        MouseControl.MouseClick();
+                                        isLeftHandClick = true;
+                                        leftHandClickProgress = 1f;
 
-                                        isLeftHandClick = false;
-                                        leftHandClickProgress = 0f;
-                                        lastLeftHandPos = Vector3.zero;
-                                        lastLeftHandTime = Time.realtimeSinceStartup;
+                                        if (controlMouseCursor)
+                                        {
+                                            MouseControl.MouseClick();
+
+                                            isLeftHandClick = false;
+                                            leftHandClickProgress = 0f;
+                                            lastLeftHandPos = Vector3.zero;
+                                            lastLeftHandTime = Time.realtimeSinceStartup;
+                                        }
                                     }
+                                }
+                                else
+                                {
+                                    leftHandClickProgress = (Time.realtimeSinceStartup - lastLeftHandTime) / KinectInterop.Constants.ClickStayDuration;
                                 }
                             }
                             else
                             {
-                                leftHandClickProgress = (Time.realtimeSinceStartup - lastLeftHandTime) / KinectInterop.Constants.ClickStayDuration;
+                                isLeftHandClick = false;
+                                leftHandClickProgress = 0f;
+                                lastLeftHandPos = leftHandPos;
+                                lastLeftHandTime = Time.realtimeSinceStartup;
+                            }
+                            customCursor.cursorCircleLeft.progress = leftHandClickProgress;
+                        }
+                        else
+                        {
+                            isLeftHandInteracting = false;
+                            isLeftHandPress = false;
+                        }
+                    }
+
+                    if (userHandedness == Handedness.RightHanded || userHandedness == Handedness.BothHanded)
+                    {
+                        // get the right hand state
+                        rightHandState = kinectManager.GetRightHandState(primaryUserID);
+
+                        // check if the right hand is interacting
+                        isRightIboxValid = kinectManager.GetRightHandInteractionBox(primaryUserID, ref rightIboxLeftBotBack, ref rightIboxRightTopFront, isRightIboxValid);
+                        //bool bRightHandPrimaryNow = false;
+
+                        if (isRightIboxValid && //bRightHandPrimaryNow &&
+                           kinectManager.GetJointTrackingState(primaryUserID, (int)KinectInterop.JointType.HandRight) != KinectInterop.TrackingState.NotTracked)
+                        {
+                            rightHandPos = kinectManager.GetJointPosition(primaryUserID, (int)KinectInterop.JointType.HandRight);
+
+                            rightHandScreenPos.x = Mathf.Clamp01((rightHandPos.x - rightIboxLeftBotBack.x) / (rightIboxRightTopFront.x - rightIboxLeftBotBack.x));
+                            rightHandScreenPos.y = Mathf.Clamp01((rightHandPos.y - rightIboxLeftBotBack.y) / (rightIboxRightTopFront.y - rightIboxLeftBotBack.y));
+                            rightHandScreenPos.z = Mathf.Clamp01((rightIboxLeftBotBack.z - rightHandPos.z) / (rightIboxLeftBotBack.z - rightIboxRightTopFront.z));
+
+                            bool wasRightHandInteracting = isRightHandInteracting;
+                            isRightHandInteracting = (rightHandPos.x >= (rightIboxLeftBotBack.x - 0.5f)) && (rightHandPos.x <= (rightIboxRightTopFront.x + 1.0f)) &&
+                                (rightHandPos.y >= (rightIboxLeftBotBack.y - 0.1f)) && (rightHandPos.y <= (rightIboxRightTopFront.y + 0.7f)) &&
+                                (rightIboxLeftBotBack.z >= rightHandPos.z) && (rightIboxRightTopFront.z * 0.8f <= rightHandPos.z);
+                            //bRightHandPrimaryNow = isRightHandInteracting;
+
+                            if (!wasRightHandInteracting && isRightHandInteracting)
+                            {
+                                rightHandInteractingSince = Time.realtimeSinceStartup;
+                            }
+
+                            if (isLeftHandInteracting && isRightHandInteracting)
+                            {
+                                if (rightHandInteractingSince <= leftHandInteractingSince)
+                                    isLeftHandInteracting = false;
+                                else
+                                    isRightHandInteracting = false;
+                            }
+
+                            // check for right press
+                            isRightHandPress = ((rightIboxRightTopFront.z - 0.1f) >= rightHandPos.z);
+
+                            // check for right hand click
+                            float fClickDist = (rightHandPos - lastRightHandPos).magnitude;
+
+                            if (allowHandClicks && !dragInProgress && isRightHandInteracting &&
+                               (fClickDist < KinectInterop.Constants.ClickMaxDistance))
+                            {
+                                if ((Time.realtimeSinceStartup - lastRightHandTime) >= KinectInterop.Constants.ClickStayDuration)
+                                {
+                                    if (!isRightHandClick)
+                                    {
+                                        isRightHandClick = true;
+                                        rightHandClickProgress = 1f;
+
+                                        if (controlMouseCursor)
+                                        {
+                                            MouseControl.MouseClick();
+
+                                            isRightHandClick = false;
+                                            rightHandClickProgress = 0f;
+                                            lastRightHandPos = Vector3.zero;
+                                            lastRightHandTime = Time.realtimeSinceStartup;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    rightHandClickProgress = (Time.realtimeSinceStartup - lastRightHandTime) / KinectInterop.Constants.ClickStayDuration;
+                                }
+                            }
+                            else
+                            {
+                                isRightHandClick = false;
+                                rightHandClickProgress = 0f;
+                                lastRightHandPos = rightHandPos;
+                                lastRightHandTime = Time.realtimeSinceStartup;
+                            }
+                            customCursor.cursorCircleRight.progress = rightHandClickProgress;
+                        }
+                        else
+                        {
+                            isRightHandInteracting = false;
+                            isRightHandPress = false;
+                        }
+                    }
+
+
+                    if (userHandedness == Handedness.LeftHanded || userHandedness == Handedness.BothHanded)
+                    {
+                        // process left hand
+                        handEvent = HandStateToEvent(leftHandState, lastLeftHandEvent);
+
+                        if ((isLeftHandInteracting != isLeftHandPrimary) || (isRightHandInteracting != isRightHandPrimary))
+                        {
+                            if (controlMouseCursor && dragInProgress)
+                            {
+                                MouseControl.MouseRelease();
+                                dragInProgress = false;
+                            }
+
+                            lastLeftHandEvent = HandEventType.Release;
+                            lastRightHandEvent = HandEventType.Release;
+                        }
+
+                        if (controlMouseCursor && (handEvent != lastLeftHandEvent))
+                        {
+                            if (controlMouseDrag && !dragInProgress && (handEvent == HandEventType.Grip))
+                            {
+                                dragInProgress = true;
+                                MouseControl.MouseDrag();
+                            }
+                            else if (dragInProgress && (handEvent == HandEventType.Release))
+                            {
+                                MouseControl.MouseRelease();
+                                dragInProgress = false;
+                            }
+                        }
+
+                        leftHandEvent = handEvent;
+                        if (handEvent != HandEventType.None)
+                        {
+                            lastLeftHandEvent = handEvent;
+                        }
+
+                        // if the hand is primary, set the cursor position
+                        if (isLeftHandInteracting)
+                        {
+                            isLeftHandPrimary = true;
+
+                            if ((leftHandClickProgress < 0.8f) /**&& !isLeftHandPress*/)
+                            {
+                                cursorScreenPos = Vector3.Lerp(cursorScreenPos, leftHandScreenPos, smoothFactor * Time.deltaTime);
+                            }
+                            //					else
+                            //					{
+                            //						leftHandScreenPos = cursorScreenPos;
+                            //					}
+
+                            if (controlMouseCursor && !useHandCursor)
+                            {
+                                MouseControl.MouseMove(cursorScreenPos, debugText);
                             }
                         }
                         else
                         {
-                            isLeftHandClick = false;
-                            leftHandClickProgress = 0f;
-                            lastLeftHandPos = leftHandPos;
-                            lastLeftHandTime = Time.realtimeSinceStartup;
+                            isLeftHandPrimary = false;
                         }
-                        customCursor.cursorCircleLeft.progress = leftHandClickProgress;
+                    }
+
+                    if (userHandedness == Handedness.RightHanded || userHandedness == Handedness.BothHanded)
+                    {
+                        // process right hand
+                        handEvent = HandStateToEvent(rightHandState, lastRightHandEvent);
+
+                        if (controlMouseCursor && (handEvent != lastRightHandEvent))
+                        {
+                            if (controlMouseDrag && !dragInProgress && (handEvent == HandEventType.Grip))
+                            {
+                                dragInProgress = true;
+                                MouseControl.MouseDrag();
+                            }
+                            else if (dragInProgress && (handEvent == HandEventType.Release))
+                            {
+                                MouseControl.MouseRelease();
+                                dragInProgress = false;
+                            }
+                        }
+
+                        rightHandEvent = handEvent;
+                        if (handEvent != HandEventType.None)
+                        {
+                            lastRightHandEvent = handEvent;
+                        }
+
+                        // if the hand is primary, set the cursor position
+                        if (isRightHandInteracting)
+                        {
+                            isRightHandPrimary = true;
+
+                            if ((rightHandClickProgress < 0.8f) /**&& !isRightHandPress*/)
+                            {
+                                cursorScreenPos = Vector3.Lerp(cursorScreenPos, rightHandScreenPos, smoothFactor * Time.deltaTime);
+                            }
+                            //					else
+                            //					{
+                            //						rightHandScreenPos = cursorScreenPos;
+                            //					}
+
+                            if (controlMouseCursor && !useHandCursor)
+                            {
+                                MouseControl.MouseMove(cursorScreenPos, debugText);
+                            }
+                        }
+                        else
+                        {
+                            isRightHandPrimary = false;
+                        }
+
                     }
                     else
                     {
-                        isLeftHandInteracting = false;
+                        leftHandState = KinectInterop.HandState.NotTracked;
+                        rightHandState = KinectInterop.HandState.NotTracked;
+
+                        isLeftHandPrimary = false;
+                        isRightHandPrimary = false;
+
                         isLeftHandPress = false;
-                    }
-
-                    // get the right hand state
-                    rightHandState = kinectManager.GetRightHandState(primaryUserID);
-
-                    // check if the right hand is interacting
-                    isRightIboxValid = kinectManager.GetRightHandInteractionBox(primaryUserID, ref rightIboxLeftBotBack, ref rightIboxRightTopFront, isRightIboxValid);
-                    //bool bRightHandPrimaryNow = false;
-
-                    if (isRightIboxValid && //bRightHandPrimaryNow &&
-                       kinectManager.GetJointTrackingState(primaryUserID, (int)KinectInterop.JointType.HandRight) != KinectInterop.TrackingState.NotTracked)
-                    {
-                        rightHandPos = kinectManager.GetJointPosition(primaryUserID, (int)KinectInterop.JointType.HandRight);
-
-                        rightHandScreenPos.x = Mathf.Clamp01((rightHandPos.x - rightIboxLeftBotBack.x) / (rightIboxRightTopFront.x - rightIboxLeftBotBack.x));
-                        rightHandScreenPos.y = Mathf.Clamp01((rightHandPos.y - rightIboxLeftBotBack.y) / (rightIboxRightTopFront.y - rightIboxLeftBotBack.y));
-                        rightHandScreenPos.z = Mathf.Clamp01((rightIboxLeftBotBack.z - rightHandPos.z) / (rightIboxLeftBotBack.z - rightIboxRightTopFront.z));
-
-                        bool wasRightHandInteracting = isRightHandInteracting;
-                        isRightHandInteracting = (rightHandPos.x >= (rightIboxLeftBotBack.x - 0.5f)) && (rightHandPos.x <= (rightIboxRightTopFront.x + 1.0f)) &&
-                            (rightHandPos.y >= (rightIboxLeftBotBack.y - 0.1f)) && (rightHandPos.y <= (rightIboxRightTopFront.y + 0.7f)) &&
-                            (rightIboxLeftBotBack.z >= rightHandPos.z) && (rightIboxRightTopFront.z * 0.8f <= rightHandPos.z);
-                        //bRightHandPrimaryNow = isRightHandInteracting;
-
-                        if (!wasRightHandInteracting && isRightHandInteracting)
-                        {
-                            rightHandInteractingSince = Time.realtimeSinceStartup;
-                        }
-
-                        if (isLeftHandInteracting && isRightHandInteracting)
-                        {
-                            if (rightHandInteractingSince <= leftHandInteractingSince)
-                                isLeftHandInteracting = false;
-                            else
-                                isRightHandInteracting = false;
-                        }
-
-                        // check for right press
-                        isRightHandPress = ((rightIboxRightTopFront.z - 0.1f) >= rightHandPos.z);
-
-                        // check for right hand click
-                        float fClickDist = (rightHandPos - lastRightHandPos).magnitude;
-
-                        if (allowHandClicks && !dragInProgress && isRightHandInteracting &&
-                           (fClickDist < KinectInterop.Constants.ClickMaxDistance))
-                        {
-                            if ((Time.realtimeSinceStartup - lastRightHandTime) >= KinectInterop.Constants.ClickStayDuration)
-                            {
-                                if (!isRightHandClick)
-                                {
-                                    isRightHandClick = true;
-                                    rightHandClickProgress = 1f;
-
-                                    if (controlMouseCursor)
-                                    {
-                                        MouseControl.MouseClick();
-
-                                        isRightHandClick = false;
-                                        rightHandClickProgress = 0f;
-                                        lastRightHandPos = Vector3.zero;
-                                        lastRightHandTime = Time.realtimeSinceStartup;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                rightHandClickProgress = (Time.realtimeSinceStartup - lastRightHandTime) / KinectInterop.Constants.ClickStayDuration;
-                            }
-                        }
-                        else
-                        {
-                            isRightHandClick = false;
-                            rightHandClickProgress = 0f;
-                            lastRightHandPos = rightHandPos;
-                            lastRightHandTime = Time.realtimeSinceStartup;
-                        }
-                        customCursor.cursorCircleRight.progress = rightHandClickProgress;
-                    }
-                    else
-                    {
-                        isRightHandInteracting = false;
                         isRightHandPress = false;
-                    }
 
-                    // process left hand
-                    handEvent = HandStateToEvent(leftHandState, lastLeftHandEvent);
+                        leftHandEvent = HandEventType.None;
+                        rightHandEvent = HandEventType.None;
 
-                    if ((isLeftHandInteracting != isLeftHandPrimary) || (isRightHandInteracting != isRightHandPrimary))
-                    {
+                        lastLeftHandEvent = HandEventType.Release;
+                        lastRightHandEvent = HandEventType.Release;
+
                         if (controlMouseCursor && dragInProgress)
                         {
                             MouseControl.MouseRelease();
                             dragInProgress = false;
                         }
-
-                        lastLeftHandEvent = HandEventType.Release;
-                        lastRightHandEvent = HandEventType.Release;
-                    }
-
-                    if (controlMouseCursor && (handEvent != lastLeftHandEvent))
-                    {
-                        if (controlMouseDrag && !dragInProgress && (handEvent == HandEventType.Grip))
-                        {
-                            dragInProgress = true;
-                            MouseControl.MouseDrag();
-                        }
-                        else if (dragInProgress && (handEvent == HandEventType.Release))
-                        {
-                            MouseControl.MouseRelease();
-                            dragInProgress = false;
-                        }
-                    }
-
-                    leftHandEvent = handEvent;
-                    if (handEvent != HandEventType.None)
-                    {
-                        lastLeftHandEvent = handEvent;
-                    }
-
-                    // if the hand is primary, set the cursor position
-                    if (isLeftHandInteracting)
-                    {
-                        isLeftHandPrimary = true;
-
-                        if ((leftHandClickProgress < 0.8f) /**&& !isLeftHandPress*/)
-                        {
-                            cursorScreenPos = Vector3.Lerp(cursorScreenPos, leftHandScreenPos, smoothFactor * Time.deltaTime);
-                        }
-                        //					else
-                        //					{
-                        //						leftHandScreenPos = cursorScreenPos;
-                        //					}
-
-                        if (controlMouseCursor && !useHandCursor)
-                        {
-                            MouseControl.MouseMove(cursorScreenPos, debugText);
-                        }
-                    }
-                    else
-                    {
-                        isLeftHandPrimary = false;
-                    }
-
-                    // process right hand
-                    handEvent = HandStateToEvent(rightHandState, lastRightHandEvent);
-
-                    if (controlMouseCursor && (handEvent != lastRightHandEvent))
-                    {
-                        if (controlMouseDrag && !dragInProgress && (handEvent == HandEventType.Grip))
-                        {
-                            dragInProgress = true;
-                            MouseControl.MouseDrag();
-                        }
-                        else if (dragInProgress && (handEvent == HandEventType.Release))
-                        {
-                            MouseControl.MouseRelease();
-                            dragInProgress = false;
-                        }
-                    }
-
-                    rightHandEvent = handEvent;
-                    if (handEvent != HandEventType.None)
-                    {
-                        lastRightHandEvent = handEvent;
-                    }
-
-                    // if the hand is primary, set the cursor position
-                    if (isRightHandInteracting)
-                    {
-                        isRightHandPrimary = true;
-
-                        if ((rightHandClickProgress < 0.8f) /**&& !isRightHandPress*/)
-                        {
-                            cursorScreenPos = Vector3.Lerp(cursorScreenPos, rightHandScreenPos, smoothFactor * Time.deltaTime);
-                        }
-                        //					else
-                        //					{
-                        //						rightHandScreenPos = cursorScreenPos;
-                        //					}
-
-                        if (controlMouseCursor && !useHandCursor)
-                        {
-                            MouseControl.MouseMove(cursorScreenPos, debugText);
-                        }
-                    }
-                    else
-                    {
-                        isRightHandPrimary = false;
-                    }
-
-                }
-                else
-                {
-                    leftHandState = KinectInterop.HandState.NotTracked;
-                    rightHandState = KinectInterop.HandState.NotTracked;
-
-                    isLeftHandPrimary = false;
-                    isRightHandPrimary = false;
-
-                    isLeftHandPress = false;
-                    isRightHandPress = false;
-
-                    leftHandEvent = HandEventType.None;
-                    rightHandEvent = HandEventType.None;
-
-                    lastLeftHandEvent = HandEventType.Release;
-                    lastRightHandEvent = HandEventType.Release;
-
-                    if (controlMouseCursor && dragInProgress)
-                    {
-                        MouseControl.MouseRelease();
-                        dragInProgress = false;
                     }
                 }
             }
-
         }
 
 

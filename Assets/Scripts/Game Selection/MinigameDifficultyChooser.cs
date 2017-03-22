@@ -33,7 +33,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
 
             MGC.Instance.sceneLoader.LoadScene(MGC.Instance.getSelectedMinigameName());
         }
-
+        
         else
         {
 			print("Setting difficulty choosing screen for mini-game: '" + props.readableName + "'");
@@ -47,24 +47,31 @@ public class MinigameDifficultyChooser : MonoBehaviour
             int x;
             int shiftX = 2160 / maxDiff;
 
-            //create "checked" icons for difficulties already finished
-            for (int i = 0; i <= maxDiff; i++)
+            if (props.stats.finishedCount == null)
             {
-                if (props.stats.finishedCount[i] > 0)
+                Debug.LogError("Can't load minigames stats. Try to manually delete stats file at: '" +
+                               Application.persistentDataPath + "/mini-games.stats'");
+            }
+            else
+            {
+                //create "checked" icons for difficulties already finished
+                for (int i = 0; i <= maxDiff; i++)
                 {
-                    //instantiate
-                    GameObject icon = (GameObject)Instantiate(Resources.Load("CheckedIcon") as GameObject);
+                    if (props.stats.finishedCount[i] > 0)
+                    {
+                        //instantiate
+                        GameObject icon = (GameObject) Instantiate(Resources.Load("CheckedIcon") as GameObject);
 
-                    //set parent
-                    icon.transform.SetParent(diffSliderGO.transform);
+                        //set parent
+                        icon.transform.SetParent(diffSliderGO.transform);
 
-                    //set position and scale
-					x = i * shiftX - 1050;
-                    icon.transform.localPosition = new Vector3(x, 370, 0);
-                    icon.transform.localScale = new Vector3(1, 1, 1);
+                        //set position and scale
+                        x = i * shiftX - 1050;
+                        icon.transform.localPosition = new Vector3(x, 370, 0);
+                        icon.transform.localScale = new Vector3(1, 1, 1);
 
-
-                    //TODO better solution, independent on resolution
+                        //TODO better solution, independent on resolution
+                    }
                 }
             }
 
@@ -73,7 +80,7 @@ public class MinigameDifficultyChooser : MonoBehaviour
             {
                 IconDifficultyLow.sprite = props.IconDifficultyLow;
             }
-                // use default
+            // use default
             else
             {
                 IconDifficultyLow.sprite = DefaultSpriteDiffLow;

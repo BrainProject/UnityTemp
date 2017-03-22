@@ -32,7 +32,7 @@ namespace Butterflies
 
         private float timestamp;
 
-        private float timestampPrint;
+        //private float timestampPrint;
 
 
 
@@ -42,7 +42,7 @@ namespace Butterflies
             mousePosition = transform.position;//mainCamera.WorldToScreenPoint(transform.position); //transform.position;
             //deltaMousePosition = Vector3.zero;
             timestamp = Time.time;
-            timestampPrint = Time.time;
+            //timestampPrint = Time.time;
         }
 
         void Update()
@@ -117,7 +117,7 @@ namespace Butterflies
                     for (int i = 0; i < numberOfButterflies; i++)
                     {
                         objectPosition = new Vector3(Random.Range(objectPosition.x - appearRange, objectPosition.x + appearRange), Random.Range(objectPosition.y - appearRange, objectPosition.y + appearRange), objectPosition.z);
-                        GameObject instance = Instantiate(butterflies[Random.Range(0, butterflies.Length)], objectPosition, Quaternion.identity) as GameObject;
+                        Instantiate(butterflies[Random.Range(0, butterflies.Length)], objectPosition, Quaternion.identity);
                     }
                     /*   
                     objectPosition = new Vector3(Random.Range(objectPosition.x - appearRange, objectPosition.x + appearRange), Random.Range(objectPosition.y - appearRange, objectPosition.y + appearRange), objectPosition.z);
