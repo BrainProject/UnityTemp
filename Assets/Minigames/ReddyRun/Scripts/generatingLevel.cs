@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace Reddy
 {
@@ -31,31 +32,34 @@ namespace Reddy
         {
 
 
-            pathLength = MGC.Instance.selectedMiniGameDiff + 10;
+            pathLength = MGC.Instance.selectedMiniGameDiff * 10;
             //pathLength = 10;
             stackLeftTurn = 0;
             stackRightTurn = 0;
 
-
+            try
+            {
+                
+            
             for (int i = 0; i < pathLength; i++)
             {
                 int randomValue;
-                randomValue = Random.Range(0, 3);
+                randomValue = UnityEngine.Random.Range(0, 3);
 
 
                 if (i == 0)
                 {
-                    GameObject addingTile = (GameObject)Instantiate(prefabs[0], Vector3.zero, Quaternion.Euler(new Vector3(-90,90,0)));
-                    
+                    GameObject addingTile = (GameObject)Instantiate(prefabs[0], Vector3.zero, Quaternion.Euler(new Vector3(-90, 90, 0)));
+
                     //Quaternion rotation = Quaternion.identity;
                     //rotation.eulerAngles = new Vector3(-90, -60, 0);
                     //addingTile.transform.rotation = rotation;
 
                     arrayPath.Add(addingTile);
-                    
+
 
                 }
-                
+
                 else
                 {
                     switch (randomValue) // switch controls non-circle path
@@ -105,18 +109,18 @@ namespace Reddy
 
                 }
 
-            } 
-            
+            }
+
             GameObject lastTileObject2 = arrayPath[arrayPath.Count - 1];
             Tile lastTile2 = lastTileObject2.GetComponent<Tile>();
 
-            
-            Instantiate(finishPrefab, lastTile2.nextTileTransform.position, lastTile2.nextTileTransform.rotation);
-            
 
-            
-
-
+            Instantiate(finishPrefab, lastTile2.nextTileTransform.position, lastTile2.nextTileTransform.rotation * Quaternion.Euler(90, 0, 0)) ;
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.LogWarning("Prefabs of the game are not set in inspector in Unity. \n" + ex);
+            }
         }
 
         // Update is called once per frame

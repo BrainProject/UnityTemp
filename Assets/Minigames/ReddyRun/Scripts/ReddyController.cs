@@ -57,7 +57,7 @@ namespace Reddy
 
             currentState = ReddyStates.WAITING;
         }
-
+        
 
         void Update()
         {
