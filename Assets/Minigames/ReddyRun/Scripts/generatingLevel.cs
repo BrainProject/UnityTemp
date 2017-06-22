@@ -32,7 +32,7 @@ namespace Reddy
         {
 
 
-            pathLength = MGC.Instance.selectedMiniGameDiff * 10;
+            pathLength = (MGC.Instance.selectedMiniGameDiff + 1) * 10;
             //pathLength = 10;
             stackLeftTurn = 0;
             stackRightTurn = 0;
