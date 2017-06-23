@@ -1178,6 +1178,7 @@ GameObject:
   - component: {fileID: 1559951102}
   - component: {fileID: 1559951104}
   - component: {fileID: 1559951105}
+  - component: {fileID: 1559951106}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1239,6 +1240,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf108ad096c5d6443adaa12db8951020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1559951106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1559951101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634d1a7029825c345a1e233e0e2c302d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countText: {fileID: 802231619}
+  winText: {fileID: 0}
 --- !u!1001 &1603118467
 Prefab:
   m_ObjectHideFlags: 0
@@ -1582,7 +1596,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1969703674}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.7
   m_Height: 1.5

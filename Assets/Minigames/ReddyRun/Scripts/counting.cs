@@ -31,13 +31,15 @@ namespace Reddy
 
         void OnTriggerEnter(Collider other)
         {
+            print("collider pickup detected");
             if (other.gameObject.CompareTag("Pick up"))
             {
+                print("pickup tag detected");
                 other.gameObject.SetActive(false);
                 count++;
                 SetCountText();
             }
-            if (other.gameObject.CompareTag("Finish"))
+            if (other.gameObject.CompareTag("Finished"))
             {
 
                 anim.SetBool("finish", true);

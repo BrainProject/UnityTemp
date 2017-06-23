@@ -255,9 +255,10 @@ namespace Reddy
 
         void OnTriggerEnter(Collider other)
         {
-
+            Debug.Log("Collider detected" + other);
             if (other.gameObject.CompareTag("Finished"))
             {
+                print("collider finish detected code");
                 currentState = ReddyStates.CELEBRATING;
                 anim.SetTrigger("finishTrigger");
                 transform.Rotate(new Vector3(0, 180, 0));
@@ -270,7 +271,8 @@ namespace Reddy
             }
             else if (other.gameObject.CompareTag("Obstacle"))
             {
-                
+                print("collider obstacle detected code");
+                Debug.Log("Debug here");
                 //GameObject.Find("mixamorig:Spine").GetComponent<CapsuleCollider>().enabled = false;
                 currentState = ReddyStates.DYING;
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("sprinting_forward_roll_inPlace") || anim.GetCurrentAnimatorStateInfo(0).IsName("jump_inPlace"))
