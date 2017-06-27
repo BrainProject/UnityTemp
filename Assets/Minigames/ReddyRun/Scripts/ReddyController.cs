@@ -92,7 +92,7 @@ namespace Reddy
 
         void UpdateWaiting()
         {
-            if (ReddyKinect.Instance.IsSquat())
+            if (ReddyKinect.Instance.IsSquat() || Input.GetKeyDown(KeyCode.Space))
             {
                 anim.SetBool("isRunning", true);
                 currentState = ReddyStates.RUNNING;

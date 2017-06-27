@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: path_str-02-02
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION
+  m_Name: flagge-start-ziel
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION _GLOSSYREFLECTIONS_OFF
   m_LightmapFlags: 1
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 26d0e527edc3baf499f0d31c5d8a103f, type: 3}
+        m_Texture: {fileID: 2800000, guid: b43c8f0f916af2449ab90a29fd8752bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -83,8 +83,14 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
         name: _Glossiness
-      second: 0.5
+      second: 1
+    - first:
+        name: _GlossyReflections
+      second: 0
     - first:
         name: _Metallic
       second: 0
@@ -97,6 +103,12 @@ Material:
     - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
     - first:
         name: _SrcBlend
       second: 1
@@ -112,4 +124,4 @@ Material:
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
-      second: {r: 0.60784316, g: 0.41960785, b: 0.41960785, a: 1}
+      second: {r: 0.8014706, g: 0.8014706, b: 0.8014706, a: 1}
