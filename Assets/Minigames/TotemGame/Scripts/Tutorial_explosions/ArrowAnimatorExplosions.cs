@@ -107,7 +107,7 @@ namespace TotemGame
                 case TotemTutorialExplosionStates.SIXTH:
                     if (currentObject.gameObject == Beam2)
                     {
-                        anim.Stop();
+                        anim.StopPlayback();
                         arrow.gameObject.SetActive(false);
                     }
                     break;

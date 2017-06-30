@@ -28,7 +28,7 @@ namespace SocialGame{
 				Debug.LogWarning(gameObject.name + "this object not found seting script");
 			}
 			//renderLine.SetVertexCount(joint.Length);
-            renderLine.numPositions = joint.Length;
+            renderLine.positionCount = joint.Length;
 		}
 		
 		/// <summary>

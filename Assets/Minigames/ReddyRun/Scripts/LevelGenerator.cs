@@ -5,13 +5,13 @@ using System;
 
 namespace Reddy
 {
-    public class GeneratingLevel : MonoBehaviour
+    public class LevelGenerator : MonoBehaviour
     {
         public int pathLength;
         // public int oxygensNumber;
         // public int dodgeObstaclesNumber;
         // public int jumpObstaclesNumber;
-
+        
         private int stackLeftTurn;
         private int stackRightTurn;
         public GameObject finishPrefab;
@@ -30,8 +30,6 @@ namespace Reddy
         // Use this for initialization
         void Start()
         {
-
-
             pathLength = (MGC.Instance.selectedMiniGameDiff + 1) * 10;
             //pathLength = 10;
             stackLeftTurn = 0;
